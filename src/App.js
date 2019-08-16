@@ -1,21 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import { Route } from "react-router-dom";
-import { TestContainer } from "./containers";
+import {Artwork, Home, Login, Register} from "./containers";
+import { Header, Footer } from './components'
+import "./App.css"
 
-/**
- * App Stateless Component
- *
- * @param location
- * @param match
- */
 const App = ({ location, match, auth, logout }) => {
     return (
-        <div className="container">
-            <h2>이곳에 라우터를 넣으면 되지 않을까? 사용자페이지</h2>
-            <Route path="/test" component={TestContainer} />
+        <div>
+            <Header />
+            <main className="site-main">
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/artwork" component={Artwork} />
+                </Switch>
+            </main>
+            <Footer />
         </div>
     );
 };
