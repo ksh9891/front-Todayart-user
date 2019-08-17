@@ -37,6 +37,21 @@ const refreshToken = (refresh_token) => {
     });
 };
 
+const cart = () =>{
+
+    return({
+        type: ActionTypes.cart,
+        payload: {
+            request:{
+                method: 'GET',
+                url: '/cart'
+            
+            }
+        }
+
+    })
+}
+
 export const Actions = {
     getClientToken,
     logout,

@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Actions } from './actions';
 import { Route } from "react-router-dom";
-import { TestContainer } from "./containers";
+import { Main, Cart, Orders } from "./containers";
+import {Header} from "./components";
 
 /**
  * App Stateless Component
@@ -14,8 +15,10 @@ import { TestContainer } from "./containers";
 const App = ({ location, match, auth, logout }) => {
     return (
         <div className="container">
-            <h2>이곳에 라우터를 넣으면 되지 않을까? 사용자페이지</h2>
-            <Route path="/test" component={TestContainer} />
+            <Header/>
+            <Route path="/main" component={Main}/>
+            <Route path="/cart" component={Cart} />
+            <Route path="/orders" component={Orders} />
         </div>
     );
 };
