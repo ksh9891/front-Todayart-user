@@ -1,24 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import { Route } from "react-router-dom";
-import { Main, Cart, Orders } from "./containers";
-import {Header} from "./components";
+import {Artwork, Home, Login, Register, Cart, Orders} from "./containers";
+import { Header, Footer } from './components'
+import "./App.css"
 
-/**
- * App Stateless Component
- *
- * @param location
- * @param match
- */
 const App = ({ location, match, auth, logout }) => {
     return (
-        <div className="container">
-            <Header/>
-            <Route path="/main" component={Main}/>
-            <Route path="/cart" component={Cart} />
-            <Route path="/orders" component={Orders} />
+        <div>
+            <Header />
+            <main className="site-main">
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/login" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/artwork" component={Artwork} />
+                    <Route path="/cart" component={Cart} />
+                    <Route path="/orders" component={Orders} />
+                </Switch>
+            </main>
+            <Footer />
         </div>
     );
 };
