@@ -25,8 +25,11 @@ class StateLoader {
     return {
       auth: {
         retryCount: 0,
-        token: null,
+        token: 'c8724819-4ded-4d23-84a4-73f2939b3f1c',
         userDetails: null
+      },
+      cart:{
+        items:[]
       }
     };
   }

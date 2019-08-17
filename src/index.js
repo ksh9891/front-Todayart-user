@@ -17,9 +17,9 @@ const clientId = 'test';
 const clientSecret = 'test';
 
 const client = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:1111',
     headers: {
-        'Authorization': `Bearer ${btoa(`21e40735-20eb-4b11-a6f9-2bfe723df8a8`)}`,
+        'Authorization': `Bearer c8724819-4ded-4d23-84a4-73f2939b3f1c`,
         'Cache-Control': 'no-cache',
         'X-Custom-Header': 'todayArt-client'
     },

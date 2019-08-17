@@ -37,15 +37,14 @@ const refreshToken = (refresh_token) => {
     });
 };
 
-const cart = () =>{
-
-    return({
-        type: ActionTypes.cart,
+const getCart = () =>{
+    return(
+        {
+        type: ActionTypes.GET_CART,
         payload: {
             request:{
                 method: 'GET',
                 url: '/cart'
-            
             }
         }
 
@@ -56,4 +55,5 @@ export const Actions = {
     getClientToken,
     logout,
     refreshToken,
+    getCart
 };
