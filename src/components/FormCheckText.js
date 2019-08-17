@@ -1,11 +1,10 @@
 import React from 'react';
 import "./FormCheckText.css";
 
-const FormCheckText = (event) => {
-    let check = (event.length > 1);
+const FormCheckText = ({isCheck}) => {
   return (
       <small className="form-text text-left text-waring">
-          {(isCheck) ? "hi" : "bye"}
+          {isCheck > 8 ? 'true':'false' }
       </small>
   )
 };

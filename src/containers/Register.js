@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Actions } from '../actions/index';
 import { ActionTypes } from "../constants";
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FormCheckText } from "../components";
 import "./Register.css";
+import {onSuccess} from "redux-axios-middleware";
 
 const registerAsync = ({email, nickname, password}) => (dispatch) => {
     return dispatch(Actions.getClientToken())
@@ -18,14 +19,17 @@ const registerAsync = ({email, nickname, password}) => (dispatch) => {
 };
 
 
-const checkPassword = () => {
-    let check = (passwordInput.length > 1);
-
-}
 const Register = ({ history, register }) => {
     let emailInput, nicknameInput;
     let passwordInput, confirmPasswordInput;
+    const [isPass, setIsPass] = useState(
+        0
+    );
 
+    // 비밀번호 유효성 검증
+    // 조건에 맞으면
+    // isPass = true / false
+    const checkPassword = (e) => setIsPass(e.target.value);
 
 
     const onSubmit = (e) => {
@@ -74,16 +78,17 @@ const Register = ({ history, register }) => {
                       <div className="col-lg-6">
                           <div className="login_form_inner register_form_inner">
                               <h3>계정생성</h3>
-                              <form className="row login_form" onSubmit={e => onSubmit(e)}>
+                              <form className="row login_form was-validated" onSubmit={e => onSubmit(e)}>
                                   <div className="col-md-12 form-group">
                                       <input type="email" className="form-control" ref={element => emailInput = element} id="email" name="email" placeholder="아이디(이메일)" />
+                                      <div name="feedback" className="invalid-feedback">asdasdazxcv</div>
                                   </div>
                                   <div className="col-md-12 form-group">
                                       <input type="text" className="form-control" ref={element => nicknameInput = element} id="nickname" name="nickname" placeholder="닉네임" />
                                   </div>
                                   <div className="col-md-12 form-group">
-                                      <input type="password" className="form-control" ref={element => passwordInput = element} id="password" name="password" placeholder="비밀번호" onChange={FormCheckText} />
-                                     <FormCheckText />
+                                      <input type="password" className="form-control" ref={element => passwordInput = element} id="password" name="password" placeholder="비밀번호" onChange={checkPassword} />
+                                     <FormCheckText isCheck={isPass} />
                                   </div>
                                   <div className="col-md-12 form-group">
                                       <input type="password" className="form-control" ref={element => confirmPasswordInput = element} id="confirmPassword" placeholder="비밀번호 확인" />
