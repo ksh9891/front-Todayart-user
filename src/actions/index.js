@@ -16,6 +16,34 @@ const getClientToken = () => {
     });
 };
 
+const register = ({ email, nickname, password }) => {
+    return ({
+        type: ActionTypes.REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                },
+                data: JSON.stringify({ email, nickname, password })
+            }
+        }
+    });
+};
+
+const login = (email, password) => {
+    return ({
+        type: ActionTypes.LOGIN,
+        payload: {
+            request: {
+                method: "POST",
+                url: "/"
+            }
+        }
+    });
+};
+
 const logout = () => ({
     type: ActionTypes.LOGOUT
 });
@@ -39,6 +67,8 @@ const refreshToken = (refresh_token) => {
 
 export const Actions = {
     getClientToken,
+    register,
+    login,
     logout,
     refreshToken,
 };
