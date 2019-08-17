@@ -1,72 +1,96 @@
 import React from 'react';
+import { Actions } from '../actions/index';
+import { ActionTypes } from "../constants";
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { FormCheckText } from "../components";
+import "./Register.css";
 
-const Register = () => {
-  return (
+const registerAsync = ({email, nickname, password}) => (dispatch) => {
+    return dispatch(Actions.getClientToken())
+        .then(response => {
+            if(response.type === ActionTypes.GET_TOKEN_SUCCESS) {
+                return dispatch(Actions.register({ email, nickname, password }))
+            } else {
+                return Promise.reject(response);
+            }
+        })
+};
+
+
+const checkPassword = () => {
+    let check = (passwordInput.length > 1);
+
+}
+const Register = ({ history, register }) => {
+    let emailInput, nicknameInput;
+    let passwordInput, confirmPasswordInput;
+
+
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const email = emailInput.value.trim();
+        const nickname = nicknameInput.value.trim();
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+
+        // [아래 작업 진행해야 함]
+        // 중복 이메일 확인
+        // 닉네임 중복 체크
+        // 비밀번호 - 비밀번호 확인 맞는지 체크
+        // Password sha256 암호화
+        // 서버에 데이터 전송
+        // 전송 후 로그인 페이지로 이동
+
+        register ({ email, nickname, password })
+            .then(response => {
+                if (response.type === ActionTypes.REGISTER_SUCCESS) {
+                    history.push('/login');
+                } else {
+                    const { error } = response;
+                    return Promise.reject(error);
+                }
+            })
+            .catch(error => {
+                console.log("error >>", error);
+            });
+    };
+
+    return (
       <div>
-          <section className="blog-banner-area" id="category">
-              <div className="container h-100">
-                  <div className="blog-banner">
-                      <div className="text-center">
-                          <h1>Register</h1>
-                          <nav aria-label="breadcrumb" className="banner-breadcrumb">
-                              <ol className="breadcrumb">
-                                  <li className="breadcrumb-item"><a href="#">Home</a></li>
-                                  <li className="breadcrumb-item active" aria-current="page">Register</li>
-                              </ol>
-                          </nav>
-                      </div>
-                  </div>
-              </div>
-          </section>
-
           <section className="login_box_area section-margin">
               <div className="container">
                   <div className="row">
                       <div className="col-lg-6">
                           <div className="login_box_img">
                               <div className="hover">
-                                  <h4>Already have an account?</h4>
-                                  <p>There are advances being made in science and technology everyday, and a good
-                                      example of this is the</p>
-                                  <a className="button button-account" href="login.html">Login Now</a>
+                                  <h4>이미 계정이 있으신가요?</h4>
+                                  <p>아래 로그인 버튼을 통해 로그인 해주세요!</p>
+                                  <a className="button button-account" href="./login">로그인</a>
                               </div>
                           </div>
                       </div>
                       <div className="col-lg-6">
                           <div className="login_form_inner register_form_inner">
-                              <h3>Create an account</h3>
-                              <form className="row login_form" action="#/" id="register_form">
+                              <h3>계정생성</h3>
+                              <form className="row login_form" onSubmit={e => onSubmit(e)}>
                                   <div className="col-md-12 form-group">
-                                      <input type="text" className="form-control" id="name" name="name"
-                                             placeholder="Username" onFocus="this.placeholder = ''"
-                                             onBlur="this.placeholder = 'Username'" />
+                                      <input type="email" className="form-control" ref={element => emailInput = element} id="email" name="email" placeholder="아이디(이메일)" />
                                   </div>
                                   <div className="col-md-12 form-group">
-                                      <input type="text" className="form-control" id="email" name="email"
-                                             placeholder="Email Address" onFocus="this.placeholder = ''"
-                                             onBlur="this.placeholder = 'Email Address'" />
+                                      <input type="text" className="form-control" ref={element => nicknameInput = element} id="nickname" name="nickname" placeholder="닉네임" />
                                   </div>
                                   <div className="col-md-12 form-group">
-                                      <input type="text" className="form-control" id="password" name="password"
-                                             placeholder="Password" onFocus="this.placeholder = ''"
-                                             onBlur="this.placeholder = 'Password'" />
+                                      <input type="password" className="form-control" ref={element => passwordInput = element} id="password" name="password" placeholder="비밀번호" onChange={FormCheckText} />
+                                     <FormCheckText />
                                   </div>
                                   <div className="col-md-12 form-group">
-                                      <input type="text" className="form-control" id="confirmPassword"
-                                             name="confirmPassword" placeholder="Confirm Password"
-                                             onFocus="this.placeholder = ''"
-                                             onBlur="this.placeholder = 'Confirm Password'" />
+                                      <input type="password" className="form-control" ref={element => confirmPasswordInput = element} id="confirmPassword" placeholder="비밀번호 확인" />
                                   </div>
+                                  <div className="col-md-12 form-group" />
                                   <div className="col-md-12 form-group">
-                                      <div className="creat_account">
-                                          <input type="checkbox" id="f-option2" name="selector" />
-                                              <label htmlFor="f-option2">Keep me logged in</label>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-12 form-group">
-                                      <button type="submit" value="submit"
-                                              className="button button-register w-100">Register
-                                      </button>
+                                      <button type="submit" value="submit" className="button button-register w-100">계정생성</button>
                                   </div>
                               </form>
                           </div>
@@ -78,4 +102,8 @@ const Register = () => {
   )
 };
 
-export default Register;
+const mapDispatchToProps = (dispatch) => ({
+   register: (email, nickname, password) => dispatch(registerAsync(email, nickname, password))
+});
+
+export default withRouter(connect(null, mapDispatchToProps)(Register));
