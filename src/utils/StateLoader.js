@@ -27,12 +27,6 @@ class StateLoader {
         retryCount: 0,
         token: null,
         userDetails: null
-      },
-      todo: {
-        items: [],
-        page: 1,
-        size: 10,
-        totalCount: 0
       }
     };
   }

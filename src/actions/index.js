@@ -33,12 +33,18 @@ const register = ({ email, nickname, password }) => {
 };
 
 const login = (email, password) => {
+    const formData = new FormData();
+    formData.append('grant_type', 'password');
+    formData.append('username', email);
+    formData.append('password', password);
+
     return ({
         type: ActionTypes.LOGIN,
         payload: {
             request: {
-                method: "POST",
-                url: "/"
+                method: 'POST',
+                url: '/oauth/token',
+                data: formData
             }
         }
     });
@@ -47,6 +53,18 @@ const login = (email, password) => {
 const logout = () => ({
     type: ActionTypes.LOGOUT
 });
+
+const getMemberMe = () => {
+    return ({
+        type: ActionTypes.GET_USER,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/me'
+            }
+        }
+    });
+};
 
 const refreshToken = (refresh_token) => {
     const formData = new FormData();
@@ -65,10 +83,24 @@ const refreshToken = (refresh_token) => {
     });
 };
 
+const fetchArtwork = () => {
+    return ({
+        type: ActionTypes.FETCH_ARTWORK,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product`
+            }
+        }
+
+    })
+}
+
 export const Actions = {
     getClientToken,
     register,
     login,
     logout,
+    getMemberMe,
     refreshToken,
 };

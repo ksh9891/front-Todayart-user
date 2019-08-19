@@ -536,15 +536,11 @@ const Home = () => {
                                   method="get" className="subscribe-form form-inline mt-5 pt-1">
                                 <div className="form-group ml-sm-auto">
                                     <input className="form-control mb-1" type="email" name="EMAIL"
-                                           placeholder="Enter your email" onFocus="this.placeholder = ''"
-                                           onBlur="this.placeholder = 'Your Email Address '" />
+                                           placeholder="Enter your email" />
                                     <div className="info" />
                                 </div>
                                 <button className="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now
                                 </button>
-                                <div style={{position: 'absolute', left: '-5000px'}}>
-                                    <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabIndex="-1" value="" type="text" />
-                                </div>
 
                             </form>
                         </div>
