@@ -1,6 +1,7 @@
 import React from 'react';
 import Logo from '../images/logo.png';
 import './Header.css';
+import {Icons} from './icons';
 
 const Header = () => {
     return (
@@ -35,12 +36,10 @@ const Header = () => {
                                 <li className="nav-item"><a className="nav-link" href="">지원</a></li>
                                 <li className="nav-item"><a className="nav-link" href="">정보</a></li>
                             </ul>
-
                             <ul className="nav-shop">
-                                <li className="nav-item"><button><i className="ti-search" /></button></li>
-                                <li className="nav-item"><button><i className="ti-shopping-cart" /><span className="nav-shop__circle">3</span></button></li>
+                            <Icons.SearchIcon/>
+                            <Icons.CartIcon/>
                             </ul>
-
                             <ul className="nav nav-user-info">
                                 <li className="nav-item"><a className="nav-link" href="./login">로그인</a></li>
                                 <li className="nav-item"><a className="nav-link" href="./register">회원가입</a></li>

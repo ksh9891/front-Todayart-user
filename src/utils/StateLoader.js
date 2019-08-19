@@ -2,20 +2,21 @@ class StateLoader {
 
   loadState() {
     try {
-      let state = localStorage.getItem("http://localhost:8080/state");
+      let state = localStorage.getItem("http://localhost:1111/state");
       if (state !== undefined && state !== null) {
         return JSON.parse(state);
       }
     } catch (error) {
       console.log('error', error)
     }
+    console.log("loadState pass");
     return this.initialState();
   }
 
   saveState(state) {
     try {
       let json = JSON.stringify(state);
-      localStorage.setItem("http://localhost:8080/state", json);
+      localStorage.setItem("http://localhost:1111/state", json);
     } catch (error) {
       console.log('error', error)
     }
@@ -25,7 +26,7 @@ class StateLoader {
     return {
       auth: {
         retryCount: 0,
-        token: 'c8724819-4ded-4d23-84a4-73f2939b3f1c',
+        token: `60f671d0-e88e-42a7-8c70-96805893aa32`,
         userDetails: null
       },
       cart:{

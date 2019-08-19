@@ -19,7 +19,7 @@ const clientSecret = 'test';
 const client = axios.create({
     baseURL: 'http://localhost:1111',
     headers: {
-        'Authorization': `Bearer c8724819-4ded-4d23-84a4-73f2939b3f1c`,
+        'Authorization': `Bearer 60f671d0-e88e-42a7-8c70-96805893aa32`,
         'Cache-Control': 'no-cache',
         'X-Custom-Header': 'todayArt-client'
     },
@@ -46,6 +46,7 @@ const store = createStore(
 store.subscribe(() => {
     stateLoader.saveState(store.getState());
 });
+
 
 ReactDOM.render (
   <Provider store={store}>

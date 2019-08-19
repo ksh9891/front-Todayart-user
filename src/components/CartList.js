@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import './components.css';
 import {Actions} from '../actions';
@@ -9,21 +9,18 @@ const cartListAsync = () => (dispatch) => {
 
 
 
-const CartList=({items, getCart, history})=>{ 
-     getCart()
-     .then(response=>{
-      })
-     .catch(error=>{
-       console.log('error>> ', error);
-      });
-
+const CartList=({items, getCart})=>{ 
+    useEffect(()=>getCart(), []);
+    let totalPrice = 0;
+    
     return(
-      <tr>
+      <div>
         {items.map((item)=>{
           const {product, productPrice, quantity} = item;
           const {productName} = product;
+          totalPrice = totalPrice+(productPrice*quantity);
           return(
-            <div className = "cartLine">
+            <tr>
               <td>
                 <div className="media">
                   <div className="d-flex">
@@ -51,12 +48,22 @@ const CartList=({items, getCart, history})=>{
               <td>
                 <h5>{productPrice*quantity}</h5>
               </td>
-              </div>
+              </tr>
               )
           }
           )
         }
-      </tr>
+        <tr>
+            <td colSpan="3">
+            </td>
+            <td>
+                <h5>합계</h5>
+            </td>
+            <td>
+                <h5>{totalPrice}</h5>
+            </td>
+        </tr>
+      </div>
     )
   }
   
@@ -65,7 +72,11 @@ const CartList=({items, getCart, history})=>{
 const mapStateToProps=(state)=>({
   items:state.cart.items
 });
+
+
 const mapDispatchToProps=(dispatch)=>({
   getCart:()=>dispatch(cartListAsync())
 })
+
+
 export default connect(mapStateToProps,mapDispatchToProps)(CartList);
