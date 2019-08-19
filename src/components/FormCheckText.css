@@ -1,0 +1,19 @@
+.feedback {
+    margin-top: .25rem;
+    text-align: left;
+    padding-left: .75rem;
+    padding-right: .75rem;
+    font-size: 80%;
+}
+
+.valid-feedback {
+    text-align: left;
+    padding-left: .75rem;
+    padding-right: .75rem;
+}
+
+.invalid-feedback {
+    text-align: left;
+    padding-left: .75rem;
+    padding-right: .75rem;
+}
