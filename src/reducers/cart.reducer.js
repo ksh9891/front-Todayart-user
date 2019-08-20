@@ -6,7 +6,7 @@ const initialStateCart = {
 
 
 const cart = (state = initialStateCart, action) => {
-    const { items, checkedItems } = state;
+    const { items} = state;
     const { payload } = action;
 
     switch (action.type) {

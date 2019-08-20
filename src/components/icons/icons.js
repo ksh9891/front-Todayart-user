@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import CircleIcon from './CircleIcon';
 import {Link} from "react-router-dom";
 
 
@@ -9,20 +10,16 @@ import {Link} from "react-router-dom";
 );
 }
 
-
  const CartIcon=({isLogin})=>{
+     console.log("isLogin:", isLogin);
      let url = isLogin?"/cart":"/login";
+
+
 return(
     
     <li className="nav-item"><Link className="nav-link" to={url}><button><i className="ti-shopping-cart"/><CircleIcon/></button></Link></li>
    
 );
-}
-
- const CircleIcon= () =>{
-    return (
-        <span className="nav-shop__circle">2</span>
-    );
 }
 
 const mapStateToProps=(state)=>({
@@ -31,6 +28,7 @@ const mapStateToProps=(state)=>({
 
 export const Icons={
     SearchIcon,
-    CircleIcon,
-    CartIcon:connect(mapStateToProps)(CartIcon)
+    CartIcon:connect(mapStateToProps,null)(CartIcon),
+    CircleIcon:connect(mapStateToProps,null)(CircleIcon)
+
 }

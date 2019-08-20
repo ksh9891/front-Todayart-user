@@ -9,7 +9,6 @@ class StateLoader {
     } catch (error) {
       console.log('error', error)
     }
-    console.log("loadState pass");
     return this.initialState();
   }
 
