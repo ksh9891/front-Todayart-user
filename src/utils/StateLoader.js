@@ -26,7 +26,8 @@ class StateLoader {
       auth: {
         retryCount: 0,
         token: null,
-        userDetails: null
+        userDetails: null,
+        isLogin:false
       }
     };
   }

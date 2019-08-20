@@ -9,9 +9,10 @@ import { ActionTypes } from '../constants';
  * The initial state
  */
 const initialStateAuth = {
-  retryCount: 0,
-  token: null,
-  userDetails: null
+   retryCount: 0,
+   token: null,
+   userDetails: null,
+   isLogin: false
 };
 
 /**
@@ -33,7 +34,8 @@ const authentication = (state = initialStateAuth, action) => {
       return {
         ...state,
         retryCount: 0,
-        token: payload.data
+        token: payload.data,
+        isLogin: true
       };
 
     case ActionTypes.REFRESH_TOKEN_FAIL:
