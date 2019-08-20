@@ -1,33 +1,71 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 import {connect} from 'react-redux';
 import './components.css';
 import {Actions} from '../actions';
 
-const cartListAsync = () => (dispatch) => {
-  return dispatch(Actions.getCart());
-}
+
+const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{ 
+     useEffect(()=>{
+       getCart().then(response=>null)}, []);
+
+      // const [totalPrice, setTotalPrice] = useState(initTotalPrice);
 
 
 
-const CartList=({items, getCart})=>{ 
-    useEffect(()=>getCart(), []);
-    let totalPrice = 0;
+    let totalPrice = items.reduce((sum, item)=>{
+      if(item.checked===true){
+        return sum+(item.productPrice*item.quantity);
+      }
+      return sum;
+    },0);
+    
+  
+
+
+    const toggle=(cartId)=>{
+    toggleCartItem(cartId);
+    }
+
+    const deleteItem=(cartId)=>{
+      deleteCartItem(cartId);
+    }
+    
+
+
+    //  console.log("before", value);
+
+    const [cartIdChecked, setCartIdChecked] = useState(true);
     
     return(
-      <div>
+      <table className="table">
+        <thead>
+          <tr>
+             <th scope="col"></th>
+             <th scope="col"></th>
+              <th scope="col">상품명</th>
+              <th scope="col">가격</th>
+              <th scope="col">수량</th>
+              <th scope="col">금액</th>
+  
+          </tr>
+      </thead>
+      <tbody>
         {items.map((item)=>{
-          const {product, productPrice, quantity} = item;
+          const {cartId, product, productPrice, quantity} = item;
           const {productName} = product;
-          totalPrice = totalPrice+(productPrice*quantity);
+          console.log("cartIdChecked:", cartIdChecked);
           return(
-            <tr>
+            <tr key={cartId}>
+              <td>
+                <input type="checkbox"  name="cartItem" defaultChecked={true} onChange={()=>toggle(cartId)}/>
+              </td>
               <td>
                 <div className="media">
                   <div className="d-flex">
                     <img src="img/cart/cart1.png" alt=""/>
                   </div>
                   <div className="media-body">
-                    <p>Minimalistic shop for multipurpose use</p>
+                    <p>썸네일을 올리세요</p>
                   </div>
                 </div>
               </td>
@@ -48,13 +86,17 @@ const CartList=({items, getCart})=>{
               <td>
                 <h5>{productPrice*quantity}</h5>
               </td>
+              <td>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={()=>deleteItem(cartId)}>삭제</button>
+              </td>
               </tr>
               )
           }
           )
         }
+  
         <tr>
-            <td colSpan="3">
+            <td colSpan="4">
             </td>
             <td>
                 <h5>합계</h5>
@@ -63,7 +105,10 @@ const CartList=({items, getCart})=>{
                 <h5>{totalPrice}</h5>
             </td>
         </tr>
-      </div>
+        </tbody>
+        </table>
+      
+
     )
   }
   
@@ -75,8 +120,9 @@ const mapStateToProps=(state)=>({
 
 
 const mapDispatchToProps=(dispatch)=>({
-  getCart:()=>dispatch(cartListAsync())
+  getCart:()=>dispatch(Actions.getCart()),
+  toggleCartItem: (id)=>dispatch(Actions.toggleCartItem(id)),
+  deleteCartItem: (id)=>dispatch(Actions.deleteCartItem(id))
 })
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(CartList);

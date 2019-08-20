@@ -32,7 +32,6 @@ class StateLoader {
       },
       cart:{
         items:[]
-
       }
     };
   }

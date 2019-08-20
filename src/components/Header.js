@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../images/logo.png';
 import './Header.css';
-import {Icons} from './icons';
+import  {Icons} from './icons';
 import HeaderNavList from "./HeaderNavList";
 import {Link} from "react-router-dom";
 
@@ -44,11 +44,6 @@ const Header = () => {
                             <Icons.SearchIcon/>
                             <Icons.CartIcon/>
                             </ul>
-                            <ul className="nav nav-user-info">
-                                <li className="nav-item"><a className="nav-link" href="./login">로그인</a></li>
-                                <li className="nav-item"><a className="nav-link" href="./register">회원가입</a></li>
-                            </ul>
-
                             <HeaderNavList />
 
                         </div>

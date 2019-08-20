@@ -112,6 +112,25 @@ const fetchArtwork = () => {
     })
 }
 
+const toggleCartItem = (cartItemId) =>{
+    return({
+        type:ActionTypes.TOGGLE_CART_ITEM,
+        itemId:cartItemId
+    })
+}
+
+const deleteCartItem  =(cartItemId) =>{
+    return({
+        type:ActionTypes.DELETE_CART_ITEM,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/cart/${cartItemId}`
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     register,
@@ -119,5 +138,7 @@ export const Actions = {
     logout,
     getMemberMe,
     refreshToken,
-    getCart
+    getCart,
+    toggleCartItem,
+    deleteCartItem
 };
