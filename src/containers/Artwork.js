@@ -1,6 +1,16 @@
-import React from 'react';
 
-const Artwork = () => {
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux';
+import { Actions } from '../actions';
+import ProductList from '../components/ProductList';
+
+function Artwork  ({ fetchArtwork }) {
+
+    useEffect(() => {
+        fetchArtwork()
+    }, []);
+
+    
   return (
       <div>
           <section className="section-margin--small mb-5">
@@ -95,161 +105,7 @@ const Artwork = () => {
                               </div>
                           </div>
                           <section className="lattest-product-area pb-40 category-list">
-                              <div className="row">
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product1.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Quartz Belt Watch</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product2.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Beauty</p>
-                                              <h4 className="card-product__title"><a href="#">Women Freshwash</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product3.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Decor</p>
-                                              <h4 className="card-product__title"><a href="#">Room Flash Light</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product4.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Decor</p>
-                                              <h4 className="card-product__title"><a href="#">Room Flash Light</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product5.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Man Office Bag</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product6.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Kids Toy</p>
-                                              <h4 className="card-product__title"><a href="#">Charging Car</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product7.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Blutooth Speaker</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product8.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Kids Toy</p>
-                                              <h4 className="card-product__title"><a href="#">Charging Car</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div className="col-md-6 col-lg-4">
-                                      <div className="card text-center card-product">
-                                          <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product1.png" alt="" />
-                                                  <ul className="card-product__imgOverlay">
-                                                      <li><button><i className="ti-search" /></button></li>
-                                                      <li><button><i className="ti-shopping-cart" /></button></li>
-                                                      <li><button><i className="ti-heart" /></button></li>
-                                                  </ul>
-                                          </div>
-                                          <div className="card-body">
-                                              <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Quartz Belt Watch</a></h4>
-                                              <p className="card-product__price">$150.00</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
+                              <ProductList/>
                           </section>
                       </div>
                   </div>
@@ -392,4 +248,13 @@ const Artwork = () => {
   )
 };
 
-export default Artwork;
+
+const mapStateToProps = (state) =>({
+    items: state.product.items
+})
+const mapDispatchToProps = (dispatch) => ({
+    fetchArtwork : () => dispatch(Actions.fetchArtwork())
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artwork)
