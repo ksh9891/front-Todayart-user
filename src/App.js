@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register} from "./containers";
+import { Artwork, Home, Login, Register } from "./containers";
 import { Header, Footer } from './components'
 import "./App.css"
 

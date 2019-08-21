@@ -93,8 +93,20 @@ const fetchArtwork = () => {
             }
         }
 
-    })
-}
+    });
+};
+
+// const fetchProduct = () => {
+//     return ({
+//         type: ActionTypes.FETCH_PRODUCT,
+//         payload: {
+//             request: {
+//                 method: 'GET',
+//                 url: `/products`
+//             }
+//         }
+//     });
+// };
 
 export const Actions = {
     getClientToken,
@@ -103,4 +115,6 @@ export const Actions = {
     logout,
     getMemberMe,
     refreshToken,
+    // fetchProduct,
+    fetchArtwork
 };

@@ -1,6 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Actions } from '../actions';
+import Product from '../components/Product';
 
-const Artwork = () => {
+function Artwork({ fetchArtwork }) {
+
+    useEffect(() => {
+        fetchArtwork()
+    }, [])
+
+
   return (
       <div>
           <section className="section-margin--small mb-5">
@@ -8,7 +17,7 @@ const Artwork = () => {
                   <div className="row">
                       <div className="col-xl-3 col-lg-4 col-md-5">
                           <div className="sidebar-categories">
-                              <div className="head">Browse Categories</div>
+                              <div className="head">카테고리</div>
                               <ul className="main-categories">
                                   <li className="common-filter">
                                       <form action="#">
@@ -73,15 +82,15 @@ const Artwork = () => {
                           <div className="filter-bar d-flex flex-wrap align-items-center">
                               <div className="sorting">
                                   <select>
-                                      <option value="1">Default sorting</option>
-                                      <option value="1">Default sorting</option>
-                                      <option value="1">Default sorting</option>
+                                      <option value="1">기본</option>
+                                      <option value="1">최신등록순</option>
+                                      <option value="1">가격순</option>
                                   </select>
                               </div>
                               <div className="sorting mr-auto">
                                   <select>
-                                      <option value="1">Show 12</option>
-                                      <option value="1">Show 12</option>
+                                      <option value="1">Show 10</option>
+                                      <option value="1">Show 11</option>
                                       <option value="1">Show 12</option>
                                   </select>
                               </div>
@@ -99,11 +108,13 @@ const Artwork = () => {
                                   <div className="col-md-6 col-lg-4">
                                       <div className="card text-center card-product">
                                           <div className="card-product__img">
-                                              <img className="card-img" src="img/product/product1.png" alt="" />
+                                              <img className="card-img" src="img/product/img1.jpg" alt="" />
                                                   <ul className="card-product__imgOverlay">
                                                       <li><button><i className="ti-search" /></button></li>
                                                       <li><button><i className="ti-shopping-cart" /></button></li>
                                                       <li><button><i className="ti-heart" /></button></li>
+
+
                                                   </ul>
                                           </div>
                                           <div className="card-body">
@@ -392,4 +403,13 @@ const Artwork = () => {
   )
 };
 
-export default Artwork;
+
+const mapStateToProps = (state) =>({
+    items: state.product.items
+})
+const mapDispatchToProps = (dispatch) => ({
+    fetchArtwork : () => dispatch(Actions.fetchArtwork())
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Artwork)
