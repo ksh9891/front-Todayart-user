@@ -3,6 +3,7 @@ import {Actions} from "../actions";
 import {ActionTypes} from "../constants";
 import {withRouter} from "react-router";
 import {connect} from "react-redux";
+import sha256 from 'sha256';
 
 const loginAsync = (email, password) => (dispatch) => {
     return dispatch(Actions.login(email, password))
@@ -29,7 +30,7 @@ const Login = ({history, login}) => {
         e.preventDefault();
 
         const email = emailInput.value.trim();
-        const password = passwordInput.value.trim();
+        const password = sha256(passwordInput.value.trim());
 
         console.log(email);
         console.log(password);
