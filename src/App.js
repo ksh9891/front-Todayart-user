@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register} from "./containers";
-import { Header, Footer } from './components'
+import {Artwork, Home, Login, Register, SingleProduct} from './containers';
+import { Header, Footer } from './components';
 import "./App.css"
 
 
@@ -16,7 +16,8 @@ const App = ({ location, match, auth, logout }) => {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
-                    <Route exact path="/artwork" component={Artwork} />                    
+                    <Route exact path="/artwork" component={Artwork} />
+                    <Route path="/singleproduct/:id" component={SingleProduct} />                    
                 </Switch>
             </main>
             <Footer />

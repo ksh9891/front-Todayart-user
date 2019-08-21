@@ -1,4 +1,5 @@
 import { ActionTypes } from '../constants';
+import { id } from 'postcss-selector-parser';
 
 const getClientToken = () => {
     const formData = new FormData();
@@ -96,6 +97,22 @@ const fetchArtwork = () => {
     })
 }
 
+const fetchSingleProduct = (id ) => {
+    console.log("productId = " + id)
+    return ({
+        type: ActionTypes.FETCH_SINGLEPRODUCT,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/detail/${id}`
+            }
+        }
+    })
+}
+
+
+
+
 export const Actions = {
     getClientToken,
     register,
@@ -104,4 +121,5 @@ export const Actions = {
     getMemberMe,
     refreshToken,
     fetchArtwork,
+    fetchSingleProduct,
 };

@@ -1,22 +1,33 @@
-import React, { useEffect } from 'react'
+import React,{ useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Actions } from '../actions';
+import { withRouter, Link } from 'react-router-dom';
 
 
 
-function ProductList ({ items }){
+
+function ProductList ({ items, match }){  
+    
+    const { id } = match.params;
+
+
+
+    
+
+
 
     
 
     return (
+        
         <div className="row">                   
                        
         {
-            items.map((item, productId) => {
-               const { productName, productPrice, productContent } = item;
+            items.map((item, index) => {
+               const { productName, productPrice, productContent, productId } = item;
                return(
 
-       <div className="col-md-6 col-lg-4 col-xl-3" key={productId}>
+       <div className="col-md-6 col-lg-4 col-xl-3" key={index}>
            <div className="card text-center card-product">
                <div className="card-product__img">
                    <img className="card-img" src="img/product/product1.png" alt="" />
@@ -33,8 +44,8 @@ function ProductList ({ items }){
                    </ul>
                </div>
                <div className="card-body">
-                   <p>{productName}</p>
-                   <h4 className="card-product__title"><a href="single-product.html">{productContent}</a></h4>
+                   <p><Link to={`/singleproduct/${productId}`}>{productName}</Link></p>
+                   <h4 className="card-product__title">{productContent}</h4>
                    <p className="card-product__price">{productPrice}</p>
                </div>
            </div>
@@ -55,4 +66,5 @@ const mapStateToProps = (state) =>({
 
 
 
-export default connect(mapStateToProps, null)(ProductList)
+
+export default withRouter(connect(mapStateToProps, null)(ProductList))
