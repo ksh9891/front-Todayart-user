@@ -32,6 +32,13 @@ class StateLoader {
       },
       cart:{
         items:[]
+      },
+      article: {
+        items: [],
+        item: null,
+        page: 1,
+        size: 10,
+        totalCount: 0
       }
     };
   }

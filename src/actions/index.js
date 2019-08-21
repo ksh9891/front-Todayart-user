@@ -131,6 +131,30 @@ const deleteCartItem  =(cartItemId) =>{
     })
 }
 
+const getArticleList = () => {
+    return ({
+        type: ActionTypes.ARTICLELIST,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/article/list'
+            }
+        }
+    });
+};
+
+const getArticleDetail = (articleId) => {
+    return ({
+        type: ActionTypes.ARTICLEDETAIL,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/article/${articleId}`
+            }
+        }
+    });
+}
+
 export const Actions = {
     getClientToken,
     register,
@@ -140,5 +164,7 @@ export const Actions = {
     refreshToken,
     getCart,
     toggleCartItem,
-    deleteCartItem
+    deleteCartItem,
+    getArticleList,
+    getArticleDetail
 };
