@@ -16,22 +16,6 @@ const getClientToken = () => {
     });
 };
 
-const register = ({ email, nickname, password }) => {
-    return ({
-        type: ActionTypes.REGISTER,
-        payload: {
-            request: {
-                method: 'POST',
-                url: '/members',
-                headers: {
-                    'Content-Type': 'application/json; charset: utf-8'
-                },
-                data: JSON.stringify({ email, nickname, password })
-            }
-        }
-    });
-};
-
 const login = (email, password) => {
     const formData = new FormData();
     formData.append('grant_type', 'password');
@@ -83,7 +67,6 @@ const refreshToken = (refresh_token) => {
     });
 };
 
-
 const getCart = () =>{
     return(
         {
@@ -97,20 +80,53 @@ const getCart = () =>{
     })
 }
 
-
-const fetchArtwork = () => {
+const checkEmail = email => {
     return ({
-        type: ActionTypes.FETCH_ARTWORK,
+        type: ActionTypes.DUPLICATION_CHECK_EMAIL,
         payload: {
             request: {
                 method: 'GET',
-                url: `/product`
+                url: '/members/checkEmail?email=' + email,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
 
+const checkNickname = nickname => {
+    return ({
+        type: ActionTypes.DUPLICATION_CHECK_NICKNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkNickname?nickname=' + nickname,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
+const register = ({ email, nickname, password }) => {
+    return ({
+        type: ActionTypes.REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                },
+                data: JSON.stringify({ email, nickname, password })
             }
         }
-
-    })
-}
+    });
+};
 
 const toggleCartItem = (cartItemId) =>{
     return({
@@ -157,7 +173,6 @@ const getArticleDetail = (articleId) => {
 
 export const Actions = {
     getClientToken,
-    register,
     login,
     logout,
     getMemberMe,
@@ -166,5 +181,8 @@ export const Actions = {
     toggleCartItem,
     deleteCartItem,
     getArticleList,
-    getArticleDetail
+    getArticleDetail,
+    checkEmail,
+    checkNickname,
+    register
 };
