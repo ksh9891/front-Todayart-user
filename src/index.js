@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import rootReducers from './reducers';
@@ -21,7 +21,7 @@ const client = axios.create({
     headers: {
         'Authorization': `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
         'Cache-Control': 'no-cache',
-        'X-Custom-Header': 'todo-client'
+        'X-Custom-Header': 'todayart-client'
     },
     responseType: 'json'
 });
@@ -37,10 +37,13 @@ const logger = createLogger({
 
 const stateLoader = new StateLoader();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
     rootReducers,
     stateLoader.loadState(),
-    applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk)
+    composeEnhancers(
+        applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk))
 );
 
 store.subscribe(() => {

@@ -37,6 +37,16 @@ const Header = () => {
                                 <li className="nav-item"><a className="nav-link" href="">지원</a></li>
                                 <li className="nav-item"><a className="nav-link" href="">정보</a></li>
                             </ul>
+                            <ul className="nav-shop">
+                                <li className="nav-item">
+                                    <button><i className="ti-search" /></button>
+                                </li>
+                                <li className="nav-item">
+                                    <button>
+                                        <i className="ti-shopping-cart" /><span className="nav-shop__circle">3</span>
+                                    </button>
+                                </li>
+                            </ul>
                             <HeaderNavList />
                         </div>
                     </div>

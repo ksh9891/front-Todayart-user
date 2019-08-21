@@ -108,7 +108,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Quartz Belt Watch</a></h4>
+                                              <h4 className="card-product__title">Quartz Belt Watch</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -125,7 +125,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Beauty</p>
-                                              <h4 className="card-product__title"><a href="#">Women Freshwash</a></h4>
+                                              <h4 className="card-product__title">Women Freshwash</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -142,7 +142,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Decor</p>
-                                              <h4 className="card-product__title"><a href="#">Room Flash Light</a></h4>
+                                              <h4 className="card-product__title">Room Flash Light</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -159,7 +159,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Decor</p>
-                                              <h4 className="card-product__title"><a href="#">Room Flash Light</a></h4>
+                                              <h4 className="card-product__title">Room Flash Light</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -176,7 +176,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Man Office Bag</a></h4>
+                                              <h4 className="card-product__title">Man Office Bag</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -210,7 +210,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Blutooth Speaker</a></h4>
+                                              <h4 className="card-product__title">Blutooth Speaker</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -227,7 +227,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Kids Toy</p>
-                                              <h4 className="card-product__title"><a href="#">Charging Car</a></h4>
+                                              <h4 className="card-product__title">Charging Car</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>
@@ -244,7 +244,7 @@ const Artwork = () => {
                                           </div>
                                           <div className="card-body">
                                               <p>Accessories</p>
-                                              <h4 className="card-product__title"><a href="#">Quartz Belt Watch</a></h4>
+                                              <h4 className="card-product__title">Quartz Belt Watch</h4>
                                               <p className="card-product__price">$150.00</p>
                                           </div>
                                       </div>

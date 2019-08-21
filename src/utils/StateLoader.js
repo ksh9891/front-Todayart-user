@@ -28,6 +28,9 @@ class StateLoader {
         token: null,
         userDetails: null,
         isLogin:false
+      },
+      members: {
+        check: null
       }
     };
   }
