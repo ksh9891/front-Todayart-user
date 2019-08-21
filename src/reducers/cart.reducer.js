@@ -1,7 +1,9 @@
 import { ActionTypes } from '../constants';
 
 const initialStateCart = {
-    items: []
+    items: [],
+    totalPrice: 0,
+    totalShipping: 0
 }
 
 
@@ -38,6 +40,24 @@ const cart = (state = initialStateCart, action) => {
                     }
                 })
             };
+
+        case ActionTypes.CALC_CART_PRICE:
+            return {
+                ...state,
+                totalPrice: items.reduce((sum, item)=>{
+                    if(item.checked===true&&item.productPrice!==undefined&&item.productPrice!==null){
+                      return sum+(item.productPrice*item.quantity);
+                    }
+                    return sum;
+                  },0),
+
+                  totalShipping : items.reduce((sum, item)=>{
+                    if(item.checked===true&&item.shippingFee!==undefined&&item.shippingFee!==null){
+                      return sum+(item.shippingFee);
+                    }
+                    return sum;
+                  },0)
+            }
             
         case ActionTypes.DELETE_CART_ITEM_SUCCESS:
             if(payload!==null && payload!==null){

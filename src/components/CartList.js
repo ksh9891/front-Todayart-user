@@ -2,38 +2,41 @@ import React, {useState,useEffect} from 'react';
 import {connect} from 'react-redux';
 import './components.css';
 import {Actions} from '../actions';
+import {Link} from "react-router-dom";
 
 
-const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{ 
+
+const CartList=({cart, getCart, toggleCartItem, deleteCartItem, calcCartPrice})=>{ 
      useEffect(()=>{
-       getCart().then(response=>null)}, []);
+       getCart().then(response=>calcCartPrice()).then(response=>null)}, []);
 
-      // const [totalPrice, setTotalPrice] = useState(initTotalPrice);
-
-
-
+       const {items, totalPrice, totalShipping} = cart;
+/*
     let totalPrice = items.reduce((sum, item)=>{
       if(item.checked===true){
         return sum+(item.productPrice*item.quantity);
       }
       return sum;
     },0);
+
+    let totalShipping = items.reduce((sum, item)=>{
+      console.log(item.shippingFee);
+      if(item.checked===true&&item.shippingFee!==undefined&&item.shippingFee!==null){
+        return sum+(item.shippingFee);
+      }
+      return sum;
+    },0)
     
-  
-
-
+*/
     const toggle=(cartId)=>{
     toggleCartItem(cartId);
+    calcCartPrice();
     }
 
     const deleteItem=(cartId)=>{
       deleteCartItem(cartId);
     }
     
-
-
-    //  console.log("before", value);
-
     const [cartIdChecked, setCartIdChecked] = useState(true);
     
     return(
@@ -51,7 +54,7 @@ const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{
       </thead>
       <tbody>
         {items.map((item)=>{
-          const {cartId, product, productPrice, quantity} = item;
+          const {cartId, product, productPrice, quantity,shippingFee} = item;
           const {productName} = product;
           console.log("cartIdChecked:", cartIdChecked);
           return(
@@ -83,8 +86,10 @@ const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{
                   <button className="reduced items-count" type="button"><i className="lnr lnr-chevron-down"></i></button>
                 </div>
               </td>
-              <td>
-                <h5>{productPrice*quantity}</h5>
+              <td><div>
+                <span><h5>{productPrice*quantity}</h5></span>
+                <span id="shippingFee">배송료: {shippingFee?shippingFee:0}</span>
+                </div>
               </td>
               <td>
               <button type="button" className="btn btn-secondary btn-sm" onClick={()=>deleteItem(cartId)}>삭제</button>
@@ -101,9 +106,31 @@ const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{
             <td>
                 <h5>합계</h5>
             </td>
-            <td>
+            <td colSpan="2">
                 <h5>{totalPrice}</h5>
             </td>
+        </tr>
+        <tr>
+            <td colSpan="4">
+            </td>
+            <td>
+                <h5>배송료</h5>
+            </td>
+            <td colSpan="2">
+                <h5>{totalShipping}</h5>
+            </td>
+        </tr>
+        
+        <tr>
+            <td colSpan="4">
+            </td>
+            <td>
+                <h5>총 주문액</h5>
+            </td>
+            <td>
+                <h5>{totalPrice+totalShipping}</h5>
+            </td>
+            <td><Link className="nav-link primary-btn ml-2" to="/checkout">결제하기</Link></td>
         </tr>
         </tbody>
         </table>
@@ -115,14 +142,15 @@ const CartList=({items, getCart, toggleCartItem, deleteCartItem})=>{
 
 
 const mapStateToProps=(state)=>({
-  items:state.cart.items
+  cart:state.cart
 });
 
 
 const mapDispatchToProps=(dispatch)=>({
   getCart:()=>dispatch(Actions.getCart()),
   toggleCartItem: (id)=>dispatch(Actions.toggleCartItem(id)),
-  deleteCartItem: (id)=>dispatch(Actions.deleteCartItem(id))
+  deleteCartItem: (id)=>dispatch(Actions.deleteCartItem(id)),
+  calcCartPrice: ()=>dispatch(Actions.calcCartPrice())
 })
 
 export default connect(mapStateToProps,mapDispatchToProps)(CartList);

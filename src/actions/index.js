@@ -131,6 +131,14 @@ const deleteCartItem  =(cartItemId) =>{
     })
 }
 
+const calcCartPrice = () =>{
+    return({
+        type:ActionTypes.CALC_CART_PRICE
+    })
+
+}
+
+
 export const Actions = {
     getClientToken,
     register,
@@ -140,5 +148,6 @@ export const Actions = {
     refreshToken,
     getCart,
     toggleCartItem,
-    deleteCartItem
+    deleteCartItem,
+    calcCartPrice
 };

@@ -30,7 +30,9 @@ class StateLoader {
         isLogin:false
       },
       cart:{
-        items:[]
+        items:[],
+        totalPrice:0,
+        totalShipping:0
       }
     };
   }
