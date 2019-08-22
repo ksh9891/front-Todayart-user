@@ -14,8 +14,9 @@ const HeaderNavList = ({auth, logout}) => {
     }
 
     return (
-            <ul className="nav nav-user-info">
+        <ul className="nav nav-user-info">
             {isAuthenticated(auth) ? '' : <li className="nav-item"><Link className="nav-link" to="/login">로그인</Link></li>}
+            {isAuthenticated(auth) ? '' : <li className="nav-item"><Link className="nav-link" to="/register">회원가입</Link></li>}
             {isAuthenticated(auth) ?
                 <li className="nav-item submenu dropdown">
                     <a href="#"
@@ -25,7 +26,7 @@ const HeaderNavList = ({auth, logout}) => {
                        aria-haspopup="true"
                        aria-expanded="false">{nickname}</a>
                     <ul className="dropdown-menu">
-                        <li className="nav-item"><a className="nav-link" href="/account">마이페이지</a></li>
+                        <li className="nav-item"><Link className="nav-link" to="/account">마이페이지</Link></li>
                         <li className="nav-item"><a className="nav-link nav-dropdown-button" onClick={logout}>로그아웃</a></li>
                     </ul>
                 </li> : ''

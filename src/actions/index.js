@@ -1,5 +1,6 @@
 import { ActionTypes } from '../constants';
 import axiosMiddleware from 'redux-axios-middleware';
+import { id } from 'postcss-selector-parser';
 
 const getClientToken = () => {
     const formData = new FormData();
@@ -12,22 +13,6 @@ const getClientToken = () => {
                 method: 'POST',
                 url: '/oauth/token',
                 data: formData
-            }
-        }
-    });
-};
-
-const register = ({ email, nickname, password }) => {
-    return ({
-        type: ActionTypes.REGISTER,
-        payload: {
-            request: {
-                method: 'POST',
-                url: '/members',
-                headers: {
-                    'Content-Type': 'application/json; charset: utf-8'
-                },
-                data: JSON.stringify({ email, nickname, password })
             }
         }
     });
@@ -84,7 +69,6 @@ const refreshToken = (refresh_token) => {
     });
 };
 
-
 const getCart = () =>{
     return(
         {
@@ -98,20 +82,53 @@ const getCart = () =>{
     })
 }
 
-
-const fetchArtwork = () => {
+const checkEmail = email => {
     return ({
-        type: ActionTypes.FETCH_ARTWORK,
+        type: ActionTypes.DUPLICATION_CHECK_EMAIL,
         payload: {
             request: {
                 method: 'GET',
-                url: `/product`
+                url: '/members/checkEmail?email=' + email,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
 
+const checkNickname = nickname => {
+    return ({
+        type: ActionTypes.DUPLICATION_CHECK_NICKNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkNickname?nickname=' + nickname,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
+const register = ({ email, nickname, password }) => {
+    return ({
+        type: ActionTypes.REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                },
+                data: JSON.stringify({ email, nickname, password })
             }
         }
-
-    })
-}
+    });
+};
 
 const toggleCartItem = (cartItemId) =>{
     return({
@@ -146,11 +163,53 @@ const makeOrder = (cartIdList, shippingFee, totalPayingPrice) =>{
             request:{
                 method: 'POST',
                 url: '/orders',
-                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPayingPrice, payment:{payMethod:"카카오페이", totalPrice:totalPayingPrice}},
+                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPayingPrice, payment:{payMethod:"카카오페이", totalPrice:totalPayingPrice}}
+            }
+        }
+    }
+    )
+}
+
+const fetchArtwork = () => {
+    return ({
+        type: ActionTypes.FETCH_ARTWORK,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product`
+            }
+        }
+
+    })
+}
+
+
+const fetchSingleProduct = (id) => {
+    console.log("productId = " + id)
+    return ({
+        type: ActionTypes.FETCH_SINGLEPRODUCT,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/detail/${id}`
             }
         }
     })
 }
+
+const fetchProductByName = (searchword) => {
+    console.log("productName = " + searchword)
+    return ({
+        type: ActionTypes.FETCH_BYPRODUCTNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/productname/?name=${searchword}`
+            }
+        }
+    })
+}
+
 
 const excuteKakaoPay = (ordered) =>{
     return ({
@@ -163,6 +222,86 @@ const excuteKakaoPay = (ordered) =>{
             }
 
         }
+    })
+}
+const fetchProductByArtist = (searchword) => {
+    console.log("productName = " + searchword)
+    return ({
+        type: ActionTypes.FETCH_BYARTISTNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/artistname/?name=${searchword}`
+            }
+        }
+    })
+}
+
+
+const fetchPriceAsc = () => {
+    return ({
+        type: ActionTypes.FETCH_PRICEASC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/priceasc`
+            }
+        }
+
+    })
+}
+
+
+
+const fetchPriceDesc = () => {
+    return ({
+        type: ActionTypes.FETCH_PRICEDESC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/pricedesc`
+            }
+        }
+
+    })
+}
+
+
+const fetchCategory = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORY,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}`
+            }
+        }
+
+    })
+}
+const fetchCategoryAsc = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORYASC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}/asc`
+            }
+        }
+
+    })
+}
+
+const fetchCategoryDesc = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORYDESC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}/desc`
+            }
+        }
+
     })
 }
 
@@ -191,13 +330,22 @@ const getArticleDetail = (articleId) => {
     });
 }
 
+
 export const Actions = {
     getClientToken,
-    register,
     login,
     logout,
     getMemberMe,
     refreshToken,
+    fetchArtwork,
+    fetchSingleProduct,
+    fetchProductByName,
+    fetchProductByArtist,
+    fetchPriceAsc,
+    fetchPriceDesc,
+    fetchCategory,
+    fetchCategoryAsc,
+    fetchCategoryDesc,
     getCart,
     toggleCartItem,
     deleteCartItem,
@@ -205,5 +353,8 @@ export const Actions = {
     getArticleList,
     getArticleDetail,
     makeOrder,
-    excuteKakaoPay
+    excuteKakaoPay,
+    checkEmail,
+    checkNickname,
+    register
 };

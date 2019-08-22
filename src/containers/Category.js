@@ -1,14 +1,18 @@
+
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import { Actions } from '../actions';
 import ProductList from '../components/ProductList';
 import Search from '../components/Search';
 
-function Artwork({ fetchArtwork, fetchPriceAsc, fetchPriceDesc }) {
+function Category({ fetchCategory, fetchCategoryAsc, fetchCategoryDesc, match }) {
+    const { id } = match.params;
+    console.log("id :", id);    
+   
 
     useEffect(() => {
-        fetchArtwork()        
-    }, []);
+        fetchCategory(id)        
+    }, []);  
 
 
 
@@ -20,13 +24,13 @@ function Artwork({ fetchArtwork, fetchPriceAsc, fetchPriceDesc }) {
         console.log(e);
         if (target.options[target.selectedIndex].value === "1") {
             console.log("if 1")
-            fetchPriceAsc();
+            fetchCategoryAsc(id);
         }else if (target.options[target.selectedIndex].value === "2") {
             console.log("if 2")
-            fetchPriceDesc();
+            fetchCategoryDesc(id);
         }else if (target.options[target.selectedIndex].value === "0") {
             console.log("if 0")
-            fetchArtwork();
+            fetchCategory(id);
         }
     }
 
@@ -267,10 +271,10 @@ const mapStateToProps = (state) => ({
     items: state.product.items
 })
 const mapDispatchToProps = (dispatch) => ({
-    fetchArtwork: () => dispatch(Actions.fetchArtwork()),
-    fetchPriceAsc: () => dispatch(Actions.fetchPriceAsc()),
-    fetchPriceDesc: () => dispatch(Actions.fetchPriceDesc())
+    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    fetchCategoryAsc: (id) => dispatch(Actions.fetchCategoryAsc(id)),
+    fetchCategoryDesc: (id) => dispatch(Actions.fetchCategoryDesc(id))
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Artwork)
+export default connect(mapStateToProps, mapDispatchToProps)(Category)
