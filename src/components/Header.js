@@ -1,9 +1,9 @@
 import React from 'react';
 import Logo from '../images/logo.png';
 import './Header.css';
+import  {Icons} from './icons';
 import HeaderNavList from "./HeaderNavList";
 import {Link} from "react-router-dom";
-
 
 
 
@@ -32,9 +32,25 @@ const Header = () => {
                                 </li>
                                
                                 <li className="nav-item"><a className="nav-link" href="">지원</a></li>
-                                <li className="nav-item"><a className="nav-link" href="">정보</a></li>
+                                <li className="nav-item"><a className="nav-link" href="/article">게시판</a></li>
+                            </ul>
+
+                            <ul className="nav-shop">
+                            <Icons.SearchIcon/>
+                            <Icons.CartIcon/>
+                            </ul>
+                            <ul className="nav-shop">
+                                <li className="nav-item">
+                                    <button><i className="ti-search" /></button>
+                                </li>
+                                <li className="nav-item">
+                                    <button>
+                                        <i className="ti-shopping-cart" /><span className="nav-shop__circle">3</span>
+                                    </button>
+                                </li>
                             </ul>
                             <HeaderNavList />
+
                         </div>
                     </div>
                 </nav>

@@ -17,6 +17,7 @@
     "redux-axios-middleware": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
+    "sha256": "^0.2.0",
     "validator": "^11.1.0"
   },
   "scripts": {

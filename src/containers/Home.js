@@ -48,7 +48,6 @@ function Home  ({ fetchArtwork }) {
                         <h2>Trending <span className="section-intro__style">Product</span></h2>
                     </div>
                    
-
                         <ProductList/>
                         
                     
@@ -369,4 +368,3 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
-

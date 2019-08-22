@@ -17,22 +17,6 @@ const getClientToken = () => {
     });
 };
 
-const register = ({ email, nickname, password }) => {
-    return ({
-        type: ActionTypes.REGISTER,
-        payload: {
-            request: {
-                method: 'POST',
-                url: '/members',
-                headers: {
-                    'Content-Type': 'application/json; charset: utf-8'
-                },
-                data: JSON.stringify({ email, nickname, password })
-            }
-        }
-    });
-};
-
 const login = (email, password) => {
     const formData = new FormData();
     formData.append('grant_type', 'password');
@@ -84,6 +68,87 @@ const refreshToken = (refresh_token) => {
     });
 };
 
+const getCart = () =>{
+    return(
+        {
+        type: ActionTypes.GET_CART,
+        payload: {
+            request:{
+                method: 'GET',
+                url: '/cart'
+            }
+        }
+    })
+}
+
+const checkEmail = email => {
+    return ({
+        type: ActionTypes.DUPLICATION_CHECK_EMAIL,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkEmail?email=' + email,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
+const checkNickname = nickname => {
+    return ({
+        type: ActionTypes.DUPLICATION_CHECK_NICKNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkNickname?nickname=' + nickname,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
+const register = ({ email, nickname, password }) => {
+    return ({
+        type: ActionTypes.REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                },
+                data: JSON.stringify({ email, nickname, password })
+            }
+        }
+    });
+};
+
+const toggleCartItem = (cartItemId) =>{
+    return({
+        type:ActionTypes.TOGGLE_CART_ITEM,
+        itemId:cartItemId
+    })
+}
+
+const deleteCartItem  =(cartItemId) =>{
+    return({
+        type:ActionTypes.DELETE_CART_ITEM,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/cart/${cartItemId}`
+            }
+        }
+    })
+}
+
+
 const fetchArtwork = () => {
     return ({
         type: ActionTypes.FETCH_ARTWORK,
@@ -96,6 +161,7 @@ const fetchArtwork = () => {
 
     })
 }
+
 
 const fetchSingleProduct = (id) => {
     console.log("productId = " + id)
@@ -206,9 +272,34 @@ const fetchCategoryDesc = (id) => {
 
 
 
+
+const getArticleList = () => {
+    return ({
+        type: ActionTypes.ARTICLELIST,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/article/list'
+            }
+        }
+    });
+};
+
+const getArticleDetail = (articleId) => {
+    return ({
+        type: ActionTypes.ARTICLEDETAIL,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/article/${articleId}`
+            }
+        }
+    });
+}
+
+
 export const Actions = {
     getClientToken,
-    register,
     login,
     logout,
     getMemberMe,
@@ -222,5 +313,13 @@ export const Actions = {
     fetchCategory,
     fetchCategoryAsc,
     fetchCategoryDesc,
+    getCart,
+    toggleCartItem,
+    deleteCartItem,
+    getArticleList,
+    getArticleDetail,
+    checkEmail,
+    checkNickname,
+    register,
 
 };
