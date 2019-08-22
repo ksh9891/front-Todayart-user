@@ -30,12 +30,9 @@ class StateLoader {
         isLogin:false
       },
       cart:{
-<<<<<<< HEAD
         items:[],
         totalPrice:0,
         totalShipping:0
-=======
-        items:[]
       },
       article: {
         items: [],
@@ -43,8 +40,8 @@ class StateLoader {
         page: 1,
         size: 10,
         totalCount: 0
->>>>>>> develop
-      }
+      },
+      order : {}
     };
   }
 }

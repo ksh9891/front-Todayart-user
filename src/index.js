@@ -17,7 +17,7 @@ const clientId = 'test';
 const clientSecret = 'test';
 
 const client = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'http://localhost:1111',
     headers: {
         'Authorization': `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
         'Cache-Control': 'no-cache',

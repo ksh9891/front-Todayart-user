@@ -138,6 +138,30 @@ const calcCartPrice = () =>{
 
 }
 
+const kakaoPayAccess = (cartIdList, shippingFee, totalPrice) =>{
+    return({
+        type:ActionTypes.KAKAOPAY_ACCESS,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/orders',
+                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPrice, payment:{payMethod:"카카오페이", totalPrice:totalPrice}},
+                responseType:'text'
+            }
+        }
+    })
+}
+
+const kakaoPayExcute = (kakaoForm) =>{
+    return({
+        type:ActionTypes.KAKAOPAY_EXCUTE,
+        payload:{
+
+        }
+    })
+
+}
+
 
 const getArticleList = () => {
     return ({
@@ -175,5 +199,7 @@ export const Actions = {
     deleteCartItem,
     calcCartPrice,
     getArticleList,
-    getArticleDetail
+    getArticleDetail,
+    kakaoPayAccess,
+    kakaoPayExcute
 };

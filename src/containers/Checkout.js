@@ -1,9 +1,32 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {DeliveryBox, OrderBox, PaymentBox} from '../components/checkout';
+import {Actions} from '../actions';
+import {ActionTypes} from "../constants";
+import { promised } from 'q';
 
-export function Checkout(){
-    const tryPaying=()=>{}
+
+const Checkout=({kakaoPayAccess, kakaoPayExcute, cart, kakaoForm})=>{
+    const {items, totalShipping}=cart;
+    let {totalPrice} = cart;
+    const orderItems = items
+        .filter((item)=>item.checked===true)
+        .map((item)=>(item.cartId));
+
+    console.log("cartIdList : ", orderItems);
+
+    const tryPaying=()=>{
+        totalPrice=totalPrice+totalShipping;
+        kakaoPayAccess(orderItems, totalShipping, totalPrice)
+        .then(response=>{
+            if(response.type===ActionTypes.KAKAOPAY_ACCESS_SUCCESS){
+                return kakaoPayExcute(kakaoForm);
+            }
+            else{
+                return promised.reject(response);
+            }
+        });
+    }
 
     return (
         <section className="checkout_area section-margin--small">
@@ -22,7 +45,7 @@ export function Checkout(){
                                     <a href="#">terms & conditions*</a>
                                 </div>
                                 <div className="text-center">
-                                <a className="button button-paypal" onClick={()=>tryPaying}>결제하기</a>
+                                <button className="button button-paypal" onClick={()=>tryPaying()}>결제하기</button>
                                 </div>
                             </div>
                         </div>
@@ -33,4 +56,13 @@ export function Checkout(){
     );
 }
 
-//export default Checkout;
+const mapStateToProps=(state)=>({
+    cart:state.cart,
+    kakaoForm:state.order.kakaoForm
+})
+
+const mapDispatchToProps=(dispatch)=>({
+    kakaoPayAccess:(cartIdList, shippingFee, totalPrice)=>dispatch(Actions.kakaoPayAccess(cartIdList, shippingFee, totalPrice)),
+    kakaoPayExcute:(kakaoForm)=>dispatch(Actions.kakaoPayExcute(kakaoForm))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
