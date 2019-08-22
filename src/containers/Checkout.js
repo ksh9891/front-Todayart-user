@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {connect} from 'react-redux';
 import {DeliveryBox, OrderBox, PaymentBox} from '../components/checkout';
 import {Actions} from '../actions';
@@ -6,8 +6,12 @@ import { ActionTypes } from '../constants';
 import { promised } from 'q';
 
 
-const Checkout=({makeOrder,excuteKakaoPay, cart})=>{
+
+
+const Checkout=({makeOrder,excuteKakaoPay,approveKakaoPay, cart,order})=>{
     const {items, totalShipping}=cart;
+    const {nextUrl, ordered, tid}=order;
+
     let {totalPrice} = cart;
     const orderItems = items
         .filter((item)=>item.checked===true)
@@ -17,14 +21,39 @@ const Checkout=({makeOrder,excuteKakaoPay, cart})=>{
     const tryPaying=()=>{
         const totalPayingPrice=totalPrice+totalShipping;
         makeOrder(orderItems, totalShipping, totalPayingPrice)
-        .then(response=>{
+        .then(async(response)=>{
             if(response.type===ActionTypes.MAKE_ORDER_SUCCESS){
-                excuteKakaoPay(response.payload.data);
+                console.log("aaaaa", response)
+                return excuteKakaoPay(response.payload.data);
             }else{
-                Promise.reject(response);
-            }})
-        .then(()=>{});
-        
+                return Promise.reject(response);
+            }
+        })
+        .then((response)=>{
+            console.log("response :",response);
+            if(response.type===ActionTypes.EXCUTE_KAKAO_PAY_SUCCESS){
+                window.open(response.payload.data.next_redirect_pc_url, "카카오 결제", "width=550, height=630");            
+            }else{
+                return Promise.reject(response);
+            }
+        })
+  /*      .then(response=>{
+            if(response!==null&&response!==undefined){
+                return approveKakaoPay(response, ordered, tid);
+            }else{
+                return Promise.reject(response);
+            }
+        })
+        .then((response)=>{
+            if(response.type===ActionTypes.APPROVE_KAKAO_PAY_SUCCESS){
+                window.close();
+                window.location.replace("/test")
+            }else{
+                window.location.replace("/kakaoSuccessFail")
+            }
+
+        })*/
+       
     }
 
     return (
@@ -56,11 +85,13 @@ const Checkout=({makeOrder,excuteKakaoPay, cart})=>{
 }
 
 const mapStateToProps=(state)=>({
-    cart:state.cart
+    cart:state.cart,
+    order:state.order
 })
 
 const mapDispatchToProps=(dispatch)=>({
     makeOrder:(cartIdList, shippingFee, totalPrice)=>dispatch(Actions.makeOrder(cartIdList, shippingFee, totalPrice)),
-    excuteKakaoPay:(ordered)=>dispatch(Actions.excuteKakaoPay(ordered))
+    excuteKakaoPay:(ordered)=>dispatch(Actions.excuteKakaoPay(ordered)),
+    approveKakaoPay:(pgToken, ordered, tid)=>dispatch(Actions.approveKakaoPay(pgToken,ordered,tid))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

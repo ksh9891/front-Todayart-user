@@ -170,6 +170,37 @@ const makeOrder = (cartIdList, shippingFee, totalPayingPrice) =>{
     )
 }
 
+const excuteKakaoPay = (ordered) =>{
+    return ({
+        type:ActionTypes.EXCUTE_KAKAO_PAY,
+        payload:{
+            request:{
+                method:'POST',
+                url:'/kakaoPay',
+                data:ordered
+            }
+
+        }
+    })
+}
+
+const approveKakaoPay = (pgToken, ordered, tid)=>{
+    window.opener.console.log("approveKakaoPay's ordered ", ordered);
+    window.opener.console.log("approveKakaoPay's tid", tid);
+    return ({
+        type:ActionTypes.APPROVE_KAKAO_PAY,
+        payload:{
+            request:{
+                method:'POST',
+                url:`/kakaoPaySuccess?${pgToken}&tid=${tid}`,
+                data:ordered,
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                }
+            }
+        }
+    })
+}
 const fetchArtwork = () => {
     return ({
         type: ActionTypes.FETCH_ARTWORK,
@@ -211,19 +242,6 @@ const fetchProductByName = (searchword) => {
 }
 
 
-const excuteKakaoPay = (ordered) =>{
-    return ({
-        type:ActionTypes.EXCUTE_KAKAO_PAY,
-        payload:{
-            request:{
-                method:'POST',
-                url:'/kakaoPay',
-                data:ordered
-            }
-
-        }
-    })
-}
 const fetchProductByArtist = (searchword) => {
     console.log("productName = " + searchword)
     return ({
@@ -354,6 +372,7 @@ export const Actions = {
     getArticleDetail,
     makeOrder,
     excuteKakaoPay,
+    approveKakaoPay,
     checkEmail,
     checkNickname,
     register

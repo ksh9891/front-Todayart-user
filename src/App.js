@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
 import {Artwork, Home, Login, Register, Cart, Orders, Checkout, ArticleList, ArticleDetail, SingleProduct, Category, Test} from "./containers";
-import { KakaoSuccess, KakaoSuccessFail, KakaoCancle } from './containers/Kakao';
+import KakaoSuccess, {KakaoSuccessFail, KakaoCancle } from './containers/Kakao';
 import { Header, Footer } from './components'
 import "./App.css"
 
