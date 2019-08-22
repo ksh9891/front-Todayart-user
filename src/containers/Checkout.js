@@ -2,30 +2,29 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {DeliveryBox, OrderBox, PaymentBox} from '../components/checkout';
 import {Actions} from '../actions';
-import {ActionTypes} from "../constants";
+import { ActionTypes } from '../constants';
 import { promised } from 'q';
 
 
-const Checkout=({kakaoPayAccess, kakaoPayExcute, cart, kakaoForm})=>{
+const Checkout=({makeOrder,excuteKakaoPay, cart})=>{
     const {items, totalShipping}=cart;
     let {totalPrice} = cart;
     const orderItems = items
         .filter((item)=>item.checked===true)
         .map((item)=>(item.cartId));
 
-    console.log("cartIdList : ", orderItems);
 
     const tryPaying=()=>{
-        totalPrice=totalPrice+totalShipping;
-        kakaoPayAccess(orderItems, totalShipping, totalPrice)
+        const totalPayingPrice=totalPrice+totalShipping;
+        makeOrder(orderItems, totalShipping, totalPayingPrice)
         .then(response=>{
-            if(response.type===ActionTypes.KAKAOPAY_ACCESS_SUCCESS){
-                return kakaoPayExcute(kakaoForm);
-            }
-            else{
-                return promised.reject(response);
-            }
-        });
+            if(response.type===ActionTypes.MAKE_ORDER_SUCCESS){
+                excuteKakaoPay(response.payload.data);
+            }else{
+                Promise.reject(response);
+            }})
+        .then(()=>{});
+        
     }
 
     return (
@@ -57,12 +56,11 @@ const Checkout=({kakaoPayAccess, kakaoPayExcute, cart, kakaoForm})=>{
 }
 
 const mapStateToProps=(state)=>({
-    cart:state.cart,
-    kakaoForm:state.order.kakaoForm
+    cart:state.cart
 })
 
 const mapDispatchToProps=(dispatch)=>({
-    kakaoPayAccess:(cartIdList, shippingFee, totalPrice)=>dispatch(Actions.kakaoPayAccess(cartIdList, shippingFee, totalPrice)),
-    kakaoPayExcute:(kakaoForm)=>dispatch(Actions.kakaoPayExcute(kakaoForm))
+    makeOrder:(cartIdList, shippingFee, totalPrice)=>dispatch(Actions.makeOrder(cartIdList, shippingFee, totalPrice)),
+    excuteKakaoPay:(ordered)=>dispatch(Actions.excuteKakaoPay(ordered))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);

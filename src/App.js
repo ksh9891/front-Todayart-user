@@ -25,7 +25,7 @@ const App = ({ location, match, auth, logout }) => {
                     <Route path="/test" component={Test}/>
                     <Route path="/kakaoSuccessFail" component={KakaoSuccessFail}/>
                     <Route path="/kakaoSuccess" component={KakaoSuccess}/>
-                    <Route path="/kakaoCancle" component={KakaoCancle}/>
+                    <Route path="/kakaoCancel" component={KakaoCancle}/>
 
                 </Switch>
             </main>

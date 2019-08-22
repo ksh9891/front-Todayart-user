@@ -41,7 +41,9 @@ class StateLoader {
         size: 10,
         totalCount: 0
       },
-      order : {}
+      order:{
+        ordered:null
+      }
     };
   }
 }

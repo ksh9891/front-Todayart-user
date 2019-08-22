@@ -1,4 +1,5 @@
 import { ActionTypes } from '../constants';
+import axiosMiddleware from 'redux-axios-middleware';
 
 const getClientToken = () => {
     const formData = new FormData();
@@ -138,28 +139,31 @@ const calcCartPrice = () =>{
 
 }
 
-const kakaoPayAccess = (cartIdList, shippingFee, totalPrice) =>{
+const makeOrder = (cartIdList, shippingFee, totalPayingPrice) =>{
     return({
-        type:ActionTypes.KAKAOPAY_ACCESS,
+        type:ActionTypes.MAKE_ORDER,
         payload:{
             request:{
                 method: 'POST',
                 url: '/orders',
-                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPrice, payment:{payMethod:"카카오페이", totalPrice:totalPrice}},
-                responseType:'text'
+                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPayingPrice, payment:{payMethod:"카카오페이", totalPrice:totalPayingPrice}},
             }
         }
     })
 }
 
-const kakaoPayExcute = (kakaoForm) =>{
-    return({
-        type:ActionTypes.KAKAOPAY_EXCUTE,
+const excuteKakaoPay = (ordered) =>{
+    return ({
+        type:ActionTypes.EXCUTE_KAKAO_PAY,
         payload:{
+            request:{
+                method:'POST',
+                url:'/kakaoPay',
+                data:ordered
+            }
 
         }
     })
-
 }
 
 
@@ -200,6 +204,6 @@ export const Actions = {
     calcCartPrice,
     getArticleList,
     getArticleDetail,
-    kakaoPayAccess,
-    kakaoPayExcute
+    makeOrder,
+    excuteKakaoPay
 };
