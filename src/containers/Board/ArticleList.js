@@ -6,19 +6,23 @@ import { connect } from 'react-redux';
 const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => {
   const { items } = article;
 
-  useEffect(() => {getArticleList().then(response=>null)}, []);
+  useEffect(() => { getArticleList().then(response => null) }, []);
 
   const detailHandler = (e, articleId) => {
     e.stopPropagation();
 
     getArticleDetail(articleId)
-    .then(respons => {
-      history.push("/article/"+{articleId})
-    })
-    .catch(error => {
-      console.log('error>>', error);
-    });
+      .then(respons => {
+        history.push("/article/" + { articleId })
+      })
+      .catch(error => {
+        console.log('error>>', error);
+      });
 
+  };
+
+  const onWrite = () => {
+    history.push("/articleWrite")
   };
 
   return (
@@ -43,12 +47,23 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => 
                 <th>{memberId}</th>
                 <th>{writeDated}</th>
                 <th>{views}</th>
+
               </div>
             );
           }
           )
           }
         </tr>
+        <td>
+          <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+              <input class="search" type="search" placeholder="Search" aria-label="Search" />
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+            </form>
+          </nav>
+            <a className="nav-link primary-btn ml-2" onClick={onWrite}>글쓰기</a>
+          </div>
+        </td>
 
       </tbody>
     </table>

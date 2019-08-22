@@ -155,6 +155,23 @@ const getArticleDetail = (articleId) => {
     });
 }
 
+const articleWrite = ({title, content, boardId, memberId}) => {
+    return ({
+        type: ActionTypes.ARTICLEWRITE,
+        payload: {
+            request: {
+                method: 'POST',
+                url: 'article/create',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({title, content, boardId, memberId})
+            }
+        }
+    });
+}
+
 export const Actions = {
     getClientToken,
     register,
@@ -166,5 +183,6 @@ export const Actions = {
     toggleCartItem,
     deleteCartItem,
     getArticleList,
-    getArticleDetail
+    getArticleDetail,
+    articleWrite
 };

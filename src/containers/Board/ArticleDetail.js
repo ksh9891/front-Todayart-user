@@ -6,13 +6,13 @@ const ArticleDetail = ({ article }) => {
     const { item } = article;
     const { title, content } = item;
     return (
-        <table class="table table-hover">
-
+        <table>
+{/* 댓글기능 / 작성자에게만 보이는 수정,삭제 버튼 미구현 */}
                     <div>
                 <thead>
                     <tr className="table_head">
-                        <th width="10%">제목</th>
-                        <th width="50%"></th>
+                        <th width="10%">title</th>
+                        <th width="50%">content</th>
                     </tr>
                 </thead>
                 <tbody>
