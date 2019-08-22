@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register, SingleProduct} from './containers';
+import {Artwork, Home, Login, Register, SingleProduct, Category} from './containers';
 import { Header, Footer } from './components';
 import "./App.css"
 
@@ -17,7 +17,8 @@ const App = ({ location, match, auth, logout }) => {
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/artwork" component={Artwork} />
-                    <Route path="/singleproduct/:id" component={SingleProduct} />                    
+                    <Route path="/singleproduct/:id" component={SingleProduct} /> 
+                    <Route exact path="/category/:id" component={Category} />                   
                 </Switch>
             </main>
             <Footer />

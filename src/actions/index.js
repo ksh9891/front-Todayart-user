@@ -97,7 +97,7 @@ const fetchArtwork = () => {
     })
 }
 
-const fetchSingleProduct = (id ) => {
+const fetchSingleProduct = (id) => {
     console.log("productId = " + id)
     return ({
         type: ActionTypes.FETCH_SINGLEPRODUCT,
@@ -107,6 +107,99 @@ const fetchSingleProduct = (id ) => {
                 url: `/product/detail/${id}`
             }
         }
+    })
+}
+
+const fetchProductByName = (searchword) => {
+    console.log("productName = " + searchword)
+    return ({
+        type: ActionTypes.FETCH_BYPRODUCTNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/productname/?name=${searchword}`
+            }
+        }
+    })
+}
+
+const fetchProductByArtist = (searchword) => {
+    console.log("productName = " + searchword)
+    return ({
+        type: ActionTypes.FETCH_BYARTISTNAME,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/artistname/?name=${searchword}`
+            }
+        }
+    })
+}
+
+
+const fetchPriceAsc = () => {
+    return ({
+        type: ActionTypes.FETCH_PRICEASC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/priceasc`
+            }
+        }
+
+    })
+}
+
+
+const fetchPriceDesc = () => {
+    return ({
+        type: ActionTypes.FETCH_PRICEDESC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/pricedesc`
+            }
+        }
+
+    })
+}
+
+
+const fetchCategory = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORY,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}`
+            }
+        }
+
+    })
+}
+const fetchCategoryAsc = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORYASC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}/asc`
+            }
+        }
+
+    })
+}
+
+const fetchCategoryDesc = (id) => {
+    return ({
+        type: ActionTypes.FETCH_CATEGORYDESC,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/product/category=${id}/desc`
+            }
+        }
+
     })
 }
 
@@ -122,4 +215,12 @@ export const Actions = {
     refreshToken,
     fetchArtwork,
     fetchSingleProduct,
+    fetchProductByName,
+    fetchProductByArtist,
+    fetchPriceAsc,
+    fetchPriceDesc,
+    fetchCategory,
+    fetchCategoryAsc,
+    fetchCategoryDesc,
+
 };
