@@ -14,6 +14,10 @@ const ArticleWrite = ({ article, history, articleWrite, auth }) => {
   let contentInput = useRef('');
   let boardIdInput = useRef('');
 
+  const onList = () => {
+    history.push("/article")
+  };
+
   const onWrite = (e) => {
     
     e.preventDefault();
@@ -106,6 +110,9 @@ const ArticleWrite = ({ article, history, articleWrite, auth }) => {
             </div>
 
             <button type="submit" class="btn btn-info">글쓰기</button>
+          </form>
+          <form onSubmit={e => onList(e)}>
+          <button type="submit" class="btn btn-info">취소</button>
           </form>
         </div>
       </body>

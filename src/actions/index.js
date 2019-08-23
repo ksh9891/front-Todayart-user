@@ -137,7 +137,7 @@ const getArticleList = () => {
         payload: {
             request: {
                 method: 'GET',
-                url: '/article/list'
+                url: '/article/list?boardId=1'
             }
         }
     });

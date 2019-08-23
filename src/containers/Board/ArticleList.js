@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => {
   const { items } = article;
-
+  console.log(items)
   useEffect(() => { getArticleList().then(response => null) }, []);
 
   const detailHandler = (e, articleId) => {
