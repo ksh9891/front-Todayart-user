@@ -131,19 +131,19 @@ const deleteCartItem  =(cartItemId) =>{
     })
 }
 
-const getArticleList = () => {
+const getArticleList = (boardId) => {
     return ({
         type: ActionTypes.ARTICLELIST,
         payload: {
             request: {
                 method: 'GET',
-                url: '/article/list?boardId=1'
+                url: `/article/list?boardId=${boardId}`
             }
         }
     });
 };
 
-const getArticleDetail = (articleId) => {
+const getArticleDetail = (boardId, articleId) => {
     return ({
         type: ActionTypes.ARTICLEDETAIL,
         payload: {
@@ -172,6 +172,18 @@ const articleWrite = ({title, content, boardId, memberId}) => {
     });
 }
 
+const articleDelete  =(articleId) =>{
+    return({
+        type:ActionTypes.ARTICLEDELETE,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/article/${articleId}`
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     register,
@@ -184,5 +196,6 @@ export const Actions = {
     deleteCartItem,
     getArticleList,
     getArticleDetail,
-    articleWrite
+    articleWrite,
+    articleDelete
 };

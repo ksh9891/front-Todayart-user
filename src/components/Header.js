@@ -37,7 +37,7 @@ const Header = () => {
                                     </ul>
                                 </li>
                                 <li className="nav-item"><a className="nav-link" href="">지원</a></li>
-                                <li className="nav-item"><a className="nav-link" href="/article">게시판</a></li>
+                                <li className="nav-item"><a className="nav-link" href="/article/1">게시판</a></li>
                             </ul>
 
                             <ul className="nav-shop">

@@ -3,18 +3,20 @@ import { Actions } from '../../actions';
 import { connect } from 'react-redux';
 
 
-const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => {
+const ArticleList = ({ article, getArticleList, getArticleDetail, history, match }) => {
   const { items } = article;
-  console.log(items)
-  useEffect(() => { getArticleList().then(response => null) }, []);
+  const boardId = match.param !== null ? match.params.boardId : items;
+  console.log(match);
+  useEffect(() => { getArticleList(boardId).then(response => null) }, []);
 
-  const detailHandler = (e, articleId) => {
+  const detailHandler = (e, {articleId, boardId}) => {
     e.stopPropagation();
 
-    getArticleDetail(articleId)
+    getArticleDetail(boardId, articleId)
       .then(respons => {
-        history.push("/article/" + { articleId })
+        history.push("/article/" + { boardId } + "/" + { articleId })
       })
+      .then(console.log(articleId))
       .catch(error => {
         console.log('error>>', error);
       });
@@ -26,11 +28,19 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => 
   };
 
   return (
+
     <table class="table table-hover">
       <thead>
+        <div class="cs-nav">
+          <ul class="cs-nav__menu-lists">
+            <li class="cs-nav__menu"><a class="cs-nav__menu-link" href="/article/1">FAQ</a></li>
+            <li class="cs-nav__menu"><a class="cs-nav__menu-link" href="/article/2">Q&A</a></li>
+          </ul>
+        </div>
         <tr className="table_head">
           <th width="10%">번호</th>
-          <th width="50%">제목</th>
+          <th width="10%">카테고리</th>
+          <th width="40%">제목</th>
           <th width="10%">작성자</th>
           <th width="20%">작성일</th>
           <th width="10%">조회수</th>
@@ -39,15 +49,14 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history }) => 
       <tbody>
         <tr>
           {items.map((item, index) => {
-            const { articleId, title, memberId, writeDated, views } = item;
+            const { articleId, boardId, title, memberId, writeDated, views } = item;
             return (
               <div>
                 <th>{articleId}</th>
-                <th><a onClick={e => detailHandler(e, articleId)} >{title}</a></th>
+                <th><a onClick={e => detailHandler(e, {articleId, boardId})} >{title}</a></th>
                 <th>{memberId}</th>
                 <th>{writeDated}</th>
                 <th>{views}</th>
-
               </div>
             );
           }
@@ -76,8 +85,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getArticleList: () => dispatch(Actions.getArticleList()),
-  getArticleDetail: (articleId) => dispatch(Actions.getArticleDetail(articleId))
+  getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
+  getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId))
 });
 
 

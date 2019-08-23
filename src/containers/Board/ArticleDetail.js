@@ -1,16 +1,36 @@
 import React, { useEffect } from 'react';
 import { Actions } from '../../actions';
 import { connect } from 'react-redux';
+import { withRouter } from "react-router";
 
-const ArticleDetail = ({ article, auth }) => {
+const ArticleDetail = ({ article, auth, articleDelete, history }) => {
 
+    console.log('sldkafjlsdahkflk',article);
     const { item } = article;
     const { userDetails } = auth;
-    const { title, content } = item;
+    const { title, content, articleId, boardId } = item;
+
+    const onList = () => {
+        history.push("/article/"+{boardId})
+    };
+
+    const onDelete = (e) => {
+
+        e.preventDefault();
+
+        articleDelete(articleId)
+            .then(response => {
+                history.push("/article/"+{boardId});
+            })
+            .catch(error => {
+                console.log('error >> ', error);
+            });
+    };
+
 
     return (
         <table>
-            {/* 댓글기능 / 작성자에게만 보이는 수정,삭제 버튼 미구현 */}
+            {/* 댓글기능 미구현 */}
             <div>
                 <thead>
                     <tr className="table_head">
@@ -24,15 +44,20 @@ const ArticleDetail = ({ article, auth }) => {
                         <th>{content}</th>
                     </tr>
                     <td>
-                        {item.memberId === userDetails.memberId ? 
-                        <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                        <form onSubmit={e => onList(e)}>
+                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0">목록</button>
+                        </form>
+                        {item.memberId === userDetails.memberId ?
+                            <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                 <form class="form-inline">
-                                    <input class="search" type="search" placeholder="Search" aria-label="Search" />
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">수정</button>
+
+                                    <button class="btn btn-outline-success my-2 my-sm-0">수정</button>
+                                    <form onSubmit={e => onDelete(e)}>
+                                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">삭제</button>
+                                    </form>
                                 </form>
                             </nav>
-                                <a className="nav-link primary-btn ml-2">삭제</a>
-                        </div> : ''}
+                            </div> : ''}
                     </td>
 
                 </tbody>
@@ -53,9 +78,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    getArticleDetail: () => dispatch(Actions.getArticleDetail())
+    articleDelete: (articleId) => dispatch(Actions.articleDelete(articleId))
 });
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleDetail)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ArticleDetail));

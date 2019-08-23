@@ -25,6 +25,7 @@ const initialStateArticle = {
  * @return {any} the next state
  */
 const article = (state = initialStateArticle, action) => {
+    const { items } = state;
     const { payload } = action;
 
     switch (action.type) {
@@ -49,6 +50,16 @@ const article = (state = initialStateArticle, action) => {
                         ...state,
                         item: data
                     };
+                }
+            }
+            return state;
+
+        case ActionTypes.ARTICLEDELETE_SUCCESS:
+            if (payload !== null && payload !== null) {
+                const { data } = payload;
+                return {
+                    ...state,
+                    items: items.filter(item => item.cartId !== data.cartId)
                 }
             }
             return state;

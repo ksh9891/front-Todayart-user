@@ -19,8 +19,8 @@ const App = ({ location, match, auth, logout }) => {
                     <Route path="/cart" component={Cart} />
                     <Route path="/orders" component={Orders} />
                     <Route path="/checkout" component={Checkout} />
-                    <Route path="/article/:id" component={ArticleDetail} />
-                    <Route path="/article" component={ArticleList} />
+                    <Route path="/article/:boardId/:id" component={ArticleDetail} />
+                    <Route path="/article/:boardId" component={ArticleList} />
                     <Route exact path="/articleWrite" component={ArticleWrite} />
                 </Switch>
             </main>
