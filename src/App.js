@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register, Cart, Orders, Checkout, Account, ArticleList, ArticleDetail, SingleProduct, Category} from "./containers";
+import {Artwork, Home, Login, Register, Cart, Orders, Checkout, Account, ArticleList, ArticleDetail, SingleProduct, Category, Test} from "./containers";
+import KakaoSuccess, {KakaoSuccessFail, KakaoCancle } from './containers/Kakao';
 import { Header, Footer } from './components'
 import "./App.css"
 
@@ -24,6 +25,10 @@ const App = ({ location, match, auth, logout }) => {
                     <Route path="/checkout" component={Checkout} />
                     <Route path="/article/:id" component={ArticleDetail} />
                     <Route path="/article" component={ArticleList} />
+                    <Route path="/test" component={Test}/>
+                    <Route path="/kakaoSuccessFail" component={KakaoSuccessFail}/>
+                    <Route path="/kakaoSuccess" component={KakaoSuccess}/>
+                    <Route path="/kakaoCancel" component={KakaoCancle}/>
 
                 </Switch>
             </main>

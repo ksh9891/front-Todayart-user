@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from '../images/logo.png';
 import './Header.css';
-import  {Icons} from './icons';
+import  {Icons} from './icons/index';
 import HeaderNavList from "./HeaderNavList";
 import {Link} from "react-router-dom";
 
@@ -36,8 +36,8 @@ const Header = () => {
                             </ul>
 
                             <ul className="nav-shop">
-                                <Icons.SearchIcon/>
-                                <Icons.CartIcon/>
+                            <Icons.SearchIcon/>
+                            <Icons.CartIcon/>
                             </ul>
                             <HeaderNavList />
 
