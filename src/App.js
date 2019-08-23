@@ -18,8 +18,7 @@ const App = ({ location, match, auth, logout }) => {
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/artwork" component={Artwork} />
                     <Route path="/singleproduct/:id" component={SingleProduct} /> 
-                    <Route exact path="/category/:id" component={Category} />               
-
+                    <Route exact path="/category/:id" component={Category} />             
                     <Route path="/cart" component={Cart} />
                     <Route path="/orders" component={Orders} />
                     <Route path="/checkout" component={Checkout} />

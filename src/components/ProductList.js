@@ -10,11 +10,7 @@ function ProductList ({ items, match }){
     
     const { id } = match.params;
 
-
-
     
-
-
 
     
 

@@ -13,33 +13,24 @@ import { ActionTypes } from '../constants';
 function SingleProduct  ({ match, fetchSingleProduct, item }) {
     const { id } = match.params;
 
-
-
-    console.log(item);
-    const { productId, productName, productPrice, productContent, thumbnailId, productCategory } = item;
+    useEffect(() => {
+        fetchSingleProduct(id);
+           
+    }, []);  
+    
+    
+    
+    const { productId, productName, productPrice, productContent, thumbnailId, productCategory, productSize } = item;
     const { category_name } = productCategory;
+   
+
+
+
     
 
-   
 
 
 
-    console.log("SingleProduct - productId = " + {productId});
-   
-    useEffect(() => {
-        console.log(id);
-        fetchSingleProduct(id).then(response => {
-            if(response.type === ActionTypes.FETCH_SINGLEPRODUCT_SUCCESS) {
-                // return dispatch(Actions.getMemberMe())
-            } else {
-                const { error } = response;
-                return Promise.reject(response);
-            }
-        })
-        .catch(error => {
-            console.log("error >>", error)
-        })
-    }, []); 
 
    
    
@@ -92,7 +83,7 @@ function SingleProduct  ({ match, fetchSingleProduct, item }) {
 						<h2>{productPrice}</h2>
 						<ul class="list">
 							<li><a class="active" href="#"><span>Category</span> : {category_name}</a></li>
-							<li><a href="#"><span>Availibility</span> : In Stock</a></li>
+							<li><a href="#"><span>productSize</span> : {productSize}</a></li>
 						</ul>
 						<p>{productContent}</p>
 						<div class="product_count">
@@ -569,5 +560,3 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleProduct))
-
-
