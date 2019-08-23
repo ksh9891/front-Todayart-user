@@ -41,18 +41,8 @@ const Header = () => {
                             </ul>
 
                             <ul className="nav-shop">
-                            <Icons.SearchIcon/>
-                            <Icons.CartIcon/>
-                            </ul>
-                            <ul className="nav-shop">
-                                <li className="nav-item">
-                                    <button><i className="ti-search" /></button>
-                                </li>
-                                <li className="nav-item">
-                                    <button>
-                                        <i className="ti-shopping-cart" /><span className="nav-shop__circle">3</span>
-                                    </button>
-                                </li>
+                                <Icons.SearchIcon/>
+                                <Icons.CartIcon/>
                             </ul>
                             <HeaderNavList />
 

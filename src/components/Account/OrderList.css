@@ -1,0 +1,73 @@
+.order_group {
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 30px;
+}
+
+.order_group_item {
+    display: flex;
+    width: 100%;
+    min-height: 161px;
+    padding: 23px 0 24px;
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.order_group_item:last-child {
+    border-bottom: 0;
+}
+
+.order_group_item .order_item {
+    display: flex;
+    width: 100%;
+}
+
+.order_group_item .order_item a {
+    width: 250px;
+    min-width: 250px;
+}
+
+.order_group_item .order_item a img {
+    width: 100%
+}
+
+.order_group_item .order_item .item_info {
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.order_group_item .order_item .item_info .order_status {
+    margin-top: auto;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 5px;
+}
+
+.order_group_item .order_item .item_info .order_message {
+    margin-top: 5px;
+}
+
+
+.order_group_item .order_item .item_info .info li {
+    display: inline-block;
+}
+
+.order_group_item .order_item .item_info .info li:nth-child(2) {
+    margin: 0 10px;
+    color: #c2c3c4;
+}
+
+.order_group_item .artist_info {
+    margin-left: auto;
+    display: flex;
+    width: 120px;
+}
+
+.order_group_item .artist_info .inner {
+    margin: auto 0;
+}
+
+.order_group_item .artist_info .inner > span {
+    display: block;
+    text-align: center;
+}

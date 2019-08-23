@@ -169,6 +169,18 @@ const getArticleDetail = (articleId) => {
             }
         }
     });
+};
+
+const getOrderList = () => {
+    return ({
+        type: ActionTypes.ACCOUNT_ORDER_ITEMS,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/orders'
+            }
+        }
+    })
 }
 
 export const Actions = {
@@ -184,5 +196,6 @@ export const Actions = {
     getArticleDetail,
     checkEmail,
     checkNickname,
-    register
+    register,
+    getOrderList
 };

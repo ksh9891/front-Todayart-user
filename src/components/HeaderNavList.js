@@ -26,7 +26,8 @@ const HeaderNavList = ({auth, logout}) => {
                        aria-haspopup="true"
                        aria-expanded="false">{nickname}</a>
                     <ul className="dropdown-menu">
-                        <li className="nav-item"><Link className="nav-link" to="/account">마이페이지</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to="/account">프로필 관리</Link></li>
+                        <li className="nav-item"><Link className="nav-link" to={`/account/${userDetails.memberId}/orders`}>주문/배송조회</Link></li>
                         <li className="nav-item"><a className="nav-link nav-dropdown-button" onClick={logout}>로그아웃</a></li>
                     </ul>
                 </li> : ''

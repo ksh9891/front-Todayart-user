@@ -1,0 +1,45 @@
+.account_orders_inner {
+    padding-top: 50px;
+    padding-bottom: 55px;
+}
+.account_orders_inner h2 { margin-bottom: 50px; }
+.account_orders_inner .table thead tr th {
+    border-top: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #222;
+    border-bottom: 0!important;
+}
+
+.account_orders_inner .shipping_box {
+    background-color: #e5e5e5;
+    padding: 30px 10px;
+}
+
+.account_orders_inner .shipping_box .shipping_area {
+    border-bottom: 1px solid #000;
+}
+
+.account_orders_inner .shipping_box .shipping_area ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.account_orders_inner .shipping_box .shipping_area ul li div {
+    padding-right: 90px;
+    text-align: center;
+}
+
+.account_orders_inner .shipping_box .shipping_area ul li div > p:first-child {
+    font-size: 1.25rem;
+}
+
+.account_orders_inner .shipping_box .shipping_area ul li div > p:last-child {
+    font-size: 3rem;
+}
+
+.account_orders_inner .search_box {
+    background-color: #e5e5e5;
+    padding-top: 30px;
+}

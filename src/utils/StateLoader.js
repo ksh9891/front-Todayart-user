@@ -2,7 +2,7 @@ class StateLoader {
 
   loadState() {
     try {
-      let state = localStorage.getItem("http://localhost:1111/state");
+      let state = localStorage.getItem("http://localhost:8080/state");
       if (state !== undefined && state !== null) {
         return JSON.parse(state);
       }
@@ -16,7 +16,7 @@ class StateLoader {
   saveState(state) {
     try {
       let json = JSON.stringify(state);
-      localStorage.setItem("http://localhost:1111/state", json);
+      localStorage.setItem("http://localhost:8080/state", json);
     } catch (error) {
       console.log('error', error)
     }
@@ -39,6 +39,12 @@ class StateLoader {
         page: 1,
         size: 10,
         totalCount: 0
+      },
+      member: {
+        orderList: []
+      },
+      util: {
+        fileStorage: "/storage/files"
       }
     };
   }

@@ -12,14 +12,12 @@ import { StateLoader, interceptors, onErrorHandler } from './utils';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-const clientId = 'test';
-const clientSecret = 'test';
+import { setting } from './utils/set';
 
 const client = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: setting.baseURL,
     headers: {
-        'Authorization': `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+        'Authorization': `Basic ${btoa(`${setting.clientId}:${setting.clientSecret}`)}`,
         'Cache-Control': 'no-cache',
         'X-Custom-Header': 'todayArt-client'
     },
@@ -43,7 +41,8 @@ const store = createStore(
     rootReducers,
     stateLoader.loadState(),
     composeEnhancers(
-        applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk))
+        applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk)
+    )
 );
 
 store.subscribe(() => {

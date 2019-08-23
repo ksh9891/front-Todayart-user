@@ -283,7 +283,6 @@ const Register = ({ history, register, checkEmail, checkNickname }) => {
                                   <div className="col-md-12 form-group">
                                       <button
                                           type="submit"
-                                          value="submit"
                                           className="button button-register w-100"
                                       >
                                           계정생성
