@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register, Cart, Orders, Checkout, ArticleList, ArticleDetail, ArticleWrite} from "./containers";
+import {Artwork, Home, Login, Register, Cart, Orders, Checkout, Account, ArticleList, ArticleDetail, ArticleWrite, SingleProduct, Category} from "./containers";
 import { Header, Footer } from './components'
 import "./App.css"
 
@@ -15,9 +15,12 @@ const App = ({ location, match, auth, logout }) => {
                     <Route exact path="/" component={Home} />
                     <Route exact path="/login" component={Login} />
                     <Route exact path="/register" component={Register} />
+                    <Route exact path="/account" component={Account} />
+                    <Route path="/account/:memberId/orders" component={Orders} />
                     <Route exact path="/artwork" component={Artwork} />
+                    <Route path="/singleproduct/:id" component={SingleProduct} /> 
+                    <Route exact path="/category/:id" component={Category} />             
                     <Route path="/cart" component={Cart} />
-                    <Route path="/orders" component={Orders} />
                     <Route path="/checkout" component={Checkout} />
                     <Route path="/article/:boardId/:id" component={ArticleDetail} />
                     <Route path="/article/:boardId" component={ArticleList} />

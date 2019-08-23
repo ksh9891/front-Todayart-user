@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import {applyMiddleware, compose, createStore} from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
 import rootReducers from './reducers';
@@ -12,14 +12,12 @@ import { StateLoader, interceptors, onErrorHandler } from './utils';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-
-const clientId = 'test';
-const clientSecret = 'test';
+import { setting } from './utils/set';
 
 const client = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: setting.baseURL,
     headers: {
-        'Authorization': `Basic ${btoa(`${clientId}:${clientSecret}`)}`,
+        'Authorization': `Basic ${btoa(`${setting.clientId}:${setting.clientSecret}`)}`,
         'Cache-Control': 'no-cache',
         'X-Custom-Header': 'todayArt-client'
     },
@@ -37,10 +35,14 @@ const logger = createLogger({
 
 const stateLoader = new StateLoader();
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(
     rootReducers,
     stateLoader.loadState(),
-    applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk)
+    composeEnhancers(
+        applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk)
+    )
 );
 
 store.subscribe(() => {
