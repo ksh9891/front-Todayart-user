@@ -6,6 +6,7 @@ import HeaderNavList from "./HeaderNavList";
 import {Link} from "react-router-dom";
 
 
+
 const Header = () => {
     return (
         <header className="header_area">
@@ -21,21 +22,15 @@ const Header = () => {
                         <div className="collapse navbar-collapse offset" id="navbarSupportedContent">
                             <ul className="nav navbar-nav menu_nav mr-auto">
                                 <li className="nav-item submenu dropdown">
-                                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">장르</a>
+                                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">작품보기</a>
                                     <ul className="dropdown-menu">
-                                        <li className="nav-item"><a className="nav-link" href="/artwork">서양화</a></li>
-                                        <li className="nav-item"><a className="nav-link" href="/artwork">동양화</a></li>
-                                        <li className="nav-item"><a className="nav-link" href="/artwork">기타</a></li>
+                                        <li className="nav-item"><a className="nav-link" href="/artwork">전체작품</a></li>
+                                        <li className="nav-item"><a className="nav-link" href={`/category/${1}`}>서양화</a></li>
+                                        <li className="nav-item"><a className="nav-link" href={`/category/${2}`}>동양화</a></li>
+                                        <li className="nav-item"><a className="nav-link" href={`/category/${3}`}>기타</a></li>
                                     </ul>
                                 </li>
-                                <li className="nav-item submenu dropdown">
-                                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">테마</a>
-                                    <ul className="dropdown-menu">
-                                        <li className="nav-item"><a className="nav-link" href="">계절</a></li>
-                                        <li className="nav-item"><a className="nav-link" href="">색상</a></li>
-                                        <li className="nav-item"><a className="nav-link" href="">분위기</a></li>
-                                    </ul>
-                                </li>
+                               
                                 <li className="nav-item"><a className="nav-link" href="">지원</a></li>
                                 <li className="nav-item"><a className="nav-link" href="/article">게시판</a></li>
                             </ul>

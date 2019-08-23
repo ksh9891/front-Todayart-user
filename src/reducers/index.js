@@ -3,12 +3,14 @@ import authentication from './authentication.reducer';
 import cart from './cart.reducer';
 import article from './article.reducer';
 import members from './member.reducer';
+import { default as product } from './product.reducer'
 
 const rootReducers = combineReducers({
   auth: authentication,
+  product: product,
   cart: cart,
   article: article,
-  members: members,
+  members: members
 });
 
 export default rootReducers;

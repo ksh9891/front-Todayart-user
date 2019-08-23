@@ -43,8 +43,9 @@ class StateLoader {
       member: {
         orderList: []
       },
-      util: {
-        fileStorage: "/storage/files"
+      product: {
+        items: [],
+        item: {}
       }
     };
   }
