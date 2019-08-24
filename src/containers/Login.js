@@ -13,14 +13,14 @@ const loginAsync = (email, password) => (dispatch) => {
             } else {
                 return Promise.reject(response);
             }
+        })
+        .then(response => {
+            if (response.type === ActionTypes.GET_USER_SUCCESS) {
+                return dispatch(Actions.getCart());
+            } else {
+                return Promise.reject(response);
+            }
         });
-        // .then(response => {
-        //     if (response.type === ActionTypes.GET_USER_SUCCESS) {
-        //         return dispatch(Actions.fetchTodo());
-        //     } else {
-        //         return Promise.reject(response);
-        //     }
-        // });
 };
 
 const Login = ({history, login}) => {
