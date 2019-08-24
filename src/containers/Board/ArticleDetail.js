@@ -15,7 +15,7 @@ const ArticleDetail = ({ article, auth, articleDelete, history }) => {
 
         articleDelete(articleId)
         .then(response => {
-            history.push("/article/"+{articleId})
+            history.push("/article/"+boardId)
           })
         .then(
             console.log('deleteId:',articleId)

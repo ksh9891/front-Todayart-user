@@ -8,13 +8,14 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history, match
   const boardId = match.param !== null ? match.params.boardId : items;
   console.log(match);
   useEffect(() => { getArticleList(boardId).then(response => null) }, []);
-
-  const detailHandler = (e, {articleId, boardId}) => {
+  
+  const detailHandler = (e, articleId, boardId) => {
     e.stopPropagation();
-
+    
     getArticleDetail(boardId, articleId)
-      .then(respons => {
-        history.push("/article/" + { boardId } + "/" + { articleId })
+    .then(respons => {
+      console.log("boardId:",boardId)
+        history.push("/article/" +boardId+ "/" +articleId)
       })
       .then(console.log(articleId))
       .catch(error => {
@@ -52,7 +53,7 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history, match
             return (
               <div>
                 <th>{articleId}</th>
-                <th><a onClick={e => detailHandler(e, {articleId, boardId})} >{title}</a></th>
+                <th><a onClick={e => detailHandler(e, articleId, boardId)} >{title}</a></th>
                 <th>{nickname}</th>
                 <th>{writeDated}</th>
                 <th>{views}</th>
