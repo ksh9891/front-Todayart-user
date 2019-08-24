@@ -52,13 +52,13 @@ function Category({ fetchCategory, fetchCategoryAsc, fetchCategoryDesc, match })
                                     <li className="common-filter">
                                         <form action="#">
                                             <ul>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="men" name="brand" /><label for="men">Men<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="women" name="brand" /><label for="women">Women<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="accessories" name="brand" /><label for="accessories">Accessories<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="footwear" name="brand" /><label for="footwear">Footwear<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="bayItem" name="brand" /><label for="bayItem">Bay item<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="electronics" name="brand" /><label for="electronics">Electronics<span> (3600)</span></label></li>
-                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="food" name="brand" /><label for="food">Food<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="men" name="brand" /><label htmlFor="men">Men<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="women" name="brand" /><label htmlFor="women">Women<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="accessories" name="brand" /><label htmlFor="accessories">Accessories<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="footwear" name="brand" /><label htmlFor="footwear">Footwear<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="bayItem" name="brand" /><label htmlFor="bayItem">Bay item<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="electronics" name="brand" /><label htmlFor="electronics">Electronics<span> (3600)</span></label></li>
+                                                <li className="filter-list"><input className="pixel-radio" type="radio" id="food" name="brand" /><label htmlFor="food">Food<span> (3600)</span></label></li>
                                             </ul>
                                         </form>
                                     </li>
