@@ -5,7 +5,6 @@ import { withRouter } from "react-router";
 
 const ArticleDetail = ({ article, auth, articleDelete, history }) => {
 
-    console.log('sldkafjlsdahkflk',article);
     const { item } = article;
     const { userDetails } = auth;
     const { title, content, articleId, boardId } = item;
@@ -47,7 +46,8 @@ const ArticleDetail = ({ article, auth, articleDelete, history }) => {
                         <form onSubmit={e => onList(e)}>
                             <button type="submit" class="btn btn-outline-success my-2 my-sm-0">목록</button>
                         </form>
-                        {item.memberId === userDetails.memberId ?
+                        <span>
+                        {(userDetails !== null)&&(item.memberId=== userDetails.memberId) ?
                             <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                 <form class="form-inline">
 
@@ -58,6 +58,7 @@ const ArticleDetail = ({ article, auth, articleDelete, history }) => {
                                 </form>
                             </nav>
                             </div> : ''}
+                            </span>
                     </td>
 
                 </tbody>

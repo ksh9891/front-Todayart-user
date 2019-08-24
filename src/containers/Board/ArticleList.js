@@ -39,8 +39,7 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history, match
         </div>
         <tr className="table_head">
           <th width="10%">번호</th>
-          <th width="10%">카테고리</th>
-          <th width="40%">제목</th>
+          <th width="50%">제목</th>
           <th width="10%">작성자</th>
           <th width="20%">작성일</th>
           <th width="10%">조회수</th>
@@ -49,12 +48,12 @@ const ArticleList = ({ article, getArticleList, getArticleDetail, history, match
       <tbody>
         <tr>
           {items.map((item, index) => {
-            const { articleId, boardId, title, memberId, writeDated, views } = item;
+            const { articleId, boardId, title, nickname, writeDated, views } = item;
             return (
               <div>
                 <th>{articleId}</th>
                 <th><a onClick={e => detailHandler(e, {articleId, boardId})} >{title}</a></th>
-                <th>{memberId}</th>
+                <th>{nickname}</th>
                 <th>{writeDated}</th>
                 <th>{views}</th>
               </div>

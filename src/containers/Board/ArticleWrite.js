@@ -36,7 +36,7 @@ const ArticleWrite = ({ article, history, articleWrite, auth }) => {
 
     articleWrite({title, content, boardId, memberId})
       .then(response => {
-        history.push("/article");
+        history.push("/article"+{boardId});
       })
       .catch(error => {
         console.log('error >> ', error);
