@@ -13,11 +13,6 @@ function Home  ({ fetchArtwork }) {
         fetchArtwork()
     }, []);
 
-    
-
-  
-
-
     return (
         <div>
             <section className="hero-banner">
@@ -48,10 +43,7 @@ function Home  ({ fetchArtwork }) {
                         <p>Popular Item in the market</p>
                         <h2>Trending <span className="section-intro__style">Product</span></h2>
                     </div>
-                   
                         <ProductList/>
-                        
-                    
                 </div>
             </section>
             <section className="offer" id="parallax-1" data-anchor-target="#parallax-1"
@@ -354,9 +346,6 @@ function Home  ({ fetchArtwork }) {
         </div>
     )
 };
-
-
-
 
 
 

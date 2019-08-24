@@ -1,16 +1,8 @@
-import React,{useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {DeliveryBox, OrderBox, PaymentBox} from '../components/checkout';
-import {Actions} from '../actions';
-import { ActionTypes } from '../constants';
-import { promised } from 'q';
-
-
-
 
 const Checkout=()=>{
-
-
     return (
         <section className="checkout_area section-margin--small">
             <div className="container">
@@ -30,6 +22,5 @@ const Checkout=()=>{
         </section>
     );
 }
-
 
 export default connect(null,null)(Checkout);

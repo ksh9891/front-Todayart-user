@@ -11,23 +11,7 @@ const CartList=({cart, getCart, toggleCartItem, deleteCartItem, calcCartPrice})=
        getCart().then(response=>calcCartPrice()).then(response=>null)}, []);
 
        const {items, totalPrice, totalShipping} = cart;
-/*
-    let totalPrice = items.reduce((sum, item)=>{
-      if(item.checked===true){
-        return sum+(item.productPrice*item.quantity);
-      }
-      return sum;
-    },0);
-
-    let totalShipping = items.reduce((sum, item)=>{
-      console.log(item.shippingFee);
-      if(item.checked===true&&item.shippingFee!==undefined&&item.shippingFee!==null){
-        return sum+(item.shippingFee);
-      }
-      return sum;
-    },0)
-    
-*/
+       
     const toggle=(cartId)=>{
     toggleCartItem(cartId);
     calcCartPrice();

@@ -18,7 +18,7 @@ const cart = (state = initialStateCart, action) => {
                 if (data !== undefined && data !== null) {
                     return {
                         ...state,
-                        items: data === undefined ? [] : data.map((item) => ({ ...item, checked: true })),
+                        items: data === undefined ? [] : data.map((item) => ({ ...item, checked: true }))
                     }
                 }
             }
@@ -60,7 +60,7 @@ const cart = (state = initialStateCart, action) => {
             }
             
         case ActionTypes.DELETE_CART_ITEM_SUCCESS:
-            if(payload!==null && payload!==null){
+            if(payload!==null && payload!==undefined){
                 const {data} = payload;
                 return {
                     ...state,
@@ -68,10 +68,26 @@ const cart = (state = initialStateCart, action) => {
                 }
             }
             return state;
-
+        
+        case ActionTypes.ADD_CART_SUCCESS:
+            if(payload!==null&&payload!==undefined){
+                let {data} = payload;
+                data = {...data, checked:true};
+                return{
+                    ...state,
+                    items:[
+                        ...items, data
+                    ]
+                }
+            }
+            return state;
+        
         case ActionTypes.LOGOUT:
             return initialStateCart;
 
+        case ActionTypes.GET_CART_FAIL:
+        case ActionTypes.DELETE_CART_ITEM_FAIL:
+        case ActionTypes.ADD_CART_FAIL:
         default:
             return state;
     }

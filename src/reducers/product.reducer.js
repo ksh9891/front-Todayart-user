@@ -2,7 +2,7 @@ import { ActionTypes } from '../constants'
 
 const initialStateProduct = {
     items: [],
-    item: {}
+    item: null
 
 };
 
@@ -116,7 +116,8 @@ const product = (state = initialStateProduct, action) => {
             }
             return state;
 
-
+            case ActionTypes.LOGOUT:
+                return initialStateProduct;
 
 
         default:
