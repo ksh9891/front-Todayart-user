@@ -9,5 +9,6 @@ export { default as Category } from './Category'
 export {  Checkout} from './Checkout'
 export { default as ArticleList } from './Board/ArticleList';
 export { default as ArticleDetail } from './Board/ArticleDetail';
+export { default as Account } from './Account';
 
 

@@ -52,6 +52,12 @@ const authentication = (state = initialStateAuth, action) => {
 
     case ActionTypes.LOGOUT:
       return initialStateAuth;
+    
+    case ActionTypes.UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        userDetails: payload.data
+      };
 
     default:
       return state;
