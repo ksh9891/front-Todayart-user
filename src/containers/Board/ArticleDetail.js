@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Actions } from '../../actions';
 import { connect } from 'react-redux';
-import { withRouter } from "react-router";
+import { withRouter, Link } from "react-router-dom";
 
 const ArticleDetail = ({ article, auth, articleDelete, history }) => {
 
@@ -9,21 +9,20 @@ const ArticleDetail = ({ article, auth, articleDelete, history }) => {
     const { userDetails } = auth;
     const { title, content, articleId, boardId } = item;
 
-    const onList = () => {
-        history.push("/article/"+{boardId})
-    };
-
     const onDelete = (e) => {
 
         e.preventDefault();
 
         articleDelete(articleId)
-            .then(response => {
-                history.push("/article/"+{boardId});
-            })
-            .catch(error => {
-                console.log('error >> ', error);
-            });
+        .then(response => {
+            history.push("/article/"+{articleId})
+          })
+        .then(
+            console.log('deleteId:',articleId)
+          )
+          .catch(error => {
+            console.log('error>>', error);
+          });
     };
 
 
@@ -43,22 +42,20 @@ const ArticleDetail = ({ article, auth, articleDelete, history }) => {
                         <th>{content}</th>
                     </tr>
                     <td>
-                        <form onSubmit={e => onList(e)}>
-                            <button type="submit" class="btn btn-outline-success my-2 my-sm-0">목록</button>
-                        </form>
+                        <button class="btn btn-outline-success my-2 my-sm-0"><Link to={`/article/${boardId}`}>목록</Link></button>
                         <span>
-                        {(userDetails !== null)&&(item.memberId=== userDetails.memberId) ?
-                            <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
-                                <form class="form-inline">
+                            {(userDetails !== null) && (item.memberId === userDetails.memberId) ?
+                                <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                    <form class="form-inline">
 
-                                    <button class="btn btn-outline-success my-2 my-sm-0">수정</button>
-                                    <form onSubmit={e => onDelete(e)}>
+                                        <button class="btn btn-outline-success my-2 my-sm-0">수정</button>
+                                        <form onSubmit={e => onDelete(e)}>
                                         <button type="submit" class="btn btn-outline-success my-2 my-sm-0">삭제</button>
+                                        </form>
                                     </form>
-                                </form>
-                            </nav>
-                            </div> : ''}
-                            </span>
+                                </nav>
+                                </div> : ''}
+                        </span>
                     </td>
 
                 </tbody>
