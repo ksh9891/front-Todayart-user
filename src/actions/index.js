@@ -390,6 +390,19 @@ const articleDelete  =(articleId) =>{
     })
 }
 
+const addCart = (item, quantity) =>{
+    return({
+        type:ActionTypes.ADD_CART,
+        payload:{
+            request:{
+                method:'POST',
+                url:'/cart',
+                data:{product:item, quantity:quantity}
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     login,
@@ -419,6 +432,7 @@ export const Actions = {
     checkEmail,
     checkNickname,
     register,
-    getOrderList
+    getOrderList,
+    addCart
 
 };

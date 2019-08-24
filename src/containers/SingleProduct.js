@@ -1,9 +1,12 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef,useState, useEffect } from 'react'
 import { connect } from 'react-redux';
 import { Actions } from '../actions';
 import { withRouter } from 'react-router-dom';
 import { Files } from '../utils';
+import {IntoCart} from '../components/buttons';
+import './SingleProduct.css'
 import { ActionTypes } from '../constants';
+import { inferredPredicate } from '@babel/types';
 
 
 
@@ -11,8 +14,9 @@ function checkValidProp(prop) {
     return (prop !== undefined && prop !== null);
 }
 
-function SingleProduct({ match, fetchSingleProduct, item }) {
+function SingleProduct({ match, fetchSingleProduct, item }, history) {
     const { id } = match.params;
+    const [count, setCount] = useState(1);
 
     useEffect(() => {
         fetchSingleProduct(id)
@@ -22,6 +26,20 @@ function SingleProduct({ match, fetchSingleProduct, item }) {
 
     if (!checkValidProp(item)) {
         return ('');
+    }
+    const increaseCount=()=>{
+        if(count<1){
+            setCount(1);
+        }else{
+            setCount(count+1);
+        }
+    }
+    const decreaseCount=()=>{
+        if(count===1){
+            setCount(1);
+        }else{
+            setCount(count-1);
+        }
     }
 
     const BannerArea=()=>{
@@ -511,13 +529,13 @@ function SingleProduct({ match, fetchSingleProduct, item }) {
                                     <p>{productContent}</p>
                                     <div className="product_count">
                                         <label htmlFor="qty">Quantity:</label>
-                                        <button onClick={()=>{}}/*"var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"*/
+                                        <input type="text" name="qty" id="sst" size="2" maxLength="12" defaultValue={count} title="Quantity:" className="input-text qty" />
+                                        <button onClick={()=>decreaseCount()}/*"var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"*/
                                             className="increase items-count" type="button"><i className="ti-angle-left"></i></button>
-                                        <input type="text" name="qty" id="sst" size="2" maxLength="12" defaultValue="1" title="Quantity:" className="input-text qty" />
-                                        <button onClick={()=>{}}/*"var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"*/
+                                        <button onClick={()=>increaseCount()}/*"var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"*/
                                             className="reduced items-count" type="button"><i className="ti-angle-right"></i></button>
-                                        <a className="button primary-btn" href="#">Add to Cart</a>
                                     </div>
+                                    <IntoCart quantity={count} item={item} history={history}/>
                                     <div className="card_area d-flex align-items-center">
                                         <a className="icon_btn" href="#"><i className="lnr lnr lnr-diamond"></i></a>
                                         <a className="icon_btn" href="#"><i className="lnr lnr lnr-heart"></i></a>
