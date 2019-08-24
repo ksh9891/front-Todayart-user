@@ -9,7 +9,6 @@ class StateLoader {
     } catch (error) {
       console.log('error', error)
     }
-    console.log("loadState pass");
     return this.initialState();
   }
 
@@ -31,7 +30,9 @@ class StateLoader {
         isLogin:false
       },
       cart:{
-        items:[]
+        items:[],
+        totalPrice:0,
+        totalShipping:0
       },
       article: {
         items: [],
@@ -40,12 +41,15 @@ class StateLoader {
         size: 10,
         totalCount: 0
       },
-      member: {
+      members: {
         orderList: []
       },
       product: {
         items: [],
         item: {}
+      },
+      order:{
+        ordered:null
       }
     };
   }

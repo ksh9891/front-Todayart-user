@@ -17,6 +17,7 @@ function Home  ({ fetchArtwork }) {
 
   
 
+
     return (
         <div>
             <section className="hero-banner">

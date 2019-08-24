@@ -1,4 +1,6 @@
 import { ActionTypes } from '../constants';
+import axiosMiddleware from 'redux-axios-middleware';
+import { id } from 'postcss-selector-parser';
 
 const getClientToken = () => {
     const formData = new FormData();
@@ -147,7 +149,58 @@ const deleteCartItem  =(cartItemId) =>{
     })
 }
 
+const calcCartPrice = () =>{
+    return({
+        type:ActionTypes.CALC_CART_PRICE
+    })
 
+}
+
+const makeOrder = (cartIdList, shippingFee, totalPayingPrice) =>{
+    return({
+        type:ActionTypes.MAKE_ORDER,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/orders',
+                data: {cartIdList:cartIdList, shippingFee:shippingFee, totalPrice:totalPayingPrice, payment:{payMethod:"카카오페이", totalPrice:totalPayingPrice}}
+            }
+        }
+    }
+    )
+}
+
+const excuteKakaoPay = (ordered) =>{
+    return ({
+        type:ActionTypes.EXCUTE_KAKAO_PAY,
+        payload:{
+            request:{
+                method:'POST',
+                url:'/kakaoPay',
+                data:ordered
+            }
+
+        }
+    })
+}
+
+const approveKakaoPay = (pgToken, ordered, tid)=>{
+    window.opener.console.log("approveKakaoPay's ordered ", ordered);
+    window.opener.console.log("approveKakaoPay's tid", tid);
+    return ({
+        type:ActionTypes.APPROVE_KAKAO_PAY,
+        payload:{
+            request:{
+                method:'POST',
+                url:`/kakaoPaySuccess?${pgToken}&tid=${tid}`,
+                data:ordered,
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                }
+            }
+        }
+    })
+}
 
 const fetchArtwork = () => {
     return ({
@@ -189,6 +242,7 @@ const fetchProductByName = (searchword) => {
     })
 }
 
+
 const fetchProductByArtist = (searchword) => {
     console.log("productName = " + searchword)
     return ({
@@ -215,6 +269,7 @@ const fetchPriceAsc = () => {
 
     })
 }
+
 
 
 const fetchPriceDesc = () => {
@@ -268,9 +323,6 @@ const fetchCategoryDesc = (id) => {
 
     })
 }
-
-
-
 
 
 const getArticleList = (boardId) => {
@@ -356,12 +408,17 @@ export const Actions = {
     getCart,
     toggleCartItem,
     deleteCartItem,
+    calcCartPrice,
     getArticleList,
     getArticleDetail,
     articleWrite,
     articleDelete,
+    makeOrder,
+    excuteKakaoPay,
+    approveKakaoPay,
     checkEmail,
     checkNickname,
     register,
     getOrderList
+
 };
