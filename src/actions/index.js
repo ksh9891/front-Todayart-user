@@ -403,6 +403,37 @@ const addCart = (item, quantity) =>{
     })
 }
 
+const update = ({ realname, nickname, chkPassword, password, phone }) => {
+    return ({
+        type: ActionTypes.UPDATE_USER,
+        payload: {
+            request: {
+                method: 'PATCH', 
+                url: '/members/update',
+                headers: {
+                    'Content-Type': 'application/json; charset: utf-8'
+                },
+                data: JSON.stringify({ realname, nickname, chkPassword, password, phone })
+            }
+        }
+    });
+};
+
+const checkPassword = (chkpassword) => {
+    return ({
+        type: ActionTypes.CHECK_PASSWORD,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkPassword?password=' + chkpassword,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
 export const Actions = {
     getClientToken,
     login,
@@ -433,6 +464,7 @@ export const Actions = {
     checkNickname,
     register,
     getOrderList,
-    addCart
-
+    addCart,
+    update,
+    checkPassword,
 };

@@ -11,5 +11,5 @@ export { default as ArticleDetail } from './Board/ArticleDetail';
 export { default as ArticleWrite } from './Board/ArticleWrite';
 export { default as Account } from './Account/Account';
 export { default as Orders } from './Account/Orders';
-
+export { default as Account } from './Account';
 export {Test} from './Test'
