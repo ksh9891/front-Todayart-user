@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { Actions } from './actions';
-import {Artwork, Home, Login, Register, Cart, Orders, Checkout, Account, ArticleList, ArticleDetail, ArticleWrite, SingleProduct, Category, Test} from "./containers";
+import {Artwork, Home, Login, Register, Cart, Orders, Checkout, Account, ArticleList, ArticleDetail, ArticleWrite, SingleProduct, Category, Test,Update} from "./containers";
 import KakaoSuccess, {KakaoSuccessFail, KakaoCancle } from './containers/Kakao';
 import { Header, Footer } from './components';
 import "./App.css";
@@ -33,6 +33,7 @@ const App = ({ location, match, auth, logout }) => {
                     <Route path="/kakaoCancel" component={KakaoCancle}/>
                     <Route path="/article/:id" component={ArticleDetail} />
                     <Route path="/article" component={ArticleList} />
+                    <Route path="/account/nickname :id" component={Update} />
                 </Switch>
             </main>
             <Footer />
