@@ -1,19 +1,22 @@
 import { combineReducers } from 'redux';
-import authentication from './authentication.reducer';
-import cart from './cart.reducer';
-import article from './article.reducer';
-import members from './member.reducer';
-import order from './order.reducer'
-import { default as product } from './product.reducer'
 
-const rootReducers = combineReducers({
-  auth: authentication,
-  product: product,
-  cart: cart,
-  article: article,
-  members: members,
-  order:order
+// Import custom components
+import productReducer from './products';
+import cartReducer from './cart';
+import filtersReducer from './filters';
+import wishlistReducer from './wishlist';
+import compareReducer from './compare';
+import authentication from "./authentication.reducer";
+
+
+const rootReducer = combineReducers({
+    data: productReducer,
+    cartList: cartReducer,
+    filters: filtersReducer,
+    wishlist: wishlistReducer,
+    compare: compareReducer,
+
+    auth: authentication
 });
 
-
-export default rootReducers;
+export default rootReducer;

@@ -3,7 +3,7 @@
  * 
  * @author: steve park <seongwuk.park@gmail.com>
  */
-import { ActionTypes } from '../constants';
+import { ActionTypes } from '../constants/ActionTypes';
 
  /**
  * The initial state
