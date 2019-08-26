@@ -1,5 +1,5 @@
 import React from 'react';
-import "./FormCheckText.css";
+import "./formCheckText.css";
 
 const FormCheckText = ({sendMsg, isCheck}) => {
     const classNameHelper = boolean => {

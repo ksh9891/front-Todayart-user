@@ -90,7 +90,7 @@ class HeaderFive extends Component {
                                             <LogoImage logo={this.props.logoName} />
 										</div>
 										<div className="navbar">
-											<a href="javascript:void(0)" onClick={this.openNav}>
+											<a href="" onClick={this.openNav}>
 												<div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true" /></div>
 											</a>
 											{/*SideBar Navigation Component*/}

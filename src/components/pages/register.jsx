@@ -4,9 +4,10 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import {Actions} from "../../actions/index";
 import {ActionTypes} from "../../constants/ActionTypes";
-import FormCheckText from "./FormCheckText";
+import FormCheckText from "./formCheckText";
 import sha256 from 'sha256';
 import validator from 'validator';
+import "./register.css";
 
 const registerAsync = ({email, nickname, password}) => (dispatch) => {
     return dispatch(Actions.getClientToken())
@@ -46,7 +47,7 @@ class Register extends Component {
         this.passwordInput = React.createRef();
     }
 
-    render({ history, register, checkEmail, checkNickname }) {
+    render() {
         // 유효성에 관련된 메시지 CSS
         const inputClassNameHelper = boolean => {
             switch (boolean) {
@@ -137,7 +138,8 @@ class Register extends Component {
         const validateDupEmail = () => {
             const email = this.emailInput.current.value;
             if (validator.isEmail(email)) {
-                checkEmail(email)
+                console.log(this.props.checkEmail(email));
+                this.props.checkEmail(email)
                     .then(response => {
                         const { statusCode, statusMessage } = response.payload.data;
                         if(response.type === ActionTypes.DUPLICATION_CHECK_EMAIL_SUCCESS) {
@@ -173,7 +175,7 @@ class Register extends Component {
         const validateDupNickname = () => {
             const nickname = this.nicknameInput.current.value;
             if(validator.isLength(nickname, {min: 2, max: 16})) {
-                checkNickname(nickname)
+                this.props.checkNickname(nickname)
                     .then(response => {
                         const { statusCode, statusMessage } = response.payload.data;
                         if(response.type === ActionTypes.DUPLICATION_CHECK_NICKNAME_SUCCESS) {
@@ -215,11 +217,11 @@ class Register extends Component {
                 const nickname = this.nicknameInput.current.value;
                 const password = sha256(this.passwordInput.current.value);
 
-                register({email, nickname, password})
+                this.props.register({email, nickname, password})
                     .then(response => {
                         if (response.type === ActionTypes.REGISTER_SUCCESS) {
                             alert('가입 성공!');
-                            history.push('/login');
+                            this.props.history.push('/login');
                         } else {
                             const { error } = response;
                             return Promise.reject(error);
@@ -245,13 +247,13 @@ class Register extends Component {
                                 <h3>계정 생성</h3>
                                 <div className="theme-card">
                                     <form className="theme-form" onSubmit={e => onSubmit(e)}>
-                                        <div className="form-row">
+                                        <div className="form-row ta-form">
                                             <div className="col-md-6">
+                                                <label htmlFor="email">아이디(이메일)</label>
                                                 <div className="input-group form-group-control">
-                                                    <label htmlFor="email">아이디(이메일)</label>
                                                     <input
                                                         type="text"
-                                                        className={`form-control ${inputClassNameHelper(this.state.isEnteredEmailValid)}`}
+                                                        className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredEmailValid)}`}
                                                         placeholder="아이디(이메일)"
                                                         name="email"
                                                         ref={this.emailInput}
@@ -264,15 +266,15 @@ class Register extends Component {
                                                             type="button"
                                                             onClick={validateDupEmail}>중복확인</button>
                                                     </div>
-                                                    <FormCheckText sendMsg={this.state.emailValidMsg} isCheck={this.state.isEnteredEmailValid} />
                                                 </div>
+                                                <FormCheckText sendMsg={this.state.emailValidMsg} isCheck={this.state.isEnteredEmailValid} />
                                             </div>
                                             <div className="col-md-6">
+                                                <label htmlFor="nickname">닉네임</label>
                                                 <div className="input-group form-group-control">
-                                                    <label htmlFor="nickname">닉네임</label>
                                                     <input
                                                         type="text"
-                                                        className={`form-control ${inputClassNameHelper(this.state.isEnteredNicknameValid)}`}
+                                                        className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredNicknameValid)}`}
                                                         placeholder="닉네임"
                                                         name="nickname"
                                                         ref={this.nicknameInput}
@@ -285,11 +287,11 @@ class Register extends Component {
                                                             type="button"
                                                             onClick={validateDupNickname}>중복확인</button>
                                                     </div>
-                                                    <FormCheckText sendMsg={this.state.nicknameValidMsg} isCheck={this.state.isEnteredNicknameValid} />
                                                 </div>
+                                                <FormCheckText sendMsg={this.state.nicknameValidMsg} isCheck={this.state.isEnteredNicknameValid} />
                                             </div>
                                         </div>
-                                        <div className="form-row">
+                                        <div className="form-row ta-form">
                                             <div className="col-md-6">
                                                 <label htmlFor="password">비밀번호</label>
                                                 <input type="password"
@@ -312,13 +314,8 @@ class Register extends Component {
                                                 />
                                                 <FormCheckText sendMsg={this.state.confirmPasswordValidMsg} isCheck={this.state.isEnteredConfirmPasswordValid} />
                                             </div>
-                                            <button
-                                                type="submit"
-                                                className="btn btn-solid"
-                                            >
-                                                계정생성
-                                            </button>
                                         </div>
+                                        <button type="submit" className="btn btn-solid">계정생성</button>
                                     </form>
                                 </div>
                             </div>

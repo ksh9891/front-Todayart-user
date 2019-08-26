@@ -1,0 +1,18 @@
+
+.ta-mb0 {
+     margin-bottom: 0!important;
+ }
+
+.ta-form {
+    margin: 20px 0;
+}
+
+.form-group-control~.invalid-feedback,
+.form-group-control~.invalid-tooltip {
+    display: block;
+}
+
+.form-group-control~.valid-feedback,
+.form-group-control~.valid-tooltip {
+    display: block;
+}

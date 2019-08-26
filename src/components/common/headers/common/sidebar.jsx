@@ -77,7 +77,7 @@ class SideBar extends Component {
     render() {
         return (
             <div id="mySidenav" className="sidenav">
-                <a href="javascript:void(0)" className="sidebar-overlay" onClick={this.closeNav}></a>
+                <a href="" className="sidebar-overlay" onClick={this.closeNav}></a>
                 <nav>
                     <a onClick={this.closeNav}>
                         <div className="sidebar-back text-left">

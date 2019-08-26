@@ -1,12 +1,36 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 
 // middlewares
-import thunkMiddleware from 'redux-thunk'
-import logger from 'redux-logger'
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+import axios from 'axios';
+import axiosMiddleware from 'redux-axios-middleware';
 
 // Import custom components
 import rootReducer from '../reducers';
 
+// utils
+import { interceptors, onErrorHandler } from '../utils';
+import { setting } from '../utils/set';
+
+const client = axios.create({
+    baseURL: setting.baseURL,
+    headers: {
+        'Authorization': `Basic ${btoa(`${setting.clientId}:${setting.clientSecret}`)}`,
+        'Cache-Control': 'no-cache',
+        'X-Custom-Header': 'todayArt-client'
+    },
+    responseType: 'json'
+});
+
+const middlewareConfig = {
+    interceptors,
+    onError: onErrorHandler
+};
+
+const logger = createLogger({
+    collapsed: true
+});
 
 function saveToLocalStorage(state) {
     try {
@@ -30,17 +54,18 @@ function loadFromLocalStorage() {
 
 const persistedState = loadFromLocalStorage()
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 /**
  * Create a Redux store that holds the app state.
  */
-const store = createStore(rootReducer, persistedState, compose(
-    applyMiddleware(thunkMiddleware),
-
-    //For working redux dev tools in chrome (https://github.com/zalmoxisus/redux-devtools-extension)
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : function (f) {
-        return f;
-    }
-));
+const store = createStore(
+    rootReducer,
+    persistedState,
+    composeEnhancers (
+        applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk),
+    )
+);
 
 const unsubscribe = store.subscribe(() => {
     const state = store.getState();
