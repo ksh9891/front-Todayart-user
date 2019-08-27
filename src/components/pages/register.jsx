@@ -138,7 +138,6 @@ class Register extends Component {
         const validateDupEmail = () => {
             const email = this.emailInput.current.value;
             if (validator.isEmail(email)) {
-                console.log(this.props.checkEmail(email));
                 this.props.checkEmail(email)
                     .then(response => {
                         const { statusCode, statusMessage } = response.payload.data;
