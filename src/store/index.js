@@ -69,6 +69,10 @@ const store = createStore(
     )
 );
 
+store.subscribe(() => {
+    stateLoader.saveState(store.getState());
+});
+
 // const unsubscribe = store.subscribe(() => {
 //     const state = store.getState();
 //     saveToLocalStorage(state);
