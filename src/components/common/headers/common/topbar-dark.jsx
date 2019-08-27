@@ -31,7 +31,7 @@ class TopBarDark extends Component {
                                                 <Link to="/account">마이페이지</Link>
                                             </li>
                                             <li>
-                                                <a onClick={this.props.logout}>로그아웃</a>
+                                                <Link to="/" onClick={this.props.logout}>로그아웃</Link>
                                             </li>
                                         </ul>
                                     </li>

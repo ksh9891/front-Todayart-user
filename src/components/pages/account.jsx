@@ -1,11 +1,48 @@
 import React, {Component} from 'react';
 import Breadcrumb from "../common/breadcrumb";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import "./account.css";
 
-class Dashboard extends Component {
+class Account extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isEdit: false
+        }
+    }
+
+    validInfo = (info) => {
+        if(info === null || info === undefined) {
+            return "입력 한 정보가 없습니다"
+        } else {
+            return info;
+        }
+    }
+
+    accountEdit = () => {
+        this.setState({
+            ...this.state,
+            isEdit: true
+        });
+    };
+
+    editBox = () => {
+        switch(this.state.isEdit) {
+            case true:
+                return "box-editing";
+            case false:
+                return "";
+            default:
+                return "";
+        }
+    }
+
     render (){
         return (
             <div>
-                <Breadcrumb title={'마이페이지'}/>
+                <Breadcrumb title={'마이페이지'} />
 
                 {/*Dashboard section*/}
                 <section className="section-b-space">
@@ -35,67 +72,67 @@ class Dashboard extends Component {
                             <div className="col-lg-9">
                                 <div className="dashboard-right">
                                     <div className="dashboard">
-                                        <div className="page-title">
-                                            <h2>My Dashboard</h2>
-                                        </div>
-                                        <div className="welcome-msg">
-                                            <p>Hello, MARK JECNO !</p>
-                                            <p>From your My Account Dashboard you have the ability to view a snapshot of
-                                                your recent account activity and update your account information. Select
-                                                a link below to view or edit information.</p>
-                                        </div>
                                         <div className="box-account box-info">
                                             <div className="box-head">
-                                                <h2>Account Information</h2>
+                                                <h2>계정정보 관리</h2>
                                             </div>
                                             <div className="row">
-                                                <div className="col-sm-6">
-                                                    <div className="box">
+                                                <div className="col-sm-12">
+                                                    <div className={`box ${this.editBox()}`}>
                                                         <div className="box-title">
-                                                            <h3>Contact Information</h3>
-                                                            <a href="#">Edit</a>
+                                                            <h3>계정정보</h3>
+                                                            <a onClick={this.accountEdit}>편집</a>
                                                         </div>
                                                         <div className="box-content">
-                                                            <h6>MARK JECNO</h6>
-                                                            <h6>MARk-JECNO@gmail.com</h6>
-                                                            <h6><a href="#">Change Password</a></h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <div className="box">
-                                                        <div className="box-title">
-                                                            <h3>Newsletters</h3>
-                                                            <a href="#">Edit</a>
-                                                        </div>
-                                                        <div className="box-content">
-                                                            <p>
-                                                                You are currently not subscribed to any newsletter.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="box">
-                                                    <div className="box-title">
-                                                        <h3>Address Book</h3>
-                                                        <a href="#">Manage Addresses</a>
-                                                    </div>
-                                                    <div className="row">
-                                                        <div className="col-sm-6">
-                                                            <h6>Default Billing Address</h6>
-                                                            <address>
-                                                                You have not set a default billing address.<br/>
-                                                                <a href="#">Edit Address</a>
-                                                            </address>
-                                                        </div>
-                                                        <div className="col-sm-6">
-                                                            <h6>Default Shipping Address</h6>
-                                                            <address>
-                                                                You have not set a default shipping address.<br />
-                                                                <a href="#">Edit Address</a>
-                                                            </address>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>이메일</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>{this.props.auth.userDetails.email}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>비밀번호</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>**********</span>
+                                                                    {/*<span><Link to="/">비밀번호 변경하기</Link></span>*/}
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>닉네임</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>{this.props.auth.userDetails.nickname}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>이름</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>{this.validInfo(this.props.auth.userDetails.realName)}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>연락처</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>{this.validInfo(this.props.auth.userDetails.phone)}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-sm-4">
+                                                                    <h6>대표 배송지</h6>
+                                                                </div>
+                                                                <div className="col-sm-8">
+                                                                    <span>{this.validInfo(this.props.auth.userDetails.phone)}</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -113,4 +150,8 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
+
+export default withRouter(connect(mapStateToProps, null)(Account))
