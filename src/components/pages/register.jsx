@@ -294,9 +294,10 @@ class Register extends Component {
                                             <div className="col-md-6">
                                                 <label htmlFor="password">비밀번호</label>
                                                 <input type="password"
-                                                       className={`form-control ${inputClassNameHelper(this.state.isEnteredPasswordValid)}`}
+                                                       className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredPasswordValid)}`}
                                                        name="password"
                                                        placeholder="비밀번호"
+                                                       ref={this.passwordInput}
                                                        required
                                                        onChange={e => validatePassword(e.target.value)}
                                                 />
@@ -305,7 +306,7 @@ class Register extends Component {
                                             <div className="col-md-6">
                                                 <label htmlFor="confirmPassword">비밀번호 확인</label>
                                                 <input type="password"
-                                                       className={`form-control ${inputClassNameHelper(this.state.isEnteredConfirmPasswordValid)}`}
+                                                       className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredConfirmPasswordValid)}`}
                                                        id="confirmPassword"
                                                        placeholder="비밀번호 확인"
                                                        required
