@@ -24,31 +24,6 @@ class FooterOne extends Component {
 
         return (
             <footer className="footer-light">
-                <div className="light-layout">
-                    <div className="container">
-                        <section className="small-section border-section border-top-0">
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <div className="subscribe">
-                                        <div>
-                                            <h4>KNOW IT ALL FIRST!</h4>
-                                            <p>Never Miss Anything From Multikart By Signing Up To Our Newsletter. </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <form className="form-inline subscribe-form">
-                                        <div className="form-group mx-sm-3">
-                                            <input type="text" className="form-control" id="exampleFormControlInput1"
-                                                   placeholder="Enter your email"/>
-                                        </div>
-                                        <button type="submit" className="btn btn-solid">subscribe</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                </div>
                 <section className="section-b-space light-layout">
                     <div className="container">
                         <div className="row footer-theme partition-f">

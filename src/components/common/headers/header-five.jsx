@@ -89,13 +89,13 @@ class HeaderFive extends Component {
 										<div className="brand-logo">
                                             <LogoImage logo={this.props.logoName} />
 										</div>
-										<div className="navbar">
-											<a href="" onClick={this.openNav}>
-												<div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true" /></div>
-											</a>
-											{/*SideBar Navigation Component*/}
-											<SideBar/>
-										</div>
+										{/*<div className="navbar">*/}
+										{/*	<a href="" onClick={this.openNav}>*/}
+										{/*		<div className="bar-style"> <i className="fa fa-bars sidebar-bar" aria-hidden="true" /></div>*/}
+										{/*	</a>*/}
+										{/*	/!*SideBar Navigation Component*!/*/}
+										{/*	<SideBar/>*/}
+										{/*</div>*/}
 									</div>
 									<div className="menu-right pull-right">
 										{/*Top Navigation Bar Component*/}

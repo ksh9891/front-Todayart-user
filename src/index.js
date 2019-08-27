@@ -20,7 +20,6 @@ import Watch from './components/layouts/watch/main';
 import Beauty from './components/layouts/beauty/main';
 import Electronic from './components/layouts/electronic/main';
 
-
 //Collection Pages
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
 import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
@@ -49,11 +48,13 @@ import checkOut from './components/checkout'
 import orderSuccess from './components/checkout/success-page'
 
 // Extra Pages
+import Login from './components/pages/login'
+import Register from './components/pages/register'
+import Account from './components/pages/account'
+
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
 import lookbook from './components/pages/lookbook'
-import Login from './components/pages/login'
-import Register from './components/pages/register'
 import Search from './components/pages/search'
 import Collection from './components/pages/collection'
 import ForgetPassword from './components/pages/forget-password'
@@ -105,6 +106,7 @@ class Root extends React.Component {
                                 {/* Member */}
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
 
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>

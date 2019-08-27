@@ -28,9 +28,7 @@ class TopBarDark extends Component {
                                         <i className="fa fa-user" aria-hidden="true" /> {this.props.auth.userDetails.nickname}
                                         <ul className="onhover-show-div">
                                             <li>
-                                                <a href="#" data-lng="en">
-                                                    마이페이지
-                                                </a>
+                                                <Link to="/account">마이페이지</Link>
                                             </li>
                                             <li>
                                                 <a onClick={this.props.logout}>로그아웃</a>
