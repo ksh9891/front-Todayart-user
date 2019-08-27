@@ -20,7 +20,7 @@
 }
 
 .box-content .row {
-    padding-bottom: 10px;
+    padding: 20px 0;
 }
 
 .dashboard .box .box-title {
@@ -34,4 +34,18 @@
 
 .box-editing .box-title a {
     display: none;
+}
+
+.ta-btn-group {
+    margin-top: 30px;
+}
+
+.btn-full {
+    width: 100%;
+}
+
+.ta-info-modify-action {
+    padding-left: 20px;
+    color: #866e6c!important;
+    cursor: pointer;
 }
