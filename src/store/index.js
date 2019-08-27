@@ -10,7 +10,7 @@ import axiosMiddleware from 'redux-axios-middleware';
 import rootReducer from '../reducers';
 
 // utils
-import { interceptors, onErrorHandler } from '../utils';
+import { StateLoader, interceptors, onErrorHandler } from '../utils';
 import { setting } from '../utils/set';
 
 const client = axios.create({
@@ -56,12 +56,14 @@ const persistedState = loadFromLocalStorage()
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const stateLoader = new StateLoader();
+
 /**
  * Create a Redux store that holds the app state.
  */
 const store = createStore(
     rootReducer,
-    persistedState,
+    stateLoader.loadState(),
     composeEnhancers (
         applyMiddleware(axiosMiddleware(client, middlewareConfig), logger, thunk),
     )
