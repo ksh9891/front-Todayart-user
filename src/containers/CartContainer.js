@@ -1,26 +1,28 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-
 import CartPage from '../components/common/headers/common/cart-header'
-import {removeFromCart} from '../actions'
+import {Actions} from '../actions'
 import {getCartTotal} from '../services'
 
-const CartContainer = ({cartList, total, symbol, removeFromCart}) => (
-     <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cartList.length}</div>
+const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
+     <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
+        {/* 카트모양 아이콘 */}
         <Link to={`${process.env.PUBLIC_URL}/cart`}>
             <img src={`${process.env.PUBLIC_URL}/assets/images/icon/cart.png`} className="img-fluid" alt=""/>
             <i className="fa fa-shopping-cart" />
         </Link>
+        
         <ul className="show-div shopping-cart">
-            { cartList.map((item,index) => (
-                <CartPage key={index} item={item} total={total} symbol={symbol} removeFromCart={() => removeFromCart(item)}  />
+            { cart.items.map((item,index) => (
+                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => deleteCartItem(item.cartId)}  />
             ))}
-            {(cartList.length > 0) ?
+            {(cart.items.length > 0) ?
                 <div>
             <li>
                 <div className="total">
                     <h5>subtotal : <span>{symbol}{total}</span></h5>
+                    <h5>shippingFee : <span>{symbol}{shipping}</span></h5>
                 </div>
             </li>
             <li>
@@ -39,10 +41,11 @@ const CartContainer = ({cartList, total, symbol, removeFromCart}) => (
 
 function mapStateToProps(state) {
     return {
-        cartList: state.cartList.cart,
-        total: getCartTotal(state.cartList.cart),
+        cart: state.cart,
+        total: state.cart.totalPrice,
+        shipping: state.cart.totalShipping,
         symbol: state.data.symbol,
     }
 }
 
-export default connect(mapStateToProps, {removeFromCart})(CartContainer);
+export default connect(mapStateToProps, (dispatch)=>({deleteCartItem:(cartId)=>dispatch(Actions.deleteCartItem(cartId))}))(CartContainer);

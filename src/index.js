@@ -45,7 +45,8 @@ import Layout from './components/app'
 import Cart from './components/cart'
 import Compare from './components/compare/index'
 import wishList from './components/wishlist'
-import checkOut from './components/checkout'
+import checkOut, {kakaoSuccessFail, kakaoCancel} from './components/checkout'
+import kakaoSuccess from './components/checkout/kakao'
 import orderSuccess from './components/checkout/success-page'
 
 // Extra Pages
@@ -132,8 +133,12 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
                                 <Route path={`${process.env.PUBLIC_URL}/order-success`} component={orderSuccess}/>
-
                                 <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={aboutUs}/>
+
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccessFail`} component={kakaoSuccessFail}/>
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccess`} component={kakaoSuccess}/>
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoCancel`} component={kakaoCancel}/>
+
 
                                 {/*Routes For Extra Pages*/}
                                 <Route path={`${process.env.PUBLIC_URL}/pages/about-us`} component={aboutUs}/>
