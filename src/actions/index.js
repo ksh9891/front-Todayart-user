@@ -525,17 +525,17 @@ const addCart = (item, quantity) =>{
     })
 }
 
-const update = ({ realname, nickname, chkPassword, password, phone }) => {
+const updateNickname = (nickname) => {
     return ({
-        type: ActionTypes.UPDATE_USER,
+        type: ActionTypes.UPDATE_NICKNAME,
         payload: {
             request: {
                 method: 'PATCH',
-                url: '/members/update',
+                url: '/members',
                 headers: {
                     'Content-Type': 'application/json; charset: utf-8'
                 },
-                data: JSON.stringify({ realname, nickname, chkPassword, password, phone })
+                data: JSON.stringify({ nickname })
             }
         }
     });
@@ -587,6 +587,6 @@ export const Actions = {
     register,
     getOrderList,
     addCart,
-    update,
+    updateNickname,
     checkPassword,
 };

@@ -7,20 +7,36 @@ import validator from "validator";
 import {ActionTypes} from "../../constants/ActionTypes";
 import {Actions} from "../../actions";
 import FormCheckText from "./formCheckText";
+import sha256 from "sha256";
 
 class Account extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            // 변경액션 수행 여부
             isNicknameEdit: false,
             isRealNameEdit: false,
-            isPhoneEdit: false
+            isPhoneEdit: false,
+
+            // 닉네임
+            isEnteredNicknameValid: '',
+            isUpdatedNicknameValid: true
         }
 
-        this.handleButtonChangeNickname = this.onEdit.bind(this, "nickname");
-        this.handleButtonChangeRealName = this.onEdit.bind(this, "realName");
-        this.handleButtonChangePhone = this.onEdit.bind(this, "phone");
+        this.handleButtonChangeNicknameUpdate = this.onUpdate.bind(this, "nickname");
+        this.handleButtonChangeRealNameUpdate = this.onUpdate.bind(this, "realName");
+        this.handleButtonChangePhoneUpdate = this.onUpdate.bind(this, "phone");
+
+        this.handleButtonChangeNicknameEdit = this.onEdit.bind(this, "nickname");
+        this.handleButtonChangeRealNameEdit = this.onEdit.bind(this, "realName");
+        this.handleButtonChangePhoneEdit = this.onEdit.bind(this, "phone");
+
+        this.handleButtonChangeNicknameCancel = this.cancelEdit.bind(this, "nickname");
+        this.handleButtonChangeRealNameCancel = this.cancelEdit.bind(this, "realName");
+        this.handleButtonChangePhoneCancel = this.cancelEdit.bind(this, "phone");
+
+        this.nicknameInput = React.createRef();
     }
 
     validInfo = (info) => {
@@ -53,7 +69,131 @@ class Account extends Component {
         }
     }
 
+    // 업데이트
+    onUpdate = (type) => {
+        switch(type) {
+            case "nickname":
+                this.props.checkNickname(this.nicknameInput.current.value)
+                    .then(response => {
+                        const { statusCode, statusMessage } = response.payload.data;
+                        if(response.type === ActionTypes.DUPLICATION_CHECK_NICKNAME_SUCCESS) {
+                            if (statusCode == "OK") {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredNicknameValid: true,
+                                    isUpdatedNicknameValid: true,
+                                });
+                            } else {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredNicknameValid: false,
+                                    isUpdatedNicknameValid: false,
+                                });
+                            }
+                            this.setState({
+                                ...this.state,
+                                nicknameValidMsg: statusMessage
+                            });
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error >>", error);
+                    });
+                break;
+            case "realName":
+                break;
+            case "phone":
+                break;
+            default:
+                break;
+        }
+    };
+
     render (){
+        // 유효성에 관련된 메시지 CSS
+        const inputClassNameHelper = boolean => {
+            switch (boolean) {
+                case true:
+                    return 'is-valid';
+                case false:
+                    return 'is-invalid';
+                default:
+                    return '';
+            }
+        };
+
+        // 닉네임 유효성 검증 (최소 2자 이상 16자 이하)
+        const validateNickname = e => {
+            // 기존 닉네임일 경우
+            if(e === this.props.auth.userDetails.nickname) {
+                this.setState({
+                    ...this.state,
+                    isEnteredNicknameValid: false,
+                    nicknameValidMsg: "닉네임을 변경 해 주세요"
+                });
+            } else {
+                if(validator.isLength(e, {min: 2, max: 16})) {
+                    this.setState({
+                        ...this.state,
+                        isEnteredNicknameValid: true,
+                        nicknameValidMsg: "닉네임 중복체크를 진행 해 주세요."
+                    });
+                } else {
+                    this.setState({
+                        ...this.state,
+                        isEnteredNicknameValid: false,
+                        nicknameValidMsg: "닉네임은 최소 2자 이상 16자 이하로 작성해야 합니다."
+                    });
+                }
+            }
+        };
+
+        // 닉네임 중복 체크 로직
+        const validateDupNickname = () => {
+            const nickname = this.nicknameInput.current.value;
+
+            if(this.state.isEnteredNicknameValid) {
+                this.props.checkNickname(nickname)
+                    .then(response => {
+                        const { statusCode, statusMessage } = response.payload.data;
+                        if(response.type === ActionTypes.DUPLICATION_CHECK_NICKNAME_SUCCESS) {
+                            if (statusCode == "OK") {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredNicknameValid: true,
+                                    isUpdatedNicknameValid: true,
+                                });
+                            } else {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredNicknameValid: false,
+                                    isUpdatedNicknameValid: false,
+                                });
+                            }
+                            this.setState({
+                                ...this.state,
+                                nicknameValidMsg: statusMessage
+                            });
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error >>", error);
+                    });
+            } else {
+                this.setState({
+                    ...this.state,
+                    isEnteredNicknameValid: false,
+                    nicknameValidMsg: "동일한 닉네임이거나, 유효하지 않은 형식입니다."
+                });
+            }
+        };
+
         return (
             <div>
                 <Breadcrumb title={'마이페이지'} />
@@ -120,8 +260,37 @@ class Account extends Component {
                                                                         <h6>닉네임</h6>
                                                                     </div>
                                                                     <div className="col-sm-8">
-                                                                        <span>{this.props.auth.userDetails.nickname}</span>
-                                                                        {this.state.isNicknameEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangeNickname}>닉네임 변경하기</span>}
+                                                                        {this.state.isNicknameEdit ?
+                                                                            <div>
+                                                                                <div className="input-group form-group-control">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredNicknameValid)}`}
+                                                                                        placeholder="닉네임"
+                                                                                        name="nickname"
+                                                                                        ref={this.nicknameInput}
+                                                                                        defaultValue={this.props.auth.userDetails.nickname}
+                                                                                        required
+                                                                                        onChange={e => validateNickname(e.target.value)}
+                                                                                    />
+                                                                                    <div className="input-group-append">
+                                                                                        <button
+                                                                                            className="btn btn-outline-secondary btn-input-group-bottom"
+                                                                                            type="button"
+                                                                                            onClick={validateDupNickname}>중복확인</button>
+                                                                                    </div>
+                                                                                    <div className="btn-group btn-group-sm ml-3">
+                                                                                        <button className="btn btn-solid" type="button" onClick={this.handleButtonChangeNicknameUpdate}>변경</button>
+                                                                                        <button className="btn btn-solid" onClick={this.handleButtonChangeNicknameCancel}>취소</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <FormCheckText sendMsg={this.state.nicknameValidMsg} isCheck={this.state.isEnteredNicknameValid} />
+                                                                            </div> :
+                                                                            <div>
+                                                                                <span>{this.props.auth.userDetails.nickname}</span>
+                                                                                <span className="ta-info-modify-action" onClick={this.handleButtonChangeNicknameEdit}>닉네임 변경하기</span>
+                                                                            </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -130,7 +299,7 @@ class Account extends Component {
                                                                     </div>
                                                                     <div className="col-sm-8">
                                                                         <span>{this.validInfo(this.props.auth.userDetails.realName) ? this.props.auth.userDetails.realName : '입력한 정보가 없어요'}</span>
-                                                                        {this.state.isRealNameEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangeRealName}>이름 변경하기</span>}
+                                                                        {this.state.isRealNameEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangeRealNameEdit}>이름 변경하기</span>}
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -139,7 +308,7 @@ class Account extends Component {
                                                                     </div>
                                                                     <div className="col-sm-8">
                                                                         <span>{this.validInfo(this.props.auth.userDetails.phone) ? this.props.auth.userDetails.phone : '입력한 정보가 없어요'}</span>
-                                                                        {this.state.isPhoneEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangePhone}>연락처 변경하기</span>}
+                                                                        {this.state.isPhoneEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangePhoneEdit}>연락처 변경하기</span>}
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -186,6 +355,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     checkNickname: (nickname) => dispatch(Actions.checkNickname(nickname)),
+    updateNickname: (nickname) => dispatch(Actions.updateNickname(nickname))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Account))
