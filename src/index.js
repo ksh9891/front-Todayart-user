@@ -110,6 +110,8 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
+                                <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
@@ -132,8 +134,6 @@ class Root extends React.Component {
 
 
                                 {/*Routes For custom Features*/}
-                                <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
-                                <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
                                 <Route path={`${process.env.PUBLIC_URL}/order-success`} component={orderSuccess}/>

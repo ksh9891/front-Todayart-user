@@ -22,7 +22,7 @@ class TopBarDark extends Component {
                             {isAuthenticated(this.props.auth) ?
                                 <ul className="header-dropdown">
                                     <li className="mobile-wishlist">
-                                        <a href="#"><i className="fa fa-heart" aria-hidden="true"/> 찜 목록</a>
+                                        <Link to="/wishlist"><i className="fa fa-heart" aria-hidden="true"/> 찜 목록</Link>
                                     </li>
                                     <li className="onhover-dropdown mobile-account">
                                         <i className="fa fa-user" aria-hidden="true" /> {this.props.auth.userDetails.nickname}

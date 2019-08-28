@@ -7,19 +7,16 @@ import Breadcrumb from '../common/breadcrumb';
 import {addToCartAndRemoveWishlist, removeFromWishlist} from '../../actions'
 
 class wishList extends Component {
-
-
     changeQty = (e) => {
         this.setState({ quantity: parseInt(e.target.value) })
     }
 
     render (){
-
         const {Items, symbol} = this.props;
 
         return (
             <div>
-                <Breadcrumb title={'Wishlist'} />
+                <Breadcrumb title={'위시리스트'} />
                 {Items.length>0 ?
                 <section className="wishlist-section section-b-space">
                     <div className="container">
@@ -28,11 +25,11 @@ class wishList extends Component {
                                 <table className="table cart-table table-responsive-xs">
                                     <thead>
                                     <tr className="table-head">
-                                        <th scope="col">image</th>
-                                        <th scope="col">product name</th>
-                                        <th scope="col">price</th>
-                                        <th scope="col">availability</th>
-                                        <th scope="col">action</th>
+                                        <th scope="col">작품 이미지</th>
+                                        <th scope="col">작품명</th>
+                                        <th scope="col">가격</th>
+                                        <th scope="col">재고 여부</th>
+                                        <th scope="col">액션</th>
                                     </tr>
                                     </thead>
                                     {Items.map((item, index) => {
@@ -58,10 +55,10 @@ class wishList extends Component {
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
                                                                 <a href="javascript:void(0)" className="icon" onClick={() => this.props.removeFromWishlist(item)}>
-                                                                    <i className="fa fa-times"></i>
+                                                                    <i className="fa fa-times" />
                                                                 </a>
                                                                 <a href="javascript:void(0)" className="cart" onClick={() => this.props.addToCartAndRemoveWishlist(item, 1)}>
-                                                                    <i className="fa fa-shopping-cart"></i>
+                                                                    <i className="fa fa-shopping-cart" />
                                                                 </a>
                                                             </h2>
                                                         </div>
@@ -74,10 +71,10 @@ class wishList extends Component {
                                                 </td>
                                                 <td>
                                                     <a href="javascript:void(0)" className="icon" onClick={() => this.props.removeFromWishlist(item)}>
-                                                        <i className="fa fa-times"></i>
+                                                        <i className="fa fa-times" />
                                                     </a>
                                                     <a href="javascript:void(0)" className="cart" onClick={() => this.props.addToCartAndRemoveWishlist(item, 1)}>
-                                                        <i className="fa fa-shopping-cart"></i>
+                                                        <i className="fa fa-shopping-cart" />
                                                     </a>
                                                 </td>
                                             </tr>
@@ -103,9 +100,9 @@ class wishList extends Component {
                                     <div className="col-sm-12 empty-cart-cls text-center">
                                         <img src={`${process.env.PUBLIC_URL}/assets/images/empty-wishlist.png`} className="img-fluid mb-4" alt="" />
                                         <h3>
-                                            <strong>WhishList is Empty</strong>
+                                            <strong>위시리스트가 비어있습니다.</strong>
                                         </h3>
-                                        <h4>Explore more shortlist some items.</h4>
+                                        <h4>다양한 작품을 감상하시고 위시리스트에 넣어보세요!</h4>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +119,4 @@ const mapStateToProps = (state) => ({
     symbol: state.data.symbol,
 })
 
-export default connect(
-    mapStateToProps,
-    {addToCartAndRemoveWishlist, removeFromWishlist}
-)(wishList)
+export default connect(mapStateToProps, {addToCartAndRemoveWishlist, removeFromWishlist})(wishList)
