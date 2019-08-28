@@ -2,7 +2,8 @@ import {
     FETCH_SINGLE_PRODUCT,
     CHANGE_CURRENCY,
     RECEIVE_PRODUCTS,
-    FETCH_ARTWORK_SUCCESS } from "../constants/ActionTypes";
+    FETCH_ARTWORK_SUCCESS
+} from "../constants/ActionTypes";
 
 import { ActionTypes } from "../constants/ActionTypes";
 
@@ -30,34 +31,49 @@ const productReducer = (state = initialState, action) => {
         //         return { ...state,
         //             product_details: singleItem };
         //     }
-            case ActionTypes.FETCH_ARTWORK_SUCCESS:
+        case ActionTypes.FETCH_ARTWORK_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                if (data !== null && data !== undefined) {
+                    console.log("fetchartwork :", data);
+                    return {
+                        ...state,
+                        items: (data === undefined ? [] : data)
+                    };
+                }
+            }
+            return state;
+
+
+        case ActionTypes.FETCH_SINGLEPRODUCT_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchsingleproduct :", data);
+                return {
+                    ...state,
+                    item: data
+                };
+            }
+            return state;
+
+            case ActionTypes.FETCH_CATEGORY_SUCCESS:
                 if (payload !== null && payload !== undefined) {
                     const { data } = payload;
-                    if (data !== null && data !== undefined) {
-                        console.log("fetchartwork :", data);
-                        return {
-                            ...state,
-                            items: (data === undefined ? [] : data)
-                        };
-                    }
+                    console.log("fetchcategory :", data);
+                    return {
+                        ...state,
+                        items: (data === undefined ? [] : data)
+                    };
                 }
                 return state;
 
-
-                case ActionTypes.FETCH_SINGLEPRODUCT_SUCCESS:
-                    if (payload !== null && payload !== undefined) {
-                        const { data } = payload;
-                        console.log("fetchsingleproduct :", data);
-                        return {
-                            ...state,
-                            item: data
-                        };
-                    }
-                    return state;
+        
 
         case CHANGE_CURRENCY:
-            return { ...state,
-                symbol: action.symbol };
+            return {
+                ...state,
+                symbol: action.symbol
+            };
         default:
             return state;
     }

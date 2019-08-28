@@ -85,16 +85,16 @@ class ProductListItem extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
                                     <i className="fa fa-refresh" aria-hidden="true"></i></Link>
                             </div>
-                            {/* {product.variants?
+                            {item.variants?
                             <ul className="product-thumb-list">
-                                {product.variants.map((vari, i) =>
+                                {item.variants.map((vari, i) =>
                                     <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
                                         <a href="javascript:void(0)" title="Add to Wishlist">
                                             <img src={`${vari.images}`} onClick={() => this.onClickHandle(vari.images)} />
                                         </a>
                                     </li>)
                                 }
-                            </ul>:''} */}
+                            </ul>:''}
 
                         </div>
                         <div className="product-detail">
@@ -102,7 +102,7 @@ class ProductListItem extends Component {
                                 <div className="rating">
                                     
                                 </div>
-                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.productId}`}>
+                                <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`}>
                                     <h6>{item.productName}</h6>
                                 </Link>
                                 <h4>{symbol}{item.productPrice}
@@ -132,12 +132,7 @@ class ProductListItem extends Component {
                                                     <h3>{symbol}{item.productPrice}
                                                         <del><span className="money">{symbol}{item.productPrice}</span></del>
                                                     </h3>
-                                                    {/* {product.variants?
-                                                    <ul className="color-variant">
-                                                        {item.variants.map((vari, i) =>
-                                                            <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
-                                                        }
-                                                    </ul>:''} */}
+                                                   
                                                     <div className="border-product">
                                                         <h6 className="product-title">product details</h6>
                                                         <p>{item}</p>
@@ -169,7 +164,7 @@ class ProductListItem extends Component {
                                                     </div>
                                                     <div className="product-buttons">
                                                         <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
-                                                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.productId}`} className="btn btn-solid">view detail</Link>
+                                                        <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} className="btn btn-solid">view detail</Link>
                                                     </div>
                                                 </div>
                                             </div>
