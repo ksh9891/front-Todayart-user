@@ -7,6 +7,7 @@ import filtersReducer from './filters';
 import wishlistReducer from './wishlist';
 import compareReducer from './compare';
 import authentication from "./authentication.reducer";
+import articleReducer from './article'
 
 
 const rootReducer = combineReducers({
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     filters: filtersReducer,
     wishlist: wishlistReducer,
     compare: compareReducer,
+    article: articleReducer,
 
     auth: authentication
 });
