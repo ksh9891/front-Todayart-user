@@ -12,6 +12,8 @@ class FAQArticle extends Component {
   }
 
   componentDidmount(){
+    this.props.articleDelete(this.props.articleId)
+    this.props.articleModify(this.props.articleId)
   }
 
   render() {
@@ -19,12 +21,37 @@ class FAQArticle extends Component {
     
     console.log('props = ',this.props)
 
-    const {items} = this.props.article
+    const {items} = this.props.article;
+    const {userDetails} = this.props.auth;
+
+    const onDelete = (e, history, {articleDelete}) => {
+
+      e.preventDefault();
+
+      articleDelete(this.props.articleId)
+      .then(response => {
+          history.push("/article/"+this.props.boardId)
+        })
+        .catch(error => {
+          console.log('error>>', error);
+        });
+  };
+
+  const onModify = (e, history, {articleModify}) => {
+
+      e.preventDefault();
+
+      articleModify(this.props.articleId)
+      .then(response => {
+          history.push("/articleWrite")
+        })
+        .catch(error => {
+          console.log('error>>', error);
+        });
+  };
 
     return(
 <div>
-<Breadcrumb title={this.props.article.boardName} />
-
   
     {items.map((item) => {
       const {title, content} = item;
@@ -51,6 +78,20 @@ class FAQArticle extends Component {
                         data-parent="#accordionExample">
                         <div className="card-body">
                           <p>{item.content}</p>
+                          <span>
+                            {(userDetails !== null) && (item.memberId === userDetails.memberId) ?
+                                <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                    <form class="form-inline">
+                                        <form onSubmit={e => onModify(e)}>
+                                        <button class="btn btn-outline-success my-2 my-sm-0">수정</button>
+                                        </form>
+                                        <form onSubmit={e => onDelete(e)}>
+                                        <button type="submit" class="btn btn-outline-success my-2 my-sm-0">삭제</button>
+                                        </form>
+                                    </form>
+                                </nav>
+                                </div> : ''}
+                        </span>
                         </div>
                       </div>
                     </div>
@@ -71,11 +112,14 @@ class FAQArticle extends Component {
 
 
 const mapStateToProps = (state) => ({
-  article: state.article
+  article: state.article,
+  auth: state.auth
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId))
+  getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
+  articleDelete: (boardId) => dispatch(Actions.articleDelete(boardId)),
+  articleModify: (boardId) => dispatch(Actions.articleModify(boardId))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FAQArticle))
