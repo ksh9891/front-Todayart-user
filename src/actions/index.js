@@ -525,22 +525,6 @@ const addCart = (item, quantity) =>{
     })
 }
 
-const updateNickname = (nickname) => {
-    return ({
-        type: ActionTypes.UPDATE_NICKNAME,
-        payload: {
-            request: {
-                method: 'PATCH',
-                url: '/members',
-                headers: {
-                    'Content-Type': 'application/json; charset: utf-8'
-                },
-                data: JSON.stringify({ nickname })
-            }
-        }
-    });
-};
-
 const checkPassword = (chkpassword) => {
     return ({
         type: ActionTypes.CHECK_PASSWORD,
@@ -556,6 +540,58 @@ const checkPassword = (chkpassword) => {
         },
     });
 };
+
+const updateNickname = (nickname) => {
+    return ({
+        type: ActionTypes.UPDATE_NICKNAME,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ nickname })
+            }
+        }
+    });
+};
+
+const updateRealName = (realName) => {
+    return ({
+        type: ActionTypes.UPDATE_REALNAME,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ realName })
+            }
+        }
+    });
+};
+
+const updatePhone = (phone) => {
+    return ({
+        type: ActionTypes.UPDATE_PHONE,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ phone })
+            }
+        }
+    });
+};
+
 export const Actions = {
     getClientToken,
     login,
@@ -587,6 +623,8 @@ export const Actions = {
     register,
     getOrderList,
     addCart,
-    updateNickname,
     checkPassword,
+    updateNickname,
+    updateRealName,
+    updatePhone
 };
