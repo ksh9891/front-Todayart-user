@@ -8,7 +8,7 @@ import BlogSection from "../common/blogsection"
 import ThemeSettings from "../../common/theme-settings"
 import FooterOne from "../../common/footers/footer-one";
 
-class Furniture extends Component {
+class Todayart extends Component {
 
     componentDidMount() {
         document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color5.css` );
@@ -160,4 +160,4 @@ class Furniture extends Component {
 }
 
 
-export default Furniture;
+export default Todayart;
