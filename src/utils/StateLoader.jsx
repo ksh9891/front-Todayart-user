@@ -1,5 +1,4 @@
 class StateLoader {
-
   loadState() {
     try {
       let state = localStorage.getItem("http://localhost:8080/state");
