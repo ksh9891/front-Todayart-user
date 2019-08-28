@@ -20,6 +20,7 @@ export const getAllProducts = () => dispatch => {
         return products;
     })
 }
+
 export const fetchSingleProduct = productId => ({
     type: types.FETCH_SINGLE_PRODUCT,
     productId
@@ -592,6 +593,24 @@ const updatePhone = (phone) => {
     });
 };
 
+const updatePassword = (password) => {
+    return ({
+        type: ActionTypes.UPDATE_PASSWORD,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ password })
+            }
+        }
+    });
+};
+
+
 export const Actions = {
     getClientToken,
     login,
@@ -626,5 +645,6 @@ export const Actions = {
     checkPassword,
     updateNickname,
     updateRealName,
-    updatePhone
+    updatePhone,
+    updatePassword
 };

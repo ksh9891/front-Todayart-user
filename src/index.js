@@ -52,6 +52,7 @@ import orderSuccess from './components/checkout/success-page'
 import Login from './components/pages/login'
 import Register from './components/pages/register'
 import Account from './components/pages/account/account'
+import Password from './components/pages/account/password'
 
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
@@ -107,8 +108,8 @@ class Root extends React.Component {
                                 {/* Member */}
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Account}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
 
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
@@ -175,7 +176,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
 
-                                {/* <Route exact path="*" component={PageNotFound} /> */}
+                                 {/*<Route exact path="*" component={PageNotFound} />*/}
                             </Layout>
                         </Switch>
                     </ScrollContext>

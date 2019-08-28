@@ -85,6 +85,10 @@ class Account extends Component {
         }
     }
 
+    preventAction = (e) => {
+        e.preventDefault();
+    }
+
     // 업데이트
     onUpdate = (type) => {
         switch(type) {
@@ -338,11 +342,11 @@ class Account extends Component {
                                     </div>
                                     <div className="block-content">
                                         <ul>
-                                            <li className="active"><a href='#'>계정정보 관리</a></li>
-                                            <li><a href="#">배송지 관리</a></li>
-                                            <li><a href="#">주문 관리</a></li>
-                                            <li><a href="#">찜목록 관리</a></li>
-                                            <li><a href="#">비밀번호 변경</a></li>
+                                            <li className="active"><Link to="/account">계정정보 관리</Link></li>
+                                            <li><Link to="/account/password">비밀번호 변경</Link></li>
+                                            <li><Link to="/account/address">배송지 관리</Link></li>
+                                            <li><Link to="/account/order">주문 관리</Link></li>
+                                            <li><Link to="/account/wish">찜목록 관리</Link></li>
                                         </ul>
                                     </div>
                                 </div>
