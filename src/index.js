@@ -112,9 +112,9 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
-                                {/*<Route exact path={`${process.env.PUBLIC_URL}/register-success?token=:token`} component={RegisterSuccess}/>*/}
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
@@ -163,7 +163,6 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/pages/lookbook`} component={lookbook}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/search`} component={Search}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/collection`} component={Collection}/>
-                                <Route path={`${process.env.PUBLIC_URL}/pages/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/contact`} component={Contact}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/dashboard`} component={Dashboard}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/faq`} component={Faq}/>
