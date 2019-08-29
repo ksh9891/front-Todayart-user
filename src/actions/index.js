@@ -426,7 +426,7 @@ const fetchCategoryAsc = (id) => {
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/category=${id}/asc`
+                url: `/product/${id}/asc`
             }
         }
 
@@ -439,7 +439,7 @@ const fetchCategoryDesc = (id) => {
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/category=${id}/desc`
+                url: `/product/${id}/desc`
             }
         }
 
