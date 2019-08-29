@@ -1,3 +1,6 @@
+// http://localhost:3000/no-sidebar/collection 여기에대한 부분
+// 전체리스트에서 상품 몇개인지 길이 뽑아주고 사진배열 정하고 그런 부분
+
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {filterSort} from '../../../actions'
@@ -48,7 +51,7 @@ class FilterBar extends Component {
         return (
             <div className="product-filter-content">
                 <div className="search-count">
-                    <h5>Showing Products 1-{this.props.products.length} Result</h5>
+                    <h5>Showing Products 1-{this.props.items.length} Result</h5>
                 </div>
                 <div className="collection-view">
                     <ul>
@@ -90,11 +93,11 @@ class FilterBar extends Component {
                 </div>
                 <div className="product-page-filter">
                     <select onChange={(e) => this.props.filterSort(e.target.value)}>
-                        <option value="">Sorting items</option>
-                        <option value="HighToLow">Price: High to Low</option>
-                        <option value="LowToHigh">Price: Low to High</option>
-                        <option value="Newest">Newest Items</option>
-                        <option value="AscOrder">Sort By Name: A To Z</option>
+                        <option value="">Sorting items 작품정렬</option>
+                        <option value="HighToLow">Price: High to Low 높은가격순</option>
+                        <option value="LowToHigh">Price: Low to High 낮은가격순</option>
+                        <option value="Newest">Newest Items 최신등록순</option>
+                        <option value="AscOrder">Sort By Name: A To Z 이름순</option>
                         <option value="DescOrder">Sort By Name: Z To A</option>
                     </select>
                 </div>
@@ -105,7 +108,8 @@ class FilterBar extends Component {
 
 const mapStateToProps = state => ({
     products: getVisibleproducts(state.data, state.filters),
-    filters: state.filters
+    filters: state.filters,
+    items: state.data.items,
 })
 
 export default connect(mapStateToProps, {filterSort})(FilterBar);

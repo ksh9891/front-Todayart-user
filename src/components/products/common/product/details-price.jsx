@@ -62,25 +62,33 @@ class DetailsWithPrice extends Component {
         return (
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
-                    <h2> {item.name} </h2>
+                    <h2> {item.productName} </h2>
                     <h4>
-                        <del>{symbol}{item.price}</del>
-                        <span>{item.discount}% off</span></h4>
-                    <h3>{symbol}{item.price-(item.price*item.discount/100)} </h3>
-                    {item.variants?
+                        {item.artistName}</h4>
+                        {/* 가격할인된거 보여주는 부분 */}
+                        {/* <span>{item.discount}% off</span> */}
+                    <h3>{item.productPrice}{symbol} </h3>
+                   
+                    {/* 색상 선택하던 부분 */}
+                    {/* {item.variants?
                     <ul >
                         <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
                             {item.variants.map((vari, i) => {
                                 return <li className={vari.color} key={i} title={vari.color}></li>
                             })}
                         </Slider>
-                    </ul>:''}
+                    </ul>:''} */}
                     <div className="product-description border-product">
-                        {item.size?
-                            <div>
-                                <h6 className="product-title size-text">select size
-                                    <span><a href="#" data-toggle="modal"
-                                             data-target="#sizemodal" onClick={this.onOpenModal} >size chart</a></span></h6>
+                        {/* {item.size? */}
+                            {/* <div> */}
+                                <h6 className="product-title size-text">상품크기
+                                <h4>{item.productSize}</h4>
+                                {/* 상품 사이즈 보는 부분 */}
+                                    {/* <span>
+                                        <a href="#" data-toggle="modal"
+                                             data-target="#sizemodal" onClick={this.onOpenModal} >size chart</a>
+                                             </span> */}
+                                             </h6>
                                 <div className="modal fade" id="sizemodal" tabIndex="-1"
                                      role="dialog" aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
@@ -103,13 +111,14 @@ class DetailsWithPrice extends Component {
                                     </div>
                                 </div>
                                 <div className="size-box">
-                            <ul>
+                                    {/* 사이즈 선택하는 부분 */}
+                            {/* <ul>
                                 {item.size.map((size, i) => {
                                     return <li key={i}><a href="#">{size}</a></li>
                                 })}
-                            </ul>
+                            </ul> */}
                         </div>
-                            </div>:''}
+                            {/* </div>:''} */}
                         <span className="instock-cls">{this.state.stock}</span>
                         <h6 className="product-title">quantity</h6>
                         <div className="qty-box">
@@ -129,15 +138,23 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-                        <a className="btn btn-solid" onClick={() => addToCartClicked(item, this.state.quantity)}>add to cart</a>
+
+                         {/* wishlist 버튼으로 만든거 */}
+                         <a className="btn btn-solid" onClick={() => addToWishlistClicked(item, this.state.quantity)}> <i
+                                    className="fa fa-heart"></i>Add To WishList</a>
+                                    {/* 여기까지 */}
+                                    
+                                    {/* 버튼 간격 넓히려고 span 추가함 */}
+                                    <span>
+                        <a className="btn btn-solid" onClick={() => addToCartClicked(item, this.state.quantity)}>add to cart</a></span>
                         <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >buy now</Link>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">product details</h6>
-                        <p>{item.shortDetails}</p>
+                        <h6 className="product-title">작품설명</h6>
+                        <p>{item.productContent}</p>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">share it</h6>
+                        <h6 className="product-title">Share it</h6>
                         <div className="product-icon">
                             <ul className="product-social">
                                 <li><a href="https://www.facebook.com/" target="_blank"><i className="fa fa-facebook"></i></a></li>
@@ -152,7 +169,8 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">Time Reminder</h6>
+                        {/* 시간나오던 부분 */}
+                        {/* <h6 className="product-title">Time Reminder</h6>
                         <div className="timer">
                             <p id="demo">
                                 <span>25
@@ -168,10 +186,10 @@ class DetailsWithPrice extends Component {
                                     <span className="timer-cal">Min</span>
                                 </span>
                                 <span>57
-                                    <span className="timer-cal">Sec</span>
+                            y        <span className="timer-cal">Sec</span>
                                 </span>
                             </p>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <Modal open={this.state.open} onClose={this.onCloseModal} center>

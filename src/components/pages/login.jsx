@@ -94,10 +94,10 @@ class Login extends Component {
                             <div className="col-lg-6 right-login">
                                 <h3>첫 방문이신가요?</h3>
                                 <div className="theme-card authentication-right">
-                                    <h6 className="title-font">계정을 생성 해 주세요</h6>
-                                    <p>회원가입을 하고 홈페이지를 이용 해 보세요.
+                                    <h6 className="title-font">계정을 생성해주세요</h6>
+                                    <p>회원가입을 하고 홈페이지를 이용해보세요.
                                         회원가입은 아주 쉽고 간편합니다.<br/>
-                                        아래 가입 버튼을 통해 등록을 시작 해 보세요!</p>
+                                        아래 가입 버튼을 통해 등록을 시작해보세요!</p>
                                     <br/>
                                     <Link to="/register" className="btn btn-solid">계정생성</Link>
                                 </div>

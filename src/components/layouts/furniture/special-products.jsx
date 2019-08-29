@@ -1,3 +1,5 @@
+// 메인부분에 대한거...
+
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {connect} from 'react-redux'
@@ -15,7 +17,7 @@ class SpecialProducts extends Component {
             <div>
                 <div className="title1 section-t-space">
                     <h4>exclusive products</h4>
-                    <h2 className="title-inner1">special products</h2>
+                    <h2 className="title-inner1">special products 메인부분</h2>
                 </div>
                 <section className="section-b-space p-t-0">
                     <div className="container">

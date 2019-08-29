@@ -1,4 +1,6 @@
 
+// 상품상세페이지에 아래 사진부분....
+
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 
@@ -22,9 +24,9 @@ class SmallImages extends Component {
 
         return (
             <div className="row">
-                <div className="col-12 p-0">
+                {/* <div className="col-12 p-0">
                     <Slider {...productsnav} asNavFor={this.props.navOne} ref={slider => (this.slider2 = slider)} className="slider-nav">
-                        {item.variants?
+                        {item.variants?s
                         item.variants.map((vari, index) =>
                             <div key={index}>
                                 <img src={`${vari.images}`} key={index} alt=""  className="img-fluid" />
@@ -36,7 +38,7 @@ class SmallImages extends Component {
                                 </div>
                             )}
                     </Slider>
-                </div>
+                </div> */}
             </div>
         );
     }

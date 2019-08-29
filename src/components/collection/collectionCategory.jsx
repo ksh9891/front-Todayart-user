@@ -14,23 +14,24 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 
-class CollectionNoSideBar extends Component {
 
-    // shouldComponentUpdate(nextProps, nextState, nextContext){
-    //     console.log('nextProps', nextProps);
-    //     if(this.props !== nextProps){
-    //         console.log('collectionCategory >> ', nextProps.match.params);
-    //         return true;
-    //     }
-    //     return false;
-    // }
+class collectionCategory extends Component {
 
-    // componentWillUpdate(nextProps, nextState){
-    //     const { id } = nextProps.match.params;
-    //     console.log('collectionCategory 1 >> ', id);
-    //     this.props.fetchCategory(id);
-    // }
+    shouldComponentUpdate(nextProps, nextState, nextContext){
+        console.log('nextProps', nextProps);
+        if(this.props !== nextProps){
+            console.log('collectionCategory 1 >> ', nextProps.match.params);
+            return true;
+        }
+        return false;
+    }
 
+    componentWillUpdate(nextProps, nextState){
+        const { id } = nextProps.match.params;
+        console.log('collectionCategory 2 >> ', id);
+        this.props.fetchCategory(id);
+    }
+    
     state = {
         layoutColumns:3
     }
@@ -46,7 +47,18 @@ class CollectionNoSideBar extends Component {
     // }
    
 
+
+    componentWillMount(nextProps){
+        const { id } = nextProps.match.params;
+        console.log('collectionCategory 3 >> ', id);
+
+    }
+
     render(){
+
+        const { id } = this.props.match.params;
+        console.log('id: ', id)
+
         return (
             <div>
                 <Breadcrumb title={'Collection'} />
@@ -65,7 +77,7 @@ class CollectionNoSideBar extends Component {
                                                         <a href="#"><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
                                                                          className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>TodayArt | fashion 여기야?</h4>
+                                                            <h4>fashion</h4>
                                                             <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</h5>
                                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p>
                                                         </div>
@@ -84,7 +96,7 @@ class CollectionNoSideBar extends Component {
                                                         <div className="product-wrapper-grid">
                                                             <div className="container-fluid">
                                                                 <div className="row">
-                                                                    <ProductListing colSize={this.state.layoutColumns}/>
+                                                                    <ProductListing colSize={this.state.layoutColumns} id={id}/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -105,4 +117,4 @@ class CollectionNoSideBar extends Component {
     }
 }
 
-export default CollectionNoSideBar;
+export default withRouter(connect(null, (dispatch) => ({fetchCategory:(id) => dispatch(Actions.fetchCategory(id))}))(collectionCategory));

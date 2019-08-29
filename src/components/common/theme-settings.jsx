@@ -87,6 +87,9 @@ class ThemeSettings extends Component {
 
         return (
             <div>
+
+
+
                 <a href="" onClick={() => this.openSetting()}>
                     <div className="setting-sidebar" id="setting-icon">
                         <div>
@@ -521,6 +524,8 @@ class ThemeSettings extends Component {
                         </div>
                     </div>
                 </div>
+
+                
                 <div className="sidebar-btn dark-light-btn">
                     <div className="dark-light">
                         <div

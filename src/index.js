@@ -22,11 +22,12 @@ import Electronic from './components/layouts/electronic/main';
 
 
 //Collection Pages
-import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
+// import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
 import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
-import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
-import CollectionFullWidth from "./components/collection/collection-full-width";
-import CollectionMetro from "./components/collection/collection-metro";
+// import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
+// import CollectionFullWidth from "./components/collection/collection-full-width";
+// import CollectionMetro from "./components/collection/collection-metro";
+import collectionCategory from "./components/collection/collectionCategory";
 
 // Product Pages
 import LeftSideBar from "./components/products/left-sidebar";
@@ -107,23 +108,25 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
 
                                 {/*Routes For Features (Product Collection) */}
-                                <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
+                                {/* <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/> */}
                                 <Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/>
-                                <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/>
+                                <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
+                                <Route path={`${process.env.PUBLIC_URL}/collections/:id`} component={collectionCategory}/>
+                                {/* <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/> */}
+                                {/* <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/> */}
+                                {/* <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/> */}
 
                                 {/*Routes For Single Product*/}
-                                <Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/>
+                                {/* <Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
+                                <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/> */}
                                 <Route path={`${process.env.PUBLIC_URL}/no-sidebar/product/:id`} component={NoSideBar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
+                                {/* <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
                                 <Route path={`${process.env.PUBLIC_URL}/col-right/product/:id`} component={ColumnRight}/>
                                 <Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
                                 <Route path={`${process.env.PUBLIC_URL}/column/product/:id`} component={Column}/>
                                 <Route path={`${process.env.PUBLIC_URL}/left-image/product/:id`} component={LeftImage}/>
                                 <Route path={`${process.env.PUBLIC_URL}/right-image/product/:id`} component={RightImage}/>
-                                <Route path={`${process.env.PUBLIC_URL}/vertical/product/:id`} component={Vertical}/>
+                                <Route path={`${process.env.PUBLIC_URL}/vertical/product/:id`} component={Vertical}/> */}
 
 
                                 {/*Routes For custom Features*/}

@@ -9,6 +9,8 @@ import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
+import { Actions } from '../../../actions'
+
 class ProductListing extends Component {
 
     constructor (props) {
@@ -20,10 +22,11 @@ class ProductListing extends Component {
 
     componentWillMount(){
         this.fetchMoreItems();
+        this.props.fetchArtwork();
     }
 
     fetchMoreItems = () => {
-        if (this.state.limit >= this.props.products.length) {
+        if (this.state.limit >= this.props.items.length) {
             this.setState({ hasMoreItems: false });
             return;
         }
@@ -38,13 +41,13 @@ class ProductListing extends Component {
     }
 
     render (){
-        const {products, addToCart, symbol, addToWishlist, addToCompare} = this.props;
+        const {products, addToCart, symbol, addToWishlist, addToCompare, items} = this.props;
         console.log(this.props.colSize)
         return (
             <div>
                 <div className="product-wrapper-grid">
                     <div className="container-fluid">
-                        {products.length > 0 ?
+                        {items.length > 0 ?
                             <InfiniteScroll
                                 dataLength={this.state.limit} //This is important field to render the next data
                                 next={this.fetchMoreItems}
@@ -57,11 +60,11 @@ class ProductListing extends Component {
                                 }
                             >
                                 <div className="row">
-                                    { products.slice(0, this.state.limit).map((product, index) =>
+                                    { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
-                                        <ProductListItem product={product} symbol={symbol}
-                                                         onAddToCompareClicked={() => addToCompare(product)}
-                                                         onAddToWishlistClicked={() => addToWishlist(product)}
+                                        <ProductListItem item={item} symbol={symbol}
+                                                         onAddToCompareClicked={() => addToCompare(item)}
+                                                         onAddToWishlistClicked={() => addToWishlist(item)}
                                                          onAddToCartClicked={addToCart} key={index}/>
                                         </div>)
                                     }
@@ -85,9 +88,15 @@ class ProductListing extends Component {
 }
 const mapStateToProps = (state) => ({
     products: getVisibleproducts(state.data, state.filters),
-    symbol: state.data.symbol,
+    items: state.data.items,
+    symbol: state.data.symbol
 })
 
-export default connect(
-    mapStateToProps, {addToCart, addToWishlist, addToCompare}
-)(ProductListing)
+const mapDispatchToProps = (dispatch) => ({
+    fetchArtwork: () => dispatch(Actions.fetchArtwork()),
+    addToCart:() => dispatch(addToCart()),
+    addToWishlist:() => dispatch(addToWishlist()),
+    addToCompare:() => dispatch(addToCompare())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListing)

@@ -1,3 +1,5 @@
+// 상품상세페이지 하단 내용, 디테일, 비디오, 리뷰 쓰는 곳에 대한 코드
+
 import React, {Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';

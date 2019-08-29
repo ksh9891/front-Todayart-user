@@ -46,7 +46,7 @@ class ProductItem extends Component {
     }
 
     render() {
-        const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked} = this.props;
+        const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
 
         let RatingStars = []
         for(var i = 0; i < product.rating; i++) {
@@ -57,11 +57,15 @@ class ProductItem extends Component {
                     <div className="img-wrapper">
                         <div className="lable-block">
                             {(product.new == true)? <span className="lable3">new</span> : ''}
+
+                            {/* 상품상세 아래 상품박스에 on sale이라고 박혀있는 부분 */}
                             {(product.sale == true)? <span className="lable4">on sale</span> : ''}
 
                         </div>
                         <div className="front">
-                            <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`} ><img
+
+                            {/* 상품상세 아래 상품박스 상품 이미지 부분  */}
+                            <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.productId}`} ><img
                                 src={`${
                                     product.variants?
                                         this.state.image?this.state.image:product.variants[0].images
@@ -98,14 +102,19 @@ class ProductItem extends Component {
                     <div className="product-detail">
                         <div>
                             <div className="rating">
+
+                                {/* 상품상세페이지 아래 상품박스 별점 부분 */}
                                 {RatingStars}
                             </div>
                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>
                                 <h6>{product.name}</h6>
                             </Link>
-                            <h4>{symbol}{product.price-(product.price*product.discount/100)}
-                                <del><span className="money">{symbol}{product.price}</span></del>
+                            <h4>
+                            {/* {symbol}{product.price} */}
+                                <span className="money">{item.productPrice}{symbol}</span>
                             </h4>
+
+                             {/* 상품상세페이지 아래 상품박스 부분 색상 3개 일렬로 나오는 부분 */}
                             {product.variants?
                             <ul className="color-variant">
                                 {product.variants.map((vari, i) => {
@@ -132,7 +141,9 @@ class ProductItem extends Component {
                                         <div className="col-lg-6 rtl-text">
                                             <div className="product-right">
                                                 <h2> {product.name} </h2>
-                                                <h3>{symbol}{product.price}</h3>
+                                                <h3>{product.price}{symbol}</h3>
+
+                                                {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 3개 일렬로 있는 색상 */}
                                                 {product.variants?
                                                 <ul className="color-variant">
                                                     {product.variants.map((vari, i) =>
@@ -140,6 +151,8 @@ class ProductItem extends Component {
                                                     }
                                                 </ul>:''}
                                                 <div className="border-product">
+
+                                                     {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품상세설명 */}
                                                     <h6 className="product-title">product details</h6>
                                                     <p>{product.shortDetails}</p>
                                                 </div>
@@ -147,6 +160,8 @@ class ProductItem extends Component {
                                                     {product.size?
                                                     <div className="size-box">
                                                         <ul>
+
+                                                              {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품사이즈 L,M,S */}
                                                             {product.size.map((size, i) => {
                                                                 return <li key={i}><a href="#">{size}</a></li>
                                                             })}

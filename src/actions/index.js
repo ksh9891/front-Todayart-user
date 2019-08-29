@@ -20,6 +20,7 @@ export const getAllProducts = () => dispatch => {
         return products;
     })
 }
+
 export const fetchSingleProduct = productId => ({
     type: types.FETCH_SINGLE_PRODUCT,
     productId
@@ -414,7 +415,8 @@ const fetchCategory = (id) => {
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/category=${id}`
+                url: `/product/${id}`
+                // url: `/product/category=${id}`
             }
         }
 
@@ -525,22 +527,6 @@ const addCart = (item, quantity) =>{
     })
 }
 
-const update = ({ realname, nickname, chkPassword, password, phone }) => {
-    return ({
-        type: ActionTypes.UPDATE_USER,
-        payload: {
-            request: {
-                method: 'PATCH',
-                url: '/members/update',
-                headers: {
-                    'Content-Type': 'application/json; charset: utf-8'
-                },
-                data: JSON.stringify({ realname, nickname, chkPassword, password, phone })
-            }
-        }
-    });
-};
-
 const checkPassword = (chkpassword) => {
     return ({
         type: ActionTypes.CHECK_PASSWORD,
@@ -556,6 +542,76 @@ const checkPassword = (chkpassword) => {
         },
     });
 };
+
+const updateNickname = (nickname) => {
+    return ({
+        type: ActionTypes.UPDATE_NICKNAME,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ nickname })
+            }
+        }
+    });
+};
+
+const updateRealName = (realName) => {
+    return ({
+        type: ActionTypes.UPDATE_REALNAME,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ realName })
+            }
+        }
+    });
+};
+
+const updatePhone = (phone) => {
+    return ({
+        type: ActionTypes.UPDATE_PHONE,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ phone })
+            }
+        }
+    });
+};
+
+const updatePassword = (password) => {
+    return ({
+        type: ActionTypes.UPDATE_PASSWORD,
+        payload: {
+            request: {
+                method: 'PATCH',
+                url: '/members',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ password })
+            }
+        }
+    });
+};
+
+
 export const Actions = {
     getClientToken,
     login,
@@ -587,6 +643,9 @@ export const Actions = {
     register,
     getOrderList,
     addCart,
-    update,
     checkPassword,
+    updateNickname,
+    updateRealName,
+    updatePhone,
+    updatePassword
 };

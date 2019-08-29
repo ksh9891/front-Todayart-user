@@ -11,6 +11,11 @@ import HeaderTwo from "../../common/headers/header-two"
 import ThemeSettings from "../../common/theme-settings"
 import FooterOne from "../../common/footers/footer-one";
 
+
+import {getVisibleproducts} from '../../../services';
+import { Actions } from '../../../actions';
+import { connect } from 'react-redux';
+
 class Furniture extends Component {
 
     componentDidMount() {
@@ -22,7 +27,7 @@ class Furniture extends Component {
             <div>
                 <HeaderTwo logoName={'logo/1.png'} />
                 <Helmet>
-                    <title>MultiKart | Furniture Store</title>
+                    <title>TodayArt | 오늘의 아트</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 <section className="p-0 small-slider">
@@ -167,5 +172,19 @@ class Furniture extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    products: getVisibleproducts(state.data, state.filters),
+    items: state.data.items,
+    symbol: state.data.symbol
+})
 
-export default Furniture;
+const mapDispatchToProps = (dispatch) => ({
+    fetchArtwork: (id) => dispatch(Actions.fetchArtwork(id)),
+    // addToCart: () => dispatch(Actions.addToCart()),
+    // addToWishlist: () => dispatch(Actions.fetchArtwaddToWishlistork()),
+    // addToCompare: () => dispatch(Actions.addToCompare())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Furniture)
+
+// export default Furniture;

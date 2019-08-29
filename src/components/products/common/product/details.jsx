@@ -11,10 +11,10 @@ class Details extends Component {
         return (
             <div className="col-lg-4">
                 <div className="product-right product-description-box">
-                    <h2> {item.name} </h2>
+                    <h2> {item.ProductName} </h2>
                     <div className="border-product">
                         <h6 className="product-title">product details</h6>
-                        <p>{item.shortDetails}</p>
+                        <p>{item.ProductContent}</p>
                     </div>
                     <div className="single-product-tables border-product detail-section">
                         <table>
