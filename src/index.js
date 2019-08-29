@@ -20,14 +20,22 @@ import Watch from './components/layouts/watch/main';
 import Beauty from './components/layouts/beauty/main';
 import Electronic from './components/layouts/electronic/main';
 
-
 //Collection Pages
+
 // import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
 import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
 // import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 // import CollectionFullWidth from "./components/collection/collection-full-width";
 // import CollectionMetro from "./components/collection/collection-metro";
 import collectionCategory from "./components/collection/collectionCategory";
+
+import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
+
+import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
+import CollectionFullWidth from "./components/collection/collection-full-width";
+import CollectionMetro from "./components/collection/collection-metro";
+import CollectionCategory from "./components/collection/collection-no-sidebar1";
+
 
 // Product Pages
 import LeftSideBar from "./components/products/left-sidebar";
@@ -46,15 +54,19 @@ import Layout from './components/app'
 import Cart from './components/cart'
 import Compare from './components/compare/index'
 import wishList from './components/wishlist'
-import checkOut from './components/checkout'
+import checkOut, {kakaoSuccessFail, kakaoCancel} from './components/checkout'
+import kakaoSuccess from './components/checkout/kakao'
 import orderSuccess from './components/checkout/success-page'
 
 // Extra Pages
+import Login from './components/pages/login'
+import Register from './components/pages/register'
+import Account from './components/pages/account/account'
+import Password from './components/pages/account/password'
+
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
 import lookbook from './components/pages/lookbook'
-import Login from './components/pages/login'
-import Register from './components/pages/register'
 import Search from './components/pages/search'
 import Collection from './components/pages/collection'
 import ForgetPassword from './components/pages/forget-password'
@@ -106,8 +118,19 @@ class Root extends React.Component {
                                 {/* Member */}
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+
+
+                                {/* Product */}
+                                
+                                <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
+
+
 
                                 {/*Routes For Features (Product Collection) */}
+
                                 {/* <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/> */}
                                 <Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
@@ -121,6 +144,19 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/> */}
                                 <Route path={`${process.env.PUBLIC_URL}/no-sidebar/product/:id`} component={NoSideBar}/>
                                 {/* <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
+
+                                <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
+                                
+                                <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>
+                                <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/>
+                                <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/>
+
+                                {/*Routes For Single Product*/}
+                                <Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
+                                <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/>
+                                
+                                <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
+
                                 <Route path={`${process.env.PUBLIC_URL}/col-right/product/:id`} component={ColumnRight}/>
                                 <Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
                                 <Route path={`${process.env.PUBLIC_URL}/column/product/:id`} component={Column}/>
@@ -135,8 +171,12 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
                                 <Route path={`${process.env.PUBLIC_URL}/order-success`} component={orderSuccess}/>
-
                                 <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={aboutUs}/>
+
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccessFail`} component={kakaoSuccessFail}/>
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccess`} component={kakaoSuccess}/>
+                                <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoCancel`} component={kakaoCancel}/>
+
 
                                 {/*Routes For Extra Pages*/}
                                 <Route path={`${process.env.PUBLIC_URL}/pages/about-us`} component={aboutUs}/>
@@ -170,7 +210,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
 
-                                {/* <Route exact path="*" component={PageNotFound} /> */}
+                                 {/*<Route exact path="*" component={PageNotFound} />*/}
                             </Layout>
                         </Switch>
                     </ScrollContext>

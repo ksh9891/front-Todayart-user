@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import {Link} from "react-router-dom"
-
 import {SlideUpDown} from "../../services/script"
 import { ToastContainer } from 'react-toastify';
 
@@ -86,6 +84,7 @@ class ThemeSettings extends Component {
         let tap_to_top = {display: 'none'}
 
         return (
+<<<<<<< HEAD
             <div>
 
 
@@ -526,6 +525,10 @@ class ThemeSettings extends Component {
                 </div>
 
                 
+=======
+            <div>                
+
+>>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
                 <div className="sidebar-btn dark-light-btn">
                     <div className="dark-light">
                         <div
@@ -536,7 +539,7 @@ class ThemeSettings extends Component {
                 </div>
                 <div className="tap-top" onClick={this.clickToTop} style={tap_to_top}>
                     <div>
-                        <i className="fa fa-angle-double-up"></i>
+                        <i className="fa fa-angle-double-up" />
                     </div>
                 </div>
 

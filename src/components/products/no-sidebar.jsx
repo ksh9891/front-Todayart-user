@@ -13,6 +13,9 @@ import { addToCart, addToCartUnsafe, addToWishlist, addToCompare } from '../../a
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
 
+import { Actions } from '../../actions'
+import { Files } from '../../utils';
+
 
 
 // import { getTotal, getCartProducts } from '../../../reducers'
@@ -34,13 +37,15 @@ class NoSideBar extends Component {
         };
     }
 
-    
 
     componentDidMount(props) {
         this.setState({
             nav1: this.slider1,
             nav2: this.slider2
         });
+
+        const {id} = this.props.match.params
+        this.props.fetchSingleProduct2(id);
 
     }
 
@@ -69,6 +74,8 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
+        const { fileName } = item.thumbnail;       
+        const image = Files.filePath(fileName);
 
         return (
             <div>
@@ -82,6 +89,7 @@ class NoSideBar extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-6 product-thumbnail">
+
                                     {/* <Slider {...products} asNavFor={this.state.nav2} ref={slider => (this.slider1 = slider)} className="product-slick">
                                         {item.variants.map((vari, index) =>
                                             <div key={index}>
@@ -95,6 +103,7 @@ class NoSideBar extends Component {
                                             </div>
 
                                     {/* 상품상세페이지 큰 사진 아래에 나오는 작은 사진 3개 부분 */}
+
                                     <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
                                 <DetailsWithPrice symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
@@ -144,3 +153,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoSideBar)
+

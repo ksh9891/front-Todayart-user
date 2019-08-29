@@ -416,7 +416,7 @@ const fetchCategory = (id) => {
             request: {
                 method: 'GET',
                 url: `/product/${id}`
-                // url: `/product/category=${id}`
+
             }
         }
 
@@ -574,6 +574,7 @@ const updateRealName = (realName) => {
                 data: JSON.stringify({ realName })
             }
         }
+
     });
 };
 
@@ -593,6 +594,7 @@ const updatePhone = (phone) => {
         }
     });
 };
+
 
 const updatePassword = (password) => {
     return ({
@@ -648,4 +650,6 @@ export const Actions = {
     updateRealName,
     updatePhone,
     updatePassword
+
 };
+

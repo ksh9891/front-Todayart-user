@@ -26,7 +26,11 @@ class SmallImages extends Component {
             <div className="row">
                 {/* <div className="col-12 p-0">
                     <Slider {...productsnav} asNavFor={this.props.navOne} ref={slider => (this.slider2 = slider)} className="slider-nav">
-                        {item.variants?s
+
+                      
+
+                        {/* {item.variants?
+
                         item.variants.map((vari, index) =>
                             <div key={index}>
                                 <img src={`${vari.images}`} key={index} alt=""  className="img-fluid" />
@@ -36,7 +40,7 @@ class SmallImages extends Component {
                                 <div key={index}>
                                     <img src={`${vari}`} key={index} alt=""  className="img-fluid" />
                                 </div>
-                            )}
+                            )} }
                     </Slider>
                 </div> */}
             </div>

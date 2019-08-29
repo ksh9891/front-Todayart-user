@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Actions } from '../../../actions'
 
 
 import { getTotal, getCartProducts } from '../../../reducers'
@@ -16,7 +17,7 @@ class ProductListing extends Component {
     constructor (props) {
         super (props)
 
-        this.state = { limit: 5, hasMoreItems: true };
+        this.state = { limit: 4, hasMoreItems: true };
 
     }
 
@@ -33,7 +34,7 @@ class ProductListing extends Component {
         // a fake async api call
         setTimeout(() => {
             this.setState({
-                limit: this.state.limit + 5
+                limit: this.state.limit + 4
             });
         }, 3000);
 
@@ -41,7 +42,15 @@ class ProductListing extends Component {
     }
 
     render (){
+<<<<<<< HEAD
         const {products, addToCart, symbol, addToWishlist, addToCompare, items} = this.props;
+=======
+        const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
+       
+
+
+
+>>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
         console.log(this.props.colSize)
         return (
             <div>
@@ -88,15 +97,27 @@ class ProductListing extends Component {
 }
 const mapStateToProps = (state) => ({
     products: getVisibleproducts(state.data, state.filters),
+<<<<<<< HEAD
     items: state.data.items,
     symbol: state.data.symbol
+=======
+    symbol: state.data.symbol,
+    items : state.data.items
+>>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
 })
 
 const mapDispatchToProps = (dispatch) => ({
     fetchArtwork: () => dispatch(Actions.fetchArtwork()),
+<<<<<<< HEAD
     addToCart:() => dispatch(addToCart()),
     addToWishlist:() => dispatch(addToWishlist()),
     addToCompare:() => dispatch(addToCompare())
+=======
+    addToCart: () => dispatch(addToCart()),
+    addToWishlist: () => dispatch(addToWishlist()),
+    addToCompare: () => dispatch(addToCompare())
+   
+>>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing)

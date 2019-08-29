@@ -109,7 +109,11 @@ class FilterBar extends Component {
 const mapStateToProps = state => ({
     products: getVisibleproducts(state.data, state.filters),
     filters: state.filters,
+<<<<<<< HEAD
     items: state.data.items,
+=======
+    items: state.data.items
+>>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
 })
 
 export default connect(mapStateToProps, {filterSort})(FilterBar);

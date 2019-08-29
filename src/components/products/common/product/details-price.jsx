@@ -71,6 +71,7 @@ class DetailsWithPrice extends Component {
                    
                     {/* 색상 선택하던 부분 */}
                     {/* {item.variants?
+
                     <ul >
                         <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
                             {item.variants.map((vari, i) => {
@@ -79,6 +80,7 @@ class DetailsWithPrice extends Component {
                         </Slider>
                     </ul>:''} */}
                     <div className="product-description border-product">
+
                         {/* {item.size? */}
                             {/* <div> */}
                                 <h6 className="product-title size-text">상품크기
@@ -89,6 +91,7 @@ class DetailsWithPrice extends Component {
                                              data-target="#sizemodal" onClick={this.onOpenModal} >size chart</a>
                                              </span> */}
                                              </h6>
+
                                 <div className="modal fade" id="sizemodal" tabIndex="-1"
                                      role="dialog" aria-labelledby="exampleModalLabel"
                                      aria-hidden="true">
@@ -109,6 +112,7 @@ class DetailsWithPrice extends Component {
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div className="size-box">
                                     {/* 사이즈 선택하는 부분 */}
@@ -119,6 +123,7 @@ class DetailsWithPrice extends Component {
                             </ul> */}
                         </div>
                             {/* </div>:''} */}
+
                         <span className="instock-cls">{this.state.stock}</span>
                         <h6 className="product-title">quantity</h6>
                         <div className="qty-box">

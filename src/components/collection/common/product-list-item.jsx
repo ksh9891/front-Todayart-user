@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
+import { Files } from '../../../utils';
+import { getRelatedItems } from '../../../services';
 
 
 import { connect } from 'react-redux';
@@ -63,13 +65,10 @@ class ProductListItem extends Component {
     render() {
         const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
         const {open} = this.state;
+        const { fileName } = item.thumbnail;
+       
+        const image = Files.filePath(fileName);
 
-        // 추가
-        // const { productName, productPrice, productId, thumbnail, artistName } = item;
-            const { fileName } = item.thumbnail;
-            const image = Files.filePath(fileName);
-
-        
 
             // let RatingStars = []
             // for(var i = 0; i < product.rating; i++) {
@@ -83,6 +82,7 @@ class ProductListItem extends Component {
                             <div className="front">
                                 
                                 <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} ><img
+
                                     src={image}
                                     className="img-fluid"
                                     alt="" /></Link>
@@ -102,7 +102,6 @@ class ProductListItem extends Component {
                                     <i className="fa fa-refresh" aria-hidden="true"></i></Link>
                             </div>
 
-
                             {item.variants?
                             <ul className="product-thumb-list">
                                 {item.variants.map((vari, i) =>
@@ -118,6 +117,7 @@ class ProductListItem extends Component {
                         <div className="product-detail">
                             <div>
                                 <div className="rating">
+
                                     {/* {RatingStars} */}
                                 </div>
                                 <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`}>
@@ -127,8 +127,18 @@ class ProductListItem extends Component {
                                     {/* <del><span className="money">{item.productPrice}{symbol}</span></del> */}
                                     </h4>
                                 {/* {product.variants?
+
+                                    
+                                </div>
+                                <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`}>
+                                    <h6>{item.productName}</h6>
+                                </Link>
+                                <h4>{symbol}{item.productPrice}
+                                    <del><span className="money">{symbol}{item.productPrice}</span></del></h4>
+                                {item.variants?
+
                                 <ul className="color-variant">
-                                    {product.variants.map((vari, i) => {
+                                    {item.variants.map((vari, i) => {
                                         return (
                                             <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
                                     })}
@@ -142,12 +152,15 @@ class ProductListItem extends Component {
                                         <div className="row">
                                             <div className="col-lg-6  col-xs-12">
                                                 <div className="quick-view-img">
-                                                    <img src={image} className="img-fluid" />
+
+                                                    <img src={image} alt="" className="img-fluid" />
+
                                                 </div>
                                             </div>
                                             <div className="col-lg-6 rtl-text">
                                                 <div className="product-right">
                                                     <h2> {item.productName} </h2>
+
                                                     <h3>{item.productPrice}{symbol}
                                                         {/* <del><span className="money">{item.productPrice}{symbol}</span></del> */}
                                                     </h3>
@@ -157,11 +170,13 @@ class ProductListItem extends Component {
                                                             <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
                                                         }
                                                     </ul>:''} */}
+
                                                     <div className="border-product">
                                                         <h6 className="product-title">product details</h6>
                                                         <p>{item}</p>
                                                     </div>
                                                     <div className="product-description border-product">
+
                                                         {item.productSize?
                                                         <div className="size-box">
                                                             {/* <ul>
@@ -170,6 +185,7 @@ class ProductListItem extends Component {
                                                                 })}
                                                             </ul> */}
                                                         </div>:''}
+
                                                         <h6 className="product-title">quantity</h6>
                                                         <div className="qty-box">
                                                             <div className="input-group">
@@ -189,7 +205,9 @@ class ProductListItem extends Component {
                                                     </div>
                                                     <div className="product-buttons">
                                                         <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
+
                                                         <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} className="btn btn-solid">view detail</Link>
+
                                                     </div>
                                                 </div>
                                             </div>
