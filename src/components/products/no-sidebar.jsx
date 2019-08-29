@@ -40,6 +40,8 @@ class NoSideBar extends Component {
             nav2: this.slider2
         });
 
+        const { id } = this.props.match.params
+        this.props.fetchSingleProduct2(id);
     }
 
     componentWillMount(){

@@ -78,14 +78,15 @@ class ProductListItem extends Component {
                                 <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" data-toggle="modal"
+                                
+                                {/* <a href="javascript:void(0)" data-toggle="modal"
                                    data-target="#quick-view"
                                    title="Quick View"
                                    onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
                                 <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
-                                    <i className="fa fa-refresh" aria-hidden="true"></i></Link>
+                                    <i className="fa fa-refresh" aria-hidden="true"></i></Link> */}
                             </div>
-                            {item.variants?
+                            {/* {item.variants?
                             <ul className="product-thumb-list">
                                 {item.variants.map((vari, i) =>
                                     <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
@@ -94,7 +95,7 @@ class ProductListItem extends Component {
                                         </a>
                                     </li>)
                                 }
-                            </ul>:''}
+                            </ul>:''} */}
 
                         </div>
                         <div className="product-detail">
@@ -105,8 +106,9 @@ class ProductListItem extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`}>
                                     <h6>{item.productName}</h6>
                                 </Link>
-                                <h4>{symbol}{item.productPrice}
-                                    <del><span className="money">{symbol}{item.productPrice}</span></del></h4>
+                                <h4>{item.productPrice}{symbol}
+                                    {/* <del><span className="money">{symbol}{item.productPrice}</span></del> */}
+                                    </h4>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {

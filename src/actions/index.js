@@ -415,7 +415,7 @@ const fetchCategory = (id) => {
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/${id}`
+                url: `/product/category/${id}`
 
             }
         }
