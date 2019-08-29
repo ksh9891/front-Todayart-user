@@ -23,7 +23,7 @@ import Electronic from './components/layouts/electronic/main';
 
 //Collection Pages
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
-import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
+
 import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 import CollectionFullWidth from "./components/collection/collection-full-width";
 import CollectionMetro from "./components/collection/collection-metro";
@@ -109,7 +109,7 @@ class Root extends React.Component {
 
 
                                 {/* Product */}
-                                <Route exact path={`${process.env.PUBLIC_URL}/collection`} component={CollectionNoSidebar}/>
+                                
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
 

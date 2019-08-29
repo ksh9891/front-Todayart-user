@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import Slider from 'react-slick';
 import '../common/index.scss';
+import {Actions} from '../../actions'
 
 // import custom Components
 import ProductListing1 from './common/product-listing1'
@@ -11,6 +13,23 @@ import FilterBar from "./common/filter-bar";
 
 class CollectionCategory extends Component {
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {        
+    if (this.props !== nextProps) {        
+        return true;
+    }
+    return false;
+}
+
+
+    componentWillUpdate(nextProps, nextState){
+        const { id } = nextProps.match.params;
+        if ( id == 0 ){
+            this.props.fetchArtwork();
+        }else {
+            this.props.fetchCategory(nextProps.match.params.id);        
+        } 
+       
+  }
 
 
     state = {
@@ -119,4 +138,11 @@ class CollectionCategory extends Component {
 //     }
 // }
 
-export default withRouter(CollectionCategory);
+
+const mapDispatchToProps = (dispatch) => ({
+    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
+   
+})
+
+export default withRouter(connect(null,mapDispatchToProps)(CollectionCategory));

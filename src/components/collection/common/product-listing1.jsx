@@ -22,27 +22,16 @@ class ProductListing1 extends Component {
         
     }
     
-    componentDidMount(){
-        console.log('id2 : ' , this.state.id)             
-        this.props.fetchCategory(this.state.id);    
-    }
-
-        shouldComponentUpdate(nextProps, nextState, nextContext) {
-        const { id } = nextProps.id;
-        if (this.props !== nextProps) {
-            console.log('CollectionCategory 2 >>  ', id);
-            return true;
-        }
-        return false;
-    }
+//     componentDidMount(){
+        
+//         if ( this.props.id === 0){
+//             this.props.fetchArtwork();
+//         }else {
+//             this.props.fetchCategory(this.props.id);    
+//     }
+// }
 
 
-    componentWillUpdate(nextProps, nextState){
-        const { id } = nextProps.id;
-        console.log('componentWillUpdate >>  ', id);
-
-        this.props.fetchCategory(id);    
-      }
 
     fetchMoreItems = () => {
         if (this.state.limit >= this.props.items.length) {
@@ -117,7 +106,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    // fetchArtwork:() => dispatch(Actions.fetchArtwork()),   
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
