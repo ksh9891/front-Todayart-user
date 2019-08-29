@@ -6,17 +6,27 @@ import {Link} from 'react-router-dom'
 
 import Breadcrumb from "../common/breadcrumb";
 import {getCartTotal} from "../../services";
-import {removeFromCart, incrementQty, decrementQty} from '../../actions'
+import {removeFromCart, incrementQty, decrementQty, Actions} from '../../actions'
 
 class cartComponent extends Component {
 
     constructor (props) {
-        super (props)
+        super (props);
+
+    }
+
+    componentWillMount(){
+        this.props.getCart().then(response=>this.props.calcCartPrice());
+    }
+
+    toggle=(cartId)=>{
+        this.props.toggleCartItem(cartId);
+        this.props.calcCartPrice();
     }
 
     render (){
-
-        const {cartItems, symbol, total} = this.props;
+        const {cart, cartItems, symbol, total} = this.props;
+        const {items, totalPrice, totalShipping} = cart;
         return (
             <div>
                 {/*SEO Support*/}
@@ -36,12 +46,13 @@ class cartComponent extends Component {
                                 <table className="table cart-table table-responsive-xs">
                                     <thead>
                                     <tr className="table-head">
+                                        <th></th>
                                         <th scope="col">image</th>
                                         <th scope="col">product name</th>
                                         <th scope="col">price</th>
                                         <th scope="col">quantity</th>
-                                        <th scope="col">action</th>
                                         <th scope="col">total</th>
+                                        <th scope="col" width="50">delete</th>
                                     </tr>
                                     </thead>
                                     {cartItems.map((item, index) => {
@@ -49,35 +60,37 @@ class cartComponent extends Component {
                                         <tbody key={index}>
                                             <tr>
                                                 <td>
+                                                    <input type="checkbox"  name="cartItem" defaultChecked={true} onChange={()=>this.toggle(item.cartId)}/>
+                                                </td>
+                                                <td>
                                                     <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>
-                                                        <img src={item.variants?
-                                                                  item.variants[0].images
-                                                                  :item.pictures[0]} alt="" />
+                                                        <img src={item.thumbnail} alt="" />
                                                     </Link>
                                                 </td>
-                                                <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>{item.name}</Link>
+                                                <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>{item.product.productName}</Link>
                                                     <div className="mobile-cart-content row">
                                                         <div className="col-xs-3">
                                                             <div className="qty-box">
                                                                 <div className="input-group">
                                                                     <input type="text" name="quantity"
-                                                                           className="form-control input-number" defaultValue={item.qty} />
+                                                                           className="form-control input-number" defaultValue={item.quantity} />
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div className="mobile-cart-content row">
                                                         <div className="col-xs-3">
-                                                            <h2 className="td-color">{symbol}{item.price-(item.price*item.discount/100)}</h2>
+                                                            <h2 className="td-color">{symbol}{item.productPrice}</h2>
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <a href="#" className="icon" onClick={() => this.props.removeFromCart(item)}>
-                                                                    <i className="icon-close"></i>
-                                                                </a>
+                                                                <i className="icon-close" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                
                                                             </h2>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><h2>{symbol}{item.price-(item.price*item.discount/100)}</h2></td>
+                                                <td><h2>{symbol}{item.productPrice}</h2>shipping Fee : {item.shippingFee?item.shippingFee:0}</td>
                                                 <td>
                                                     <div className="qty-box">
                                                         <div className="input-group">
@@ -86,7 +99,7 @@ class cartComponent extends Component {
                                                                  <i className="fa fa-angle-left"></i>
                                                                 </button>
                                                             </span>
-                                                            <input type="text" name="quantity" value={item.qty} readOnly={true} className="form-control input-number" />
+                                                            <input type="text" name="quantity" value={item.quantity} readOnly={true} className="form-control input-number" />
 
                                                             <span className="input-group-prepend">
                                                             <button className="btn quantity-right-plus" onClick={() => this.props.incrementQty(item, 1)}  data-type="plus" disabled={(item.qty >= item.stock)? true : false}>
@@ -96,12 +109,10 @@ class cartComponent extends Component {
                                                         </div>
                                                     </div>{(item.qty >= item.stock)? 'out of Stock' : ''}
                                                 </td>
+                                                <td><h2 className="td-color">{symbol}{item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)}</h2></td>
                                                 <td>
-                                                    <a href="#" className="icon" onClick={() => this.props.removeFromCart(item)}>
-                                                        <i className="fa fa-times"></i>
-                                                    </a>
+                                                    <i className="fa fa-times" onClick={() => this.props.deleteCartItem(item.cartId)}/>
                                                 </td>
-                                                <td><h2 className="td-color">{symbol}{item.sum}</h2></td>
                                             </tr>
                                         </tbody> )
                                     })}
@@ -110,7 +121,7 @@ class cartComponent extends Component {
                                     <tfoot>
                                     <tr>
                                         <td>total price :</td>
-                                        <td><h2>{symbol} {total} </h2></td>
+                                        <td><h2>{symbol} {cart.totalPrice+cart.totalShipping} </h2></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -121,7 +132,7 @@ class cartComponent extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">continue shopping</Link>
                             </div>
                             <div className="col-6">
-                                <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
                             </div>
                         </div>
                     </div>
@@ -150,12 +161,21 @@ class cartComponent extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    cartItems: state.cartList.cart,
-    symbol: state.data.symbol,
-    total: getCartTotal(state.cartList.cart)
+    cart:state.cart,
+    cartItems: state.cart.items,
+    symbol: state.data.symbol
 })
+
+const mapDispatchToProps=(dispatch)=>({
+    getCart:()=>dispatch(Actions.getCart()),
+    toggleCartItem: (id)=>dispatch(Actions.toggleCartItem(id)),
+    deleteCartItem: (id)=>dispatch(Actions.deleteCartItem(id)),
+    calcCartPrice: ()=>dispatch(Actions.calcCartPrice()),
+    incrementQty: ()=>dispatch(incrementQty()),
+    decrementQty: ()=>dispatch(decrementQty())
+  })
 
 export default connect(
     mapStateToProps,
-    {removeFromCart, incrementQty, decrementQty}
+    mapDispatchToProps
 )(cartComponent)
