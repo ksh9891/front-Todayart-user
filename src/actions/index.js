@@ -610,6 +610,22 @@ const updatePassword = (password) => {
     });
 };
 
+const registerVerification = (email) => {
+    return ({
+        type: ActionTypes.SEND_MAIL_REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members/sendEmail',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ type:"register", email:email })
+            }
+        }
+    });
+};
 
 export const Actions = {
     getClientToken,
@@ -646,5 +662,6 @@ export const Actions = {
     updateNickname,
     updateRealName,
     updatePhone,
-    updatePassword
+    updatePassword,
+    registerVerification
 };
