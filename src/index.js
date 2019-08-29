@@ -27,7 +27,7 @@ import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
 // import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 // import CollectionFullWidth from "./components/collection/collection-full-width";
 // import CollectionMetro from "./components/collection/collection-metro";
-import collectionCategory from "./components/collection/collectionCategory";
+// import collectionCategory from "./components/collection/collectionCategory";
 
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
 
@@ -133,8 +133,8 @@ class Root extends React.Component {
 
                                 {/* <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/> */}
                                 <Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/collections/:id`} component={collectionCategory}/>
+                                {/* <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/> */}
+                                {/* <Route path={`${process.env.PUBLIC_URL}/collections/:id`} component={collectionCategory}/> */}
                                 {/* <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/> */}
                                 {/* <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/> */}
                                 {/* <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/> */}

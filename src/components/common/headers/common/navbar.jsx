@@ -83,19 +83,13 @@ class NavBar extends Component {
                             <li>
                                 <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>작품<span className="sub-arrow" /></Link>
                                 <ul className="nav-submenu">
-<<<<<<< HEAD
-                                    <li><Link to={`${process.env.PUBLIC_URL}/no-sidebar/collection`}>전체</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/no-sidebar/collection/${1}`}>서양화</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/no-sidebar/collection/${2}`}>동양화</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/no-sidebar/collection/${3}`}>기타</Link></li>
-=======
+
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${0}`}>전체</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`}>서양화</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`}>동양화</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${3}`}>기타</Link></li>
                                     
                                      
->>>>>>> bb6217e418292c0898d49aa476c80942400bcf46
                                 </ul>
                             </li>
                             <li>

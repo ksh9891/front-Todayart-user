@@ -22,10 +22,6 @@ import { Files } from '../../utils';
 import {getVisibleproducts} from '../../services';
 // // import ProductListItem from "product-list-item";
 
-import { Actions } from '../../actions'
-
-import { Files } from '../../utils';
-
 
 class NoSideBar extends Component {
 
@@ -43,9 +39,6 @@ class NoSideBar extends Component {
             nav1: this.slider1,
             nav2: this.slider2
         });
-
-        const {id} = this.props.match.params
-        this.props.fetchSingleProduct2(id);
 
     }
 
@@ -74,8 +67,7 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
-        const { fileName } = item.thumbnail;       
-        const image = Files.filePath(fileName);
+    
 
         return (
             <div>
