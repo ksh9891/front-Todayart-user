@@ -19,7 +19,7 @@ class wishList extends Component {
 
         return (
             <div>
-                <Breadcrumb title={'Wishlist'} />
+                <Breadcrumb title={'내가 찜한 목록'} />
                 {Items.length>0 ?
                 <section className="wishlist-section section-b-space">
                     <div className="container">
@@ -28,11 +28,11 @@ class wishList extends Component {
                                 <table className="table cart-table table-responsive-xs">
                                     <thead>
                                     <tr className="table-head">
-                                        <th scope="col">image</th>
-                                        <th scope="col">product name</th>
-                                        <th scope="col">price</th>
-                                        <th scope="col">availability</th>
-                                        <th scope="col">action</th>
+                                        <th scope="col">작품 사진</th>
+                                        <th scope="col">작품 명</th>
+                                        <th scope="col">가격</th>
+                                        <th scope="col">구매 가능여부</th>
+                                        <th scope="col">액션</th>
                                     </tr>
                                     </thead>
                                     {Items.map((item, index) => {
@@ -103,9 +103,9 @@ class wishList extends Component {
                                     <div className="col-sm-12 empty-cart-cls text-center">
                                         <img src={`${process.env.PUBLIC_URL}/assets/images/empty-wishlist.png`} className="img-fluid mb-4" alt="" />
                                         <h3>
-                                            <strong>WhishList is Empty</strong>
+                                            <strong>찜 목록이 비어있어요</strong>
                                         </h3>
-                                        <h4>Explore more shortlist some items.</h4>
+                                        <h4>작품들을 감상하며 찜 목록을 채워보세요!</h4>
                                     </div>
                                 </div>
                             </div>
