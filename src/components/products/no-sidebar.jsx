@@ -53,8 +53,8 @@ class NoSideBar extends Component {
         const {symbol, item, addToCart, addToCartUnsafe, addToWishlist} = this.props
 
         // const {products, addToCart, symbol, addToWishlist, addToCompare, items} = this.props;
-
-        const { fileName } = item.thumbnail;
+        
+        const { fileName } = item.thumbnail
         const image = Files.filePath(fileName);
 
         var products = {

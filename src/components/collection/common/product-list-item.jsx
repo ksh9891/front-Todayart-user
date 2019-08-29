@@ -101,14 +101,16 @@ class ProductListItem extends Component {
                         <div className="product-detail">
                             <div>
                                 <div className="rating">
-                                    
+                                    {/* 카테고리에서 보이는 작품에 대한 이미지 */}
                                 </div>
                                 <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`}>
-                                    <h6>{item.productName}</h6>
+                                    <h4>{item.productName}</h4>
                                 </Link>
-                                <h4>{item.productPrice}{symbol}
+                                <h6>{item.artistName}</h6>
+                                {/* <h6>{item.productSize}</h6> */}
+                                <h5>{item.productPrice}{symbol}
                                     {/* <del><span className="money">{symbol}{item.productPrice}</span></del> */}
-                                    </h4>
+                                    </h5>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {

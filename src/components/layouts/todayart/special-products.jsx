@@ -6,16 +6,24 @@ import {getBestSeller, getBestSellerProducts, getMensWear, getNewProducts, getWo
 import {addToCart, addToWishlist, addToCompare} from "../../../actions/index";
 import ProductItem from '../common/product-item';
 
+import {Actions} from '../../../actions'
+
 class SpecialProducts extends Component {
+
+    componentWillMount(){
+        // this.fetchMoreItems();
+        this.props.fetchArtwork();
+    }
+
     render (){
 
-        const {bestSeller,newProducts, featuredProducts, symbol, addToCart, addToWishlist, addToCompare} = this.props
+        const {bestSeller,newProducts, featuredProducts, symbol, addToCart, addToWishlist, addToCompare, items} = this.props
 
         return (
             <div>
                 <div className="title1 section-t-space">
                     <h4>exclusive products</h4>
-                    <h2 className="title-inner1">special products</h2>
+                    <h2 className="title-inner1">special products 메인 홈</h2>
                 </div>
                 <section className="section-b-space p-t-0">
                     <div className="container">
@@ -28,31 +36,31 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { newProducts.map((product, index ) =>
-                                        <ProductItem product={product} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(product)}
-                                                     onAddToWishlistClicked={() => addToWishlist(product)}
-                                                     onAddToCartClicked={() => addToCart(product, 1)} key={index} /> )
+                                    { items.map((item, index ) =>
+                                        <ProductItem item={item} symbol={symbol}
+                                                     onAddToCompareClicked={() => addToCompare(item)}
+                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { featuredProducts.map((product, index ) =>
-                                        <ProductItem product={product} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(product)}
-                                                     onAddToWishlistClicked={() => addToWishlist(product)}
-                                                     onAddToCartClicked={() => addToCart(product, 1)} key={index} /> )
+                                    { items.map((item, index ) =>
+                                        <ProductItem item={item} symbol={symbol}
+                                                     onAddToCompareClicked={() => addToCompare(item)}
+                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
                             <TabPanel>
                                 <div className=" no-slider row">
-                                    { bestSeller.map((product, index ) =>
-                                        <ProductItem product={product} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(product)}
-                                                     onAddToWishlistClicked={() => addToWishlist(product)}
-                                                     onAddToCartClicked={() => addToCart(product, 1)} key={index} /> )
+                                    { bestSeller.map((products, index ) =>
+                                        <ProductItem products={products} symbol={symbol}
+                                                     onAddToCompareClicked={() => addToCompare(products)}
+                                                     onAddToWishlistClicked={() => addToWishlist(products)}
+                                                     onAddToCartClicked={() => addToCart(products, 1)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
@@ -68,7 +76,16 @@ const mapStateToProps = (state, ownProps) => ({
     bestSeller: getBestSellerProducts(state.data.products, ownProps.type),
     newProducts: getNewProducts(state.data.products, ownProps.type),
     featuredProducts: getBestSellerProducts(state.data.products, ownProps.type).reverse(),
-    symbol: state.data.symbol
+    symbol: state.data.symbol,
+    items: state.data.items
 })
 
-export default connect(mapStateToProps, {addToCart, addToWishlist, addToCompare}) (SpecialProducts);
+const mapDispatchToProps = (dispatch) => ({
+    // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
+   
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (SpecialProducts);
+
+// export default connect(mapStateToProps, {addToCart, addToWishlist, addToCompare}) (SpecialProducts);

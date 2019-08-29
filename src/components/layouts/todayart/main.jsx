@@ -8,6 +8,8 @@ import BlogSection from "../common/blogsection"
 import ThemeSettings from "../../common/theme-settings"
 import FooterOne from "../../common/footers/footer-one";
 
+import {Helmet} from 'react-helmet'
+
 class Todayart extends Component {
 
     componentDidMount() {
@@ -17,6 +19,10 @@ class Todayart extends Component {
     render(){
         return (
             <div>
+                <Helmet>
+                    <title>TodayArt | 오늘의 아트</title>
+                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                </Helmet>
                 <section className="p-0 small-slider">
                     <Slider className="slide-1 home-slider">
                         <div>
@@ -112,7 +118,7 @@ class Todayart extends Component {
                 {/*Collection Banner section end*/}
 
                 {/*Special Products Start*/}
-                <SpecialProducts type={'furniture'} />
+                <SpecialProducts type={'todayart'} />
                 {/*Special Products End*/}
 
                 {/*Parallax banner*/}

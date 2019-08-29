@@ -8,16 +8,18 @@ export const fetchProductsBegin = () => ({
     type: types.FETCH_PRODUCTS_BEGIN
 });
 
-export const receiveProducts = products => ({
-    type: types.RECEIVE_PRODUCTS,
-    products
-})
+// export const receiveProducts = products => ({
+//     type: types.RECEIVE_PRODUCTS,
+//     products
+// })
 
+
+// 위에 주석처리하면서 이부분도 수정  receiveProducts=>fetchArtwork로, products=> items로
 export const getAllProducts = () => dispatch => {
     dispatch(fetchProductsBegin());
-    shop.getProducts(products => {
-        dispatch(receiveProducts(products));
-        return products;
+    shop.getProducts(items => {
+        dispatch(fetchArtwork(items));
+        return items;
     })
 }
 
