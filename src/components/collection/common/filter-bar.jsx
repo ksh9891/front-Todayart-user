@@ -48,7 +48,7 @@ class FilterBar extends Component {
         return (
             <div className="product-filter-content">
                 <div className="search-count">
-                    <h5>Showing Products 1-{this.props.products.length} Result</h5>
+                    <h5>Showing Products 1-{this.props.items.length} Result</h5>
                 </div>
                 <div className="collection-view">
                     <ul>
@@ -105,7 +105,8 @@ class FilterBar extends Component {
 
 const mapStateToProps = state => ({
     products: getVisibleproducts(state.data, state.filters),
-    filters: state.filters
+    filters: state.filters,
+    items: state.data.items
 })
 
 export default connect(mapStateToProps, {filterSort})(FilterBar);
