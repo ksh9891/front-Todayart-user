@@ -22,10 +22,11 @@ import Electronic from './components/layouts/electronic/main';
 
 //Collection Pages
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
-import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
+
 import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 import CollectionFullWidth from "./components/collection/collection-full-width";
 import CollectionMetro from "./components/collection/collection-metro";
+import CollectionCategory from "./components/collection/collection-no-sidebar1";
 
 // Product Pages
 import LeftSideBar from "./components/products/left-sidebar";
@@ -113,9 +114,17 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 
+
+                                {/* Product */}
+                                
+                                <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
+
+
+
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/no-sidebar/collection`} component={CollectionNoSidebar}/>
+                                
                                 <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/>
                                 <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/>
@@ -123,7 +132,7 @@ class Root extends React.Component {
                                 {/*Routes For Single Product*/}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/>
-                                <Route path={`${process.env.PUBLIC_URL}/no-sidebar/product/:id`} component={NoSideBar}/>
+                                
                                 <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
                                 <Route path={`${process.env.PUBLIC_URL}/col-right/product/:id`} component={ColumnRight}/>
                                 <Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
