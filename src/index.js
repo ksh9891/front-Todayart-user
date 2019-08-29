@@ -27,6 +27,8 @@ import CollectionRightSidebar from "./components/collection/collection-right-sid
 import CollectionFullWidth from "./components/collection/collection-full-width";
 import CollectionMetro from "./components/collection/collection-metro";
 import CollectionCategory from "./components/collection/collection-no-sidebar1";
+import CollectionSearch from "./components/collection/collection-no-sidebar";
+
 
 // Product Pages
 import LeftSideBar from "./components/products/left-sidebar";
@@ -117,6 +119,8 @@ class Root extends React.Component {
                                 
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/collection`} component={CollectionSearch}/>
+
 
 
 

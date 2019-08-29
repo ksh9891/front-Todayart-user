@@ -9,15 +9,18 @@ import TopBar from "./common/topbar";
 import LogoImage from "./common/logo";
 import {changeCurrency} from '../../../actions'
 import {connect} from "react-redux";
+import { Actions } from '../../../actions'
 
 class HeaderOne extends Component {
-
+	
     constructor(props) {
         super(props);
 
 		this.state = {
 			isLoading:false
 		}
+
+		this.textInput = React.createRef();
     }
     /*=====================
          Pre loader
@@ -70,8 +73,36 @@ class HeaderOne extends Component {
 			this.setState({isLoading: false})
 		})
 	};
+
+	
+   
+    
+
+
+
+    
+
+
+
 	
 	render() {
+
+		
+		const onSubmit = (e) => {
+            e.preventDefault();
+			const searchword = this.textInput.current.value.trim(); 
+			
+			console.log(searchword)
+			
+            this.props.fetchProductByName(searchword)
+                // .then(response => {
+                //     // this.props.history.push('/collections');
+                // })
+                // .catch(error => {
+                //     console.log('error >> ', error);
+                // });
+
+        };
 
 		return (
 			<div>
@@ -145,9 +176,13 @@ class HeaderOne extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-xl-12">
-                                        <form>
+                                        <form onSubmit={e => onSubmit(e)}>
                                             <div className="form-group">
-                                                <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Search a Product" />
+												<input type="text"
+												 className="form-control" 
+												 id="searchword"  
+												 ref={this.textInput}
+												 placeholder="Search a Product" />
                                             </div>
                                             <button type="submit" className="btn btn-primary"><i className="fa fa-search"></i></button>
                                         </form>
@@ -163,6 +198,19 @@ class HeaderOne extends Component {
 	}
 }
 
-export default connect(null,
-    { changeCurrency }
-)(HeaderOne);
+
+
+const mapStateToProps = (state) => ({
+    items : state.data.items
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    
+    fetchProductByName:(searchword) => dispatch(Actions.fetchProductByName(searchword)),   
+    changeCurrency: () => dispatch(changeCurrency())
+   
+})
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderOne);

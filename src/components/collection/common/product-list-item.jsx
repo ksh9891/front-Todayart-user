@@ -78,12 +78,7 @@ class ProductListItem extends Component {
                                 <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
-                                <a href="javascript:void(0)" data-toggle="modal"
-                                   data-target="#quick-view"
-                                   title="Quick View"
-                                   onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
-                                <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
-                                    <i className="fa fa-refresh" aria-hidden="true"></i></Link>
+                                
                             </div>
                             {item.variants?
                             <ul className="product-thumb-list">
