@@ -13,6 +13,9 @@ import { addToCart, addToCartUnsafe, addToWishlist } from '../../actions'
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
 
+import { Actions } from '../../actions'
+import { Files } from '../../utils';
+
 
 
 
@@ -26,11 +29,14 @@ class NoSideBar extends Component {
         };
     }
 
-    componentDidMount() {
+    componentDidMount(props) {
         this.setState({
             nav1: this.slider1,
             nav2: this.slider2
         });
+
+        const {id} = this.props.match.params
+        this.props.fetchSingleProduct2(id);
 
     }
 
@@ -48,11 +54,13 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
+        const { fileName } = item.thumbnail;       
+        const image = Files.filePath(fileName);
 
         return (
             <div>
 
-                <Breadcrumb title={' Product / '+item.name} />
+                <Breadcrumb title={' Product / '+item.productName} />
 
                 {/*Section Start*/}
                 {(item)?
@@ -61,13 +69,11 @@ class NoSideBar extends Component {
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-6 product-thumbnail">
-                                    <Slider {...products} asNavFor={this.state.nav2} ref={slider => (this.slider1 = slider)} className="product-slick">
-                                        {item.variants.map((vari, index) =>
-                                            <div key={index}>
-                                                <ImageZoom image={vari.images} className="img-fluid image_zoom_cls-0" />
+                                    
+                                            <div >
+                                                <ImageZoom image={image} className="img-fluid image_zoom_cls-0" />
                                             </div>
-                                        )}
-                                    </Slider>
+                                       
                                     <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
                                 <DetailsWithPrice symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
@@ -93,12 +99,23 @@ class NoSideBar extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps) => {
-    let productId = ownProps.match.params.id;
-    return {
-        item: state.data.products.find(el => el.id == productId),
+const mapStateToProps = (state) => ({
+    
+        item: state.data.item,
         symbol: state.data.symbol
-    }
-}
+    
+    
+})
 
-export default connect(mapStateToProps, {addToCart, addToCartUnsafe, addToWishlist}) (NoSideBar);
+
+
+
+const mapDispatchToProps = (dispatch) => ({
+    fetchSingleProduct2: (id) => dispatch(Actions.fetchSingleProduct2(id)),
+    addToCart: () => dispatch(addToCart()),
+    addToWishlist: () => dispatch(addToWishlist()),
+    addToCartUnsafe: () => dispatch(addToCartUnsafe())
+   
+})
+
+export default connect(mapStateToProps, mapDispatchToProps) (NoSideBar);

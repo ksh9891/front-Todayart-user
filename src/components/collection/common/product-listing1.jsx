@@ -10,19 +10,28 @@ import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
-class ProductListing extends Component {
+class ProductListing1 extends Component {
 
     constructor (props) {
         super (props)
-
-        this.state = { limit: 4, hasMoreItems: true };
-
+        this.state = { limit: 4, hasMoreItems: true, id:this.props.id };       
     }
 
     componentWillMount(){
-        this.fetchMoreItems();
-        this.props.fetchArtwork();
+        this.fetchMoreItems(); 
+        
     }
+    
+//     componentDidMount(){
+        
+//         if ( this.props.id === 0){
+//             this.props.fetchArtwork();
+//         }else {
+//             this.props.fetchCategory(this.props.id);    
+//     }
+// }
+
+
 
     fetchMoreItems = () => {
         if (this.state.limit >= this.props.items.length) {
@@ -40,6 +49,7 @@ class ProductListing extends Component {
     }
 
     render (){
+      
         const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
        
 
@@ -96,11 +106,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchArtwork: () => dispatch(Actions.fetchArtwork()),
+    // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    // fetchArtwork:() => dispatch(Actions.fetchArtwork()),   
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
    
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListing)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
