@@ -627,6 +627,22 @@ const registerVerification = (email) => {
     });
 };
 
+const checkRegisterToken = (token) => {
+    return ({
+        type: ActionTypes.CHECK_REGISTER_TOKEN,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkRegisterToken?token=' + token,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
 export const Actions = {
     getClientToken,
     login,
@@ -663,5 +679,6 @@ export const Actions = {
     updateRealName,
     updatePhone,
     updatePassword,
-    registerVerification
+    registerVerification,
+    checkRegisterToken
 };

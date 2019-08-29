@@ -53,6 +53,7 @@ import orderSuccess from './components/checkout/success-page'
 import Login from './components/pages/login'
 import Register from './components/pages/register'
 import RegisterWait from "./components/pages/registert-wait";
+import RegisterSuccess from "./components/pages/registert-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
 
@@ -111,6 +112,8 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
+                                {/*<Route exact path={`${process.env.PUBLIC_URL}/register-success?token=:token`} component={RegisterSuccess}/>*/}
+                                <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
