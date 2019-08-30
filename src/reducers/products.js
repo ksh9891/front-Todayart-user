@@ -57,10 +57,80 @@ const productReducer = (state = initialState, action) => {
             }
             return state;
 
-            case ActionTypes.FETCH_CATEGORY_SUCCESS:
+        case ActionTypes.FETCH_CATEGORY_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchcategory :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+
+        case ActionTypes.FETCH_PRICEASC_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchpriceasc :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+        case ActionTypes.FETCH_PRICEDESC_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchpricedesc :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+
+        case ActionTypes.FETCH_CATEGORY_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchcategory :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+        case ActionTypes.FETCH_CATEGORYASC_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchcategoryasc :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+
+        case ActionTypes.FETCH_CATEGORYDESC_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                console.log("fetchcategorydesc :", data);
+                return {
+                    ...state,
+                    items: (data === undefined ? [] : data)
+                };
+            }
+            return state;
+
+
+            case ActionTypes.FETCH_BYPRODUCTNAME_SUCCESS:
                 if (payload !== null && payload !== undefined) {
                     const { data } = payload;
-                    console.log("fetchcategory :", data);
+                    console.log("fetchbtproductname :", data);
                     return {
                         ...state,
                         items: (data === undefined ? [] : data)
@@ -68,7 +138,11 @@ const productReducer = (state = initialState, action) => {
                 }
                 return state;
 
-        
+        case ActionTypes.LOGOUT:
+            return initialState;
+
+
+
 
         case CHANGE_CURRENCY:
             return {

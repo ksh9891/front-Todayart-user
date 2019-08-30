@@ -23,13 +23,14 @@ class CollectionCategory extends Component {
 
     componentWillUpdate(nextProps, nextState){
         const { id } = nextProps.match.params;
-        if ( id == 0 ){
+            if ( id == 0){
             this.props.fetchArtwork();
         }else {
-            this.props.fetchCategory(nextProps.match.params.id);        
-        } 
-       
+            this.props.fetchCategory(id);
+
+    }
   }
+
 
 
     state = {
@@ -50,6 +51,7 @@ class CollectionCategory extends Component {
     render(){
 
         const { id } = this.props.match.params;
+        const { items } = this.props;
         console.log('id : ', id)
         return (
             <div>
@@ -79,7 +81,7 @@ class CollectionCategory extends Component {
                                                             <div className="container-fluid p-0">
                                                                 <div className="row">
                                                                     <div className="col-12">
-                                                                        <FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
+                                                                        <FilterBar id={id} onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -137,6 +139,9 @@ class CollectionCategory extends Component {
 //         return (<div>{id}</div>);
 //     }
 // }
+
+
+
 
 
 const mapDispatchToProps = (dispatch) => ({

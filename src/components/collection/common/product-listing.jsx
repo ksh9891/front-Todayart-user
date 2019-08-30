@@ -21,7 +21,7 @@ class ProductListing extends Component {
 
     componentWillMount(){
         this.fetchMoreItems();
-        this.props.fetchArtwork();
+       
     }
 
     fetchMoreItems = () => {
@@ -96,7 +96,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchArtwork: () => dispatch(Actions.fetchArtwork()),
+    
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
