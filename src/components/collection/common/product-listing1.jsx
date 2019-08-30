@@ -19,24 +19,28 @@ class ProductListing1 extends Component {
             limit: 4,
             hasMoreItems: true,
             id:this.props.id
+           
         };
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("should", this.props, nextProps, this.state, nextState)
-        
-        if(this.props !== nextProps) {
-            return true;
+    static getDerivedStateFromProps(props, state) {
+        if(props.items.length <= state.limit) {
+            return {...state, hasMoreItems: false}
         } else {
-            return false;
+            return {...state, hasMoreItems: true,  limit: state.limit + 4}
         }
-
-        // if(nextState !== this.state) {
-        //     return true;
-        // } else {
-        //     return false;
-        // }
+       
     }
+
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     console.log("should", this.props, nextProps, this.state, nextState)
+
+    //     if(nextState == this.state && this.props !== nextProps) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     // shouldComponentUpdate(nextProps, nextState, nextContext) {
     //     console.log("shouldComponentUpdate", this.state, nextState);
@@ -44,36 +48,35 @@ class ProductListing1 extends Component {
     // }
 
 
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     this.setState({
+    //         ...this.state,
+    //         hasMoreItems: true
+    //     })
+    // }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log("prevState >> ", prevState);
-        console.log("Didstate >> ",this.state);
-        console.log("this.props.ltems.length >> ",this.props.items.length);
+    // componentDidCatch(error, errorInfo) {
+    //     console.log("error", error);
+    // }
 
-        this.setState({
-            ...this.state,
-            hasMoreItems: true
-        })
-    }
+    // componentDidMount() {
 
-    componentDidCatch(error, errorInfo) {
-        console.log("error", error);
-    }
+        
 
-    componentDidMount() {
-        console.log("props", this.props);
-        this.setState({
-            ...this.state,
-            id: this.props.id           
-        });
 
-        // if ( this.props.id == 0){
-        //     this.props.fetchArtwork();
-        // }else {
-        //     this.props.fetchCategory(this.props.id);
-        // }
-        // this.fetchMoreItems();
-    }
+    //     console.log("props", this.props);
+    //     this.setState({
+    //         ...this.state,
+    //         id: this.props.id           
+    //     });
+
+    //     // if ( this.props.id == 0){
+    //     //     this.props.fetchArtwork();
+    //     // }else {
+    //     //     this.props.fetchCategory(this.props.id);
+    //     // }
+    //     // this.fetchMoreItems();
+    // }
 
     // componentDidMount(){        
     //     if ( this.props.id == 0){
@@ -83,18 +86,31 @@ class ProductListing1 extends Component {
     // }
 // }
 
-    fetchMoreItems = () => {
-        if (this.state.limit >= this.props.items.length) {
-            console.log("!23123");
+    fetchMoreItems = () => {   
+          
+        console.log("33");
+        // console.log("items :::" , this.props.items)
+        // this.props.items.slice(this.state.limit-4, this.state.limit)
+        // console.log("items >>>>>>> " ,this.props.items.slice(this.state.limit-4, this.state.limit ))
+        if (this.state.limit >= this.props.items.length) {  
             this.setState({ hasMoreItems: false });
             return;
         }
-        // a fake async api call
-        setTimeout(() => {
-            this.setState({
-                limit: this.state.limit + 4
-            });
-        }, 1000);
+        
+        this.setState({
+            ...this.state,
+            items : this.props.items.slice(this.state.limit-4, this.state.limit ),
+            hasMoreItems : true
+
+        })
+
+
+        // // a fake async api call
+        // setTimeout(() => {
+        //     this.setState({
+        //         limit: this.state.limit + 4
+        //     });
+        // }, 1000);
 
 
     }
@@ -104,6 +120,8 @@ class ProductListing1 extends Component {
         console.log("items >>",items);
         console.log("items.length >> ",items.length)
         console.log("this.state.limit >>",this.state.limit);
+        console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
+        console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
         return (
             <div>
                 <div className="product-wrapper-grid">
