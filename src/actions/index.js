@@ -513,6 +513,18 @@ const articleDelete  =(articleId) =>{
     })
 }
 
+const articleModify  =(articleId) =>{
+    return({
+        type:ActionTypes.ARTICLEMODIFY,
+        payload:{
+            request:{
+                method: 'UPDATE',
+                url: `/article/${articleId}`
+            }
+        }
+    })
+}
+
 const addCart = (item, quantity) =>{
     return({
         type:ActionTypes.ADD_CART,
@@ -678,6 +690,7 @@ export const Actions = {
     getArticleDetail,
     articleWrite,
     articleDelete,
+    articleModify,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,

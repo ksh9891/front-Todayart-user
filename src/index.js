@@ -68,6 +68,7 @@ import ForgetPassword from './components/pages/forget-password'
 import Contact from './components/pages/contact'
 import Dashboard from './components/pages/dashboard'
 import Faq from './components/pages/faq'
+import SupportContainer from './containers/SupportContainer'
 
 // Blog Pages
 import RightSide from './components/blogs/right-sidebar'
@@ -88,6 +89,7 @@ import ElementProductSlider from "./components/features/product/element-product-
 import ElementProductNoSlider from "./components/features/product/element-product-no-slider"
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
 import ElementProductTab from "./components/features/product/element-product-tab"
+import ArticleWrite from './components/articles/ArticleWrite';
 
 class Root extends React.Component {
     render() {
@@ -170,6 +172,8 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/pages/contact`} component={Contact}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/dashboard`} component={Dashboard}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/faq`} component={Faq}/>
+                                <Route path={`${process.env.PUBLIC_URL}/article/:boardId`} component={SupportContainer}/>
+                                <Route path={`${process.env.PUBLIC_URL}/articleWrite/:boardId`} component={ArticleWrite}/>
 
                                 {/*Features*/}
                                 {/*Theme Elements*/}
