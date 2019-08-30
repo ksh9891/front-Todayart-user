@@ -86,7 +86,7 @@ class HeaderFive extends Component {
 			
 			console.log('word',searchword)
 			//this.props.history.push('/collection');
-            this.props.fetchProductByName(searchword)
+            this.props.fetchProductBySearch(searchword)
                 .then(response => {
 					
 					console.log('word',searchword)
@@ -188,7 +188,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     
-    fetchProductByName:(searchword) => dispatch(Actions.fetchProductByName(searchword)),   
+    fetchProductBySearch:(searchword) => dispatch(Actions.fetchProductBySearch(searchword)),   
     changeCurrency: () => dispatch(changeCurrency())
    
 })

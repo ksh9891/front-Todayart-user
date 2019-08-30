@@ -41,6 +41,7 @@ class NoSideBar extends Component {
     }
 
     render(){
+       
         const {symbol, item, addToCart, addToCartUnsafe, addToWishlist} = this.props
         var products = {
             fade: true
