@@ -3,7 +3,6 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
-import {getCartTotal} from '../services'
 
 const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>

@@ -556,6 +556,18 @@ const checkPassword = (chkpassword) => {
         },
     });
 };
+
+const getAddress = () =>{
+    return ({
+        type:ActionTypes.GET_ADDRESS,
+        payload:{
+            request:{
+                method: 'GET',
+                url: '/address'
+            }
+        }
+    })
+}
 export const Actions = {
     getClientToken,
     login,
@@ -589,4 +601,5 @@ export const Actions = {
     addCart,
     updateNickname,
     checkPassword,
+    getAddress,
 };
