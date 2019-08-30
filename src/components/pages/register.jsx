@@ -219,8 +219,7 @@ class Register extends Component {
                 this.props.register({email, nickname, password})
                     .then(response => {
                         if (response.type === ActionTypes.REGISTER_SUCCESS) {
-                            alert('가입 성공!');
-                            this.props.history.push('/login');
+                            this.props.history.push(`/register-wait/${btoa(email)}`);
                         } else {
                             const { error } = response;
                             return Promise.reject(error);
@@ -330,7 +329,7 @@ class Register extends Component {
 const mapDispatchToProps = (dispatch) => ({
     checkNickname: (nickname) => dispatch(Actions.checkNickname(nickname)),
     checkEmail: (email) => dispatch(Actions.checkEmail(email)),
-    register: ({email, nickname, password}) => dispatch(registerAsync({email, nickname, password}))
+    register: ({email, nickname, password}) => dispatch(registerAsync({email, nickname, password})),
 });
 
 export default withRouter(connect(null, mapDispatchToProps)(Register));

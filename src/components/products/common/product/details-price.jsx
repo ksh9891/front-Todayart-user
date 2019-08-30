@@ -62,11 +62,11 @@ class DetailsWithPrice extends Component {
         return (
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
-                    <h2> {item.name} </h2>
+                    <h2> {item.productName} </h2>
                     <h4>
-                        <del>{symbol}{item.price}</del>
-                        <span>{item.discount}% off</span></h4>
-                    <h3>{symbol}{item.price-(item.price*item.discount/100)} </h3>
+                        <del>{symbol}{item.productPrice}</del>
+                        <span>10% off</span></h4>
+                    <h3>{symbol}{item.productPrice} </h3>
                     {item.variants?
                     <ul >
                         <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
@@ -76,9 +76,9 @@ class DetailsWithPrice extends Component {
                         </Slider>
                     </ul>:''}
                     <div className="product-description border-product">
-                        {item.size?
+                        
                             <div>
-                                <h6 className="product-title size-text">select size
+                                {/* <h6 className="product-title size-text">select size
                                     <span><a href="#" data-toggle="modal"
                                              data-target="#sizemodal" onClick={this.onOpenModal} >size chart</a></span></h6>
                                 <div className="modal fade" id="sizemodal" tabIndex="-1"
@@ -101,15 +101,15 @@ class DetailsWithPrice extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="size-box">
+                                </div> */}
+                                <div >
                             <ul>
-                                {item.size.map((size, i) => {
-                                    return <li key={i}><a href="#">{size}</a></li>
-                                })}
+                                {
+                                    <li ><a href="#">{item.productSize}</a></li>
+                                }
                             </ul>
                         </div>
-                            </div>:''}
+                            </div>
                         <span className="instock-cls">{this.state.stock}</span>
                         <h6 className="product-title">quantity</h6>
                         <div className="qty-box">

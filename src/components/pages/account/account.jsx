@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import Breadcrumb from "../common/breadcrumb";
+import Breadcrumb from "../../common/breadcrumb";
 import {Link, withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 import "./account.css";
 import validator from "validator";
-import {ActionTypes} from "../../constants/ActionTypes";
-import {Actions} from "../../actions";
-import FormCheckText from "./formCheckText";
+import {ActionTypes} from "../../../constants/ActionTypes";
+import {Actions} from "../../../actions";
+import FormCheckText from "../formCheckText";
 import sha256 from "sha256";
 
 class Account extends Component {
@@ -21,22 +21,38 @@ class Account extends Component {
 
             // 닉네임
             isEnteredNicknameValid: '',
-            isUpdatedNicknameValid: true
+            isUpdatedNicknameValid: false,
+            nicknameValidMsg: '',
+
+            // 이름
+            isEnteredRealNameValid: '',
+            isUpdatedRealNameValid: false,
+            realNameValidMsg: '',
+
+            // 연락처
+            isEnteredPhoneValid: '',
+            isUpdatedPhoneValid: false,
+            phoneValidMsg: ''
         }
 
+        // 업데이트 버튼
         this.handleButtonChangeNicknameUpdate = this.onUpdate.bind(this, "nickname");
         this.handleButtonChangeRealNameUpdate = this.onUpdate.bind(this, "realName");
         this.handleButtonChangePhoneUpdate = this.onUpdate.bind(this, "phone");
 
+        // 편집모드 실행 버튼
         this.handleButtonChangeNicknameEdit = this.onEdit.bind(this, "nickname");
         this.handleButtonChangeRealNameEdit = this.onEdit.bind(this, "realName");
         this.handleButtonChangePhoneEdit = this.onEdit.bind(this, "phone");
 
+        // 편집모드 취소 버튼
         this.handleButtonChangeNicknameCancel = this.cancelEdit.bind(this, "nickname");
         this.handleButtonChangeRealNameCancel = this.cancelEdit.bind(this, "realName");
         this.handleButtonChangePhoneCancel = this.cancelEdit.bind(this, "phone");
 
         this.nicknameInput = React.createRef();
+        this.realNameInput = React.createRef();
+        this.phoneInput = React.createRef();
     }
 
     validInfo = (info) => {
@@ -69,20 +85,37 @@ class Account extends Component {
         }
     }
 
+    preventAction = (e) => {
+        e.preventDefault();
+    }
+
     // 업데이트
     onUpdate = (type) => {
         switch(type) {
             case "nickname":
-                this.props.checkNickname(this.nicknameInput.current.value)
+                this.props.updateNickname(this.nicknameInput.current.value)
                     .then(response => {
                         const { statusCode, statusMessage } = response.payload.data;
-                        if(response.type === ActionTypes.DUPLICATION_CHECK_NICKNAME_SUCCESS) {
+                        if(response.type === ActionTypes.UPDATE_NICKNAME_SUCCESS) {
                             if (statusCode == "OK") {
                                 this.setState({
                                     ...this.state,
-                                    isEnteredNicknameValid: true,
-                                    isUpdatedNicknameValid: true,
+                                    isNicknameEdit: false,
+                                    isEnteredNicknameValid: '',
+                                    isUpdatedNicknameValid: false,
                                 });
+                                return this.props.getMemberMe()
+                                    .then(response => {
+                                        if(response.type === ActionTypes.GET_USER_SUCCESS) {
+                                            console.log("유저 정보 다시 가져오기!");
+                                        } else {
+                                            const { error } = response;
+                                            return Promise.reject(error);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.log("error >> ", error);
+                                    })
                             } else {
                                 this.setState({
                                     ...this.state,
@@ -104,11 +137,106 @@ class Account extends Component {
                     });
                 break;
             case "realName":
+                this.props.updateRealName(this.realNameInput.current.value)
+                    .then(response => {
+                        const { statusCode, statusMessage } = response.payload.data;
+                        if(response.type === ActionTypes.UPDATE_REALNAME_SUCCESS) {
+                            if (statusCode == "OK") {
+                                this.setState({
+                                    ...this.state,
+                                    isRealNameEdit: false,
+                                    isEnteredRealNameValid: '',
+                                    isUpdatedRealNameValid: false,
+                                });
+                                return this.props.getMemberMe()
+                                    .then(response => {
+                                        if(response.type === ActionTypes.GET_USER_SUCCESS) {
+                                            console.log("유저 정보 다시 가져오기!");
+                                        } else {
+                                            const { error } = response;
+                                            return Promise.reject(error);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.log("error >> ", error);
+                                    })
+                            } else {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredRealNameValid: false,
+                                    isUpdatedRealNameValid: false,
+                                });
+                            }
+                            this.setState({
+                                ...this.state,
+                                realNameValidMsg: statusMessage
+                            });
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error >>", error);
+                    });
                 break;
             case "phone":
+                this.props.updatePhone(this.phoneInput.current.value)
+                    .then(response => {
+                        const { statusCode, statusMessage } = response.payload.data;
+                        if(response.type === ActionTypes.UPDATE_PHONE_SUCCESS) {
+                            if (statusCode == "OK") {
+                                this.setState({
+                                    ...this.state,
+                                    isPhoneEdit: false,
+                                    isEnteredPhoneValid: '',
+                                    isUpdatedPhoneValid: false,
+                                });
+                                return this.props.getMemberMe()
+                                    .then(response => {
+                                        if(response.type === ActionTypes.GET_USER_SUCCESS) {
+                                            console.log("유저 정보 다시 가져오기!");
+                                        } else {
+                                            const { error } = response;
+                                            return Promise.reject(error);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.log("error >> ", error);
+                                    })
+                            } else {
+                                this.setState({
+                                    ...this.state,
+                                    isEnteredPhoneValid: false,
+                                    isUpdatedPhoneValid: false,
+                                });
+                            }
+                            this.setState({
+                                ...this.state,
+                                phoneValidMsg: statusMessage
+                            });
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error >>", error);
+                    });
                 break;
             default:
-                break;
+                return this.props.getMemberMe()
+                    .then(response => {
+                        if(response.type === ActionTypes.GET_USER_SUCCESS) {
+                            console.log("유저 정보 다시 가져오기!");
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
+                        }
+                    })
+                    .catch(error => {
+                        console.log("error >> ", error);
+                    })
         }
     };
 
@@ -214,11 +342,11 @@ class Account extends Component {
                                     </div>
                                     <div className="block-content">
                                         <ul>
-                                            <li className="active"><a href='#'>계정정보 관리</a></li>
-                                            <li><a href="#">배송지 관리</a></li>
-                                            <li><a href="#">주문 관리</a></li>
-                                            <li><a href="#">찜목록 관리</a></li>
-                                            <li><a href="#">비밀번호 변경</a></li>
+                                            <li className="active"><Link to="/account">계정정보 관리</Link></li>
+                                            <li><Link to="/account/password">비밀번호 변경</Link></li>
+                                            <li><Link to="/account/address">배송지 관리</Link></li>
+                                            <li><Link to="/account/order">주문 관리</Link></li>
+                                            <li><Link to="/wishlist">찜목록 관리</Link></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -252,7 +380,7 @@ class Account extends Component {
                                                                     </div>
                                                                     <div className="col-sm-8">
                                                                         <span>**********</span>
-                                                                        <span className="ta-info-modify-action"><Link to="/">비밀번호 변경하기</Link></span>
+                                                                        <span className="ta-info-modify-action"><Link to="/account/password">비밀번호 변경하기</Link></span>
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -298,8 +426,33 @@ class Account extends Component {
                                                                         <h6>이름</h6>
                                                                     </div>
                                                                     <div className="col-sm-8">
-                                                                        <span>{this.validInfo(this.props.auth.userDetails.realName) ? this.props.auth.userDetails.realName : '입력한 정보가 없어요'}</span>
-                                                                        {this.state.isRealNameEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangeRealNameEdit}>이름 변경하기</span>}
+                                                                        {this.state.isRealNameEdit ?
+                                                                            <div className="input-group form-group-control">
+                                                                                <input
+                                                                                    type="text"
+                                                                                    className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredRealNameValid)}`}
+                                                                                    placeholder="이름"
+                                                                                    name="realName"
+                                                                                    ref={this.realNameInput}
+                                                                                    defaultValue={this.props.auth.userDetails.realName}
+                                                                                    required
+                                                                                    onChange={e => validateNickname(e.target.value)}
+                                                                                />
+                                                                                <div className="btn-group btn-group-sm ml-3">
+                                                                                    <button className="btn btn-solid"
+                                                                                            type="button"
+                                                                                            onClick={this.handleButtonChangeRealNameUpdate}>변경
+                                                                                    </button>
+                                                                                    <button className="btn btn-solid"
+                                                                                            onClick={this.handleButtonChangeRealNameCancel}>취소
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div> :
+                                                                            <div>
+                                                                                <span>{this.validInfo(this.props.auth.userDetails.realName) ? this.props.auth.userDetails.realName : '입력한 정보가 없어요'}</span>
+                                                                                <span className="ta-info-modify-action" onClick={this.handleButtonChangeRealNameEdit}>이름 변경하기</span>
+                                                                            </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -307,8 +460,33 @@ class Account extends Component {
                                                                         <h6>연락처</h6>
                                                                     </div>
                                                                     <div className="col-sm-8">
-                                                                        <span>{this.validInfo(this.props.auth.userDetails.phone) ? this.props.auth.userDetails.phone : '입력한 정보가 없어요'}</span>
-                                                                        {this.state.isPhoneEdit ? "" : <span className="ta-info-modify-action" onClick={this.handleButtonChangePhoneEdit}>연락처 변경하기</span>}
+                                                                        {this.state.isPhoneEdit ?
+                                                                            <div className="input-group form-group-control">
+                                                                                <input
+                                                                                    type="text"
+                                                                                    className={`form-control ta-mb0 ${inputClassNameHelper(this.state.isEnteredRealNameValid)}`}
+                                                                                    placeholder="연락처"
+                                                                                    name="phone"
+                                                                                    ref={this.phoneInput}
+                                                                                    defaultValue={this.props.auth.userDetails.phone}
+                                                                                    required
+                                                                                    onChange={e => validateNickname(e.target.value)}
+                                                                                />
+                                                                                <div className="btn-group btn-group-sm ml-3">
+                                                                                    <button className="btn btn-solid"
+                                                                                            type="button"
+                                                                                            onClick={this.handleButtonChangePhoneUpdate}>변경
+                                                                                    </button>
+                                                                                    <button className="btn btn-solid"
+                                                                                            onClick={this.handleButtonChangePhoneCancel}>취소
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div> :
+                                                                            <div>
+                                                                                <span>{this.validInfo(this.props.auth.userDetails.phone) ? this.props.auth.userDetails.phone : '입력한 정보가 없어요'}</span>
+                                                                                <span className="ta-info-modify-action" onClick={this.handleButtonChangePhoneEdit}>연락처 변경하기</span>
+                                                                            </div>
+                                                                        }
                                                                     </div>
                                                                 </div>
                                                                 <div className="row">
@@ -320,17 +498,6 @@ class Account extends Component {
                                                                         <span className="ta-info-modify-action"><Link to="/">대표 배송지 변경하기</Link></span>
                                                                     </div>
                                                                 </div>
-                                                                {this.state.isEdit ?
-                                                                    <div className="row ta-btn-group">
-                                                                        <div className="col-sm-6">
-                                                                            <button className="btn btn-outline btn-full mb-3" onClick={this.accountEditCancel}>취소하기</button>
-                                                                        </div>
-                                                                        <div className="col-sm-6">
-                                                                            <button className="btn btn-outline btn-full mb-3">저장하기</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    : ""
-                                                                }
                                                             </div>
                                                         </div>
                                                     </form>
@@ -343,7 +510,6 @@ class Account extends Component {
                         </div>
                     </div>
                 </section>
-
             </div>
         )
     }
@@ -354,8 +520,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    getMemberMe: () => dispatch(Actions.getMemberMe()),
+
     checkNickname: (nickname) => dispatch(Actions.checkNickname(nickname)),
-    updateNickname: (nickname) => dispatch(Actions.updateNickname(nickname))
+    updateNickname: (nickname) => dispatch(Actions.updateNickname(nickname)),
+    updateRealName: (realName) => dispatch(Actions.updateRealName(realName)),
+    updatePhone: (phone) => dispatch(Actions.updatePhone(phone))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Account))

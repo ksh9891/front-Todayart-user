@@ -105,7 +105,8 @@ class FilterBar extends Component {
 
 const mapStateToProps = state => ({
     products: getVisibleproducts(state.data, state.filters),
-    filters: state.filters
+    filters: state.filters,
+    items: state.data.items
 })
 
 export default connect(mapStateToProps, {filterSort})(FilterBar);
