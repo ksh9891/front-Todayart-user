@@ -4,6 +4,7 @@ import { ActionTypes } from '../constants/ActionTypes';
 const initialStateArticle = {
     items: [],
     item: null,
+    boardName: null,
     page: 1,
     size: 10,
     totalCount: 0,
@@ -22,7 +23,8 @@ const article = (state = initialStateArticle, action) => {
                 if (data !== undefined && data !== null) {
                     return {
                         ...state,
-                        items: data.items
+                        items: data.items,
+                        boardName: data.boardName,
                     };
                 }
             }

@@ -17,13 +17,38 @@ class SupportContainer extends Component {
         console.log(this.props.match.params.boardId);
         this.props.getArticleList(this.props.match.params.boardId);
     }
+    
+    shouldComponentUpdate(nextProps, nextState){
+        console.log('next props = ', nextProps)
+        console.log('this.props.match.params.boardId', this.props.match.params.boardId)
+        console.log('nextProps.match.params.boardId', nextProps.match.params.boardId)
+        
+        if(this.props.match.params.boardId !== nextProps.match.params.boardId){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    
+    componentWillUpdate(nextProps, nextState){
+        
+        this.props.getArticleList(nextProps.match.params.boardId);
+    }
+    
 
     render() {
+
+
+        const { userDetails } = this.props.auth;
 
         return (
             <div>
 
-                <Breadcrumb title={this.props.article.boardName} />
+                <Breadcrumb title={this.props.article.boardName.boardName} />
+                
+                <section className="section-b-space">
+                    <div className="container">
 
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-secondary">
@@ -39,6 +64,21 @@ class SupportContainer extends Component {
 
 
                 <FAQArticle />
+                <span>
+                    {(userDetails !== null && userDetails.memberId === 1) ?
+                        <div className="checkout_btn_inner d-flex align-items-center">
+                            <nav class="navbar navbar-light bg-light">
+                                <form class="form-inline">
+                                        <button class="btn btn-outline-success my-2 my-sm-0"> 
+                                        <Link to={"/articleWrite/"+`${this.props.match.params.boardId}`}>글쓰기</Link>
+                                        </button>
+                                </form>
+                            </nav>
+                        </div> : ''}
+                </span>
+                        </div>
+                        </section>
+
             </div>
         )
     }
@@ -46,12 +86,14 @@ class SupportContainer extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    article: state.article
+    article: state.article,
+    auth: state.auth
 });
 
 const mapDispatchToProps = (dispatch) => ({
     getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
-    getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId))
+    getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
+    articleWrite: (boardId) => dispatch(Actions.articleWrite(boardId))
 });
 
 
