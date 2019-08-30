@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Actions } from '../actions/index'
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
+import queryString from 'query-string'
 
 import FAQArticle from '../components/articles/FAQArticle';
 import Breadcrumb from '../components/common/breadcrumb'
@@ -11,29 +12,28 @@ class SupportContainer extends Component {
 
     constructor(props) {
         super(props)
+        this.state={
+            boardId : queryString.parse(props.location.search).boardId
+        }
+        console.log("constructor", props, this.state.boardId)
+    }
+    static getDerivedStateFromProps(nextProps, prevState){
+        return {boardId:queryString.parse(nextProps.location.search).boardId}
     }
 
-    componentDidMount() {
-        console.log(this.props.match.params.boardId);
-        this.props.getArticleList(this.props.match.params.boardId);
+    getSnapshotBeforeUpdate(preProps, prevState){
+        console.log("getSnapshotBeforeUpdate", preProps, prevState, this.state)
+        this.props.getArticleList(this.state.boardId);
     }
     
     shouldComponentUpdate(nextProps, nextState){
-        console.log('next props = ', nextProps)
-        console.log('this.props.match.params.boardId', this.props.match.params.boardId)
-        console.log('nextProps.match.params.boardId', nextProps.match.params.boardId)
-        
-        if(this.props.match.params.boardId !== nextProps.match.params.boardId){
+        console.log("shouldComponentUpdate", this.state, nextState, nextProps)
+        if(this.state.boardId !== nextState.boardId){
+            console.log("asdfaf")
             return true;
         }
-        else {
             return false;
-        }
-    }
-    
-    componentWillUpdate(nextProps, nextState){
         
-        this.props.getArticleList(nextProps.match.params.boardId);
     }
     
 
@@ -44,32 +44,30 @@ class SupportContainer extends Component {
 
         return (
             <div>
-
-                <Breadcrumb title={this.props.article.boardName.boardName} />
-                
+                {this.props.article.boardName!==null&&this.props.article.boardName!==undefined?
+                <Breadcrumb title={this.props.article.boardName.boardName} />:''
+                }
                 <section className="section-b-space">
                     <div className="container">
 
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option1" autocomplete="off" checked /><Link to="/article/1">FAQ</Link>
+                <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label className="btn btn-secondary">
+                        <input type="radio" name="options" id="option1" autoComplete="off" defaultChecked={true} /><Link to="/articles?boardId=1">FAQ</Link>
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" autocomplete="off" /> <Link to="/article/2">Q&A</Link>
+                    <label className="btn btn-secondary">
+                        <input type="radio" name="options" id="option2" autoComplete="off"/> <Link to="/articles?boardId=2">Q&A</Link>
                     </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option3" autocomplete="off" /> <Link to="/article/3">공지사항</Link>
+                    <label className="btn btn-secondary">
+                        <input type="radio" name="options" id="option3" autoComplete="off"/> <Link to="/articles?boardId=3">공지사항</Link>
                     </label>
                 </div>
-
-
-                <FAQArticle />
+                <FAQArticle boardId={this.state.boardId}/>
                 <span>
                     {(userDetails !== null && userDetails.memberId === 1) ?
                         <div className="checkout_btn_inner d-flex align-items-center">
-                            <nav class="navbar navbar-light bg-light">
-                                <form class="form-inline">
-                                        <button class="btn btn-outline-success my-2 my-sm-0"> 
+                            <nav className="navbar navbar-light bg-light">
+                                <form className="form-inline">
+                                        <button className="btn btn-outline-success my-2 my-sm-0"> 
                                         <Link to={"/articleWrite/"+`${this.props.match.params.boardId}`}>글쓰기</Link>
                                         </button>
                                 </form>
@@ -92,7 +90,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
-    getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
     articleWrite: (boardId) => dispatch(Actions.articleWrite(boardId))
 });
 
