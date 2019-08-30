@@ -8,6 +8,7 @@ import Breadcrumb from "../common/breadcrumb";
 import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import {getCartTotal} from "../../services";
+import ShippingBox from './shippingBox';
 
 
 class CheckoutDetail extends Component{
@@ -82,24 +83,6 @@ class CheckoutDetail extends Component{
         return null
     }
 
-
-    // Paypal Integration
-    const onSuccess = (payment) => {
-        console.log("The payment was succeeded!", payment);
-        this.props.history.push({
-            pathname: '/order-success',
-                state: { payment: payment, items: orderItems, orderTotal: totalPrice, symbol: symbol }
-        })
-
-    }
-
-    const onCancel = (data) => {
-        console.log('The payment was cancelled!', data);
-    }
-
-    const onError = (err) => {
-        console.log("Error!", err);
-    }
 
     const client = {
         sandbox:    'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
@@ -214,16 +197,16 @@ class checkOut extends Component {
 
       }
 
-      setStateFromCheckbox = (event) => {
-          var obj = {};
-          obj[event.target.name] = event.target.checked;
-          this.setState(obj);
+    setStateFromCheckbox = (event) => {
+        var obj = {};
+        obj[event.target.name] = event.target.checked;
+        this.setState(obj);
 
-          if(!this.validator.fieldValid(event.target.name))
-          {
-              this.validator.showMessages();
-          }
+        if(!this.validator.fieldValid(event.target.name))
+        {
+            this.validator.showMessages();
         }
+    }
 
     checkhandle(value) {
         this.setState({
@@ -231,33 +214,7 @@ class checkOut extends Component {
         })
     }
 
-    StripeClick = () => {
 
-        if (this.validator.allValid()) {
-            alert('You submitted the form and stuff!');
-
-            var handler = (window).StripeCheckout.configure({
-                key: 'pk_test_glxk17KhP7poKIawsaSgKtsL',
-                locale: 'auto',
-                token: (token: any) => {
-                    console.log(token)
-                      this.props.history.push({
-                          pathname: '/order-success',
-                              state: { payment: token, items: this.props.cartItems, orderTotal: this.props.total, symbol: this.props.symbol }
-                      })
-                }
-              });
-              handler.open({
-                name: 'Multikart',
-                description: 'Online Fashion Store',
-                amount: this.amount * 100
-              })
-        } else {
-          this.validator.showMessages();
-          // rerender to show messages for the first time
-          this.forceUpdate();
-        }
-    }
 
     render (){
         const {symbol, payment} = this.props;
@@ -280,9 +237,11 @@ class checkOut extends Component {
                             <div className="checkout-form">
                                 <form>
                                     <div className="checkout row">
-                                    <div className="col-lg-6 col-sm-12 col-xs-12">
+
+                                    <ShippingBox/>
+                                    {/* <div className="col-lg-6 col-sm-12 col-xs-12">
                                         <div className="checkout-title">
-                                            <h3>Billing Details</h3>
+                                            <h3>주소 입력</h3>
                                         </div>
                                         <div className="row check-out">
                                             <div className="form-group col-md-6 col-sm-6 col-xs-12">
@@ -341,7 +300,7 @@ class checkOut extends Component {
                                                 {this.validator.message('checkbox', this.state.create_account, 'create_account')}
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                         <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
                                     <div className="row section-t-space">

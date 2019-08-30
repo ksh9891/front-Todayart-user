@@ -643,6 +643,18 @@ const checkRegisterToken = (token) => {
     });
 };
 
+const getAddress = () =>{
+    return ({
+        type:ActionTypes.GET_ADDRESS,
+        payload:{
+            request:{
+                method: 'GET',
+                url: '/address'
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     login,
@@ -675,6 +687,7 @@ export const Actions = {
     getOrderList,
     addCart,
     checkPassword,
+    getAddress,
     updateNickname,
     updateRealName,
     updatePhone,
