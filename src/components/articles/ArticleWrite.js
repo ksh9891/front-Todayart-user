@@ -4,6 +4,8 @@ import { withRouter, Link } from "react-router-dom";
 
 import { Actions } from '../../actions';
 import Breadcrumb from '../common/breadcrumb'
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 class ArticleWrite extends Component {
 
@@ -18,6 +20,7 @@ class ArticleWrite extends Component {
 
     return (
       <div>
+        
         <body> 
           <div class="container">
             <h1>글쓰기</h1>
@@ -47,6 +50,21 @@ class ArticleWrite extends Component {
                   required
                 />
               </div>
+
+              <div className="App">
+                <h4>내용</h4>
+                <CKEditor
+                    editor={ ClassicEditor }
+                    data="<p>내용을 입력하세요.</p>"
+                    onInit={ editor => {
+                        console.log( 'Editor is ready to use!', editor );
+                    } }
+                    onChange={ ( event, editor ) => {
+                        const data = editor.getData();
+                        console.log( { event, editor, data } );
+                    } }
+                />
+            </div>
   
               <div class="form-group">
                 <label for=" Email1msg">내용</label>
