@@ -43,6 +43,7 @@ class ArticleWrite extends Component {
               <div class="form-group">
                 <label for="Name">제목</label>
                 <input
+                class="form-control"
                   type="title"
                   id="title"
                   name="title"
