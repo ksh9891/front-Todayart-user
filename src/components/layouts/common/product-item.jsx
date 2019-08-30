@@ -12,7 +12,8 @@ class ProductItem extends Component {
             open: false,
             stock: 'InStock',
             quantity: 1,
-            image: ''
+            image: '',
+            onAddToWishlistClicked:props.onAddToCartClicked
         }
     }
 
@@ -74,10 +75,10 @@ class ProductItem extends Component {
                             <button title="Add to cart" onClick={onAddToCartClicked}>
                                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                             </button>
-                            <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
+                            <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
                                 <i className="fa fa-heart" aria-hidden="true"></i>
                             </a>
-                            <a href="javascript:void(0)" data-toggle="modal"
+                            <a href="#" data-toggle="modal"
                                data-target="#quick-view"
                                title="Quick View"
                                onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
@@ -88,7 +89,7 @@ class ProductItem extends Component {
                         <ul className="product-thumb-list">
                             { product.variants.map((vari, i) =>
                                 <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
-                                    <a href="javascript:void(0)" title="Add to Wishlist">
+                                    <a href="#" title="Add to Wishlist">
                                         <img src={`${vari.images}`} onClick={() => this.onClickHandle(vari.images)} />
                                     </a>
                                 </li>)}

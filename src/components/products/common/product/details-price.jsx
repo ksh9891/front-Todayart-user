@@ -50,7 +50,7 @@ class DetailsWithPrice extends Component {
 
     render (){
         const {symbol, item, addToCartClicked, BuynowClicked, addToWishlistClicked} = this.props
-
+        console.log("product Render Item", item, this.props);
         var colorsnav = {
             slidesToShow: 6,
             swipeToSlide:true,
@@ -129,8 +129,8 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-                        <a className="btn btn-solid" onClick={() => addToCartClicked(item, this.state.quantity)}>add to cart</a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >buy now</Link>
+                        <a className="btn btn-solid" onClick={() => addToCartClicked(item.productId, this.state.quantity)}>장바구니에 담기</a>
+                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item.productId, this.state.quantity)} >바로 구입하기</Link>
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">product details</h6>

@@ -37,11 +37,19 @@ export const addToCartAndRemoveWishlist = (product,qty) => (dispatch) => {
     dispatch(addToCartUnsafe(product, qty));
     dispatch(removeFromWishlist(product));
 }
-export const addToCartUnsafe = (product, qty) => ({
-    type: types.ADD_TO_CART,
-    product,
-    qty
-});
+export const addToCartUnsafe = (product, qty) => {
+    console.log("addToCartItem : ", product);
+    return{
+    type:ActionTypes.ADD_CART,
+    payload:{
+        request:{
+            method:'POST',
+            url:'/cart',
+            data:{product:product, quantity:qty}
+        }
+    }
+}};
+
 export const removeFromCart = product_id => (dispatch) => {
     toast.error("Item Removed from Cart");
     dispatch({
