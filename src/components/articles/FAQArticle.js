@@ -17,6 +17,10 @@ class FAQArticle extends Component {
     this.props.getArticleList(this.state.boardId);
 }
 
+componentWillUnmount(){
+        
+}
+
 
 
  onDelete = (e, articleId) => {
@@ -79,7 +83,7 @@ onModify = (e, articleId) => {
                               <p>{item.content}</p>
                               <span>
                                 {(userDetails !== null) && (item.memberId === userDetails.memberId) ?
-                                  <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                  <div className="checkout_btn_inner d-flex align-items-center"><nav className="navbar navbar-light bg-light">
                                     <form className="form-inline">
                                       <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.articleId)}>수정</button>
                                       <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
