@@ -13,29 +13,79 @@ import ProductListItem from "./product-list-item";
 class ProductListing1 extends Component {
 
     constructor (props) {
-        super (props)
-        this.state = { limit: 4, hasMoreItems: true, id:this.props.id };       
+        super (props);
+        console.log(props);
+        this.state = {
+            limit: 4,
+            hasMoreItems: true,
+            id:this.props.id
+        };
     }
 
-    componentWillMount(){
-        this.fetchMoreItems(); 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("should", this.props, nextProps, this.state, nextState)
         
+        if(this.props !== nextProps) {
+            return true;
+        } else {
+            return false;
+        }
+
+        // if(nextState !== this.state) {
+        //     return true;
+        // } else {
+        //     return false;
+        // }
     }
-    
-    // componentDidMount(){
-        
+
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     console.log("shouldComponentUpdate", this.state, nextState);
+    //     return false
+    // }
+
+
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log("prevState >> ", prevState);
+        console.log("Didstate >> ",this.state);
+        console.log("this.props.ltems.length >> ",this.props.items.length);
+
+        this.setState({
+            ...this.state,
+            hasMoreItems: true
+        })
+    }
+
+    componentDidCatch(error, errorInfo) {
+        console.log("error", error);
+    }
+
+    componentDidMount() {
+        console.log("props", this.props);
+        this.setState({
+            ...this.state,
+            id: this.props.id           
+        });
+
+        // if ( this.props.id == 0){
+        //     this.props.fetchArtwork();
+        // }else {
+        //     this.props.fetchCategory(this.props.id);
+        // }
+        // this.fetchMoreItems();
+    }
+
+    // componentDidMount(){        
     //     if ( this.props.id == 0){
     //         this.props.fetchArtwork();
     //     }else {
     //         this.props.fetchCategory(this.props.id);
-
     // }
 // }
 
-
-
     fetchMoreItems = () => {
         if (this.state.limit >= this.props.items.length) {
+            console.log("!23123");
             this.setState({ hasMoreItems: false });
             return;
         }
@@ -44,19 +94,16 @@ class ProductListing1 extends Component {
             this.setState({
                 limit: this.state.limit + 4
             });
-        }, 3000);
+        }, 1000);
 
 
     }
 
     render (){
-      
         const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-       
-
-
-
-        console.log(this.props.colSize)
+        console.log("items >>",items);
+        console.log("items.length >> ",items.length)
+        console.log("this.state.limit >>",this.state.limit);
         return (
             <div>
                 <div className="product-wrapper-grid">
@@ -107,8 +154,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    //  fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    //  fetchArtwork:() => dispatch(Actions.fetchArtwork()),   
+    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()),
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
