@@ -94,9 +94,7 @@ class ArticleWrite extends Component {
   
               <button type="submit" class="btn btn-info">글쓰기</button>
             </form>
-            <form onSubmit={e => this.onList(e)}>
-            <button type="submit" class="btn btn-info">취소</button>
-            </form>
+            <button type="submit" class="btn btn-info"><Link to={"/articles?boardId="+`${this.props.article.boardName.boardId}`}>취소</Link></button>
           </div>
         </body>
       </div>

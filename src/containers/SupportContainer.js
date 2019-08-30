@@ -5,7 +5,6 @@ import { withRouter, Link } from "react-router-dom";
 import queryString from 'query-string'
 
 import FAQArticle from '../components/articles/FAQArticle';
-import Breadcrumb from '../components/common/breadcrumb'
 
 
 class SupportContainer extends Component {
@@ -44,9 +43,7 @@ class SupportContainer extends Component {
 
         return (
             <div>
-                {this.props.article.boardName!==null&&this.props.article.boardName!==undefined?
-                <Breadcrumb title={this.props.article.boardName.boardName} />:''
-                }
+                
                 <section className="section-b-space">
                     <div className="container">
 
