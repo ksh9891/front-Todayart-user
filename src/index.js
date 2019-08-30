@@ -54,6 +54,8 @@ import orderSuccess from './components/checkout/success-page'
 // Extra Pages
 import Login from './components/pages/login'
 import Register from './components/pages/register'
+import RegisterWait from "./components/pages/registert-wait";
+import RegisterSuccess from "./components/pages/registert-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
 
@@ -66,6 +68,7 @@ import ForgetPassword from './components/pages/forget-password'
 import Contact from './components/pages/contact'
 import Dashboard from './components/pages/dashboard'
 import Faq from './components/pages/faq'
+import SupportContainer from './containers/SupportContainer'
 
 // Blog Pages
 import RightSide from './components/blogs/right-sidebar'
@@ -86,6 +89,7 @@ import ElementProductSlider from "./components/features/product/element-product-
 import ElementProductNoSlider from "./components/features/product/element-product-no-slider"
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
 import ElementProductTab from "./components/features/product/element-product-tab"
+import ArticleWrite from './components/articles/ArticleWrite';
 
 class Root extends React.Component {
     render() {
@@ -111,12 +115,16 @@ class Root extends React.Component {
                                 {/* Member */}
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
+                                <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 
 
                                 {/* Product */}
-                                
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collection`} component={CollectionSearch}/>
@@ -145,8 +153,6 @@ class Root extends React.Component {
 
 
                                 {/*Routes For custom Features*/}
-                                <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
-                                <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
                                 <Route path={`${process.env.PUBLIC_URL}/order-success`} component={orderSuccess}/>
@@ -163,10 +169,11 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/pages/lookbook`} component={lookbook}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/search`} component={Search}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/collection`} component={Collection}/>
-                                <Route path={`${process.env.PUBLIC_URL}/pages/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/contact`} component={Contact}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/dashboard`} component={Dashboard}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/faq`} component={Faq}/>
+                                <Route path={`${process.env.PUBLIC_URL}/article/:boardId`} component={SupportContainer}/>
+                                <Route path={`${process.env.PUBLIC_URL}/articleWrite/:boardId`} component={ArticleWrite}/>
 
                                 {/*Features*/}
                                 {/*Theme Elements*/}

@@ -2,11 +2,8 @@ import React, {Component} from 'react';
 import {Helmet} from 'react-helmet'
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
-
-
 import Breadcrumb from "../common/breadcrumb";
-import {getCartTotal} from "../../services";
-import {removeFromCart, incrementQty, decrementQty, Actions} from '../../actions'
+import {incrementQty, decrementQty, Actions} from '../../actions'
 
 class cartComponent extends Component {
 

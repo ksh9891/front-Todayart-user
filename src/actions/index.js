@@ -513,6 +513,18 @@ const articleDelete  =(articleId) =>{
     })
 }
 
+const articleModify  =(articleId) =>{
+    return({
+        type:ActionTypes.ARTICLEMODIFY,
+        payload:{
+            request:{
+                method: 'UPDATE',
+                url: `/article/${articleId}`
+            }
+        }
+    })
+}
+
 const addCart = (item, quantity) =>{
     return({
         type:ActionTypes.ADD_CART,
@@ -610,6 +622,50 @@ const updatePassword = (password) => {
     });
 };
 
+const registerVerification = (email) => {
+    return ({
+        type: ActionTypes.SEND_MAIL_REGISTER,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/members/sendEmail',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ type:"register", email:email })
+            }
+        }
+    });
+};
+
+const checkRegisterToken = (token) => {
+    return ({
+        type: ActionTypes.CHECK_REGISTER_TOKEN,
+        payload: {
+            request: {
+                method: 'GET',
+                url: '/members/checkRegisterToken?token=' + token,
+                headers: {
+                    'Content-Type': 'charset: utf-8',
+                    'Accept': 'Application/json'
+                }
+            }
+        },
+    });
+};
+
+const getAddress = () =>{
+    return ({
+        type:ActionTypes.GET_ADDRESS,
+        payload:{
+            request:{
+                method: 'GET',
+                url: '/address'
+            }
+        }
+    })
+}
 
 export const Actions = {
     getClientToken,
@@ -633,6 +689,7 @@ export const Actions = {
     getArticleDetail,
     articleWrite,
     articleDelete,
+    articleModify,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,
@@ -642,9 +699,13 @@ export const Actions = {
     getOrderList,
     addCart,
     checkPassword,
+    getAddress,
     updateNickname,
     updateRealName,
     updatePhone,
     updatePassword,
-    fetchProductBySearch
+    fetchProductBySearch,
+    registerVerification,
+    checkRegisterToken
+
 };

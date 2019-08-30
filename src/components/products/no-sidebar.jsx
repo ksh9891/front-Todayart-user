@@ -20,29 +20,34 @@ import { Files } from '../../utils';
 
 
 class NoSideBar extends Component {
-
-    constructor() {
-        super();
+// this.props.location.state.item
+    constructor(props) {
+        super(props);
         this.state = {
             nav1: null,
-            nav2: null
+            nav2: null,
+            item: this.props.location.state.item
         };
+        console.log("constructor props >> ",props)
     }
 
-    componentDidMount(props) {
+    
+    componentDidMount() {
+        console.log("componentDidMount", this.state)
         this.setState({
             nav1: this.slider1,
             nav2: this.slider2
         });
 
-        const {id} = this.props.match.params
-        this.props.fetchSingleProduct2(id);
 
     }
 
     render(){
-       
-        const {symbol, item, addToCart, addToCartUnsafe, addToWishlist} = this.props
+
+        console.log("render>>",this.props, this.state)
+        const {symbol, addToCart, addToCartUnsafe, addToWishlist} = this.props
+        const {thumbnail} = this.state.item;
+
         var products = {
             fade: true
         };
@@ -55,16 +60,16 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
-        const { fileName } = item.thumbnail;       
+        const { fileName } = thumbnail?thumbnail:{};
         const image = Files.filePath(fileName);
 
         return (
             <div>
 
-                <Breadcrumb title={' Product / '+item.productName} />
+                <Breadcrumb title={' Product / '+this.state.item.productName} />
 
                 {/*Section Start*/}
-                {(item)?
+                {(this.state.item)?
                 <section >
                     <div className="collection-wrapper">
                         <div className="container">
@@ -75,9 +80,9 @@ class NoSideBar extends Component {
                                                 <ImageZoom image={image} className="img-fluid image_zoom_cls-0" />
                                             </div>
                                        
-                                    <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
+                                    <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
                             </div>
                         </div>
                     </div>
@@ -88,7 +93,7 @@ class NoSideBar extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 col-lg-12">
-                                <DetailsTopTabs item={item} />
+                                <DetailsTopTabs item={this.state.item} />
                             </div>
                         </div>
                     </div>
