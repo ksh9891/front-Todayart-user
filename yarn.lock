@@ -983,6 +983,18 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@ckeditor/ckeditor5-build-classic@^12.4.0":
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-build-classic/-/ckeditor5-build-classic-12.4.0.tgz#d5eefb00424d6c559f826d8509ba6ce7e1ce12b9"
+  integrity sha512-KzndcFz45e96z/ErToABYFf7mtcHyPCyNzzobAkpBRzKqBoS0CMDmLjHWWnL0ite39oidgBJ7PXt+iRl7p+5jA==
+
+"@ckeditor/ckeditor5-react@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@ckeditor/ckeditor5-react/-/ckeditor5-react-1.1.3.tgz#7d79f3d5390f3f8eaab53ef03cf97fd782c56318"
+  integrity sha512-h5jgUOkGt8up3yjyOP7LXJTuhMtbiUnDn1Bv4FEJ5Bjl4hs5cDk1+U8sghog/KJ3C84kCHn5P81slo0JzUuYyQ==
+  dependencies:
+    prop-types "^15.6.1"
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"
@@ -2907,6 +2919,11 @@ circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
   integrity sha512-UZK3NBx2Mca+b5LsG7bY183pHWt5Y1xts4P3Pz7ENTwGVnJOUWbRb3ocjvX7hx9tq/yTAdclXm9sZ38gNuem4A==
+
+ckeditor@^4.12.1:
+  version "4.12.1"
+  resolved "https://registry.yarnpkg.com/ckeditor/-/ckeditor-4.12.1.tgz#954a7b028dd611e44ba51cc7c2fe051cf1052186"
+  integrity sha512-pH2Su4oi0D4iN/3U8nUcwI7/lXHoOJi0aiN8e2zxnm4Ow5kq8eZP2ZGmpYyuqRyKZ2tHaU8+OyYi7laXcjiq9Q==
 
 class-utils@^0.3.5:
   version "0.3.6"
