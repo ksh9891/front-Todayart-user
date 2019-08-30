@@ -352,14 +352,14 @@ const fetchSingleProduct2 = (id) => {
     })
 }
 
-const fetchProductByName = (searchword) => {
+const fetchProductBySearch = (searchword) => {
     console.log("productName = " + searchword)
     return ({
-        type: ActionTypes.FETCH_BYPRODUCTNAME,
+        type: ActionTypes.FETCH_BYSEARCH,
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/productname/?name=${searchword}`
+                url: `/product/search?search=${searchword}`
             }
         }
     })
@@ -675,7 +675,6 @@ export const Actions = {
     refreshToken,
     fetchArtwork,
     fetchSingleProduct2,
-    fetchProductByName,
     fetchProductByArtist,
     fetchPriceAsc,
     fetchPriceDesc,
@@ -705,6 +704,8 @@ export const Actions = {
     updateRealName,
     updatePhone,
     updatePassword,
+    fetchProductBySearch,
     registerVerification,
     checkRegisterToken
+
 };

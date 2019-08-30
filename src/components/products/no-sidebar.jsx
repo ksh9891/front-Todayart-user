@@ -43,9 +43,11 @@ class NoSideBar extends Component {
     }
 
     render(){
+
         console.log("render>>",this.props, this.state)
         const {symbol, addToCart, addToCartUnsafe, addToWishlist} = this.props
         const {thumbnail} = this.state.item;
+
         var products = {
             fade: true
         };
