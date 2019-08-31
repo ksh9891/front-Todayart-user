@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {Actions} from "../../actions";
 import {ActionTypes} from "../../constants/ActionTypes";
 import sha256 from 'sha256';
+import "./login.css"
 
 const loginAsync = (email, password) => (dispatch) => {
     return dispatch(Actions.login(email, password))
@@ -64,7 +65,7 @@ class Login extends Component {
                             <div className="col-lg-6">
                                 <h3>로그인</h3>
                                 <div className="theme-card">
-                                    <form className="theme-form" onSubmit={e => onSubmit(e)}>
+                                    <form className="theme-form mb-3" onSubmit={e => onSubmit(e)}>
                                         <div className="form-group">
                                             <label htmlFor="email">Email</label>
                                             <input
@@ -89,6 +90,7 @@ class Login extends Component {
                                         </div>
                                         <button type="submit" className="btn btn-solid">로그인</button>
                                     </form>
+                                    <Link to="/forget-password">비밀번호를 잊어버리셨나요?</Link>
                                 </div>
                             </div>
                             <div className="col-lg-6 right-login">

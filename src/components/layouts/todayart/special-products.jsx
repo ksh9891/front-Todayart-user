@@ -29,9 +29,7 @@ class SpecialProducts extends Component {
                     <div className="container">
                         <Tabs className="theme-tab">
                             <TabList  className="tabs tab-title">
-                                <Tab>NEW PRODUCTS</Tab>
-                                <Tab>FEATURED PRODUCTS</Tab>
-                                <Tab>BEST SELLERS</Tab>
+                                <Tab>NEW PRODUCTS</Tab>                               
                             </TabList>
 
                             <TabPanel>

@@ -129,7 +129,8 @@ const productReducer = (state = initialState, action) => {
             return state;
 
 
-            case ActionTypes.FETCH_BYPRODUCTNAME_SUCCESS:
+
+            case ActionTypes.FETCH_BYSEARCH_SUCCESS:
                 if (payload !== null && payload !== undefined) {
                     const { data } = payload;
                     console.log("fetchbtproductname :", data);

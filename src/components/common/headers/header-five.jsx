@@ -11,6 +11,10 @@ import {connect} from "react-redux";
 import TopBarDark from "./common/topbar-dark";
 import LogoImage from "./common/logo";
 
+import {Link, withRouter} from "react-router-dom";
+
+import { Actions } from '../../../actions'
+
 class HeaderFive extends Component {
 
     constructor(props) {
@@ -19,6 +23,8 @@ class HeaderFive extends Component {
 		this.state = {
 			isLoading:false
 		}
+
+		this.textInput = React.createRef();
     }
     /*=====================
          Pre loader
@@ -72,6 +78,28 @@ class HeaderFive extends Component {
 	};
 	
 	render() {
+
+
+		const onSubmit = (e) => {
+            e.preventDefault();
+			const searchword = this.textInput.current.value.trim(); 
+			
+			console.log('word',searchword)
+			//this.props.history.push('/collection');
+            this.props.fetchProductBySearch(searchword)
+                .then(response => {
+					
+					console.log('word',searchword)
+                    this.props.history.push('/collection');
+                })
+                .catch(error => {
+                    console.log('error >> ', error);
+                });
+
+		};
+		
+	
+
 
 		return (
 			<div>
@@ -133,11 +161,15 @@ class HeaderFive extends Component {
                             <div className="container">
                                 <div className="row">
                                     <div className="col-xl-12">
-                                        <form>
+									<form onSubmit={e => onSubmit(e)}>
                                             <div className="form-group">
-                                                <input type="text" className="form-control" id="exampleInputPassword1" placeholder="Search a Product" />
+												<input type="text"
+												 className="form-control" 
+												 id="searchword"  
+												 ref={this.textInput}
+												 placeholder="Search a Product" />
                                             </div>
-                                            <button type="submit" className="btn btn-primary"><i className="fa fa-search" /></button>
+                                            <button type="submit"  onClick={this.closeSearch} className="btn btn-primary"><i className="fa fa-search" /></button>
                                         </form>
                                     </div>
                                 </div>
@@ -150,6 +182,17 @@ class HeaderFive extends Component {
 	}
 }
 
-export default connect(null,
-    { changeCurrency }
-)(HeaderFive);
+const mapStateToProps = (state) => ({
+    items : state.data.items
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    
+    fetchProductBySearch:(searchword) => dispatch(Actions.fetchProductBySearch(searchword)),   
+    changeCurrency: () => dispatch(changeCurrency())
+   
+})
+
+
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(HeaderFive));

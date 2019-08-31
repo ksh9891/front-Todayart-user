@@ -12,29 +12,39 @@ import FilterBar from "./common/filter-bar";
 
 
 class CollectionCategory extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            id:this.props.match.params,
+            layoutColumns:3
+        }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {        
-    if (this.props !== nextProps) {        
-        return true;
     }
-    return false;
-}
 
+    getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.id!==nextProps.match.params){
+        return {id:nextProps.match.params}}
+        return prevState
+    }
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("shouldComponentUpdate111111", this.state, nextState, this.props, nextProps);
+        if(this.props.match.params.id!==nextProps.match.params.id){
+            return true
+        }
+        return false
+    }
 
-    componentWillUpdate(nextProps, nextState){
-        const { id } = nextProps.match.params;
-        if ( id == 0 ){
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log("getSnapshotBeforeUpdate", prevProps, this.props)
+        if (this.props.match.params.id == 0){
             this.props.fetchArtwork();
         }else {
-            // this.props.fetchCategory(nextProps.match.params.id); 
-            this.props.fetchCategory(id);       
-        } 
-       
-  }
+
+            this.props.fetchCategory(this.props.match.params.id);
+        }
 
 
-    state = {
-        layoutColumns:3
+        return null
     }
 
     LayoutViewClicked(colums) {
@@ -43,16 +53,32 @@ class CollectionCategory extends Component {
         })
     }
 
-    componentWillMount() {
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     const { id } = this.props.match.params;
+    //     console.log("id", id);
+    //     if ( id == 0){
+    //         this.props.fetchArtwork();
+    //     }else {
+    //         this.props.fetchCategory(id);
+    //     }
+    // }
+
+    componentDidMount() {
         const { id } = this.props.match.params;
-        console.log('componentWillMount >>  ', id)
+        console.log("id", id);
+        if ( id == 0){
+            this.props.fetchArtwork();
+        }else {
+            this.props.fetchCategory(id);
+        }
     }
 
     render(){
-
         const { id } = this.props.match.params;
+
         console.log('id : ', id)
-        const { item } = this.props;
+        const { items } = this.props;
+
         return (
             <div>
                 <Breadcrumb title={'Collection'} />
@@ -139,6 +165,9 @@ class CollectionCategory extends Component {
 //         return (<div>{id}</div>);
 //     }
 // }
+
+
+
 
 
 const mapDispatchToProps = (dispatch) => ({

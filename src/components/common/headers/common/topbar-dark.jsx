@@ -14,7 +14,7 @@ class TopBarDark extends Component {
                             <div className="header-contact">
                                 <ul>
                                     <li>오늘의아트 방문을 환영합니다!</li>
-                                    <li><i className="fa fa-phone" aria-hidden="true"/>Call Us: 02 - 000 - 0000</li>
+                                    <li><i className="fa fa-phone" aria-hidden="true"/>연락처 : 02 - 000 - 0000</li>
                                 </ul>
                             </div>
                         </div>
@@ -22,7 +22,7 @@ class TopBarDark extends Component {
                             {isAuthenticated(this.props.auth) ?
                                 <ul className="header-dropdown">
                                     <li className="mobile-wishlist">
-                                        <a href="#"><i className="fa fa-heart" aria-hidden="true"/> 찜 목록</a>
+                                        <Link to="/wishlist"><i className="fa fa-heart" aria-hidden="true"/> 찜 목록</Link>
                                     </li>
                                     <li className="onhover-dropdown mobile-account">
                                         <i className="fa fa-user" aria-hidden="true" /> {this.props.auth.userDetails.nickname}

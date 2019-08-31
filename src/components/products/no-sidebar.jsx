@@ -24,24 +24,29 @@ import {getVisibleproducts} from '../../services';
 
 
 class NoSideBar extends Component {
-
-    constructor() {
-        super();
+// this.props.location.state.item
+    constructor(props) {
+        super(props);
         this.state = {
             nav1: null,
-            nav2: null
+            nav2: null,
+            item: this.props.location.state.item
         };
+        console.log("constructor props >> ",props)
     }
 
 
-    componentDidMount(props) {
+    
+    componentDidMount() {
+        console.log("componentDidMount", this.state)
+
         this.setState({
             nav1: this.slider1,
             nav2: this.slider2
         });
 
-        const { id } = this.props.match.params
-        this.props.fetchSingleProduct2(id);
+
+
     }
 
     componentWillMount(){
@@ -50,13 +55,12 @@ class NoSideBar extends Component {
         }
 
     render(){
-        const {symbol, item, addToCart, addToCartUnsafe, addToWishlist} = this.props
 
-        // const {products, addToCart, symbol, addToWishlist, addToCompare, items} = this.props;
-        
-        // thumbnail
-        const { fileName } = item.thumbnail
-        const image = Files.filePath(fileName);
+
+        console.log("render>>",this.props, this.state)
+        const {symbol, addToCart, addToCartUnsafe, addToWishlist} = this.props
+        const {thumbnail} = this.state.item;
+
 
         var products = {
             fade: true
@@ -70,15 +74,17 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
-    
+
+        const { fileName } = thumbnail?thumbnail:{};
+        const image = Files.filePath(fileName);
 
         return (
             <div>
 
-                <Breadcrumb title={' Product / '+item.productName} />
+                <Breadcrumb title={' Product / '+this.state.item.productName} />
 
                 {/*Section Start*/}
-                {(item)?
+                {(this.state.item)?
                 <section >
                     <div className="collection-wrapper">
                         <div className="container">
@@ -97,11 +103,11 @@ class NoSideBar extends Component {
                                                 <ImageZoom image={image} className="img-fluid image_zoom_cls-0" />
                                             </div>
 
-                                    {/* 상품상세페이지 큰 사진 아래에 나오는 작은 사진 3개 부분 */}
+                                       
+                                    <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
 
-                                    <SmallImages item={item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
                             </div>
                         </div>
                     </div>
@@ -112,7 +118,7 @@ class NoSideBar extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12 col-lg-12">
-                                <DetailsTopTabs item={item} />
+                                <DetailsTopTabs item={this.state.item} />
                             </div>
                         </div>
                     </div>

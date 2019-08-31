@@ -66,7 +66,9 @@ class ProductListItem extends Component {
                     <div className="product-box">
                         <div className="img-wrapper">
                             <div className="front">
-                                <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`} ><img
+                                <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                state :{ item:this.props.item }}}
+                                ><img
                                     src={image}
                                     className="img-fluid"
                                     alt="" /></Link>
@@ -75,22 +77,17 @@ class ProductListItem extends Component {
                                 <button title="Add to cart" onClick={() => onAddToCartClicked(item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </button>
-                                <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
+                                <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
                                 
-                                {/* <a href="javascript:void(0)" data-toggle="modal"
-                                   data-target="#quick-view"
-                                   title="Quick View"
-                                   onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
-                                <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
-                                    <i className="fa fa-refresh" aria-hidden="true"></i></Link> */}
+
                             </div>
                             {/* {item.variants?
                             <ul className="product-thumb-list">
                                 {item.variants.map((vari, i) =>
                                     <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
-                                        <a href="javascript:void(0)" title="Add to Wishlist">
+                                        <a href="#" title="Add to Wishlist">
                                             <img src={`${vari.images}`} onClick={() => this.onClickHandle(vari.images)} />
                                         </a>
                                     </li>)
@@ -103,8 +100,12 @@ class ProductListItem extends Component {
                                 <div className="rating">
                                     {/* 카테고리에서 보이는 작품에 대한 이미지 */}
                                 </div>
-                                <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`}>
-                                    <h4>{item.productName}</h4>
+
+                                <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                state :{ item:this.props.item }}}
+                                >
+                                    <h6>{item.productName}</h6>
+
                                 </Link>
                                 <h6>{item.artistName}</h6>
                                 {/* <h6>{item.productSize}</h6> */}

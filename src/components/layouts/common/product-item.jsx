@@ -83,7 +83,9 @@ class ProductItem extends Component {
                                 
                                 {/* 이미지 */}
                                 <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} >
-                                    <img src={image} className="img-fluid"
+
+                                    <img src={image}className="img-fluid"
+
                                     alt="" /></Link>
 
                         </div>
@@ -98,8 +100,7 @@ class ProductItem extends Component {
                                data-target="#quick-view"
                                title="Quick View"
                                onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
-                            <Link to={`${process.env.PUBLIC_URL}/compare`} title="Compare" onClick={onAddToCompareClicked}>
-                                <i className="fa fa-refresh" aria-hidden="true"></i></Link>
+                           
                         </div>
                         {/* {product.variants?
                         <ul className="product-thumb-list">
@@ -127,14 +128,7 @@ class ProductItem extends Component {
                                 <span className="money">{item.productName}</span>
                             </h4>
 
-                             {/* 상품상세페이지 아래 상품박스 부분 색상 3개 일렬로 나오는 부분 */}
-                            {/* {product.variants?
-                            <ul className="color-variant">
-                                {product.variants.map((vari, i) => {
-                                    return (
-                                        <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
-                                })}
-                            </ul>:''} */}
+
                         </div>
                     </div>
                     <Modal open={this.state.open} onClose={this.onCloseModal} center>
@@ -144,11 +138,9 @@ class ProductItem extends Component {
                                     <div className="row">
                                         <div className="col-lg-6  col-xs-12">
                                             <div className="quick-view-img">
-                                                {/* <img src={`${
-                                                    product.variants?
-                                                        this.state.image?this.state.image:product.variants[0].images
-                                                        :product.pictures[0]
-                                                    }`} alt="" className="img-fluid" /> */}
+
+                                                <img src={image} alt="" className="img-fluid" />
+
                                             </div>
                                         </div>
                                         <div className="col-lg-6 rtl-text">
@@ -156,30 +148,25 @@ class ProductItem extends Component {
                                                 <h2> {item.productName} </h2>
                                                 <h3>{item.productPrice}{symbol}</h3>
 
-                                                {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 3개 일렬로 있는 색상 */}
-                                                {/* {product.variants?
-                                                <ul className="color-variant">
-                                                    {product.variants.map((vari, i) =>
-                                                        <li className={vari.color} key={i} title={vari.color} onClick={() => this.onClickHandle(vari.images)}></li>)
-                                                    }
-                                                </ul>:''} */}
+
+
                                                 <div className="border-product">
 
                                                      {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품상세설명 */}
                                                     <h6 className="product-title">product details</h6>
-                                                    <p>{item.productConte}</p>
+
+                                                    <p>{item.productContent}</p>
                                                 </div>
                                                 <div className="product-description border-product">
-                                                    {/* {product.size?
+                                                    
                                                     <div className="size-box">
-                                                        <ul> */}
+                                                        <ul>
+                                                            
+                                                               <li>{item.productSize}</li>
+                                                           
+                                                        </ul>
+                                                    </div>
 
-                                                              {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품사이즈 L,M,S */}
-                                                            {/* {product.size.map((size, i) => {
-                                                                return <li key={i}><a href="#">{size}</a></li>
-                                                            })} */}
-                                                        {/* </ul>
-                                                    </div>:''} */}
                                                     <h6 className="product-title">quantity</h6>
                                                     <div className="qty-box">
                                                         <div className="input-group">
