@@ -2,111 +2,50 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Actions } from '../../../actions'
+
 
 import { getTotal, getCartProducts } from '../../../reducers'
 import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
-import {ActionTypes} from "../../../constants/ActionTypes";
 
-class ProductListing1 extends Component {
+class ProductListing extends Component {
+
     constructor (props) {
-        super (props);
-        this.state = {
-            limit: 4,
-            hasMoreItems: true,
-            id:this.props.id
-        };
+        super (props)
+
+        this.state = { limit: 5, hasMoreItems: true };
+
     }
 
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     if(nextState !== this.state) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("shouldComponentUpdate", this.state, nextState);
-    //     return false
-    // }
-
-
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     console.log("prevState >> ", prevState);
-    //     console.log("Didstate >> ",this.state);
-    //     console.log("this.props.ltems.length >> ",this.props.items.length);
-    //     if(prevState === this.state) {
-    //         this.fetchMoreItems();
-    //     }
-    // }
-
-    componentDidCatch(error, errorInfo) {
-        console.log("error", error);
+    componentWillMount(){
+        this.fetchMoreItems();
     }
-
-    componentDidMount() {
-        console.log("props", this.props);
-        this.setState({
-            ...this.state,
-            id: this.props.id
-        });
-
-        // if ( this.props.id == 0){
-        //     this.props.fetchArtwork();
-        // }else {
-        //     this.props.fetchCategory(this.props.id);
-        // }
-        // this.fetchMoreItems();
-    }
-
-    // componentDidMount(){
-        
-    //     if ( this.props.id == 0){
-    //         this.props.fetchArtwork();
-    //     }else {
-    //         this.props.fetchCategory(this.props.id);
-
-    // }
-// }
 
     fetchMoreItems = () => {
-        // if (this.state.limit >= this.props.items.length) {
-        //     this.setState({ hasMoreItems: false });
-        //     return;
-        // }
-
-        // a fake async api
-        // this.props.fetchCategory(this.props.id)
-        //     .then(response => {
-        //         if(response.type === ActionTypes.FETCH_CATEGORY_SUCCESS) {
-        //             setTimeout(() => {
-        //                 this.setState({
-        //                     hasMoreItems: true,
-        //                     limit: this.state.limit + 4
-        //                 });
-        //             }, 3000);
-        //         } else {
-        //             this.setState({
-        //                 hasMoreItems:false,
-        //             });
-        //         }
-        //     })
+        console.log(this.props.products.length)
+        if (this.state.limit >= this.props.products.length) {
+            this.setState({ hasMoreItems: false });
+            return;
+        }
+        // a fake async api call
+        setTimeout(() => {
+            this.setState({
+                limit: this.state.limit + 5
+            });
+        }, 3000);
 
 
     }
 
     render (){
-        const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-        console.log("items >>",items);
-        console.log("this.state.limit >>",this.state.limit);
+        const {products, addToCart, symbol, addToWishlist, addToCompare} = this.props;
+        console.log(this.props.colSize)
         return (
             <div>
                 <div className="product-wrapper-grid">
                     <div className="container-fluid">
-                        {items.length > 0 ?
+                        {products.length > 0 ?
                             <InfiniteScroll
                                 dataLength={this.state.limit} //This is important field to render the next data
                                 next={this.fetchMoreItems}
@@ -119,12 +58,12 @@ class ProductListing1 extends Component {
                                 }
                             >
                                 <div className="row">
-                                    { items.slice(0, this.state.limit).map((item, index) =>
+                                    { products.slice(0, this.state.limit).map((product, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
-                                        <ProductListItem item={item} symbol={symbol}
-                                                         onAddToCompareClicked={() => addToCompare(item)}
-                                                         onAddToWishlistClicked={() => addToWishlist(item)}
-                                                         onAddToCartClicked={addToCart} key={index}/>
+                                            <ProductListItem product={product} symbol={symbol}
+                                                             onAddToCompareClicked={() => addToCompare(product)}
+                                                             onAddToWishlistClicked={() => addToWishlist(product)}
+                                                             onAddToCartClicked={addToCart} key={index}/>
                                         </div>)
                                     }
                                 </div>
@@ -148,15 +87,8 @@ class ProductListing1 extends Component {
 const mapStateToProps = (state) => ({
     products: getVisibleproducts(state.data, state.filters),
     symbol: state.data.symbol,
-    items : state.data.items
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    fetchArtwork:() => dispatch(Actions.fetchArtwork()),
-    addToCart: () => dispatch(addToCart()),
-    addToWishlist: () => dispatch(addToWishlist()),
-    addToCompare: () => dispatch(addToCompare())
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
+export default connect(
+    mapStateToProps, {addToCart, addToWishlist, addToCompare}
+)(ProductListing)
