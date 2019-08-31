@@ -18,8 +18,6 @@ class FAQArticle extends Component {
     this.props.getArticleList(this.state.boardId);
   }
 
-
-
   onDelete = (e, articleId) => {
     e.preventDefault();
     this.props.articleDelete(articleId)
@@ -51,11 +49,9 @@ class FAQArticle extends Component {
 
     return (
       <div>
-
         {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
           <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
         }
-
         {items ?
 
           items.map((item) => {
@@ -85,7 +81,7 @@ class FAQArticle extends Component {
                               <div className="card-body">
                                 <p>{item.content}</p>
                                 <span>
-                                  {(userDetails !== null) && (item.memberId === userDetails.memberId) ?
+                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null)&&(userDetails.memberId===1)) ?
                                     <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                       <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.boardId, item.articleId)}>수정</button>

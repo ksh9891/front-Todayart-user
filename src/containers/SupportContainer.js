@@ -28,7 +28,6 @@ class SupportContainer extends Component {
     shouldComponentUpdate(nextProps, nextState){
         console.log("shouldComponentUpdate", this.state, nextState, nextProps)
         if(this.state.boardId !== nextState.boardId){
-            console.log("asdfaf")
             return true;
         }
             return false;
@@ -60,12 +59,12 @@ class SupportContainer extends Component {
                 </div>
                 <FAQArticle boardId={this.state.boardId}/>
                 <span>
-                    {(userDetails !== null && userDetails.memberId === 1) ?
+                    {(userDetails !== null && (userDetails.role === "ROLE_ADMIN" || this.state.boardId === "2")) ?
                         <div className="checkout_btn_inner d-flex align-items-center">
                             <nav className="navbar navbar-light bg-light">
                                 <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0"> 
-                                        <Link to={"/articleWrite/"+`${this.props.match.params.boardId}`}>글쓰기</Link>
+                                        <Link to={"/articleWrite"} boardId={this.state.boardId}>글쓰기</Link>
                                         </button>
                                 </form>
                             </nav>
