@@ -4,24 +4,64 @@ import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
 
-
 import { getTotal, getCartProducts } from '../../../reducers'
 import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
+import {ActionTypes} from "../../../constants/ActionTypes";
 
 class ProductListing1 extends Component {
-
     constructor (props) {
-        super (props)
-        this.state = { limit: 4, hasMoreItems: true, id:this.props.id };       
+        super (props);
+        this.state = {
+            limit: 4,
+            hasMoreItems: true,
+            id:this.props.id
+        };
     }
 
-    componentWillMount(){
-        this.fetchMoreItems(); 
-        
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     if(nextState !== this.state) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+    // shouldComponentUpdate(nextProps, nextState, nextContext) {
+    //     console.log("shouldComponentUpdate", this.state, nextState);
+    //     return false
+    // }
+
+
+
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     console.log("prevState >> ", prevState);
+    //     console.log("Didstate >> ",this.state);
+    //     console.log("this.props.ltems.length >> ",this.props.items.length);
+    //     if(prevState === this.state) {
+    //         this.fetchMoreItems();
+    //     }
+    // }
+
+    componentDidCatch(error, errorInfo) {
+        console.log("error", error);
     }
-    
+
+    componentDidMount() {
+        console.log("props", this.props);
+        this.setState({
+            ...this.state,
+            id: this.props.id
+        });
+
+        // if ( this.props.id == 0){
+        //     this.props.fetchArtwork();
+        // }else {
+        //     this.props.fetchCategory(this.props.id);
+        // }
+        // this.fetchMoreItems();
+    }
+
     // componentDidMount(){
         
     //     if ( this.props.id == 0){
@@ -32,31 +72,36 @@ class ProductListing1 extends Component {
     // }
 // }
 
-
-
     fetchMoreItems = () => {
-        if (this.state.limit >= this.props.items.length) {
-            this.setState({ hasMoreItems: false });
-            return;
-        }
-        // a fake async api call
-        setTimeout(() => {
-            this.setState({
-                limit: this.state.limit + 4
-            });
-        }, 3000);
+        // if (this.state.limit >= this.props.items.length) {
+        //     this.setState({ hasMoreItems: false });
+        //     return;
+        // }
+
+        // a fake async api
+        // this.props.fetchCategory(this.props.id)
+        //     .then(response => {
+        //         if(response.type === ActionTypes.FETCH_CATEGORY_SUCCESS) {
+        //             setTimeout(() => {
+        //                 this.setState({
+        //                     hasMoreItems: true,
+        //                     limit: this.state.limit + 4
+        //                 });
+        //             }, 3000);
+        //         } else {
+        //             this.setState({
+        //                 hasMoreItems:false,
+        //             });
+        //         }
+        //     })
 
 
     }
 
     render (){
-      
         const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-       
-
-
-
-        console.log(this.props.colSize)
+        console.log("items >>",items);
+        console.log("this.state.limit >>",this.state.limit);
         return (
             <div>
                 <div className="product-wrapper-grid">
@@ -107,12 +152,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    //  fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    //  fetchArtwork:() => dispatch(Actions.fetchArtwork()),   
+    fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()),
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
-   
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
