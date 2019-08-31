@@ -82,7 +82,8 @@ class ProductItem extends Component {
                                 alt="" /></Link> */}
                                 
                                 {/* 이미지 */}
-                                <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} >
+                                <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                state :{ item:this.props.item }}}>
                                     <img src={image}className="img-fluid"
                                     alt="" /></Link>
 
@@ -121,10 +122,14 @@ class ProductItem extends Component {
                             {/* <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>   
                             </Link> */}
                             {/* <h6>{item.productName}</h6> */}
+                            
+                            <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                state :{ item:this.props.item }}}>
                             <h4>
                             {/* {symbol}{product.price} */}
                                 <span className="money">{item.productName}</span>
                             </h4>
+                            </Link>
 
                             
                         </div>
@@ -178,7 +183,8 @@ class ProductItem extends Component {
                                                 </div>
                                                 <div className="product-buttons">
                                                     <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
-                                                    <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.productId}`} className="btn btn-solid">view detail</Link>
+                                                    <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                        state :{ item:this.props.item }}} className="btn btn-solid">>view detail</Link>
                                                 </div>
                                             </div>
                                         </div>

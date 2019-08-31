@@ -10,10 +10,10 @@ import { ActionTypes } from "../constants/ActionTypes";
 
 const initialState = {
     products: [],
-    symbol: '$',
+    symbol: '￦',
     product_details: [],
     items: [],
-    item: null
+    item: {}
 
 };
 
