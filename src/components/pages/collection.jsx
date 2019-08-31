@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Breadcrumb from "../common/breadcrumb";
+import {Link} from 'react-router-dom';
 
 class Collection extends Component {
 
@@ -27,7 +28,7 @@ class Collection extends Component {
                                             <h3>fashion</h3>
                                             <p>Lorem Ipsum is simply dummy text of the printing and typesetting
                                                 industry....</p>
-                                            <a href="category-page.html" className="btn btn-outline">shop now !</a>
+                                            <Link to="http://localhost:3000/collections/0" className="btn btn-outline">shop now !</Link>
                                         </div>
                                 </div>
                             </div>

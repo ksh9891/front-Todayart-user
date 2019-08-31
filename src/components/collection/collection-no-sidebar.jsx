@@ -72,7 +72,7 @@ class CollectionNoSideBar extends Component {
                                                     </div>
 
                                                     <div className="container">
-                                <div className="row">
+                                {/* <div className="row">
                                     <div className="col-xl-12">
 									<form className="collectionSearch">
                                             <div className="form-group">
@@ -85,7 +85,7 @@ class CollectionNoSideBar extends Component {
                                             <button type="submit"  onClick={this.closeSearch} className="btn btn-primary"><i className="fa fa-search" /></button>
                                         </form>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                                        
 

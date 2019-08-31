@@ -7,7 +7,6 @@ import {filterSort} from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import {Actions} from '../../../actions';
 
-import {Actions} from '../../../actions';
 
 class FilterBar extends Component {
 
@@ -56,7 +55,7 @@ class FilterBar extends Component {
         return (
             <div className="product-filter-content">
                 <div className="search-count">
-                    <h5>Showing Products 1-{this.props.products.length} Result</h5>
+                    <h5>Showing Products 1-{this.props.items.length} Result</h5>
                 </div>
                 <div className="collection-view">
                     <ul>

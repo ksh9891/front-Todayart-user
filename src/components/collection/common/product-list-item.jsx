@@ -68,10 +68,7 @@ class ProductListItem extends Component {
                             <div className="front">
                                 <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                 state :{ item:this.props.item }}}
-                                ><img
-                                    src={image}
-                                    className="img-fluid"
-                                    alt="" /></Link>
+                                ><img src={image} className="img-fluid" alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
                                 <button title="Add to cart" onClick={() => onAddToCartClicked(item, 1)}>
@@ -80,6 +77,11 @@ class ProductListItem extends Component {
                                 <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
+
+                                <a href="javascript:void(0)" data-toggle="modal"
+                               data-target="#quick-view"
+                               title="Quick View"
+                               onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
                                 
 
                             </div>
@@ -104,14 +106,14 @@ class ProductListItem extends Component {
                                 <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                 state :{ item:this.props.item }}}
                                 >
-                                    <h6>{item.productName}</h6>
+                                    <h5>{item.productName}</h5>
 
                                 </Link>
                                 <h6>{item.artistName}</h6>
                                 {/* <h6>{item.productSize}</h6> */}
-                                <h5>{item.productPrice}{symbol}
+                                <h6>{item.productPrice}{symbol}
                                     {/* <del><span className="money">{symbol}{item.productPrice}</span></del> */}
-                                    </h5>
+                                    </h6>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {
@@ -121,22 +123,22 @@ class ProductListItem extends Component {
                                 </ul>:''}
                             </div>
                         </div>
-                    <Modal open={open} onClose={this.onCloseModal} center>
-                            <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                <div className="modal-content quick-view-modal">
-                                    <div className="modal-body">
-                                        <div className="row">
-                                            <div className="col-lg-6  col-xs-12">
-                                                <div className="quick-view-img">
-                                                    <img src={image} alt="" className="img-fluid" />
-                                                </div>
+                    <Modal open={this.state.open} onClose={this.onCloseModal} center>
+                        <div className="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div className="modal-content quick-view-modal">
+                                <div className="modal-body">
+                                    <div className="row">
+                                        <div className="col-lg-6  col-xs-12">
+                                            <div className="quick-view-img">
+
+                                                <img src={image} alt="" className="img-fluid" />
+
                                             </div>
-                                            <div className="col-lg-6 rtl-text">
-                                                <div className="product-right">
-                                                    <h2> {item.productName} </h2>
-                                                    <h3>{symbol}{item.productPrice}
-                                                        <del><span className="money">{symbol}{item.productPrice}</span></del>
-                                                    </h3>
+                                        </div>
+                                        <div className="col-lg-6 rtl-text">
+                                            <div className="product-right">
+                                                <h2> {item.productName} </h2>
+                                                <h3>{item.productPrice}{symbol}</h3>
                                                    
                                                     <div className="border-product">
                                                         <h6 className="product-title">product details</h6>
