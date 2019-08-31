@@ -67,7 +67,7 @@ class DetailsWithPrice extends Component {
                         {item.artistName}</h4>
                         {/* 가격할인된거 보여주는 부분 */}
                         {/* <span>{item.discount}% off</span> */}
-                    <h3>{item.productPrice}{symbol} </h3>
+                    <h3>{symbol}{item.productPrice} </h3>
                    
                     {/* 색상 선택하던 부분 */}
                     {/* {item.variants?

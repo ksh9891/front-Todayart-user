@@ -43,8 +43,12 @@ class ProductListing extends Component {
     render (){
 
         const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-       
-        console.log(this.props.colSize)
+
+        console.log(this.props.colSize);
+        console.log("this.state.limit >> ", this.state.limit);
+        console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
+        console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
+
         return (
             <div>
                 <div className="product-wrapper-grid">
