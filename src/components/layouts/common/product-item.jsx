@@ -1,8 +1,11 @@
 // 메인 홈화면에 대한 부분
 
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
+import {addToCart, Actions} from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
 
 import { Files } from '../../../utils';
 
@@ -56,6 +59,18 @@ class ProductItem extends Component {
         const { fileName } = item.thumbnail
         const image = Files.filePath(fileName);
 
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+
         // let RatingStars = []
         // for(var i = 0; i < product.rating; i++) {
         //     RatingStars.push(<i className="fa fa-star" key={i}></i>)
@@ -83,13 +98,13 @@ class ProductItem extends Component {
                                 alt="" /></Link> */}
                                 
                                 {/* 이미지 */}
-                                <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} >
+                                <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`, state:{item:item}}} >
                                     <img src={image}className="img-fluid"
                                     alt="" /></Link>
 
                         </div>
                         <div className="cart-info cart-wrap">
-                            <button title="Add to cart" onClick={onAddToCartClicked}>
+                            <button title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
                                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                             </button>
                             <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
@@ -178,8 +193,8 @@ class ProductItem extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="product-buttons">
-                                                    <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
-                                                    <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.productId}`} className="btn btn-solid">view detail</Link>
+                                                    <button  className="btn btn-solid" onClick={() => asyncAddCart(item, this.state.quantity)} >add to cart</button>
+                                                    <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`, state:{item:item}}} className="btn btn-solid">view detail</Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,4 +208,9 @@ class ProductItem extends Component {
     }
 }
 
-export default ProductItem;
+const mapDispatchToProps=(dispatch)=>({
+ addToCart:(item, qty)=>dispatch(addToCart(item, qty)),
+ calcPrice:()=>dispatch(Actions.calcCartPrice())
+})
+
+export default connect(null,mapDispatchToProps)(ProductItem);

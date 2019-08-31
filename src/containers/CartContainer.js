@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
+import { ActionTypes } from '../constants/ActionTypes';
 
 class CartContainer extends React.Component{
     constructor(props){
@@ -36,6 +37,14 @@ class CartContainer extends React.Component{
 
     render(){
         const {symbol, cart, totalPrice, totalShipping} = this.state;
+        const deleteItemFromCart=(cartId)=>{
+            this.props.deleteCartItem(cartId).then((response)=>{
+                if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
+                    return this.props.calcCartItem()
+                }
+            
+            })
+        }
         return(
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
@@ -46,7 +55,7 @@ class CartContainer extends React.Component{
         
         <ul className="show-div shopping-cart">
             { cart.items.map((item,index) => (
-                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => this.props.deleteCartItem(item.cartId)}  />
+                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => deleteItemFromCart(item.cartId) }  />
             ))}
             {(cart.items.length > 0) ?
                 <div>
@@ -79,4 +88,10 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, (dispatch)=>({deleteCartItem:(cartId)=>dispatch(Actions.deleteCartItem(cartId))}))(CartContainer);
+const mapDispatchToProps=(dispatch)=>({
+    deleteCartItem:(cartId)=>dispatch(Actions.deleteCartItem(cartId)),
+    calcCartItem:()=>dispatch(Actions.calcCartPrice())
+
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(CartContainer);

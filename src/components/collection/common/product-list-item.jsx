@@ -74,7 +74,7 @@ class ProductListItem extends Component {
                                     alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
-                                <button title="Add to cart" onClick={() => onAddToCartClicked(item, 1)}>
+                                <button title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </button>
                                 <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
@@ -162,7 +162,7 @@ class ProductListItem extends Component {
                                                         </div>
                                                     </div>
                                                     <div className="product-buttons">
-                                                        <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
+                                                        <button  className="btn btn-solid" onClick={() => onAddToCartClicked(this.props.item, 1)} >add to cart</button>
                                                         <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`} className="btn btn-solid">view detail</Link>
                                                     </div>
                                                 </div>
