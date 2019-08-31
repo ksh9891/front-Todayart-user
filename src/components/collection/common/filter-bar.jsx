@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import {filterSort} from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 
+import {Actions} from '../../../actions';
+
 class FilterBar extends Component {
 
     //List Layout View
@@ -48,6 +50,8 @@ class FilterBar extends Component {
     }
 
     render (){
+        
+        const { id } = this.props;
         return (
             <div className="product-filter-content">
                 <div className="search-count">
@@ -92,13 +96,37 @@ class FilterBar extends Component {
                     </ul>
                 </div>
                 <div className="product-page-filter">
-                    <select onChange={(e) => this.props.filterSort(e.target.value)}>
+
+
+                <select onChange={(e) => {
+                        if(e.target.value=="HighToLow"&&id==0){
+                            this.props.fetchPriceDesc();
+                        }else if(e.target.value=="LowToHigh"&&id==0){
+                            this.props.fetchPriceAsc();
+                        }else if(e.target.value=="HighToLow"&&id==1){
+                            this.props.fetchCategoryDesc(id);
+                        }else if(e.target.value=="LowToHigh"&&id==1){
+                            this.props.fetchCategoryAsc(id);
+                        }else if(e.target.value=="HighToLow"&&id==2){
+                            this.props.fetchCategoryDesc(id);
+                        }else if(e.target.value=="LowToHigh"&&id==2){
+                            this.props.fetchCategoryAsc(id);
+                        }else if(e.target.value=="HighToLow"&&id==3){
+                            this.props.fetchCategoryDesc(id);
+                        }else if(e.target.value=="LowToHigh"&&id==3){
+                            this.props.fetchCategoryAsc(id);
+                        }
+                    }
+                        }>
+
+
+                    {/* <select onChange={(e) => this.props.filterSort(e.target.value)}> */}
                         <option value="">Sorting items 작품정렬</option>
                         <option value="HighToLow">Price: High to Low 높은가격순</option>
                         <option value="LowToHigh">Price: Low to High 낮은가격순</option>
-                        <option value="Newest">Newest Items 최신등록순</option>
+                        {/* <option value="Newest">Newest Items 최신등록순</option>
                         <option value="AscOrder">Sort By Name: A To Z 이름순</option>
-                        <option value="DescOrder">Sort By Name: Z To A</option>
+                        <option value="DescOrder">Sort By Name: Z To A</option> */}
                     </select>
                 </div>
             </div>
@@ -113,4 +141,13 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, {filterSort})(FilterBar);
+const mapDispatchToProps = (dispatch) => ({
+    fetchPriceAsc: () => dispatch(Actions.fetchPriceAsc()),
+    fetchPriceDesc:() => dispatch(Actions.fetchPriceDesc()),
+    fetchCategoryAsc: (id) => dispatch(Actions.fetchCategoryAsc(id)),
+    fetchCategoryDesc:(id) => dispatch(Actions.fetchCategoryDesc(id)) 
+
+ })
+
+ export default connect(mapStateToProps, mapDispatchToProps)(FilterBar)
+// export default connect(mapStateToProps, {filterSort})(FilterBar);

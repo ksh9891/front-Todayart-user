@@ -26,7 +26,8 @@ class CollectionCategory extends Component {
         if ( id == 0 ){
             this.props.fetchArtwork();
         }else {
-            this.props.fetchCategory(nextProps.match.params.id);        
+            // this.props.fetchCategory(nextProps.match.params.id); 
+            this.props.fetchCategory(id);       
         } 
        
   }
@@ -51,6 +52,7 @@ class CollectionCategory extends Component {
 
         const { id } = this.props.match.params;
         console.log('id : ', id)
+        const { item } = this.props;
         return (
             <div>
                 <Breadcrumb title={'Collection'} />
@@ -79,7 +81,7 @@ class CollectionCategory extends Component {
                                                             <div className="container-fluid p-0">
                                                                 <div className="row">
                                                                     <div className="col-12">
-                                                                        <FilterBar onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
+                                                                        <FilterBar id={id} onLayoutViewClicked={(colmuns) => this.LayoutViewClicked(colmuns)}/>
                                                                     </div>
                                                                 </div>
                                                             </div>

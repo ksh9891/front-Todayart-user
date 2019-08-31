@@ -83,7 +83,7 @@ class ProductItem extends Component {
                                 
                                 {/* 이미지 */}
                                 <Link to={`${process.env.PUBLIC_URL}/no-sidebar/product/${item.productId}`} >
-                                    <img src={image}className="img-fluid"
+                                    <img src={image} className="img-fluid"
                                     alt="" /></Link>
 
                         </div>
