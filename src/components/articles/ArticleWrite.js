@@ -62,19 +62,19 @@ class ArticleWrite extends Component {
     
   const { items } = this.props.article;
   const { userDetails } = this.props.auth;  
-  function hidden() {
-    var chkbox = document.getElementsByName('is_hidden');
-    var chk = false;
+  // function hidden() {
+  //   var chkbox = document.getElementsByName('is_hidden');
+  //   var chk = false;
 
-    for(var i=0 ; i<chkbox.length ; i++) {
-      if(chkbox[i].checked) {
-         chk = true; 
-      }
-      else {
-        chk = false; 
-      } 
-    }  
-    }
+  //   for(var i=0 ; i<chkbox.length ; i++) {
+  //     if(chkbox[i].checked) {
+  //        chk = true; 
+  //     }
+  //     else {
+  //       chk = false; ㅜㅏㅓ
+  //     } 
+  //   }  
+  //   }
 
 
 

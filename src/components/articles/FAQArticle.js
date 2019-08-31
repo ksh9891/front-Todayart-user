@@ -12,18 +12,24 @@ class FAQArticle extends Component {
     this.state = {
       boardId: queryString.parse(props.location.search).boardId
     }
+    this.searchWordInput = React.createRef();
+    this.searchConditionInput = React.createRef();
   }
 
   componentDidMount() {
     this.props.getArticleList(this.state.boardId);
   }
 
+//  shouldComponentUpdate(nextProps, nextState) {
+//    if(this.props.article.data.items)
+//  }
+
   onDelete = (e, articleId) => {
     e.preventDefault();
     this.props.articleDelete(articleId)
-    .then(response => {
-      this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId)
-    })
+      .then(response => {
+        this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId)
+      })
       .catch(error => {
         console.log('error>>', error);
       });
@@ -43,6 +49,27 @@ class FAQArticle extends Component {
       });
   };
 
+  onSearch = (e) => {
+
+    e.preventDefault();
+
+    console.log('searchWordInputsearchWordInputsearchWordInput=', this.searchConditionInput)
+
+    const searchWord = this.searchWordInput.current.value;
+    const searchCondition = this.searchConditionInput.current.value;
+    const boardId = this.props.article.boardName.boardId;
+
+    console.log("searchCondition", searchCondition)
+    this.props.articleSearch({ boardId, searchWord, searchCondition })
+      .then(response => {
+        this.props.history.push("/articles/search?value="+searchWord+"&boardId="+boardId+"&where="+searchCondition)
+      })
+      .catch(error => {
+        console.log('error>>', error);
+      });
+  }
+
+
   render() {
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
@@ -52,8 +79,33 @@ class FAQArticle extends Component {
         {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
           <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
         }
-        {items ?
+        <nav class="navbar navbar-light bg-light">
+          <form class="form-inline" onSubmit={e => this.onSearch(e)}>
 
+            <select
+              class="form-control"
+              type="boardId"
+              id="boardId"
+              name="boardId"
+              placeholder="카테고리"
+              ref={this.searchConditionInput}
+              required>
+              <option value="title+content">제목 + 내용</option>
+              <option value="title">제목</option>
+              <option value="content">내용</option>
+            </select>
+
+            <input class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+              id="SearchWordInput"
+              name="searchWordInput"
+              ref={this.searchWordInput} />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </nav>
+        {items ?
           items.map((item) => {
             const { title, content } = item;
             return (
@@ -81,7 +133,7 @@ class FAQArticle extends Component {
                               <div className="card-body">
                                 <p>{item.content}</p>
                                 <span>
-                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null)&&(userDetails.memberId===1)) ?
+                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
                                     <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                       <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.boardId, item.articleId)}>수정</button>
@@ -117,7 +169,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
   articleDelete: (boardId) => dispatch(Actions.articleDelete(boardId)),
-  getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId))
+  getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
+  articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition }))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FAQArticle))

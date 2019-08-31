@@ -30,6 +30,20 @@ const article = (state = initialStateArticle, action) => {
             }
             return state;
 
+        case ActionTypes.ARTICLESEARCH_SUCCESS:
+            if (payload !== undefined && payload !== null) {
+                const { data } = payload;
+                console.log('data = ', data)
+                if (data !== undefined && data !== null) {
+                    return {
+                        ...state,
+                        items: data.items,
+                        boardName: data.boardName,
+                    };
+                }
+            }
+            return state;
+
         case ActionTypes.ARTICLEDETAIL_SUCCESS:
             if (payload !== undefined && payload !== null) {
                 const { data } = payload;

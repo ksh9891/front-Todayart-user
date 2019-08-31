@@ -531,6 +531,18 @@ const articleUpdate  =({articleId, title, content}) =>{
     })
 }
 
+const articleSearch = ({boardId, searchWord, searchCondition}) => {
+    return ({
+        type: ActionTypes.ARTICLESEARCH,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/article/search?value=${searchWord}&boardId=${boardId}&where=${searchCondition}`
+            }
+        }
+    })
+}
+
 const addCart = (item, quantity) =>{
     return({
         type:ActionTypes.ADD_CART,
@@ -696,6 +708,7 @@ export const Actions = {
     articleWrite,
     articleDelete,
     articleUpdate,
+    articleSearch,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,
