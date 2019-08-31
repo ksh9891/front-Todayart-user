@@ -60,11 +60,13 @@ class cartComponent extends Component {
                                                     <input type="checkbox"  name="cartItem" defaultChecked={true} onChange={()=>this.toggle(item.cartId)}/>
                                                 </td>
                                                 <td>
-                                                    <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>
+                                                    <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                    state:{item:item}}}>
                                                         <img src={item.thumbnail} alt="" />
                                                     </Link>
                                                 </td>
-                                                <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>{item.product.productName}</Link>
+                                                <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                state:{item:item}}}>{item.product.productName}</Link>
                                                     <div className="mobile-cart-content row">
                                                         <div className="col-xs-3">
                                                             <div className="qty-box">
