@@ -3,18 +3,20 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
+import Breadcrumb from '../common/breadcrumb'
 
 class FAQArticle extends Component {
 
   constructor(props) {
     super(props)
-    this.state={
-      boardId : queryString.parse(props.location.search).boardId
-  }
+    this.state = {
+      boardId: queryString.parse(props.location.search).boardId
+    }
   }
 
   componentDidMount() {
     this.props.getArticleList(this.state.boardId);
+<<<<<<< HEAD
 }
 
 componentWillUnmount(){
@@ -26,26 +28,34 @@ componentWillUnmount(){
  onDelete = (e, articleId) => {
 e.preventDefault();
   this.props.articleDelete(articleId)
+=======
+  }
+>>>>>>> 22c6fd6590acfc08337f4552d273ce168419fb7e
 
-    .then(console.log('articleID==============', this.props.articleId))
-    .catch(error => {
-      console.log('error>>', error);
-    });
-};
-
-onModify = (e, articleId) => {
-
-  e.preventDefault();
-
-  this.props.getArticleDetail(articleId)
+  onDelete = (e, articleId) => {
+    e.preventDefault();
+    this.props.articleDelete(articleId)
     .then(response => {
-      this.props.history.push("/articleWrite/"+articleId)
+      this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId)
     })
-    .then(console.log('thisprops = ',this.props))
-    .catch(error => {
-      console.log('error>>', error);
-    });
-};
+      .catch(error => {
+        console.log('error>>', error);
+      });
+  };
+
+  onModify = (e, boardId, articleId) => {
+
+    e.preventDefault();
+
+    this.props.getArticleDetail(boardId, articleId)
+      .then(response => {
+        this.props.history.push("/articleWrite/" + articleId)
+      })
+      .then(console.log('thisprops = ', this.props))
+      .catch(error => {
+        console.log('error>>', error);
+      });
+  };
 
   render() {
     const { items } = this.props.article;
@@ -53,30 +63,34 @@ onModify = (e, articleId) => {
 
     return (
       <div>
+        {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
+          <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
+        }
+        {items ?
 
-        { items?
-          
           items.map((item) => {
-          const { title, content } = item;
-          return (
-            <div>
-              {/*Dashboard section*/}
-              <section className="faq-section section-b-space">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <div className="accordion theme-accordion" id="accordionExample">
-                        <div className="card">
-                          <div className="card-header" id="headingOne">
-                            <h5 className="mb-0">
-                              <button className="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapseOne" aria-expanded="true"
-                                aria-controls="collapseOne">
-                                {item.title}
-                              </button>
-                            </h5>
-                          </div>
+            const { title, content } = item;
+            return (
+              <div>
 
+                {/*Dashboard section*/}
+                <section className="faq-section section-b-space">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col-sm-12">
+                        <div className="accordion theme-accordion" id="accordionExample">
+                          <div className="card">
+                            <div className="card-header" id="headingOne">
+                              <h5 className="mb-0">
+                                <button className="btn btn-link" type="button" data-toggle="collapse"
+                                  data-target="#collapseOne" aria-expanded="true"
+                                  aria-controls="collapseOne">
+                                  {item.title}
+                                </button>
+                              </h5>
+                            </div>
+
+<<<<<<< HEAD
                           <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                             data-parent="#accordionExample">
                             <div className="card-body">
@@ -91,18 +105,34 @@ onModify = (e, articleId) => {
                                   </nav>
                                   </div> : ''}
                               </span>
+=======
+                            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
+                              data-parent="#accordionExample">
+                              <div className="card-body">
+                                <p>{item.content}</p>
+                                <span>
+                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null)&&(userDetails.memberId===1)) ?
+                                    <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                      <form className="form-inline">
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.boardId, item.articleId)}>수정</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
+                                      </form>
+                                    </nav>
+                                    </div> : ''}
+                                </span>
+                              </div>
+>>>>>>> 22c6fd6590acfc08337f4552d273ce168419fb7e
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </section>
+                </section>
 
-            </div >
-          )
-        }):''}
+              </div >
+            )
+          }) : ''}
       </div>
     )
 

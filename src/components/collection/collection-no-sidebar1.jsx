@@ -63,7 +63,7 @@ class CollectionCategory extends Component {
 
     componentDidMount() {
         const { id } = this.props.match.params;
-        console.log("id", id);
+        console.log("DIdMount", id);
         if ( id == 0){
             this.props.fetchArtwork();
         }else {
@@ -72,6 +72,7 @@ class CollectionCategory extends Component {
     }
 
     render(){
+        console.log('render!!!!!')
         const { id } = this.props.match.params;
         const { items } = this.props;
         return (
