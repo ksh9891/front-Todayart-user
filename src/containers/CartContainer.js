@@ -4,7 +4,20 @@ import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
 
-const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
+class CartContainer extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            cart:props.cart,
+            totalPrice:props.cart.totalPrice,
+            totalShipping:props.cart.totalShipping,
+            symbol:props.symbol
+        }
+
+    }
+    render(){
+        const {symbol, cart, totalPrice, totalShipping} = this.state;
+        return(
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
         <Link to={`${process.env.PUBLIC_URL}/cart`}>
@@ -14,14 +27,14 @@ const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
         
         <ul className="show-div shopping-cart">
             { cart.items.map((item,index) => (
-                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => deleteCartItem(item.cartId)}  />
+                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => this.props.deleteCartItem(item.cartId)}  />
             ))}
             {(cart.items.length > 0) ?
                 <div>
             <li>
                 <div className="total">
-                    <h5>subtotal : <span>{symbol}{total}</span></h5>
-                    <h5>shippingFee : <span>{symbol}{shipping}</span></h5>
+                    <h5>subtotal : <span>{symbol}{totalPrice}</span></h5>
+                    <h5>shippingFee : <span>{symbol}{totalShipping}</span></h5>
                 </div>
             </li>
             <li>
@@ -35,15 +48,15 @@ const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
         </ul>
 
     </li>
-)
+        )
+    }
+}
 
 
 function mapStateToProps(state) {
     return {
         cart: state.cart,
-        total: state.cart.totalPrice,
-        shipping: state.cart.totalShipping,
-        symbol: state.data.symbol,
+        symbol: '￦'
     }
 }
 
