@@ -15,12 +15,14 @@ import SmallImages from './common/product/small-image'
 
 import { Actions } from '../../actions'
 import { Files } from '../../utils';
+import { ActionTypes } from '../../constants/ActionTypes';
+
 
 
 
 
 class NoSideBar extends Component {
-// this.props.location.state.item
+    // this.props.location.state.item
     constructor(props) {
         super(props);
         this.state = {
@@ -28,12 +30,10 @@ class NoSideBar extends Component {
             nav2: null,
             item: this.props.location.state.item
         };
-        console.log("constructor props >> ",props)
     }
 
     
     componentDidMount() {
-        console.log("componentDidMount", this.state)
         this.setState({
             nav1: this.slider1,
             nav2: this.slider2
@@ -44,8 +44,19 @@ class NoSideBar extends Component {
 
     render(){
 
-        console.log("render>>",this.props, this.state)
-        const {symbol, addToCart, addToCartUnsafe, addToWishlist} = this.props
+            
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+        const {symbol, addToCart, addToCartUnsafe, addToWishlist, calcPrice} = this.props
         const {thumbnail} = this.state.item;
 
         var products = {
@@ -82,7 +93,7 @@ class NoSideBar extends Component {
                                        
                                     <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} calcPrice={calcPrice} />
                             </div>
                         </div>
                     </div>
@@ -108,7 +119,7 @@ class NoSideBar extends Component {
 const mapStateToProps = (state) => ({
     
         item: state.data.item,
-        symbol: state.data.symbol
+        symbol: "￦"
     
     
 })
@@ -118,9 +129,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchSingleProduct2: (id) => dispatch(Actions.fetchSingleProduct2(id)),
-    addToCart: () => dispatch(addToCart()),
+    addToCart: (product, qty) => dispatch(addToCart(product, qty)),
     addToWishlist: () => dispatch(addToWishlist()),
-    addToCartUnsafe: () => dispatch(addToCartUnsafe())
+    addToCartUnsafe: () => dispatch(addToCartUnsafe()),
+    calcPrice:()=>dispatch(Actions.calcCartPrice())
    
 })
 

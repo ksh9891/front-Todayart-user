@@ -15,6 +15,25 @@ class CartContainer extends React.Component{
         }
 
     }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.cart!==nextProps.cart){
+        return {cart:nextProps.cart,
+        totalPrice:nextProps.cart.totalPrice,
+        totalShipping:nextProps.cart.totalShipping}
+        }
+        return null;
+        
+       }
+
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.cart!==nextProps.cart){
+            return true;
+        }
+        return false;
+    }
+
     render(){
         const {symbol, cart, totalPrice, totalShipping} = this.state;
         return(

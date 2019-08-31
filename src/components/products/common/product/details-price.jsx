@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
+import { ActionTypes } from '../../../../constants/ActionTypes';
 
 
 class DetailsWithPrice extends Component {
@@ -129,8 +130,11 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-                        <a className="btn btn-solid" onClick={() => addToCartClicked(item.productId, this.state.quantity)}>장바구니에 담기</a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item.productId, this.state.quantity)} >바로 구입하기</Link>
+                        <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
+                                    this.props.calcPrice()
+                                    }}
+                        >장바구니에 담기</a>
+                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >바로 구입하기</Link>
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">product details</h6>

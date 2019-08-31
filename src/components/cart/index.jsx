@@ -61,12 +61,12 @@ class cartComponent extends Component {
                                                 </td>
                                                 <td>
                                                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`,
-                                                    state:{item:item}}}>
+                                                    state:{item:item.product}}}>
                                                         <img src={item.thumbnail} alt="" />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.productId}`,
-                                                state:{item:item}}}>{item.product.productName}</Link>
+                                                state:{item:item.product}}}>{item.product.productName}</Link>
                                                     <div className="mobile-cart-content row">
                                                         <div className="col-xs-3">
                                                             <div className="qty-box">
