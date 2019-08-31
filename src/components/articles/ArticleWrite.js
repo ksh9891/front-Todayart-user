@@ -1,4 +1,4 @@
-import React, { useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 
@@ -11,20 +11,80 @@ class ArticleWrite extends Component {
 
   constructor(props) {
     super(props)
+
+    this.titleInput = React.createRef();
+    this.contentInput = React.createRef();
+    this.boardIdInput = React.createRef();
   }
+
+
+  onWrite = (e) => {
+
+    e.preventDefault();
+
+    const title = this.titleInput.current.value;
+    const content = this.contentInput.current.value;
+    const boardId = this.props.article.boardName.boardId;
+
+    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa',boardId)
+
+    this.props.articleWrite({title, content, boardId})
+      .then(response => {
+        this.props.history.push("/articles?boardId=" + boardId)
+      })
+      .then(console.log('titleeeeeeeeeeeeeeeeeeeeeeeeee = ', title))
+      .catch(error => {
+        console.log('error>>', error);
+      });
+  };
+
+  onUpdate = (e) => {
+
+    const title = this.titleInput.current.value;
+    const content = this.contentInput.current.value;
+    const articleId = this.props.article.item.articleId;
+
+    e.preventDefault();
+
+    this.props.articleUpdate({articleId, title, content})
+      .then(response => {
+        this.props.history.push("/articles?boardId=" + this.props.article.item.boardId)
+      })
+      .then(console.log('thisprops = ', this.props))
+      .catch(error => {
+        console.log('error>>', error);
+      });
+  };
+
+  
 
   render() {
     
   const { items } = this.props.article;
   const { userDetails } = this.props.auth;  
+  function hidden() {
+    var chkbox = document.getElementsByName('is_hidden');
+    var chk = false;
+
+    for(var i=0 ; i<chkbox.length ; i++) {
+      if(chkbox[i].checked) {
+         chk = true; 
+      }
+      else {
+        chk = false; 
+      } 
+    }  
+    }
+
+
 
     return (
       <div>
         
         <body> 
           <div class="container">
-            <h1>글쓰기</h1>
-            <form onSubmit={e => this.onWrite(e)}>
+            <form onSubmit={e => this.props.match.params.articleId !== undefined ? 
+              this.onUpdate(e) : this.onWrite(e)}>
               <div class="form-group">
                 <label for="Inputselect">Category</label>
   
@@ -47,12 +107,14 @@ class ArticleWrite extends Component {
                   type="title"
                   id="title"
                   name="title"
+                  ref={this.titleInput}
+                  defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.item.title : null}
                   placeholder="제목을 입력하세요."
                   required
                 />
               </div>
 
-              <div className="App">
+              {/* <div className="App">
                 <h4>내용</h4>
                 <CKEditor
                     editor={ ClassicEditor }
@@ -65,7 +127,7 @@ class ArticleWrite extends Component {
                         console.log( { event, editor, data } );
                     } }
                 />
-            </div>
+            </div> */}
   
               <div class="form-group">
                 <label for=" Email1msg">내용</label>
@@ -76,6 +138,8 @@ class ArticleWrite extends Component {
                     type="content"
                     id="content"
                     name="content"
+                    ref={this.contentInput}
+                    defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.item.content : null}
                     placeholder="내용을 입력하세요."
                     required
                   ></textarea>
@@ -91,19 +155,17 @@ class ArticleWrite extends Component {
                   /> 비밀글 여부
                 </label>
               </div>
+              
   
-              <button type="submit" class="btn btn-info">글쓰기</button>
+              <button type="submit" class="btn btn-info">확인</button>
             </form>
-            <form onSubmit={e => this.onList(e)}>
-            <button type="submit" class="btn btn-info">취소</button>
-            </form>
+            <button type="submit" class="btn btn-info">
+              <Link to={"/articles?boardId="+`${this.props.article.boardName.boardId}`}>취소</Link>
+            </button>
           </div>
         </body>
       </div>
-    );
-    
-
-
+    );    
   }
 }
 
@@ -114,8 +176,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  articleWrite: ({title, content, boardId, memberId}) => dispatch(Actions.articleWrite({title, content, boardId, memberId})),
-
+  articleWrite: ({title, content, boardId}) => dispatch(Actions.articleWrite({title, content, boardId})),
+  articleUpdate: ({articleId, title, content}) => dispatch(Actions.articleUpdate({articleId, title, content}))
 });
 
 

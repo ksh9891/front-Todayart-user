@@ -46,7 +46,7 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { items.map((item, index ) =>
+                                    { items.slice(0, 8).map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
                                                      onAddToWishlistClicked={() => addToWishlist(item)}

@@ -28,19 +28,30 @@ class NoSideBar extends Component {
         this.state = {
             nav1: null,
             nav2: null,
-            item: this.props.location.state.item
+            item : this.props.location.state?this.props.location.state.item:null          
         };
     }
 
+    componentWillMount(){
+        console.log('WillMount >> ', this.props)
+        this.props.fetchSingleProduct2(this.props.match.params.id)
+        .then(() => this.setState({ ...this.state, item: this.props.item }));
+        
+        if(this.state.item === null){
+            this.setState({
+                ...this.state,
+                item : this.props.item
+            })
+        }
+    }
     
     componentDidMount() {
         this.setState({
+            ...this.state,
             nav1: this.slider1,
             nav2: this.slider2
         });
-
-
-    }
+       }
 
     render(){
 
@@ -56,9 +67,8 @@ class NoSideBar extends Component {
              })
         }
 
-        const {symbol, addToCart, addToCartUnsafe, addToWishlist, calcPrice} = this.props
+        const {symbol, addToCartUnsafe, addToWishlist, calcPrice} = this.props
         const {thumbnail} = this.state.item;
-
         var products = {
             fade: true
         };
@@ -115,6 +125,7 @@ class NoSideBar extends Component {
         )
     }
 }
+
 
 const mapStateToProps = (state) => ({
     

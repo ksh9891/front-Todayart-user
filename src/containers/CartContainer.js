@@ -42,9 +42,9 @@ class CartContainer extends React.Component{
                 if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
                     return this.props.calcCartItem()
                 }
-            
             })
         }
+        
         return(
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
