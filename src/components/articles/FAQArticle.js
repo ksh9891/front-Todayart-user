@@ -20,9 +20,12 @@ class FAQArticle extends Component {
     this.props.getArticleList(this.state.boardId);
   }
 
+
 //  shouldComponentUpdate(nextProps, nextState) {
 //    if(this.props.article.data.items)
 //  }
+
+  componentWillUnmount(){}
 
   onDelete = (e, articleId) => {
     e.preventDefault();
@@ -126,7 +129,6 @@ class FAQArticle extends Component {
                                 </button>
                               </h5>
                             </div>
-
                             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionExample">
                               <div className="card-body">

@@ -74,12 +74,16 @@ class ProductListItem extends Component {
                                     alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
-                                <button title="Add to cart" onClick={() => onAddToCartClicked(item, 1)}>
+                                <button title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </button>
                                 <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
+                                <a href="javascript:void(0)" data-toggle="modal"
+                                   data-target="#quick-view"
+                                   title="Quick View"
+                                   onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
                                 
                             </div>
                             {item.variants?
@@ -99,13 +103,20 @@ class ProductListItem extends Component {
                                 <div className="rating">
                                     
                                 </div>
+                                
+
+
+
+
                                 <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                 state :{ item:this.props.item }}}
                                 >
-                                    <h6>{item.productName}</h6>
+                                    <h4>{item.productName}</h4>
+
                                 </Link>
-                                <h4>{symbol}{item.productPrice}
-                                    <del><span className="money">{symbol}{item.productPrice}</span></del></h4>
+
+                                <h6><span className="money">{item.artist.artistName}</span></h6>
+                                <h6>{symbol}{item.productPrice}</h6>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {
@@ -134,7 +145,7 @@ class ProductListItem extends Component {
                                                    
                                                     <div className="border-product">
                                                         <h6 className="product-title">product details</h6>
-                                                        <p>{item}</p>
+                                                        <p>{item.productContent}</p>
                                                     </div>
                                                     <div className="product-description border-product">
                                                         
@@ -163,7 +174,8 @@ class ProductListItem extends Component {
                                                     </div>
                                                     <div className="product-buttons">
                                                         <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
-                                                        <Link to={`${process.env.PUBLIC_URL}/product/${item.productId}`} className="btn btn-solid">view detail</Link>
+                                                       <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                        state :{ item:this.props.item }}} className="btn btn-solid">>view detail</Link>
                                                     </div>
                                                 </div>
                                             </div>

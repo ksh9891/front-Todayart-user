@@ -21,23 +21,47 @@ class HeaderFive extends Component {
         super(props);
 
 		this.state = {
-			isLoading:false
+			isLoading:false,
+			cart:props.cart
 		}
 
 		this.textInput = React.createRef();
     }
     /*=====================
          Pre loader
-         ==========================*/
-    componentDidMount() {
-        setTimeout(function() {
-            document.querySelector(".loader-wrapper").style = "display: none";
-        }, 2000);
-    }
+		 ==========================*/
 
-    componentWillMount(){
-        window.addEventListener('scroll', this.handleScroll);
-	}
+
+		static getDerivedStateFromProps(nextProps, prevState){
+			 setTimeout(function() {
+				 document.querySelector(".loader-wrapper").style = "display: none";
+			 }, 2000);
+			 if(prevState.cart!==nextProps.cart){
+				 console.log("getDerivedStateFromProps",nextProps.cart)
+			 return {cart:nextProps.cart}
+			 }
+			 return null;
+			 
+			}
+			
+			shouldComponentUpdate(nextProps, nextState){
+				console.log("SHOULD--COMPONENT--UPDATE, nextProps, nextState", this.props, nextProps, this.state, nextState);
+				if(this.state.cart!==nextState.cart){
+				return true;}
+				return false;
+		 	}
+
+		 getSnapshotBeforeUpdate(prevProps, prevState){
+			 return window.addEventListener('scroll', this.handleScroll);
+		 }
+
+		 componentDidUpdate(prevProps, prevState){
+			 console.log("componentDidUpdate==prevProps, prevState",prevProps, this.props, prevState, this.state);
+			 if(prevState.cart!==this.state.cart){
+			 this.forceUpdate()}
+		 }
+
+   
     componentWillUnmount() {
         window.removeEventListener('scroll', this.handleScroll);
     }
@@ -88,7 +112,7 @@ class HeaderFive extends Component {
 			//this.props.history.push('/collection');
             this.props.fetchProductBySearch(searchword)
                 .then(response => {
-					
+				
 					console.log('word',searchword)
                     this.props.history.push('/collection');
                 })
@@ -183,7 +207,8 @@ class HeaderFive extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    items : state.data.items
+	items : state.data.items,
+	cart: state.cart
 })
 
 const mapDispatchToProps = (dispatch) => ({

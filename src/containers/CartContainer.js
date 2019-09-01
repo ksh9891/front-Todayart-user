@@ -3,8 +3,49 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
+import { ActionTypes } from '../constants/ActionTypes';
 
-const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
+class CartContainer extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            cart:props.cart,
+            totalPrice:props.cart.totalPrice,
+            totalShipping:props.cart.totalShipping,
+            symbol:props.symbol
+        }
+
+    }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.cart!==nextProps.cart){
+        return {cart:nextProps.cart,
+        totalPrice:nextProps.cart.totalPrice,
+        totalShipping:nextProps.cart.totalShipping}
+        }
+        return null;
+        
+       }
+
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.cart!==nextProps.cart){
+            return true;
+        }
+        return false;
+    }
+
+    render(){
+        const {symbol, cart, totalPrice, totalShipping} = this.state;
+        const deleteItemFromCart=(cartId)=>{
+            this.props.deleteCartItem(cartId).then((response)=>{
+                if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
+                    return this.props.calcCartItem()
+                }
+            })
+        }
+        
+        return(
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
         <Link to={`${process.env.PUBLIC_URL}/cart`}>
@@ -14,14 +55,14 @@ const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
         
         <ul className="show-div shopping-cart">
             { cart.items.map((item,index) => (
-                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => deleteCartItem(item.cartId)}  />
+                <CartPage key={index} item={item} total={item.productPrice*item.quantity} symbol={symbol} deleteCartItem={() => deleteItemFromCart(item.cartId) }  />
             ))}
             {(cart.items.length > 0) ?
                 <div>
             <li>
                 <div className="total">
-                    <h5>subtotal : <span>{symbol}{total}</span></h5>
-                    <h5>shippingFee : <span>{symbol}{shipping}</span></h5>
+                    <h5>subtotal : <span>{symbol}{totalPrice}</span></h5>
+                    <h5>shippingFee : <span>{symbol}{totalShipping}</span></h5>
                 </div>
             </li>
             <li>
@@ -35,16 +76,22 @@ const CartContainer = ({cart, total, shipping, symbol, deleteCartItem}) => (
         </ul>
 
     </li>
-)
+        )
+    }
+}
 
 
 function mapStateToProps(state) {
     return {
         cart: state.cart,
-        total: state.cart.totalPrice,
-        shipping: state.cart.totalShipping,
-        symbol: state.data.symbol,
+        symbol: '￦'
     }
 }
 
-export default connect(mapStateToProps, (dispatch)=>({deleteCartItem:(cartId)=>dispatch(Actions.deleteCartItem(cartId))}))(CartContainer);
+const mapDispatchToProps=(dispatch)=>({
+    deleteCartItem:(cartId)=>dispatch(Actions.deleteCartItem(cartId)),
+    calcCartItem:()=>dispatch(Actions.calcCartPrice())
+
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(CartContainer);
