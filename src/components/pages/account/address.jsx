@@ -68,16 +68,20 @@ class Address extends Component {
                                                                     <th>No</th>
                                                                     <th>주소</th>
                                                                     <th>우편번호</th>
+                                                                    <th>대표 배송지</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>asd</td>
-                                                                    <td>asd</td>
-                                                                    <td>asd</td>
-                                                                    <td>asd</td>
-                                                                    <td>asd</td>
-                                                                </tr>
+                                                            {this.props.auth.userDetails.memberAddresses.map((memberAddress, index) => {
+                                                                return (
+                                                                    <tr>
+                                                                        <td>{index+1}</td>
+                                                                        <td>{memberAddress.address} {memberAddress.addressDetail}</td>
+                                                                        <td>{memberAddress.postalNumber}</td>
+                                                                        <td>{memberAddress.mainAddress === "y" ? "O" : "X"}</td>
+                                                                    </tr>
+                                                                )
+                                                            })}
                                                             </tbody>
                                                         </table>
                                                     </div>

@@ -153,8 +153,19 @@ class AddressAdd extends Component {
                 this.props.addAddress({address, postalNumber, addressDetail})
                     .then(response => {
                         if(response.type === ActionTypes.ADD_ADDRESS_SUCCESS) {
-                            alert("배송지가 등록되었습니다.");
-                            this.props.history.push("/account/address");
+                            return this.props.getMemberMe()
+                                .then(response => {
+                                    if(response.type === ActionTypes.GET_USER_SUCCESS) {
+                                        alert("배송지가 등록되었습니다.");
+                                        this.props.history.push("/account/address");
+                                    } else {
+                                        const { error } = response;
+                                        return Promise.reject(error);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.log("error >> ", error);
+                                })
                         } else {
                             const { error } = response;
                             return Promise.reject(error);
@@ -315,7 +326,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     searchAddressInApi: (keyword) => dispatch(Actions.searchAddressInApi(keyword)),
-    addAddress: ({address, postalNumber, addressDetail}) => dispatch(Actions.addAddress({address, postalNumber, addressDetail}))
+    addAddress: ({address, postalNumber, addressDetail}) => dispatch(Actions.addAddress({address, postalNumber, addressDetail})),
+
+    getMemberMe: () => dispatch(Actions.getMemberMe())
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddressAdd))
