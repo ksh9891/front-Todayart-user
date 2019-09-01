@@ -52,19 +52,21 @@ class cartComponent extends Component {
                                         <th scope="col" width="50">delete</th>
                                     </tr>
                                     </thead>
+                                    <tbody>
                                     {cartItems.map((item, index) => {
                                         return (
-                                        <tbody key={index}>
-                                            <tr>
+                                            <tr key={index}>
                                                 <td>
                                                     <input type="checkbox"  name="cartItem" defaultChecked={true} onChange={()=>this.toggle(item.cartId)}/>
                                                 </td>
                                                 <td>
-                                                    <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>
+                                                    <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
+                                                    state:{item:item.product}}}>
                                                         <img src={item.thumbnail} alt="" />
                                                     </Link>
                                                 </td>
-                                                <td><Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${item.id}`}>{item.product.productName}</Link>
+                                                <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
+                                                state:{item:item.product}}}>{item.product.productName}</Link>
                                                     <div className="mobile-cart-content row">
                                                         <div className="col-xs-3">
                                                             <div className="qty-box">
@@ -111,8 +113,8 @@ class cartComponent extends Component {
                                                     <i className="fa fa-times" onClick={() => this.props.deleteCartItem(item.cartId)}/>
                                                 </td>
                                             </tr>
-                                        </tbody> )
-                                    })}
+                                         )
+                                    })}</tbody>
                                 </table>
                                 <table className="table cart-table table-responsive-md">
                                     <tfoot>

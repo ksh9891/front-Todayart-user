@@ -11,18 +11,9 @@ import { getAllProducts } from './actions'
 
 // Layouts
 import TodayArt from './components/layouts/todayart/main';
-import Fashion from './components/layouts/fashion/main';
-import Vegetables from './components/layouts/vegetables/main';
-import Kids from './components/layouts/kids/main';
-import Pets from './components/layouts/pets/main';
-import Furniture from './components/layouts/furniture/main';
-import Watch from './components/layouts/watch/main';
-import Beauty from './components/layouts/beauty/main';
-import Electronic from './components/layouts/electronic/main';
 
 //Collection Pages
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
-
 import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 import CollectionFullWidth from "./components/collection/collection-full-width";
 import CollectionMetro from "./components/collection/collection-metro";

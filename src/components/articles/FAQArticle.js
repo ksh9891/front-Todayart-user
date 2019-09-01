@@ -18,6 +18,8 @@ class FAQArticle extends Component {
     this.props.getArticleList(this.state.boardId);
   }
 
+  componentWillUnmount(){}
+
   onDelete = (e, articleId) => {
     e.preventDefault();
     this.props.articleDelete(articleId)
@@ -75,7 +77,6 @@ class FAQArticle extends Component {
                                 </button>
                               </h5>
                             </div>
-
                             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionExample">
                               <div className="card-body">

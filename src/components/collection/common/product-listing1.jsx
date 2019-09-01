@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
 
 
 import { getTotal, getCartProducts } from '../../../reducers'
@@ -184,6 +185,18 @@ class ProductListing1 extends Component {
         console.log("items >>",items);
         console.log("items.length >> ",items.length)
         console.log("this.state.limit >>",this.state.limit);
+
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
         console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
         console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
         return (
@@ -206,10 +219,10 @@ class ProductListing1 extends Component {
                                 <div className="row">
                                     { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
-                                            <ProductListItem item={item} symbol={symbol}
-                                                             onAddToCompareClicked={() => addToCompare(item)}
-                                                             onAddToWishlistClicked={() => addToWishlist(item)}
-                                                             onAddToCartClicked={addToCart} key={index}/>
+                                        <ProductListItem item={item} symbol={symbol}
+                                                         onAddToCompareClicked={() => addToCompare(item)}
+                                                         onAddToWishlistClicked={() => addToWishlist(item)}
+                                                         onAddToCartClicked={asyncAddCart} key={index}/>
                                         </div>)
                                     }
                                 </div>
@@ -239,7 +252,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
     fetchArtwork:() => dispatch(Actions.fetchArtwork()),
-    addToCart: () => dispatch(addToCart()),
+    addToCart: (item, qty) => dispatch(addToCart(item, qty)),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
 
