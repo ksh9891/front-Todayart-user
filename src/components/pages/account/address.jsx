@@ -72,16 +72,22 @@ class Address extends Component {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                            {this.props.auth.userDetails.memberAddresses.map((memberAddress, index) => {
-                                                                return (
-                                                                    <tr>
-                                                                        <td>{index+1}</td>
-                                                                        <td>{memberAddress.address} {memberAddress.addressDetail}</td>
-                                                                        <td>{memberAddress.postalNumber}</td>
-                                                                        <td>{memberAddress.mainAddress === "y" ? "O" : "X"}</td>
-                                                                    </tr>
-                                                                )
-                                                            })}
+                                                            {this.props.auth.userDetails.memberAddresses === null || this.props.auth.userDetails.memberAddresses === undefined ?
+                                                                <tr>
+                                                                    <td colSpan="4" className="ta-address-none">등록된 배송지가 없어요!</td>
+                                                                </tr>
+                                                                :
+                                                                this.props.auth.userDetails.memberAddresses.map((memberAddress, index) => {
+                                                                        return (
+                                                                            <tr>
+                                                                                <td>{index+1}</td>
+                                                                                <td>{memberAddress.address} {memberAddress.addressDetail}</td>
+                                                                                <td>{memberAddress.postalNumber}</td>
+                                                                                <td>{memberAddress.mainAddress === "y" ? "O" : "X"}</td>
+                                                                            </tr>
+                                                                        )
+                                                                    })
+                                                            }
                                                             </tbody>
                                                         </table>
                                                     </div>
