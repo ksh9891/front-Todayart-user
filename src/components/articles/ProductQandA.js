@@ -1,11 +1,11 @@
-import React, { useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
 import Breadcrumb from '../common/breadcrumb'
 
-class FAQArticle extends Component {
+class ProductQandA extends Component {
 
   constructor(props) {
     super(props)
@@ -69,14 +69,12 @@ class FAQArticle extends Component {
 
 
   render() {
+    this.state.boardId = (this.props.match.params.product !== true) ? '4' : '';
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
 
     return (
       <div>
-        {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
-          <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
-        }
         <nav class="navbar navbar-light bg-light">
           <form class="form-inline" onSubmit={e => this.onSearch(e)}>
 
@@ -105,8 +103,11 @@ class FAQArticle extends Component {
           </form>
         </nav>
         {items ?
-          items.map((item) => {
-            const { title, content } = item;
+          items.filter((item) => {
+            return item.productId == this.props.match.params.id
+          }
+          ).map((item)=>{
+
             return (
               <div>
 
@@ -172,5 +173,5 @@ const mapDispatchToProps = (dispatch) => ({
   articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition }))
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FAQArticle))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductQandA))
 

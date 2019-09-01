@@ -48,7 +48,13 @@ class ArticleWrite extends Component {
 
     this.props.articleUpdate({articleId, title, content})
       .then(response => {
-        this.props.history.push("/articles?boardId=" + this.props.article.item.boardId)
+        
+        this.props.article.boardName.boardId === 4 ? 
+        this.props.history.push("/product/" + this.props.article.item.productId) :
+        this.props.history.push("/articles?boardId=" + this.props.article.item.boardId) 
+        console.log('777777777777777777777777=', this.props.article.boardName.boardId)
+        console.log('00000000000000000000=', this.props.article.item.productId)
+
       })
       .then(console.log('thisprops = ', this.props))
       .catch(error => {
@@ -71,7 +77,7 @@ class ArticleWrite extends Component {
   //        chk = true; 
   //     }
   //     else {
-  //       chk = false; ㅜㅏㅓ
+  //       chk = false; 
   //     } 
   //   }  
   //   }
