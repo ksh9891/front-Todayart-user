@@ -49,6 +49,8 @@ import RegisterWait from "./components/pages/registert-wait";
 import RegisterSuccess from "./components/pages/registert-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
+import Orders from './components/pages/account/orders.jsx'
+import Address from './components/pages/account/address'
 
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
@@ -111,6 +113,8 @@ class Root extends React.Component {
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 

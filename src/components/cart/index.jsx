@@ -145,9 +145,9 @@ class cartComponent extends Component {
                                     <div className="col-sm-12 empty-cart-cls text-center">
                                         <img src={`${process.env.PUBLIC_URL}/assets/images/icon-empty-cart.png`} className="img-fluid mb-4" alt="" />
                                         <h3>
-                                            <strong>Your Cart is Empty</strong>
+                                            <strong>장바구니가 비어있습니다.</strong>
                                         </h3>
-                                        <h4>Explore more shortlist some items.</h4>
+                                        <h4>다양한 작품을 감상하시고 장바구니에 넣어보세요!</h4>
                                     </div>
                                 </div>
                             </div>
