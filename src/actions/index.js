@@ -352,14 +352,14 @@ const fetchSingleProduct2 = (id) => {
     })
 }
 
-const fetchProductByName = (searchword) => {
+const fetchProductBySearch = (searchword) => {
     console.log("productName = " + searchword)
     return ({
-        type: ActionTypes.FETCH_BYPRODUCTNAME,
+        type: ActionTypes.FETCH_BYSEARCH,
         payload: {
             request: {
                 method: 'GET',
-                url: `/product/productname/?name=${searchword}`
+                url: `/product/search?search=${searchword}`
             }
         }
     })
@@ -484,18 +484,18 @@ const getOrderList = () => {
     })
 }
 
-const articleWrite = ({title, content, boardId, memberId}) => {
+const articleWrite = ({title, content, boardId}) => {
     return ({
         type: ActionTypes.ARTICLEWRITE,
         payload: {
             request: {
                 method: 'POST',
-                url: 'article/create',
+                url: '/article',
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 },
-                data: JSON.stringify({title, content, boardId, memberId})
+                data: JSON.stringify({title, content, boardId})
             }
         }
     });
@@ -513,13 +513,19 @@ const articleDelete  =(articleId) =>{
     })
 }
 
-const articleModify  =(articleId) =>{
+const articleUpdate  =({articleId, title, content}) =>{
+    console.log("article >> ", articleId)
     return({
-        type:ActionTypes.ARTICLEMODIFY,
+        type:ActionTypes.ARTICLEUPDATE,
         payload:{
             request:{
-                method: 'UPDATE',
-                url: `/article/${articleId}`
+                method: 'PATCH',
+                url: `/article/${articleId}`,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({title, content})
             }
         }
     })
@@ -675,7 +681,6 @@ export const Actions = {
     refreshToken,
     fetchArtwork,
     fetchSingleProduct2,
-    fetchProductByName,
     fetchProductByArtist,
     fetchPriceAsc,
     fetchPriceDesc,
@@ -690,7 +695,7 @@ export const Actions = {
     getArticleDetail,
     articleWrite,
     articleDelete,
-    articleModify,
+    articleUpdate,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,
@@ -705,6 +710,8 @@ export const Actions = {
     updateRealName,
     updatePhone,
     updatePassword,
+    fetchProductBySearch,
     registerVerification,
     checkRegisterToken
+
 };

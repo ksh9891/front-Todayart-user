@@ -7,20 +7,55 @@ import ProductListing from './common/product-listing1'
 import Breadcrumb from "../common/breadcrumb";
 import FilterBar from "./common/filter-bar";
 
+class CollectionCategory extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            id:this.props.match.params,
+            layoutColumns:3
+        }
 
-class CollectionNoSideBar extends Component {
-
-    state = {
-        layoutColumns:3
     }
 
-    LayoutViewClicked(colums) {
-        this.setState({
-            layoutColumns:colums
-        })
+    getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.id!==nextProps.match.params){
+        return {id:nextProps.match.params}}
+        return prevState
+    }
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("shouldComponentUpdate111111", this.state, nextState, this.props, nextProps);
+        if(this.props.match.params.id!==nextProps.match.params.id){
+            return true
+        }
+        return false
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log("getSnapshotBeforeUpdate", prevProps, this.props)
+        if (this.props.match.params.id == 0) {
+            this.props.fetchArtwork();
+        } else {
+            this.props.fetchCategory(this.props.match.params.id);
+        }
+
+        return null
+    }
+
+    componentDidMount() {
+        const { id } = this.props.match.params;
+        console.log("DIdMount", id);
+        if ( id == 0){
+            this.props.fetchArtwork();
+        }else {
+            this.props.fetchCategory(id);
+        }
     }
 
     render(){
+        console.log('render!!!!!')
+        const { id } = this.props.match.params;
+        const { items } = this.props;
+
         return (
             <div>
                 <Breadcrumb title={'Collection'} />
@@ -97,4 +132,4 @@ class CollectionNoSideBar extends Component {
     }
 }
 
-export default CollectionNoSideBar;
+export default CollectionCategory;

@@ -94,9 +94,9 @@ class NavBar extends Component {
                             <li>
                                 <Link to="" className="nav-link">지원<span className="sub-arrow" /></Link>
                                 <ul className="nav-submenu">
-                                    <li><Link to={`${process.env.PUBLIC_URL}/article/1`}>FAQ</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`}>Q&A</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/right-sidebar/collection`}>공지사항</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${1}`}>FAQ</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${2}`}>Q&A</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${3}`}>공지사항</Link></li>
                                 </ul>
                             </li>
                         </ul>
