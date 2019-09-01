@@ -487,18 +487,18 @@ const getOrderList = () => {
     })
 }
 
-const articleWrite = ({title, content, boardId, memberId}) => {
+const articleWrite = ({title, content, boardId}) => {
     return ({
         type: ActionTypes.ARTICLEWRITE,
         payload: {
             request: {
                 method: 'POST',
-                url: 'article/create',
+                url: '/article',
                 headers: {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 },
-                data: JSON.stringify({title, content, boardId, memberId})
+                data: JSON.stringify({title, content, boardId})
             }
         }
     });
@@ -516,13 +516,19 @@ const articleDelete  =(articleId) =>{
     })
 }
 
-const articleModify  =(articleId) =>{
+const articleUpdate  =({articleId, title, content}) =>{
+    console.log("article >> ", articleId)
     return({
-        type:ActionTypes.ARTICLEMODIFY,
+        type:ActionTypes.ARTICLEUPDATE,
         payload:{
             request:{
-                method: 'UPDATE',
-                url: `/article/${articleId}`
+                method: 'PATCH',
+                url: `/article/${articleId}`,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({title, content})
             }
         }
     })
@@ -694,7 +700,7 @@ export const Actions = {
     getArticleDetail,
     articleWrite,
     articleDelete,
-    articleModify,
+    articleUpdate,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,
