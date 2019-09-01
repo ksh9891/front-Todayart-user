@@ -676,6 +676,35 @@ const getAddress = () =>{
     })
 }
 
+const searchAddressInApi = (keyword) =>{
+    return ({
+        type:ActionTypes.SEARCH_ADDRESS_API,
+        payload:{
+            request:{
+                method: 'GET',
+                url: `/getAddrApi?keyword=${keyword}`
+            }
+        }
+    })
+}
+
+const addAddress = ({address, postalNumber, addressDetail}) => {
+    return ({
+        type: ActionTypes.ADD_ADDRESS,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/address',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ address, postalNumber, addressDetail })
+            }
+        }
+    });
+};
+
 export const Actions = {
     getClientToken,
     login,
@@ -714,6 +743,7 @@ export const Actions = {
     updatePassword,
     fetchProductBySearch,
     registerVerification,
-    checkRegisterToken
-
+    checkRegisterToken,
+    searchAddressInApi,
+    addAddress
 };

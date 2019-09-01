@@ -53,7 +53,7 @@ class ProductListItem extends Component {
         const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
         const {open} = this.state;
         const { fileName } = item.thumbnail;
-       
+
         const image = Files.filePath(fileName);
 
             // let RatingStars = []
