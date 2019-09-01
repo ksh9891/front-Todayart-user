@@ -15,7 +15,7 @@ class Address extends Component {
 
     render() {
         const onAdd = () => {
-            this.props.history.push("/account/address-add");
+            this.props.history.push("/account/addresses-add");
         }
 
         return (

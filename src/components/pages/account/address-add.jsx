@@ -157,7 +157,7 @@ class AddressAdd extends Component {
                                 .then(response => {
                                     if(response.type === ActionTypes.GET_USER_SUCCESS) {
                                         alert("배송지가 등록되었습니다.");
-                                        this.props.history.push("/account/address");
+                                        this.props.history.push("/account/addresses");
                                     } else {
                                         const { error } = response;
                                         return Promise.reject(error);
@@ -199,7 +199,7 @@ class AddressAdd extends Component {
                                         <ul>
                                             <li><Link to="/account">계정정보 관리</Link></li>
                                             <li><Link to="/account/password">비밀번호 변경</Link></li>
-                                            <li className="active"><Link to="/account/address">배송지 관리</Link></li>
+                                            <li className="active"><Link to="/account/addresses">배송지 관리</Link></li>
                                             <li><Link to="/account/order">주문 관리</Link></li>
                                             <li><Link to="/wishlist">찜목록 관리</Link></li>
                                         </ul>
