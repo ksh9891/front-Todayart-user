@@ -667,6 +667,51 @@ const getAddress = () =>{
     })
 }
 
+
+
+const addWishlist = (item) => {
+    return({
+        type : ActionTypes.ADD_WISHLIST,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/wish',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data:JSON.stringify({ product : item })
+            }
+        }
+    })
+}
+
+
+const removeWishlist = (id) => {
+    return({
+        type: ActionTypes.REMOVE_WISHLIST,
+        payload: {
+            request:{
+                method: 'DELETE',
+                url: `/wish/${id}`
+            }
+        }
+    })
+}
+
+
+const fetchWishlist = () => {
+    return({
+        type: ActionTypes.FETCH_WISHLIST,
+        payload: {
+            request:{
+                method: 'GET',
+                url: `/wish`
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     login,
@@ -706,6 +751,9 @@ export const Actions = {
     updatePassword,
     fetchProductBySearch,
     registerVerification,
-    checkRegisterToken
+    checkRegisterToken,
+    addWishlist,
+    removeWishlist,
+    fetchWishlist
 
 };
