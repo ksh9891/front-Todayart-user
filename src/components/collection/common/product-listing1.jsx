@@ -2,14 +2,15 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Actions } from '../../../actions'
 
 
 import { getTotal, getCartProducts } from '../../../reducers'
-import {addToCart, addToWishlist, addToCompare, Actions} from '../../../actions'
+import { addToCart, addToWishlist, addToCompare } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
-class ProductListing extends Component {
+class ProductListing1 extends Component {
 
     constructor (props) {
         super (props);
@@ -18,26 +19,28 @@ class ProductListing extends Component {
             limit: 0,
             hasMoreItems: true,
             id:this.props.id
-           
+
         };
     }
 
+
+
     componentWillReceiveProps(){
-        
+
         if (this.state.limit < this.props.items.length) {
             this.setState({
-                ...this.state,            
+                ...this.state,
                 limit: this.state.limit + 4,
                 hasMoreItems: true
-               
+
             })
         }else {
             this.setState({
-                ...this.state,            
+                ...this.state,
                 limit: 0,
                 hasMoreItems: true
             })
-    }
+        }
     }
 
     // getDerivedStateFromProps(nextProps, prevState){
@@ -55,17 +58,17 @@ class ProductListing extends Component {
 
 
 
-   
+
     // static getDerivedStateFromProps(props, state) {
     //     if(props.items.length <= state.limit) {
     //         return {...state, hasMoreItems: false}
     //     } else {
     //         setTimeout(() => {
-                
+
     //         }, 3000);
     //         return {...state, hasMoreItems: true,  limit: state.limit + 4}
     //     }
-       
+
     // }
 
     // shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -97,13 +100,13 @@ class ProductListing extends Component {
 
     // componentDidMount() {
 
-        
+
 
 
     //     console.log("props", this.props);
     //     this.setState({
     //         ...this.state,
-    //         id: this.props.id           
+    //         id: this.props.id
     //     });
 
     //     // if ( this.props.id == 0){
@@ -114,7 +117,7 @@ class ProductListing extends Component {
     //     // this.fetchMoreItems();
     // }
 
-    // componentDidMount(){        
+    // componentDidMount(){
     //     if ( this.props.id == 0){
     //         this.props.fetchArtwork();
     //     }else {
@@ -124,15 +127,15 @@ class ProductListing extends Component {
 
 
 
-    fetchMoreItems = () => {   
+    fetchMoreItems = () => {
 
         console.log("33");
         if (this.state.limit >= this.props.items.length) {
             console.log("44");
-            this.setState({ 
+            this.setState({
                 ...this.state,
                 hasMoreItems: false });
-           // return;
+            // return;
         }else{
             console.log("5");
             setTimeout(() => {
@@ -144,17 +147,17 @@ class ProductListing extends Component {
             }, 1000);
         }
         // a fake async api call
-        
-          
-        
+
+
+
         // // console.log("items :::" , this.props.items)
         // // this.props.items.slice(this.state.limit-4, this.state.limit)
         // // console.log("items >>>>>>> " ,this.props.items.slice(this.state.limit-4, this.state.limit ))
-        // if (this.state.limit >= this.props.items.length) {  
+        // if (this.state.limit >= this.props.items.length) {
         //     this.setState({ hasMoreItems: false });
         //     return;
         // }
-        
+
         // this.setState({
         //     ...this.state,
         //     items : this.props.items.slice(this.state.limit-4, this.state.limit ),
@@ -171,16 +174,18 @@ class ProductListing extends Component {
         // //     });
         // // }, 1000);
 
+
     }
 
     render (){
+
+
         const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
         console.log("items >>",items);
         console.log("items.length >> ",items.length)
         console.log("this.state.limit >>",this.state.limit);
         console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
         console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
-
         return (
             <div>
                 <div className="product-wrapper-grid">
@@ -199,9 +204,9 @@ class ProductListing extends Component {
 
                             >
                                 <div className="row">
-                                   { items.slice(0, this.state.limit).map((item, index) =>
+                                    { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
-                                            <ProductListItem product={item} symbol={symbol}
+                                            <ProductListItem item={item} symbol={symbol}
                                                              onAddToCompareClicked={() => addToCompare(item)}
                                                              onAddToWishlistClicked={() => addToWishlist(item)}
                                                              onAddToCartClicked={addToCart} key={index}/>
@@ -237,8 +242,7 @@ const mapDispatchToProps = (dispatch) => ({
     addToCart: () => dispatch(addToCart()),
     addToWishlist: () => dispatch(addToWishlist()),
     addToCompare: () => dispatch(addToCompare())
+
 })
 
-export default connect(
-    mapStateToProps, {addToCart, addToWishlist, addToCompare}
-)(ProductListing)
+export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
