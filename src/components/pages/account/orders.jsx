@@ -71,6 +71,8 @@ class Orders extends React.Component{
         }
         else if(status==='결제대기'||status==='결제완료'||status==='배송준비'){
             return '주문취소'
+        }else if(status==='배송중'){
+            return '운송장 조회'
         }
     }
 
@@ -104,6 +106,8 @@ class Orders extends React.Component{
                 }
             } 
             )
+        }else if(status==='배송중'){
+            window.open("https://tracker.delivery/#/kr.cjlogistics/353709593941", "배송조회", "width=550, height=550")
         }
     }
     
@@ -173,13 +177,13 @@ class Orders extends React.Component{
                             <div className="filterBox">
                                 <img src={`${process.env.PUBLIC_URL}/assets/images/delivery.png`} className="statusNow del" alt="" />
                                 <span className="delivery">배송중</span>
-                                <span className="number del">{this.state.del}</span>
+                                <span className="number del">{this.state.deliveryNow}</span>
                                 <img src={`${process.env.PUBLIC_URL}/assets/images/complete.png`} className="statusNow com" alt="" />
                                 <span className="complete">배송완료</span>
-                                <span className="number com">{this.state.com}</span>
+                                <span className="number com">{this.state.complete}</span>
                                 <img src={`${process.env.PUBLIC_URL}/assets/images/refund.png`} className="statusNow ref" alt="" />
                                 <span className="refund">반품/환불</span>
-                                <span className="number ref">{this.state.ref}</span>
+                                <span className="number ref">{this.state.refund}</span>
                             </div>
                             <div className="orderList">
                             {this.state.orders!==null?
@@ -203,7 +207,7 @@ class Orders extends React.Component{
                                 <div>
                                 <div className="goods_botton_status">{item.status}</div>
                                 <div>
-                                {item.status!=='결제취소'&&item.status!=='주문확정'&&item.status!=='주문취소'&&item.status!=='배송중'?
+                                {item.status!=='결제취소'&&item.status!=='주문확정'&&item.status!=='주문취소'?
                                 <button type="button" className="btn btn-outline-secondary btn-sm" onClick={()=>this.excuteCommand(item)}>{this.botton(item)}</button>:''}
                                 </div>
                                 </div>  
