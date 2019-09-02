@@ -17,7 +17,8 @@ class CheckoutDetail extends Component{
         this.state={
             cart:props.cart,
             sysbol:props.symbol,
-            payment:props.symbol,
+            totalPrice:props.totalPrice,
+            totalShipping:props.totalShipping,
             pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
@@ -26,9 +27,25 @@ class CheckoutDetail extends Component{
         }
     }
 
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(nextProps.cart!==prevState.cart){
+            return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
+        }
+        return null;
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.props.cart!==nextProps.cart){
+            return true
+        }
+        return false
+    }
+
+
     render(){
 
-    const {items, totalPrice, totalShipping}=this.state.cart;
+    const {cart, totalPrice, totalShipping} = this.state;
+    const {items}=cart;
     const symbol = this.state.symbol;
     const orderItems = items.filter((item)=>item.checked===true);
     const orderItemList = orderItems.map((item)=>item.cartId);
@@ -239,7 +256,7 @@ class checkOut extends Component {
                                     <div className="checkout row">
 
                                     <ShippingBox/>
-                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
+                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} totalPrice={this.props.totalPrice} totalShipping={this.props.totalShipping} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
                                     <div className="row section-t-space">
                                         <div className="col-lg-6">
@@ -302,7 +319,9 @@ class checkOut extends Component {
 }
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    symbol: state.data.symbol
+    symbol: state.data.symbol,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping
 })
 
 const mapDispatchToProps=(dispatch)=>({

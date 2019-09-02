@@ -11,8 +11,7 @@ const CartHeader  = ({item, total, symbol, deleteCartItem}) => {
                 <div className="media">
                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                             state:{item:item.product}}}>
-                                <img src={image} className="mr-3" alt="" style={{"border-radius":"10px"}}
-/>
+                                <img src={image} className="mr-3" alt="" style={{"border-radius":"10px"}}/>
                             </Link>
                     <div className="media-body">
                         <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,

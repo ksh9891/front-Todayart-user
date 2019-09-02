@@ -96,6 +96,18 @@ class NoSideBar extends Component {
                  console.log('error >>', error)
              })
         }
+        const buyNow=(item, qty)=>{
+            this.props.addToCart(item,qty)
+            .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.snapOneItem();
+                    this.props.calcPrice();
+                }
+                this.props.history.push(`${process.env.PUBLIC_URL}/checkout`)
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+        }
 
         
 
@@ -118,7 +130,7 @@ class NoSideBar extends Component {
                                        
                                     <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addWishilist} calcPrice={calcPrice} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={buyNow} addToWishlistClicked={addWishilist} calcPrice={calcPrice} />
                             </div>
                         </div>
                     </div>
@@ -160,7 +172,8 @@ const mapDispatchToProps = (dispatch) => ({
     addToCart: (product, qty) => dispatch(addToCart(product, qty)),
     addWishlist: (item) => dispatch(Actions.addWishlist(item)),
     addToCartUnsafe: () => dispatch(addToCartUnsafe()),
-    calcPrice:()=>dispatch(Actions.calcCartPrice())
+    calcPrice:()=>dispatch(Actions.calcCartPrice()),
+    snapOneItem:()=>dispatch(Actions.snapOneItem())
    
 })
 
