@@ -13,6 +13,21 @@ class Account extends Component {
     constructor(props) {
         super(props);
 
+        const { memberAddresses } = this.props.auth.userDetails;
+
+        let address = '';
+        if(memberAddresses === null || memberAddresses === undefined) {
+            address = '';
+        } else {
+            const addresses = memberAddresses.filter(item => (item.mainAddress === 'y'));
+            address = addresses[0].address + addresses[0].addressDetail;
+        }
+
+        // this.setState({
+        //     ...this.state,
+        //     mainAddress: addresses[0].address + addresses[0].addressDetail
+        // })
+
         this.state = {
             // 변경액션 수행 여부
             isNicknameEdit: false,
@@ -32,7 +47,10 @@ class Account extends Component {
             // 연락처
             isEnteredPhoneValid: '',
             isUpdatedPhoneValid: false,
-            phoneValidMsg: ''
+            phoneValidMsg: '',
+
+            // 대표 배송지
+            mainAddress: address
         }
 
         // 업데이트 버튼
@@ -239,6 +257,10 @@ class Account extends Component {
                     })
         }
     };
+
+    componentDidMount() {
+
+    }
 
     render (){
         // 유효성에 관련된 메시지 CSS
@@ -494,8 +516,8 @@ class Account extends Component {
                                                                         <h6>대표 배송지</h6>
                                                                     </div>
                                                                     <div className="col-sm-8">
-                                                                        <span>{this.validInfo(this.props.auth.userDetails.address) ? this.props.auth.userDetails.address : '입력한 정보가 없어요'}</span>
-                                                                        <span className="ta-info-modify-action"><Link to="/">대표 배송지 변경하기</Link></span>
+                                                                        <span>{this.state.mainAddress === '' ? '입력한 정보가 없어요' : this.state.mainAddress}</span>
+                                                                        <span className="ta-info-modify-action"><Link to="/account/addresses">대표 배송지 변경하기</Link></span>
                                                                     </div>
                                                                 </div>
                                                             </div>

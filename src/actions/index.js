@@ -705,6 +705,30 @@ const addAddress = ({address, postalNumber, addressDetail}) => {
     });
 };
 
+const updateMainAddress = (addressId) =>{
+    return ({
+        type:ActionTypes.UPDATE_MAIN_ADDRESS,
+        payload:{
+            request:{
+                method: 'PATCH',
+                url: `/address?addressId=${addressId}`
+            }
+        }
+    })
+}
+
+const deleteAddress = (addressId) =>{
+    return ({
+        type:ActionTypes.DELETE_ADDRESS,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/address?addressId=${addressId}`
+            }
+        }
+    })
+}
+
 export const Actions = {
     getClientToken,
     login,
@@ -745,5 +769,7 @@ export const Actions = {
     registerVerification,
     checkRegisterToken,
     searchAddressInApi,
-    addAddress
+    addAddress,
+    updateMainAddress,
+    deleteAddress
 };
