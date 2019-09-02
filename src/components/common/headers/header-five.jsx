@@ -114,7 +114,7 @@ class HeaderFive extends Component {
                 .then(response => {
 				
 					console.log('word',searchword)
-                    this.props.history.push('/collection');
+                    this.props.history.push(`/collection`);
                 })
                 .catch(error => {
                     console.log('error >> ', error);

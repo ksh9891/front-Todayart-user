@@ -87,9 +87,7 @@ class DetailsWithPrice extends Component {
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
                     <h2> {item.productName} </h2>
-                    <h4>
-                        <del>{symbol}{item.productPrice}</del>
-                        <span>10% off</span></h4>
+                    <h4>{item.artistName}</h4>
                     <h3>{symbol}{item.productPrice} </h3>
                     {item.variants?
                     <ul >
@@ -106,7 +104,7 @@ class DetailsWithPrice extends Component {
                                 <div >
                             <ul>
                                 {
-                                    <li ><a href="#">{item.productSize}</a></li>
+                                    <li >{item.productSize}</li>
                                 }
                             </ul>
                         </div>
@@ -138,7 +136,7 @@ class DetailsWithPrice extends Component {
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">product details</h6>
-                        <p>{item.shortDetails}</p>
+                        <p>{item.productContent}</p>
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">share it</h6>
@@ -156,26 +154,7 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">Time Reminder</h6>
-                        <div className="timer">
-                            <p id="demo">
-                                <span>25
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Days</span>
-                                </span>
-                                <span>22
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Hrs</span>
-                                </span>
-                                <span>13
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Min</span>
-                                </span>
-                                <span>57
-                                    <span className="timer-cal">Sec</span>
-                                </span>
-                            </p>
-                        </div>
+                        
                     </div>
                 </div>
                 <Modal open={this.state.open} onClose={this.onCloseModal} center>

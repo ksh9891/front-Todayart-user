@@ -755,6 +755,23 @@ const addAddress = ({address, postalNumber, addressDetail}) => {
 };
 
 
+const addCartFromWishlist = (id) => {
+    return ({
+        type: ActionTypes.ADDCART_FROMWISHLIST,
+        payload: {
+            request: {
+                method: 'POST',
+                url: `/cart/${id}`
+            }
+        }
+    });
+};
+
+
+
+
+        
+
 export const Actions = {
     getClientToken,
     login,
@@ -798,6 +815,7 @@ export const Actions = {
     removeWishlist,
     fetchWishlist,
     searchAddressInApi,
-    addAddress
+    addAddress,
+    addCartFromWishlist
 
 };
