@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
+import { ActionTypes } from '../../../../constants/ActionTypes';
 
 
 class DetailsWithPrice extends Component {
@@ -50,7 +51,7 @@ class DetailsWithPrice extends Component {
 
     render (){
         const {symbol, item, addToCartClicked, BuynowClicked, addToWishlistClicked} = this.props
-
+        console.log("product Render Item", item, this.props);
         var colorsnav = {
             slidesToShow: 6,
             swipeToSlide:true,
@@ -144,15 +145,12 @@ class DetailsWithPrice extends Component {
                     </div>
                     <div className="product-buttons" >
 
-                         {/* wishlist 버튼으로 만든거 */}
-                         <a className="btn btn-solid" onClick={() => addToWishlistClicked(item, this.state.quantity)}> <i
-                                    className="fa fa-heart"></i>Add To WishList</a>
-                                    {/* 여기까지 */}
-                                    
-                                    {/* 버튼 간격 넓히려고 span 추가함 */}
-                                    <span>
-                        <a className="btn btn-solid" onClick={() => addToCartClicked(item, this.state.quantity)}>add to cart</a></span>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >buy now</Link>
+                        <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
+                                    this.props.calcPrice()
+                                    }}
+                        >장바구니에 담기</a>
+                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >바로 구입하기</Link>
+
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">작품설명</h6>

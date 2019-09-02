@@ -22,7 +22,11 @@ class SupportContainer extends Component {
 
     getSnapshotBeforeUpdate(preProps, prevState){
         console.log("getSnapshotBeforeUpdate", preProps, prevState, this.state)
-        this.props.getArticleList(this.state.boardId);
+        return this.props.getArticleList(this.state.boardId);
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
     }
     
     shouldComponentUpdate(nextProps, nextState){
@@ -34,6 +38,9 @@ class SupportContainer extends Component {
         
     }
     
+    componentWillUnmount(){
+        
+    }
 
     render() {
 

@@ -19,9 +19,7 @@ class FooterOne extends Component {
         }
     }
 
-
     render () {
-
         return (
             <footer className="footer-light">
                 <section className="section-b-space light-layout">
@@ -35,8 +33,9 @@ class FooterOne extends Component {
                                     <div className="footer-logo">
                                         <LogoImage logo={this.props.logoName} />
                                     </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, </p>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                        tempor incididunt ut labore et.Lorem ipsum dolor sit amet, consectetur
+                                        adipiscing</p>
                                     <div className="footer-social">
                                         <ul>
                                             <li>

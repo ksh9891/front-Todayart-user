@@ -15,6 +15,8 @@ import SmallImages from './common/product/small-image'
 
 import { Actions } from '../../actions'
 import { Files } from '../../utils';
+import { ActionTypes } from '../../constants/ActionTypes';
+
 
 
 
@@ -24,7 +26,7 @@ import {getVisibleproducts} from '../../services';
 
 
 class NoSideBar extends Component {
-// this.props.location.state.item
+    // this.props.location.state.item
     constructor(props) {
         super(props);
         this.state = {
@@ -32,8 +34,6 @@ class NoSideBar extends Component {
             nav2: null,
             item : this.props.location.state?this.props.location.state.item:null          
         };
-        console.log("constructor props >> ",props)
-        
     }
 
 
@@ -54,6 +54,7 @@ class NoSideBar extends Component {
     componentDidMount() {
         console.log("componentDidMount", this.state)
 
+
         this.setState({
             ...this.state,
             nav1: this.slider1,
@@ -61,15 +62,27 @@ class NoSideBar extends Component {
         });
        }
 
-      
-     render(){
+    render(){
+
+            
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
 
 
         
-        console.log("render>>",this.props, this.state)
-        const {symbol, addToCart, addToCartUnsafe, addToWishlist} = this.props
+   
+ 
+        const {symbol, addToCartUnsafe, addToWishlist, calcPrice} = this.props
         const {thumbnail} = this.state.item;
-
 
         var products = {
             fade: true
@@ -116,7 +129,7 @@ class NoSideBar extends Component {
                                     <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
 
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={addToCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} calcPrice={calcPrice} />
                             </div>
                         </div>
                     </div>
@@ -141,18 +154,31 @@ class NoSideBar extends Component {
 
 
 
-
 const mapStateToProps = (state) => ({
-    products: getVisibleproducts(state.data, state.filters),
-    item: state.data.item,
-    symbol: state.data.symbol
+    
+        item: state.data.item,
+        symbol: "￦"
+    
+    
 })
+
+
+
+
+// const mapStateToProps = (state) => ({
+//     products: getVisibleproducts(state.data, state.filters),
+//     item: state.data.item,
+//     symbol: state.data.symbol
+// })
 
 const mapDispatchToProps = (dispatch) => ({
     fetchSingleProduct2: (id) => dispatch(Actions.fetchSingleProduct2(id)),
-    addToCart:() => dispatch(addToCart()),
-    addToWishlist:() => dispatch(addToWishlist()),
-    addToCompare:() => dispatch(addToCompare())
+
+    addToCart: (product, qty) => dispatch(addToCart(product, qty)),
+    addToWishlist: () => dispatch(addToWishlist()),
+    addToCartUnsafe: () => dispatch(addToCartUnsafe()),
+    calcPrice:()=>dispatch(Actions.calcCartPrice())
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NoSideBar)

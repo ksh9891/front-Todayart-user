@@ -23,7 +23,7 @@ class CollectionCategory extends Component {
 
     getDerivedStateFromProps(nextProps, prevState){
         if(prevState.id!==nextProps.match.params){
-        return {id:nextProps.match.params}}
+            return {id:nextProps.match.params}}
         return prevState
     }
     shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -173,8 +173,8 @@ class CollectionCategory extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
-   
+    fetchArtwork:() => dispatch(Actions.fetchArtwork())
+
 })
 
 export default withRouter(connect(null,mapDispatchToProps)(CollectionCategory));

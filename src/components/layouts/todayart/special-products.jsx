@@ -7,6 +7,7 @@ import {addToCart, addToWishlist, addToCompare} from "../../../actions/index";
 import ProductItem from '../common/product-item';
 
 import {Actions} from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
 
 class SpecialProducts extends Component {
 
@@ -17,7 +18,18 @@ class SpecialProducts extends Component {
 
     render (){
 
-        const {bestSeller,newProducts, featuredProducts, symbol, addToCart, addToWishlist, addToCompare, items} = this.props
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+        const {symbol, addToCart, addToWishlist, addToCompare, items} = this.props
 
         return (
             <div>
@@ -38,7 +50,7 @@ class SpecialProducts extends Component {
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
                                                      onAddToWishlistClicked={() => addToWishlist(item)}
-                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
+                                                     onAddToCartClicked={asyncAddCart} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
@@ -48,17 +60,7 @@ class SpecialProducts extends Component {
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
                                                      onAddToWishlistClicked={() => addToWishlist(item)}
-                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
-                                    }
-                                </div>
-                            </TabPanel>
-                            <TabPanel>
-                                <div className=" no-slider row">
-                                    { bestSeller.map((products, index ) =>
-                                        <ProductItem products={products} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(products)}
-                                                     onAddToWishlistClicked={() => addToWishlist(products)}
-                                                     onAddToCartClicked={() => addToCart(products, 1)} key={index} /> )
+                                                     onAddToCartClicked={asyncAddCart} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
@@ -80,7 +82,8 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()),
+    addToCart:(item, qty)=>dispatch(addToCart(item, qty))
    
 })
 

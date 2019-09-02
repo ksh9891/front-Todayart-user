@@ -11,14 +11,6 @@ import { getAllProducts } from './actions'
 
 // Layouts
 import TodayArt from './components/layouts/todayart/main';
-import Fashion from './components/layouts/fashion/main';
-import Vegetables from './components/layouts/vegetables/main';
-import Kids from './components/layouts/kids/main';
-import Pets from './components/layouts/pets/main';
-import Furniture from './components/layouts/furniture/main';
-import Watch from './components/layouts/watch/main';
-import Beauty from './components/layouts/beauty/main';
-import Electronic from './components/layouts/electronic/main';
 
 //Collection Pages
 
@@ -30,7 +22,6 @@ import CollectionNoSidebar from "./components/collection/collection-no-sidebar";
 // import collectionCategory from "./components/collection/collectionCategory";
 
 import CollectionLeftSidebar from "./components/collection/collection-left-sidebar";
-
 import CollectionRightSidebar from "./components/collection/collection-right-sidebar";
 import CollectionFullWidth from "./components/collection/collection-full-width";
 import CollectionMetro from "./components/collection/collection-metro";
@@ -67,6 +58,10 @@ import RegisterWait from "./components/pages/registert-wait";
 import RegisterSuccess from "./components/pages/registert-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
+import Orders from './components/pages/account/orders.jsx'
+import RegisterArtist from './components/pages/register-artist'
+import Address from './components/pages/account/address'
+import AddressAdd from './components/pages/account/address-add'
 
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
@@ -129,17 +124,18 @@ class Root extends React.Component {
                                 <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 
+                                <Route path={`${process.env.PUBLIC_URL}/register-artist`} component={RegisterArtist}/>
 
                                 {/* Product */}
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collection`} component={CollectionSearch}/>
-
-
-
 
                                 {/*Routes For Features (Product Collection) */}
 

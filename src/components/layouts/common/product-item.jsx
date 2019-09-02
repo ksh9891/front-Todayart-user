@@ -1,8 +1,11 @@
 // 메인 홈화면에 대한 부분
 
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
+import {addToCart, Actions} from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
 
 import { Files } from '../../../utils';
 
@@ -15,7 +18,8 @@ class ProductItem extends Component {
             open: false,
             stock: 'InStock',
             quantity: 1,
-            image: ''
+            image: '',
+            onAddToWishlistClicked:props.onAddToCartClicked
         }
     }
 
@@ -55,6 +59,18 @@ class ProductItem extends Component {
         const { fileName } = item.thumbnail
         const image = Files.filePath(fileName);
 
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+
         // let RatingStars = []
         // for(var i = 0; i < product.rating; i++) {
         //     RatingStars.push(<i className="fa fa-star" key={i}></i>)
@@ -92,13 +108,13 @@ class ProductItem extends Component {
 
                         </div>
                         <div className="cart-info cart-wrap">
-                            <button title="Add to cart" onClick={onAddToCartClicked}>
+                            <button title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
                                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                             </button>
-                            <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
+                            <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
                                 <i className="fa fa-heart" aria-hidden="true"></i>
                             </a>
-                            <a href="javascript:void(0)" data-toggle="modal"
+                            <a href="#" data-toggle="modal"
                                data-target="#quick-view"
                                title="Quick View"
                                onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
@@ -108,7 +124,7 @@ class ProductItem extends Component {
                         <ul className="product-thumb-list">
                             { product.variants.map((vari, i) =>
                                 <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
-                                    <a href="javascript:void(0)" title="Add to Wishlist">
+                                    <a href="#" title="Add to Wishlist">
                                         <img src={`${vari.images}`} onClick={() => this.onClickHandle(vari.images)} />
                                     </a>
                                 </li>)}
@@ -191,7 +207,7 @@ class ProductItem extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="product-buttons">
-                                                    <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} >add to cart</button>
+                                                    <button  className="btn btn-solid" onClick={() => asyncAddCart(item, this.state.quantity)} >add to cart</button>
                                                     <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                                         state :{ item:this.props.item }}} className="btn btn-solid">>view detail</Link>
                                                 </div>
@@ -207,4 +223,9 @@ class ProductItem extends Component {
     }
 }
 
-export default ProductItem;
+const mapDispatchToProps=(dispatch)=>({
+ addToCart:(item, qty)=>dispatch(addToCart(item, qty)),
+ calcPrice:()=>dispatch(Actions.calcCartPrice())
+})
+
+export default connect(null,mapDispatchToProps)(ProductItem);

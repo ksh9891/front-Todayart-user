@@ -29,6 +29,10 @@ class ShippingBox extends React.Component{
         return true
     }
 
+    componentWillUnmount(){
+        
+    }
+
     
     render(){
         const {member, mainAddress} = this.state;

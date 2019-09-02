@@ -31,7 +31,7 @@ class SpecialProducts extends Component {
                                         <ProductItem product={product} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(product)}
                                                      onAddToWishlistClicked={() => addToWishlist(product)}
-                                                     onAddToCartClicked={() => addToCart(product, 1)} key={index} /> )
+                                                     onAddToCartClicked={(product, qty) => addToCart(product, qty)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
@@ -41,7 +41,7 @@ class SpecialProducts extends Component {
                                         <ProductItem product={product} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(product)}
                                                      onAddToWishlistClicked={() => addToWishlist(product)}
-                                                     onAddToCartClicked={() => addToCart(product, 1)} key={index} /> )
+                                                     onAddToCartClicked={(product, qty) => addToCart(product, qty)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>

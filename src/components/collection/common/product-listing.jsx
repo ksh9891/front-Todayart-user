@@ -36,8 +36,6 @@ class ProductListing extends Component {
                 limit: this.state.limit + 4
             });
         }, 3000);
-
-
     }
 
     render (){

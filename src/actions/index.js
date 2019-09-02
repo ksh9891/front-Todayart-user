@@ -28,22 +28,24 @@ export const fetchSingleProduct = productId => ({
     productId
 })
 
-//it seems that I should probably use this as the basis for "Cart"
-export const addToCart = (product,qty) => (dispatch) => {
-    toast.success("Item Added to Cart");
-        dispatch(addToCartUnsafe(product, qty))
-
-}
 export const addToCartAndRemoveWishlist = (product,qty) => (dispatch) => {
     toast.success("Item Added to Cart");
     dispatch(addToCartUnsafe(product, qty));
     dispatch(removeFromWishlist(product));
 }
-export const addToCartUnsafe = (product, qty) => ({
-    type: types.ADD_TO_CART,
-    product,
-    qty
-});
+export const addToCartUnsafe = (product, qty) => {
+    console.log("addToCartItem : ", product);
+    return{
+    type:ActionTypes.ADD_CART,
+    payload:{
+        request:{
+            method:'POST',
+            url:'/cart',
+            data:{product:product, quantity:qty}
+        }
+    }
+}};
+
 export const removeFromCart = product_id => (dispatch) => {
     toast.error("Item Removed from Cart");
     dispatch({
@@ -52,12 +54,12 @@ export const removeFromCart = product_id => (dispatch) => {
     })
 };
 export const incrementQty = (product,qty) => (dispatch) => {
-    toast.success("Item Added to Cart");
+    // toast.success("Item Added to Cart");
     dispatch(addToCartUnsafe(product, qty))
 
 }
 export const decrementQty = productId => (dispatch) => {
-    toast.warn("Item Decrement Qty to Cart");
+    // toast.warn("Item Decrement Qty to Cart");
 
     dispatch({
     type: types.DECREMENT_QTY,
@@ -534,7 +536,8 @@ const articleUpdate  =({articleId, title, content}) =>{
     })
 }
 
-const addCart = (item, quantity) =>{
+export const addToCart = (item, quantity) =>{
+    // toast.success("Item Added to Cart");
     return({
         type:ActionTypes.ADD_CART,
         payload:{
@@ -678,6 +681,35 @@ const getAddress = () =>{
     })
 }
 
+const searchAddressInApi = (keyword) =>{
+    return ({
+        type:ActionTypes.SEARCH_ADDRESS_API,
+        payload:{
+            request:{
+                method: 'GET',
+                url: `/getAddrApi?keyword=${keyword}`
+            }
+        }
+    })
+}
+
+const addAddress = ({address, postalNumber, addressDetail}) => {
+    return ({
+        type: ActionTypes.ADD_ADDRESS,
+        payload: {
+            request: {
+                method: 'POST',
+                url: '/address',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({ address, postalNumber, addressDetail })
+            }
+        }
+    });
+};
+
 export const Actions = {
     getClientToken,
     login,
@@ -708,7 +740,6 @@ export const Actions = {
     checkNickname,
     register,
     getOrderList,
-    addCart,
     checkPassword,
     getAddress,
     updateNickname,
@@ -717,8 +748,9 @@ export const Actions = {
     updatePassword,
     fetchProductBySearch,
     registerVerification,
-    checkRegisterToken
-
+    checkRegisterToken,
+    searchAddressInApi,
+    addAddress
 
 };
 

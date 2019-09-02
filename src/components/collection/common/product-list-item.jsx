@@ -53,7 +53,7 @@ class ProductListItem extends Component {
         const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
         const {open} = this.state;
         const { fileName } = item.thumbnail;
-       
+
         const image = Files.filePath(fileName);
 
             // let RatingStars = []
@@ -71,7 +71,7 @@ class ProductListItem extends Component {
                                 ><img src={image} className="img-fluid" alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
-                                <button title="Add to cart" onClick={() => onAddToCartClicked(item, 1)}>
+                                <button title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </button>
                                 <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
