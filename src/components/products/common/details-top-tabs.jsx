@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import {Link} from 'react-router-dom'
+import ProductQandA from '../../articles/ProductQandA'
 
 class DetailsTopTabs extends Component {
     render (){
@@ -32,7 +33,7 @@ class DetailsTopTabs extends Component {
                                 </Tab>
                                 <Tab className="nav-item">
                                     <span className="nav-link" >
-                                        <i className="icofont icofont-contacts"></i>Write Review</span>
+                                        <i className="icofont icofont-contacts"></i>Product Q&A</span>
                                     <div className="material-border"></div>
                                 </Tab>
                             </TabList>
@@ -82,7 +83,7 @@ class DetailsTopTabs extends Component {
                             <TabPanel>
                                 <form className="theme-form mt-4">
                                     <div className="form-row">
-                                        <div className="col-md-12 ">
+                                        {/* <div className="col-md-12 ">
                                             <div className="media m-0">
                                                 <label>Rating</label>
                                                 <div className="media-body ml-3">
@@ -103,13 +104,14 @@ class DetailsTopTabs extends Component {
                                         <div className="col-md-6">
                                             <label htmlFor="email">Email</label>
                                             <input type="text" className="form-control" id="email" placeholder="Email" required />
-                                        </div>
+                                        </div> */}
+                                        <ProductQandA />
                                         <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
+                                            <label htmlFor="review">Product Q&A Title</label>
                                             <input type="text" className="form-control" id="review" placeholder="Enter your Review Subjects" required />
                                         </div>
                                         <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
+                                            <label htmlFor="review">Product Q&A Content</label>
                                             <textarea className="form-control" placeholder="Wrire Your Testimonial Here" id="exampleFormControlTextarea1" rows="6"></textarea>
                                         </div>
                                         <div className="col-md-12">
