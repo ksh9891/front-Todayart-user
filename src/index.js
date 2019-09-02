@@ -172,7 +172,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/pages/contact`} component={Contact}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/dashboard`} component={Dashboard}/>
                                 <Route path={`${process.env.PUBLIC_URL}/pages/faq`} component={Faq}/>
-                                <Route path={`${process.env.PUBLIC_URL}/article/:boardId`} component={SupportContainer}/>
+                                <Route path={`${process.env.PUBLIC_URL}/articles`} component={SupportContainer}/>
                                 <Route path={`${process.env.PUBLIC_URL}/articleWrite/:boardId`} component={ArticleWrite}/>
 
                                 {/*Features*/}

@@ -1,35 +1,23 @@
 import React, { useEffect, Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
-
+import queryString from 'query-string'
 import { Actions } from '../../actions';
-import Breadcrumb from '../common/breadcrumb'
 
 class FAQArticle extends Component {
 
   constructor(props) {
     super(props)
+    this.state={
+      boardId : queryString.parse(props.location.search).boardId
+  }
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.boardId);
-    this.props.getArticleList(this.props.match.params.boardId);
+    this.props.getArticleList(this.state.boardId);
 }
 
-shouldComponentUpdate(nextProps, nextState){
-    
-    if(this.props.match.params.boardId !== nextProps.match.params.boardId){
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
-componentWillUpdate(nextProps, nextState){
-    
-    this.props.getArticleList(nextProps.match.params.boardId);
-}
 
  onDelete = (e, articleId) => {
 e.preventDefault();
@@ -56,25 +44,18 @@ onModify = (e, articleId) => {
 };
 
   render() {
-
-
-    console.log('props = ', this.props)
-
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
-
-    
-
-    
 
     return (
       <div>
 
-        {items.map((item) => {
+        { items?
+          
+          items.map((item) => {
           const { title, content } = item;
           return (
             <div>
-              
               {/*Dashboard section*/}
               <section className="faq-section section-b-space">
                 <div className="container">
@@ -99,9 +80,9 @@ onModify = (e, articleId) => {
                               <span>
                                 {(userDetails !== null) && (item.memberId === userDetails.memberId) ?
                                   <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
-                                    <form class="form-inline">
-                                      <button class="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.articleId)}>수정</button>
-                                      <button class="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
+                                    <form className="form-inline">
+                                      <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.articleId)}>수정</button>
+                                      <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
                                     </form>
                                   </nav>
                                   </div> : ''}
@@ -117,7 +98,7 @@ onModify = (e, articleId) => {
 
             </div >
           )
-        })}
+        }):''}
       </div>
     )
 
