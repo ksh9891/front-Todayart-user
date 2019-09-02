@@ -27,7 +27,7 @@ class ProductListing1 extends Component {
         if(props.items.length <= state.limit) {
             return {...state, hasMoreItems: false}
         } else {
-            return {...state, hasMoreItems: true,  limit: state.limit + 4}
+            return {...state, hasMoreItems: true}
         }
        
     }
