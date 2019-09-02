@@ -676,6 +676,26 @@ const getAddress = () =>{
     })
 }
 
+const changeStatus = (changeCode, orderDetailId, status) =>{
+    console.log("ACTION", changeCode, orderDetailId, status)
+    return ({
+        type:ActionTypes.CHANGE_STATUS,
+        payload:{
+            request:{
+                method:'PATCH',
+                url:'/orders',
+                data:{
+                    changeCode:changeCode,
+                    orderDetailId:orderDetailId,
+                    status:status
+                }
+            }
+        }
+    })
+}
+
+
+
 export const Actions = {
     getClientToken,
     login,
@@ -714,6 +734,7 @@ export const Actions = {
     updatePassword,
     fetchProductBySearch,
     registerVerification,
-    checkRegisterToken
+    checkRegisterToken,
+    changeStatus
 
 };
