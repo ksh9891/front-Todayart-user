@@ -29,9 +29,9 @@ class ProductQandA extends Component {
     e.preventDefault();
     this.props.articleDelete(articleId)
       .then(response => {
-        this.props.article.boardName.boardId === 4 ? 
-        this.props.history.push("/product/" + this.props.data.item.productId) :
-        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
+        this.props.article.boardName.boardId === 4 ?
+          this.props.history.push("/product/" + this.props.data.item.productId) :
+          this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId)
       })
       .catch(error => {
         console.log('error>>', error);
@@ -80,7 +80,39 @@ class ProductQandA extends Component {
               <div>
 
                 {/*Dashboard section*/}
-                <section className="faq-section section-b-space">
+
+                <div class="media">
+                  <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+                    alt="Avatar" />
+                  <div class="media-body">
+                    <h5 class="mt-0 font-weight-bold blue-text">{detail.nickname}</h5>
+                    <p>{detail.content}</p>
+                    <span >
+                      {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
+                        <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                          <form className="form-inline">
+                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
+                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
+                          </form>
+                        </nav>
+                        </div> : ''}
+                    </span>
+                    <span>
+                      {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN")) ?
+                        <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                          <form className="form-inline">
+                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onReply(e, detail.articleId)}>답변</button>
+                          </form>
+                        </nav>
+                        </div> : ''}
+                    </span>
+
+                    <Comment articleId={detail.articleId} onComment={this.props.commentList} />
+
+                  </div>
+                </div>
+
+                {/* <section className="faq-section section-b-space">
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12">
@@ -89,7 +121,7 @@ class ProductQandA extends Component {
                             <div className="card-header" id={"heading"+`${detail.articleId}`}>
                               <h5 className="mb-0">
                                 <button className="btn btn-link" type="button" data-toggle="collapse" 
-                                  data-target={"#collapse"+`${detail.articleId}`} aria-expanded="true"
+                                  data-target={"#collapse"+`${detail.articleId}`} aria-expanded="false"
                                   aria-controls={"collapse"+`${detail.articleId}`}>
                                   {detail.title}
                                 </button>
@@ -127,12 +159,12 @@ class ProductQandA extends Component {
                     </div>
                   </div>
                 </section>
-                <Comment articleId={detail.articleId} onComment={this.props.commentList} />
+                <Comment articleId={detail.articleId} onComment={this.props.commentList} /> */}
 
               </div >
             )
           }) : ''}
-        
+
         <span>
           {userDetails !== null ?
             <div className="checkout_btn_inner d-flex align-items-center">
@@ -155,7 +187,7 @@ class ProductQandA extends Component {
 const mapStateToProps = (state) => ({
   article: state.article,
   auth: state.auth,
-  data : state.data
+  data: state.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

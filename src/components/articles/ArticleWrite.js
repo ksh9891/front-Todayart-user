@@ -77,10 +77,9 @@ class ArticleWrite extends Component {
             <form onSubmit={e => this.props.match.params.articleId !== undefined ? 
               this.onUpdate(e) : this.onWrite(e)}>
               <div class="form-group">
-                <label for="Inputselect">Category</label>
   
-  
-                <select
+                {this.props.article.boardName.boardName}
+                {/* <select
                   class="form-control"
                   type="boardId"
                   id="boardId"
@@ -88,7 +87,7 @@ class ArticleWrite extends Component {
                   placeholder="카테고리"
                   required>
                       <option value={this.props.article.boardName.boardName}>{this.props.article.boardName.boardName}</option>
-                </select>
+                </select> */}
   
               </div>
               <div class="form-group">
