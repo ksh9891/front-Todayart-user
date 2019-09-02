@@ -682,6 +682,7 @@ const getAddress = () =>{
 }
 
 
+
 const searchAddressInApi = (keyword) =>{
     return ({
         type:ActionTypes.SEARCH_ADDRESS_API,
@@ -693,27 +694,6 @@ const searchAddressInApi = (keyword) =>{
         }
     })
 }
-
-
-
-const addWishlist = (item) => {
-    return({
-        type : ActionTypes.ADD_WISHLIST,
-        payload:{
-            request:{
-                method: 'POST',
-                url: '/wish',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json'
-                },
-                data:JSON.stringify({ product : item })
-
-            }
-        }
-    })
-}
-
 
 const addAddress = ({address, postalNumber, addressDetail}) => {
     return ({
@@ -731,6 +711,29 @@ const addAddress = ({address, postalNumber, addressDetail}) => {
         }
     });
 };
+
+
+
+
+const addWishlist = (item) => {
+    return({
+        type : ActionTypes.ADD_WISHLIST,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/wish',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data:JSON.stringify({ product : item })
+            }
+        }
+    })
+}
+
+
+
 
 
 const removeWishlist = (id) => {
@@ -757,6 +760,42 @@ const fetchWishlist = () => {
         }
     })
 }
+
+
+// const searchAddressInApi = (keyword) =>{
+//     return ({
+//         type:ActionTypes.SEARCH_ADDRESS_API,
+//         payload:{
+//             request:{
+//                 method: 'GET',
+//                 url: `/getAddrApi?keyword=${keyword}`
+
+//             }
+//         }
+//     })
+// }
+
+
+
+
+
+// const addAddress = ({address, postalNumber, addressDetail}) => {
+//     return ({
+//         type: ActionTypes.ADD_ADDRESS,
+//         payload: {
+//             request: {
+//                 method: 'POST',
+//                 url: '/address',
+//                 headers: {
+//                     'Content-Type': 'application/json; charset=UTF-8',
+//                     'Accept': 'application/json'
+//                 },
+//                 data: JSON.stringify({ address, postalNumber, addressDetail })
+//             }
+//         }
+//     });
+// };
+
 
 
 export const Actions = {
