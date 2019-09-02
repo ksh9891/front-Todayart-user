@@ -99,13 +99,23 @@ class ProductQandA extends Component {
                     </span>
                     <span>
                       {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN")) ?
-                        <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
-                          <form className="form-inline">
-                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onReply(e, detail.articleId)}>답변</button>
-                          </form>
-                        </nav>
-                        </div> : ''}
+                        <div className="checkout_btn_inner d-flex align-items-center">
+                          <nav class="navbar navbar-light bg-light">
+                            <form className="form-inline">
+                              <input ></input>
+                              <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onReply(e, detail.articleId)}>답변</button>
+                            </form>
+                          </nav>
+                        </div>
+                        : ''}
                     </span>
+
+
+
+
+
+
+
 
                     <Comment articleId={detail.articleId} onComment={this.props.commentList} />
 
