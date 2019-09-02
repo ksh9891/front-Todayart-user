@@ -4,7 +4,9 @@ const initialStateOrder={
     ordered:null,
     nextUrl:null,
     tid:null,
-    addresses:null
+    addresses:null,
+    orderList:null,
+    refresh:false
 }
 // window.open(next_redirect_pc_url, "카카오 결제", "width=550, height=650");      
 
@@ -51,6 +53,10 @@ const order = (state=initialStateOrder, action) =>{
                     }
                 }
             }
+
+        
+        case ActionTypes.CHANGE_STATUS_SUCCESS:
+            return {...state, refresh:true};
 
         case ActionTypes.LOGOUT:
                 return initialStateOrder;
