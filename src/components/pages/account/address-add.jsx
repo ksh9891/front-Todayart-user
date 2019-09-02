@@ -125,7 +125,19 @@ class AddressAdd extends Component {
                                     addressValidMsg: errorMessage
                                 })
                             }
+                        } else {
+                            const { error } = response;
+                            return Promise.reject(error);
                         }
+                    })
+                    .catch(error => {
+                        this.setState({
+                            ...this.state,
+                            isAddressValid: false,
+                            isSubmitAddressValid: false,
+                            addressValidMsg: '오류가 발생했습니다. 잠시 후 다시 시도해 주세요'
+                        })
+                        console.log("error >> ", error)
                     })
             }
         }
