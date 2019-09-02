@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Actions } from '../actions/index'
 import { connect } from 'react-redux';
-import { withRouter, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import queryString from 'query-string'
 
 import FAQArticle from '../components/articles/FAQArticle';

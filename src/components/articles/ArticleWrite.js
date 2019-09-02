@@ -25,14 +25,16 @@ class ArticleWrite extends Component {
     const title = this.titleInput.current.value;
     const content = this.contentInput.current.value;
     const boardId = this.props.article.boardName.boardId;
+    const productId = this.props.data.item.productId !== null ? this.props.data.item.productId:null;
 
     console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa',boardId)
 
-    this.props.articleWrite({title, content, boardId})
+    this.props.articleWrite({title, content, boardId, productId})
       .then(response => {
-        this.props.history.push("/articles?boardId=" + boardId)
+        this.props.article.boardName.boardId === 4 ? 
+        this.props.history.push("/product/" + this.props.data.item.productId) :
+        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
       })
-      .then(console.log('titleeeeeeeeeeeeeeeeeeeeeeeeee = ', title))
       .catch(error => {
         console.log('error>>', error);
       });
@@ -42,7 +44,7 @@ class ArticleWrite extends Component {
 
     const title = this.titleInput.current.value;
     const content = this.contentInput.current.value;
-    const articleId = this.props.article.item.articleId;
+    const articleId = this.props.article.detail.articleId;
 
     e.preventDefault();
 
@@ -50,10 +52,8 @@ class ArticleWrite extends Component {
       .then(response => {
         
         this.props.article.boardName.boardId === 4 ? 
-        this.props.history.push("/product/" + this.props.article.item.productId) :
-        this.props.history.push("/articles?boardId=" + this.props.article.item.boardId) 
-        console.log('777777777777777777777777=', this.props.article.boardName.boardId)
-        console.log('00000000000000000000=', this.props.article.item.productId)
+        this.props.history.push("/product/" + this.props.article.detail.productId) :
+        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
 
       })
       .then(console.log('thisprops = ', this.props))
@@ -114,7 +114,7 @@ class ArticleWrite extends Component {
                   id="title"
                   name="title"
                   ref={this.titleInput}
-                  defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.item.title : null}
+                  defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.detail.title : null}
                   placeholder="제목을 입력하세요."
                   required
                 />
@@ -145,7 +145,7 @@ class ArticleWrite extends Component {
                     id="content"
                     name="content"
                     ref={this.contentInput}
-                    defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.item.content : null}
+                    defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.detail.content : null}
                     placeholder="내용을 입력하세요."
                     required
                   ></textarea>
@@ -178,11 +178,12 @@ class ArticleWrite extends Component {
 // 리액트 라우터 추가 + 리덕스 스토어 관련 된 옵션 추가
 const mapStateToProps = (state) => ({
   article: state.article,
-  auth: state.auth
+  auth: state.auth,
+  data: state.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  articleWrite: ({title, content, boardId}) => dispatch(Actions.articleWrite({title, content, boardId})),
+  articleWrite: ({title, content, boardId, productId}) => dispatch(Actions.articleWrite({title, content, boardId, productId})),
   articleUpdate: ({articleId, title, content}) => dispatch(Actions.articleUpdate({articleId, title, content}))
 });
 

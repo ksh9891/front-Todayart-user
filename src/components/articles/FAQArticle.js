@@ -1,6 +1,6 @@
-import React, { useEffect, Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
 import Breadcrumb from '../common/breadcrumb'
@@ -20,12 +20,9 @@ class FAQArticle extends Component {
     this.props.getArticleList(this.state.boardId);
   }
 
-
 //  shouldComponentUpdate(nextProps, nextState) {
 //    if(this.props.article.data.items)
 //  }
-
-  componentWillUnmount(){}
 
   onDelete = (e, articleId) => {
     e.preventDefault();
@@ -56,7 +53,9 @@ class FAQArticle extends Component {
 
     e.preventDefault();
 
-    const searchWord = this.searcyarnhWordInput.current.value;
+    console.log('searchWordInputsearchWordInputsearchWordInput=', this.searchConditionInput)
+
+    const searchWord = this.searchWordInput.current.value;
     const searchCondition = this.searchConditionInput.current.value;
     const boardId = this.props.article.boardName.boardId;
 
@@ -91,10 +90,9 @@ class FAQArticle extends Component {
               placeholder="카테고리"
               ref={this.searchConditionInput}
               required>
-              <option value="TC">제목 + 내용</option>
+              <option value="TCy">제목 + 내용</option>
               <option value="title">제목</option>
               <option value="content">내용</option>
-              <option value="member">작성자</option>
             </select>
 
             <input class="form-control mr-sm-2"
@@ -108,8 +106,8 @@ class FAQArticle extends Component {
           </form>
         </nav>
         {items ?
-          items.map((item) => {
-            const { title, content } = item;
+          items.map((detail) => {
+            const { title, content } = detail;
             return (
               <div>
 
@@ -125,20 +123,21 @@ class FAQArticle extends Component {
                                 <button className="btn btn-link" type="button" data-toggle="collapse"
                                   data-target="#collapseOne" aria-expanded="true"
                                   aria-controls="collapseOne">
-                                  {item.title}
+                                  {detail.title}
                                 </button>
                               </h5>
                             </div>
+
                             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionExample">
                               <div className="card-body">
-                                <p>{item.content}</p>
+                                <p>{detail.content}</p>
                                 <span>
-                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
+                                  {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
                                     <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                       <form className="form-inline">
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.boardId, item.articleId)}>수정</button>
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
                                       </form>
                                     </nav>
                                     </div> : ''}
@@ -175,4 +174,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FAQArticle))
-

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
-import Breadcrumb from '../common/breadcrumb'
+import Comment from './Comment';
 
 class ProductQandA extends Component {
 
@@ -18,11 +18,12 @@ class ProductQandA extends Component {
 
   componentDidMount() {
     this.props.getArticleList(this.state.boardId);
+    // this.props.commentList(this.articleId);
   }
 
-//  shouldComponentUpdate(nextProps, nextState) {
-//    if(this.props.article.data.items)
-//  }
+  //  shouldComponentUpdate(nextProps, nextState) {
+  //    if(this.props.article.data.items)
+  //  }
 
   onDelete = (e, articleId) => {
     e.preventDefault();
@@ -49,22 +50,13 @@ class ProductQandA extends Component {
       });
   };
 
-  onSearch = (e) => {
+  onReply = (e, articleId) => {
 
     e.preventDefault();
+  };
 
-    const searchWord = this.searcyarnhWordInput.current.value;
-    const searchCondition = this.searchConditionInput.current.value;
-    const boardId = this.props.article.boardName.boardId;
-
-    console.log("searchCondition", searchCondition)
-    this.props.articleSearch({ boardId, searchWord, searchCondition })
-      .then(response => {
-        this.props.history.push("/articles/search?value="+searchWord+"&boardId="+boardId+"&where="+searchCondition)
-      })
-      .catch(error => {
-        console.log('error>>', error);
-      });
+  onComment = (articleId) => {
+    this.props.commentList(articleId)
   }
 
 
@@ -72,42 +64,16 @@ class ProductQandA extends Component {
     this.state.boardId = (this.props.match.params.product !== true) ? '4' : '';
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
+    const { item } = this.props.data;
 
     return (
       <div>
-        <nav class="navbar navbar-light bg-light">
-          <form class="form-inline" onSubmit={e => this.onSearch(e)}>
 
-            <select
-              class="form-control"
-              type="boardId"
-              id="boardId"
-              name="boardId"
-              placeholder="카테고리"
-              ref={this.searchConditionInput}
-              required>
-              <option value="TC">제목 + 내용</option>
-              <option value="title">제목</option>
-              <option value="content">내용</option>
-              <option value="member">작성자</option>
-            </select>
-
-            <input class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              id="SearchWordInput"
-              name="searchWordInput"
-              ref={this.searchWordInput} />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </nav>
         {items ?
-          items.filter((item) => {
-            return item.productId == this.props.match.params.id
+          items.filter((detail) => {
+            return detail.productId == this.props.match.params.id
           }
-          ).map((item)=>{
-
+          ).map((detail) => {
             return (
               <div>
 
@@ -123,7 +89,7 @@ class ProductQandA extends Component {
                                 <button className="btn btn-link" type="button" data-toggle="collapse"
                                   data-target="#collapseOne" aria-expanded="true"
                                   aria-controls="collapseOne">
-                                  {item.title}
+                                  {detail.title}
                                 </button>
                               </h5>
                             </div>
@@ -131,17 +97,26 @@ class ProductQandA extends Component {
                             <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
                               data-parent="#accordionExample">
                               <div className="card-body">
-                                <p>{item.content}</p>
+                                <p>{detail.content}</p>
                                 <span>
-                                  {((userDetails !== null) && (item.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
+                                  {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
                                     <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                       <form className="form-inline">
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, item.boardId, item.articleId)}>수정</button>
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, item.articleId)}>삭제</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, item.articleId)}>수정</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
                                       </form>
                                     </nav>
                                     </div> : ''}
                                 </span>
+                                <span>
+                                    {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN")) ?
+                                      <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                        <form className="form-inline">
+                                          <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onReply(e, detail.articleId)}>답변</button>
+                                        </form>
+                                      </nav>
+                                      </div> : ''}
+                                  </span>
                               </div>
                             </div>
                           </div>
@@ -150,10 +125,24 @@ class ProductQandA extends Component {
                     </div>
                   </div>
                 </section>
+                <Comment articleId={detail.articleId} onComment={this.props.commentList} />
 
               </div >
             )
           }) : ''}
+        
+        <span>
+          {userDetails !== null ?
+            <div className="checkout_btn_inner d-flex align-items-center">
+              <nav className="navbar navbar-light bg-light">
+                <form className="form-inline">
+                  <button className="btn btn-outline-success my-2 my-sm-0">
+                    <Link to={"/articleWrite"} boardId={this.state.boardId}>글쓰기</Link>
+                  </button>
+                </form>
+              </nav>
+            </div> : ''}
+        </span>
       </div>
     )
 
@@ -163,14 +152,16 @@ class ProductQandA extends Component {
 
 const mapStateToProps = (state) => ({
   article: state.article,
-  auth: state.auth
+  auth: state.auth,
+  data : state.data
 });
 
 const mapDispatchToProps = (dispatch) => ({
   getArticleList: (boardId) => dispatch(Actions.getArticleList(boardId)),
   articleDelete: (boardId) => dispatch(Actions.articleDelete(boardId)),
   getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
-  articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition }))
+  articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition })),
+  commentList: (articleId) => dispatch(Actions.commentList(articleId))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductQandA))
