@@ -85,6 +85,7 @@ import ElementProductNoSlider from "./components/features/product/element-produc
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
 import ElementProductTab from "./components/features/product/element-product-tab"
 import ArticleWrite from './components/articles/ArticleWrite';
+import PrivateRoute from "./PrivateRoute";
 
 class Root extends React.Component {
     render() {
@@ -112,14 +113,14 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
-                                <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
-                                <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
-                                <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList} />
 
                                 <Route path={`${process.env.PUBLIC_URL}/register-artist`} component={RegisterArtist}/>
 
