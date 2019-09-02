@@ -5,7 +5,6 @@ import { withRouter, Link } from "react-router-dom";
 import queryString from 'query-string'
 
 import FAQArticle from '../components/articles/FAQArticle';
-import Breadcrumb from '../components/common/breadcrumb'
 
 
 class SupportContainer extends Component {
@@ -23,19 +22,25 @@ class SupportContainer extends Component {
 
     getSnapshotBeforeUpdate(preProps, prevState){
         console.log("getSnapshotBeforeUpdate", preProps, prevState, this.state)
-        this.props.getArticleList(this.state.boardId);
+        return this.props.getArticleList(this.state.boardId);
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
     }
     
     shouldComponentUpdate(nextProps, nextState){
         console.log("shouldComponentUpdate", this.state, nextState, nextProps)
         if(this.state.boardId !== nextState.boardId){
-            console.log("asdfaf")
             return true;
         }
             return false;
         
     }
     
+    componentWillUnmount(){
+        
+    }
 
     render() {
 
@@ -44,9 +49,7 @@ class SupportContainer extends Component {
 
         return (
             <div>
-                {this.props.article.boardName!==null&&this.props.article.boardName!==undefined?
-                <Breadcrumb title={this.props.article.boardName.boardName} />:''
-                }
+                
                 <section className="section-b-space">
                     <div className="container">
 
@@ -63,12 +66,12 @@ class SupportContainer extends Component {
                 </div>
                 <FAQArticle boardId={this.state.boardId}/>
                 <span>
-                    {(userDetails !== null && userDetails.memberId === 1) ?
+                    {(userDetails !== null && (userDetails.role === "ROLE_ADMIN" || this.state.boardId === "2")) ?
                         <div className="checkout_btn_inner d-flex align-items-center">
                             <nav className="navbar navbar-light bg-light">
                                 <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0"> 
-                                        <Link to={"/articleWrite/"+`${this.props.match.params.boardId}`}>글쓰기</Link>
+                                        <Link to={"/articleWrite"} boardId={this.state.boardId}>글쓰기</Link>
                                         </button>
                                 </form>
                             </nav>

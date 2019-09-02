@@ -8,6 +8,8 @@ import {ActionTypes} from '../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import { addToCart } from '../../../actions'
+
 
 class SpecialProducts extends Component {
 
@@ -17,20 +19,33 @@ class SpecialProducts extends Component {
 
     render (){
 
-        const {bestSeller, symbol, addToCart, addToWishlist, addToCompare, items} = this.props
+        const {symbol,addToCart, addToCompare, items} = this.props
 
         const addWishilist=(item)=>{
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
                     toast.success("상품이 찜하기에 추가되었습니다");       
-                    console.log('찜하기성공!')                    
+                    console.log('찜하기성공!')  
+                } 
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }                 
                                  
+
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+
                 }
              }).catch(error=>{
                  console.log('error >>', error)
              })
-        }
+        }       
+
 
         return (
             <div>
@@ -49,8 +64,10 @@ class SpecialProducts extends Component {
                                 <div className="no-slider row">
                                     { items.slice(0, 8).map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
+
                                                      onAddToWishlistClicked={() => addWishilist(item)}
-                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
+                                                     onAddToCartClicked={asyncAddCart} key={index} /> )
+
                                     }
                                 </div>
                             </TabPanel>
@@ -60,20 +77,11 @@ class SpecialProducts extends Component {
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
                                                      onAddToWishlistClicked={() => addWishilist(item)}
-                                                     onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
+                                                     onAddToCartClicked={asyncAddCart} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
-                            <TabPanel>
-                                <div className=" no-slider row">
-                                    { bestSeller.map((products, index ) =>
-                                        <ProductItem products={products} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(products)}
-                                                     onAddToWishlistClicked={() => addWishilist(products)}
-                                                     onAddToCartClicked={() => addToCart(products, 1)} key={index} /> )
-                                    }
-                                </div>
-                            </TabPanel>
+                           
                         </Tabs>
                         <ToastContainer/>
                     </div>
@@ -92,10 +100,11 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
+
     addWishlist: (item) => dispatch(Actions.addWishlist(item)),
-    fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()) ,
+    addToCart:(item, qty)=>dispatch(addToCart(item, qty))
    
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (SpecialProducts);
-

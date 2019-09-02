@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
+
 import { Actions } from '../../../../actions'
 import {ActionTypes} from '../../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
+
 
 
 
@@ -56,6 +58,7 @@ class DetailsWithPrice extends Component {
     }
 
     render (){
+
         const {symbol, item, addToCartClicked, BuynowClicked} = this.props
 
         const addWishilist=(item)=>{
@@ -70,6 +73,7 @@ class DetailsWithPrice extends Component {
                  console.log('error >>', error)
              })
         }
+
 
         var colorsnav = {
             slidesToShow: 6,
@@ -126,8 +130,11 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-                        <a className="btn btn-solid" onClick={() => addToCartClicked(item, this.state.quantity)}>add to cart</a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >buy now</Link>
+                        <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
+                                    this.props.calcPrice()
+                                    }}
+                        >장바구니에 담기</a>
+                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >바로 구입하기</Link>
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">product details</h6>

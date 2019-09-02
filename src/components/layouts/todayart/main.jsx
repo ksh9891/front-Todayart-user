@@ -158,8 +158,6 @@ class Todayart extends Component {
                 {/* Blog Section End*/}
 
                 <ThemeSettings/>
-
-                <FooterOne logoName={'logo/1.png'} />
             </div>
         )
     }

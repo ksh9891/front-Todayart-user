@@ -74,11 +74,24 @@ const cart = (state = initialStateCart, action) => {
             if(payload!==null&&payload!==undefined){
                 let {data} = payload;
                 data = {...data, checked:true};
+                const refreashCartItem=(items, data)=>{
+                    if(items.every((item)=>item.cartId!==data.cartId)){
+                        items.push(data);
+                        return items;
+                    }else{
+                        return(
+                    items.map((item)=>{
+                        if(item.cartId===data.cartId){
+                            return {...data}
+                        }
+                        else {
+                            return{...item, checked:true}
+                        }
+                    }))
+                }}
                 return{
                     ...state,
-                    items:[
-                        ...items, data
-                    ]
+                    items:refreashCartItem(items, data)
                 }
             }
             return state;

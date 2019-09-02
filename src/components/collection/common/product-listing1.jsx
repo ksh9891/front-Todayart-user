@@ -4,12 +4,10 @@ import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
 import {ActionTypes} from '../../../constants/ActionTypes'
+
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
-
-
 
 import { addToCart} from '../../../actions'
 import {getVisibleproducts} from '../../../services';
@@ -24,7 +22,7 @@ class ProductListing1 extends Component {
             limit: 0,
             hasMoreItems: true,
             id:this.props.id
-           
+
         };
     }
 
@@ -32,35 +30,34 @@ class ProductListing1 extends Component {
 
 
     componentWillReceiveProps(){
-        
+
         if (this.state.limit < this.props.items.length) {
             this.setState({
-                ...this.state,            
+                ...this.state,
                 limit: this.state.limit + 4,
                 hasMoreItems: true
-               
+
             })
         }else {
             this.setState({
-                ...this.state,            
+                ...this.state,
                 limit: 0,
                 hasMoreItems: true
             })
-    }
+        }
     }
 
- 
-    
 
-    fetchMoreItems = () => {   
+
+    fetchMoreItems = () => {
 
         console.log("33");
         if (this.state.limit >= this.props.items.length) {
             console.log("44");
-            this.setState({ 
+            this.setState({
                 ...this.state,
                 hasMoreItems: false });
-           // return;
+            // return;
         }else{
             console.log("5");
             setTimeout(() => {
@@ -71,7 +68,6 @@ class ProductListing1 extends Component {
                 });
             }, 1000);
         }
-        
 
 
     }
@@ -80,6 +76,7 @@ class ProductListing1 extends Component {
     
 
     render (){
+
 
       
         const {products, items, addToCart, symbol} = this.props;
@@ -90,19 +87,31 @@ class ProductListing1 extends Component {
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
                     toast.success("상품이 찜하기에 추가되었습니다");       
-                    console.log('찜하기성공!')                    
+                    console.log('찜하기성공!')    
+                }
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }             
                                  
+
+        const asyncAddCart=(item,qty)=>{
+            this.props.addToCart(item,qty)
+                .then(response=>{
+                if(response.type===ActionTypes.ADD_CART_SUCCESS){
+                    this.props.calcPrice();
+
                 }
              }).catch(error=>{
                  console.log('error >>', error)
              })
         }
-       
+
         return (
             <div>
                 <div className="product-wrapper-grid">
                     <div className="container-fluid">
-                        {items.length > 0 ? 
+                        {items.length > 0 ?
                             <InfiniteScroll
                                 dataLength={this.state.limit} //This is important field to render the next data
                                 next={this.fetchMoreItems}
@@ -113,14 +122,18 @@ class ProductListing1 extends Component {
                                         <b>Yay! You have seen it all</b>
                                     </p>
                                 }
-                                
+
                             >
                                 <div className="row">
-                                   { items.slice(0, this.state.limit).map((item, index) =>
+                                    { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
                                         <ProductListItem item={item} symbol={symbol}
+
                                                          onAddToWishlistClicked={() => addWishilist(item)}
                                                          onAddToCartClicked={addToCart} key={index}/>
+
+                                                         onAddToCartClicked={asyncAddCart} key={index}/>
+
                                         </div>)
                                     }
                                 </div>
@@ -152,10 +165,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
     fetchArtwork:() => dispatch(Actions.fetchArtwork()),
-    addToCart: () => dispatch(addToCart()),
-    addWishlist: (item) => dispatch(Actions.addWishlist(item))
-    
+    addWishlist: (item) => dispatch(Actions.addWishlist(item)), 
+    addToCart: (item, qty) => dispatch(addToCart(item, qty))
    
+
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
