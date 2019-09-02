@@ -29,7 +29,9 @@ class ProductQandA extends Component {
     e.preventDefault();
     this.props.articleDelete(articleId)
       .then(response => {
-        this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId)
+        this.props.article.boardName.boardId === 4 ? 
+        this.props.history.push("/product/" + this.props.data.item.productId) :
+        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
       })
       .catch(error => {
         console.log('error>>', error);
@@ -84,17 +86,17 @@ class ProductQandA extends Component {
                       <div className="col-sm-12">
                         <div className="accordion theme-accordion" id="accordionExample">
                           <div className="card">
-                            <div className="card-header" id="headingOne">
+                            <div className="card-header" id={"heading"+`${detail.articleId}`}>
                               <h5 className="mb-0">
-                                <button className="btn btn-link" type="button" data-toggle="collapse"
-                                  data-target="#collapseOne" aria-expanded="true"
-                                  aria-controls="collapseOne">
+                                <button className="btn btn-link" type="button" data-toggle="collapse" 
+                                  data-target={"#collapse"+`${detail.articleId}`} aria-expanded="true"
+                                  aria-controls={"collapse"+`${detail.articleId}`}>
                                   {detail.title}
                                 </button>
                               </h5>
                             </div>
 
-                            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
+                            <div id={"collapse"+`${detail.articleId}`} className="collapse" aria-labelledby={"heading"+`${detail.articleId}`}
                               data-parent="#accordionExample">
                               <div className="card-body">
                                 <p>{detail.content}</p>
@@ -102,7 +104,7 @@ class ProductQandA extends Component {
                                   {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
                                     <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                                       <form className="form-inline">
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, item.articleId)}>수정</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
                                       </form>
                                     </nav>

@@ -14,8 +14,8 @@ class Comment extends Component {
       }
     this.searchWordInput = React.createRef();
     this.searchConditionInput = React.createRef();
-    }    
-  
+    }
+
     componentDidMount() {
       if (this.state.comment === null || this.state.comment === undefined) {
         this.state.onComment(this.state.articleId).then((response) => {
@@ -36,7 +36,7 @@ class Comment extends Component {
             console.log('error>>', error);
           });
       };
-    
+
       onModify = (e, boardId, articleId) => {
     
         e.preventDefault();

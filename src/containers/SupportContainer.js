@@ -53,16 +53,10 @@ class SupportContainer extends Component {
                 <section className="section-b-space">
                     <div className="container">
 
-                <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label className="btn btn-secondary">
-                        <input type="radio" name="options" id="option1" autoComplete="off" defaultChecked={true} /><Link to="/articles?boardId=1">FAQ</Link>
-                    </label>
-                    <label className="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" autoComplete="off"/> <Link to="/articles?boardId=2">Q&A</Link>
-                    </label>
-                    <label className="btn btn-secondary">
-                        <input type="radio" name="options" id="option3" autoComplete="off"/> <Link to="/articles?boardId=3">공지사항</Link>
-                    </label>
+                <div>
+                        <Link to="/articles?boardId=1">FAQ</Link> |
+                        <Link to="/articles?boardId=2">Q&A</Link> |
+                        <Link to="/articles?boardId=3">공지사항</Link>
                 </div>
                 <FAQArticle boardId={this.state.boardId}/>
                 <span>

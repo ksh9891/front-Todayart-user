@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
 import Breadcrumb from '../common/breadcrumb'
+import useCollapse from 'react-collapsed';
 
 class FAQArticle extends Component {
 
@@ -73,17 +74,19 @@ class FAQArticle extends Component {
   render() {
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
+    
 
     return (
       <div>
+        
         {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
           <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
         }
-        <nav class="navbar navbar-light bg-light">
-          <form class="form-inline" onSubmit={e => this.onSearch(e)}>
+        <nav className="navbar navbar-light bg-light">
+          <form className="form-inline" onSubmit={e => this.onSearch(e)}>
 
             <select
-              class="form-control"
+              className="form-control"
               type="boardId"
               id="boardId"
               name="boardId"
@@ -95,19 +98,19 @@ class FAQArticle extends Component {
               <option value="content">내용</option>
             </select>
 
-            <input class="form-control mr-sm-2"
+            <input className="form-control mr-sm-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
               id="SearchWordInput"
               name="searchWordInput"
               ref={this.searchWordInput} />
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           </form>
         </nav>
         {items ?
           items.map((detail) => {
-            const { title, content } = detail;
+            const { title, content, nickname } = detail;
             return (
               <div>
 
@@ -121,20 +124,21 @@ class FAQArticle extends Component {
                             <div className="card-header" id="headingOne">
                               <h5 className="mb-0">
                                 <button className="btn btn-link" type="button" data-toggle="collapse"
-                                  data-target="#collapseOne" aria-expanded="true"
-                                  aria-controls="collapseOne">
-                                  {detail.title}
+                                  data-target={"#collapse"+`${detail.articleId}`} aria-expanded="true"
+                                  aria-controls={"collapse"+`${detail.articleId}`}>
+                                  {title}
+                                  {this.props.article.boardName.boardId==2? "글쓴이:"+nickname :''}
                                 </button>
                               </h5>
                             </div>
 
-                            <div id="collapseOne" className="collapse show" aria-labelledby="headingOne"
+                            <div id={"collapse"+`${detail.articleId}`} className="collapse" aria-labelledby={"heading"+`${detail.articleId}`}
                               data-parent="#accordionExample">
                               <div className="card-body">
                                 <p>{detail.content}</p>
                                 <span>
                                   {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
-                                    <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
+                                    <div className="checkout_btn_inner d-flex align-items-center"><nav className="navbar navbar-light bg-light">
                                       <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
@@ -154,6 +158,8 @@ class FAQArticle extends Component {
               </div >
             )
           }) : ''}
+
+          
       </div>
     )
 
