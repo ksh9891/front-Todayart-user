@@ -2,17 +2,12 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
-<<<<<<< HEAD
-import { ActionTypes } from '../../../../constants/ActionTypes';
-=======
 import { Actions } from '../../../../actions'
-import {ActionTypes} from '../../../../constants/ActionTypes'
+import { ActionTypes } from '../../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
-
->>>>>>> ckk
 
 
 class DetailsWithPrice extends Component {
@@ -60,11 +55,9 @@ class DetailsWithPrice extends Component {
     }
 
     render (){
-<<<<<<< HEAD
-        const {symbol, item, addToCartClicked, BuynowClicked, addToWishlistClicked} = this.props
-        console.log("product Render Item", item, this.props);
-=======
+
         const {symbol, item, addToCartClicked, BuynowClicked} = this.props
+        console.log("product Render Item", item, this.props);
 
         const addWishilist=(item)=>{
             this.props.addWishlist(item)
@@ -79,7 +72,7 @@ class DetailsWithPrice extends Component {
              })
         }
 
->>>>>>> ckk
+
         var colorsnav = {
             slidesToShow: 6,
             swipeToSlide:true,
@@ -97,8 +90,8 @@ class DetailsWithPrice extends Component {
                         {/* 가격할인된거 보여주는 부분 */}
                         {/* <span>{item.discount}% off</span> */}
                     <h3>{symbol}{item.productPrice} </h3>
-                   
-                    {/* 색상 선택하던 부분 */}
+                    
+                      {/* 색상 선택하던 부분 */}
                     {/* {item.variants?
 
                     <ul >
@@ -108,12 +101,12 @@ class DetailsWithPrice extends Component {
                             })}
                         </Slider>
                     </ul>:''} */}
-                    <div className="product-description border-product">
-<<<<<<< HEAD
 
-                        {/* {item.size? */}
+                    <div className="product-description border-product">
+                        
+                              {/* {item.size? */}
                             {/* <div> */}
-                                <h6 className="product-title size-text">상품크기
+                            <h6 className="product-title size-text">상품크기
                                 <h4>{item.productSize}</h4>
                                 {/* 상품 사이즈 보는 부분 */}
                                     {/* <span>
@@ -151,20 +144,8 @@ class DetailsWithPrice extends Component {
                                     return <li key={i}><a href="#">{size}</a></li>
                                 })}
                             </ul> */}
-=======
-                        
-                            <div>
-                               
-                                <div >
-                            <ul>
-                                {
-                                    <li ><a href="#">{item.productSize}</a></li>
-                                }
-                            </ul>
->>>>>>> ckk
                         </div>
                             {/* </div>:''} */}
-
                         <span className="instock-cls">{this.state.stock}</span>
                         <h6 className="product-title">quantity</h6>
                         <div className="qty-box">
@@ -184,20 +165,18 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-
                         <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
                                     this.props.calcPrice()
                                     }}
                         >장바구니에 담기</a>
                         <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >바로 구입하기</Link>
-
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">작품설명</h6>
+                        <h6 className="product-title">product details</h6>
                         <p>{item.productContent}</p>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">Share it</h6>
+                        <h6 className="product-title">share it</h6>
                         <div className="product-icon">
                             <ul className="product-social">
                                 <li><a href="https://www.facebook.com/" target="_blank"><i className="fa fa-facebook"></i></a></li>
