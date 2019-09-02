@@ -681,6 +681,7 @@ const getAddress = () =>{
     })
 }
 
+
 const searchAddressInApi = (keyword) =>{
     return ({
         type:ActionTypes.SEARCH_ADDRESS_API,
@@ -692,6 +693,27 @@ const searchAddressInApi = (keyword) =>{
         }
     })
 }
+
+
+
+const addWishlist = (item) => {
+    return({
+        type : ActionTypes.ADD_WISHLIST,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/wish',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data:JSON.stringify({ product : item })
+
+            }
+        }
+    })
+}
+
 
 const addAddress = ({address, postalNumber, addressDetail}) => {
     return ({
@@ -709,6 +731,33 @@ const addAddress = ({address, postalNumber, addressDetail}) => {
         }
     });
 };
+
+
+const removeWishlist = (id) => {
+    return({
+        type: ActionTypes.REMOVE_WISHLIST,
+        payload: {
+            request:{
+                method: 'DELETE',
+                url: `/wish/${id}`
+            }
+        }
+    })
+}
+
+
+const fetchWishlist = () => {
+    return({
+        type: ActionTypes.FETCH_WISHLIST,
+        payload: {
+            request:{
+                method: 'GET',
+                url: `/wish`
+            }
+        }
+    })
+}
+
 
 export const Actions = {
     getClientToken,
@@ -750,7 +799,11 @@ export const Actions = {
     registerVerification,
     checkRegisterToken,
     searchAddressInApi,
-    addAddress
+    addAddress,
+    addWishlist,
+    removeWishlist,
+    fetchWishlist
+
 
 };
 

@@ -1,41 +1,57 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {connect} from 'react-redux'
-
-import {getBestSeller, getBestSellerProducts, getMensWear, getNewProducts, getWomensWear} from '../../../services/index'
-import {addToCart, addToWishlist, addToCompare} from "../../../actions/index";
+import {getBestSellerProducts, getNewProducts} from '../../../services/index'
 import ProductItem from '../common/product-item';
-
 import {Actions} from '../../../actions'
 import {ActionTypes} from '../../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { addToCart } from '../../../actions'
+
 
 class SpecialProducts extends Component {
 
-    componentWillMount(){
-        // this.fetchMoreItems();
+    componentWillMount(){        
         this.props.fetchArtwork();
     }
 
     render (){
+
+        const {symbol,addToCart, addToCompare, items} = this.props
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')  
+                } 
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }                 
+                                 
 
         const asyncAddCart=(item,qty)=>{
             this.props.addToCart(item,qty)
                 .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
                     this.props.calcPrice();
+
                 }
              }).catch(error=>{
                  console.log('error >>', error)
              })
-        }
+        }       
 
-        const {symbol, addToCart, addToWishlist, addToCompare, items} = this.props
 
         return (
             <div>
                 <div className="title1 section-t-space">
                     <h4>exclusive products</h4>
-                    <h2 className="title-inner1">special products 메인 홈</h2>
+                    <h2 className="title-inner1">special products</h2>
                 </div>
                 <section className="section-b-space p-t-0">
                     <div className="container">
@@ -48,9 +64,10 @@ class SpecialProducts extends Component {
                                 <div className="no-slider row">
                                     { items.slice(0, 8).map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(item)}
-                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+
+                                                     onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={asyncAddCart} key={index} /> )
+
                                     }
                                 </div>
                             </TabPanel>
@@ -59,12 +76,14 @@ class SpecialProducts extends Component {
                                     { items.map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
-                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={asyncAddCart} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
+                           
                         </Tabs>
+                        <ToastContainer/>
                     </div>
                 </section>
             </div>
@@ -81,12 +100,11 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
-    fetchArtwork:() => dispatch(Actions.fetchArtwork()),
+
+    addWishlist: (item) => dispatch(Actions.addWishlist(item)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()) ,
     addToCart:(item, qty)=>dispatch(addToCart(item, qty))
    
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (SpecialProducts);
-
-// export default connect(mapStateToProps, {addToCart, addToWishlist, addToCompare}) (SpecialProducts);

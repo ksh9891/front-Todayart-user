@@ -5,9 +5,11 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
 import {ActionTypes} from '../../../constants/ActionTypes'
 
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
-import { getTotal, getCartProducts } from '../../../reducers'
-import { addToCart, addToWishlist, addToCompare } from '../../../actions'
+import { addToCart} from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
@@ -15,7 +17,7 @@ class ProductListing1 extends Component {
 
     constructor (props) {
         super (props);
-        console.log(props);
+        console.log("props", props);
         this.state = {
             limit: 0,
             hasMoreItems: true,
@@ -23,6 +25,7 @@ class ProductListing1 extends Component {
 
         };
     }
+
 
 
 
@@ -43,88 +46,6 @@ class ProductListing1 extends Component {
             })
         }
     }
-
-    // getDerivedStateFromProps(nextProps, prevState){
-    //     if(prevState.id!==nextProps.id){
-    //     return {hasMoreItems: true}}
-    //     return prevState
-    // }
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("shouldComponentUpdate111111", this.state, nextState, this.props, nextProps);
-    //     if(this.props.id!==nextProps.id){
-    //         return true
-    //     }
-    //     return true
-    // }
-
-
-
-
-    // static getDerivedStateFromProps(props, state) {
-    //     if(props.items.length <= state.limit) {
-    //         return {...state, hasMoreItems: false}
-    //     } else {
-    //         setTimeout(() => {
-
-    //         }, 3000);
-    //         return {...state, hasMoreItems: true,  limit: state.limit + 4}
-    //     }
-
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("should", this.props, nextProps, this.state, nextState)
-
-    //     if(nextState == this.state && this.props !== nextProps) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("shouldComponentUpdate", this.state, nextState);
-    //     return false
-    // }
-
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     this.setState({
-    //         ...this.state,
-    //         hasMoreItems: true
-    //     })
-    // }
-
-    // componentDidCatch(error, errorInfo) {
-    //     console.log("error", error);
-    // }
-
-    // componentDidMount() {
-
-
-
-
-    //     console.log("props", this.props);
-    //     this.setState({
-    //         ...this.state,
-    //         id: this.props.id
-    //     });
-
-    //     // if ( this.props.id == 0){
-    //     //     this.props.fetchArtwork();
-    //     // }else {
-    //     //     this.props.fetchCategory(this.props.id);
-    //     // }
-    //     // this.fetchMoreItems();
-    // }
-
-    // componentDidMount(){
-    //     if ( this.props.id == 0){
-    //         this.props.fetchArtwork();
-    //     }else {
-    //         this.props.fetchCategory(this.props.id);
-    // }
-// }
 
 
 
@@ -147,58 +68,45 @@ class ProductListing1 extends Component {
                 });
             }, 1000);
         }
-        // a fake async api call
-
-
-
-        // // console.log("items :::" , this.props.items)
-        // // this.props.items.slice(this.state.limit-4, this.state.limit)
-        // // console.log("items >>>>>>> " ,this.props.items.slice(this.state.limit-4, this.state.limit ))
-        // if (this.state.limit >= this.props.items.length) {
-        //     this.setState({ hasMoreItems: false });
-        //     return;
-        // }
-
-        // this.setState({
-        //     ...this.state,
-        //     items : this.props.items.slice(this.state.limit-4, this.state.limit ),
-        //     hasMoreItems : true,
-        //     limit: this.state.limit + 4
-
-        // })
-
-
-        // // // a fake async api call
-        // // setTimeout(() => {
-        // //     this.setState({
-        // //         limit: this.state.limit + 4
-        // //     });
-        // // }, 1000);
 
 
     }
 
+
+    
+
     render (){
 
 
-        const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-        console.log("items >>",items);
-        console.log("items.length >> ",items.length)
-        console.log("this.state.limit >>",this.state.limit);
+      
+        const {products, items, addToCart, symbol} = this.props;
+
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')    
+                }
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }             
+                                 
 
         const asyncAddCart=(item,qty)=>{
             this.props.addToCart(item,qty)
                 .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
                     this.props.calcPrice();
+
                 }
              }).catch(error=>{
                  console.log('error >>', error)
              })
         }
 
-        console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
-        console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
         return (
             <div>
                 <div className="product-wrapper-grid">
@@ -220,9 +128,12 @@ class ProductListing1 extends Component {
                                     { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
                                         <ProductListItem item={item} symbol={symbol}
-                                                         onAddToCompareClicked={() => addToCompare(item)}
-                                                         onAddToWishlistClicked={() => addToWishlist(item)}
+
+                                                         onAddToWishlistClicked={() => addWishilist(item)}
+                                                         onAddToCartClicked={addToCart} key={index}/>
+
                                                          onAddToCartClicked={asyncAddCart} key={index}/>
+
                                         </div>)
                                     }
                                 </div>
@@ -236,8 +147,10 @@ class ProductListing1 extends Component {
                                     <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                             </div>
+                           
                         }
                     </div>
+                    <ToastContainer/>
                 </div>
             </div>
         )
@@ -252,9 +165,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
     fetchArtwork:() => dispatch(Actions.fetchArtwork()),
-    addToCart: (item, qty) => dispatch(addToCart(item, qty)),
-    addToWishlist: () => dispatch(addToWishlist()),
-    addToCompare: () => dispatch(addToCompare())
+    addWishlist: (item) => dispatch(Actions.addWishlist(item)), 
+    addToCart: (item, qty) => dispatch(addToCart(item, qty))
+   
+
 
 })
 

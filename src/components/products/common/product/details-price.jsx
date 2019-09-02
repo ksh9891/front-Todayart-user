@@ -2,7 +2,17 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
+<<<<<<< HEAD
 import { ActionTypes } from '../../../../constants/ActionTypes';
+=======
+import { Actions } from '../../../../actions'
+import {ActionTypes} from '../../../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { connect } from 'react-redux'
+
+>>>>>>> ckk
 
 
 class DetailsWithPrice extends Component {
@@ -39,7 +49,7 @@ class DetailsWithPrice extends Component {
     }
 
     plusQty = () => {
-        if(this.props.item.stock >= this.state.quantity) {
+        if(this.props.item.remain > this.state.quantity) {
             this.setState({quantity: this.state.quantity+1})
         }else{
             this.setState({stock: 'Out of Stock !'})
@@ -50,8 +60,26 @@ class DetailsWithPrice extends Component {
     }
 
     render (){
+<<<<<<< HEAD
         const {symbol, item, addToCartClicked, BuynowClicked, addToWishlistClicked} = this.props
         console.log("product Render Item", item, this.props);
+=======
+        const {symbol, item, addToCartClicked, BuynowClicked} = this.props
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')                    
+                                 
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+>>>>>>> ckk
         var colorsnav = {
             slidesToShow: 6,
             swipeToSlide:true,
@@ -81,6 +109,7 @@ class DetailsWithPrice extends Component {
                         </Slider>
                     </ul>:''} */}
                     <div className="product-description border-product">
+<<<<<<< HEAD
 
                         {/* {item.size? */}
                             {/* <div> */}
@@ -122,6 +151,17 @@ class DetailsWithPrice extends Component {
                                     return <li key={i}><a href="#">{size}</a></li>
                                 })}
                             </ul> */}
+=======
+                        
+                            <div>
+                               
+                                <div >
+                            <ul>
+                                {
+                                    <li ><a href="#">{item.productSize}</a></li>
+                                }
+                            </ul>
+>>>>>>> ckk
                         </div>
                             {/* </div>:''} */}
 
@@ -165,7 +205,7 @@ class DetailsWithPrice extends Component {
                                 <li><a href="https://twitter.com/" target="_blank"><i className="fa fa-twitter"></i></a></li>
                                 <li><a href="https://www.instagram.com/" target="_blank"><i className="fa fa-instagram"></i></a></li>
                             </ul>
-                                <button className="wishlist-btn" onClick={() => addToWishlistClicked(item)}><i
+                                <button className="wishlist-btn" onClick={() => addWishilist(item)}><i
                                     className="fa fa-heart"></i><span
                                     className="title-font">Add To WishList</span>
                                 </button>
@@ -207,10 +247,18 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                 </Modal>
+                <ToastContainer/>
             </div>
         )
     }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+    
+    addWishlist: (item) => dispatch(Actions.addWishlist(item))
+    
+   
+})
 
-export default DetailsWithPrice;
+
+export default connect(null,mapDispatchToProps)(DetailsWithPrice);

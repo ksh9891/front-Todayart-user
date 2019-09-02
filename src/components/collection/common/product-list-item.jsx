@@ -50,7 +50,7 @@ class ProductListItem extends Component {
 
 
     render() {
-        const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
+        const {symbol, onAddToCartClicked, onAddToWishlistClicked, item} = this.props;
         const {open} = this.state;
         const { fileName } = item.thumbnail;
 
@@ -74,7 +74,7 @@ class ProductListItem extends Component {
                                 <button title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
                                 </button>
-                                <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
+                                <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
 
@@ -89,7 +89,7 @@ class ProductListItem extends Component {
                             <ul className="product-thumb-list">
                                 {item.variants.map((vari, i) =>
                                     <li className={`grid_thumb_img ${(vari.images === this.state.image)?'active':''}`} key={i}>
-                                        <a href="#" title="Add to Wishlist">
+                                        <a href="javascript:void(0)" title="Add to Wishlist">
                                             <img src={`${vari.images}`} onClick={() => this.onClickHandle(vari.images)} />
                                         </a>
                                     </li>)
