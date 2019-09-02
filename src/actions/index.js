@@ -887,8 +887,8 @@ const addCartFromWishlist = (id) => {
 
 
 
-
         
+
 
 export const Actions = {
     getClientToken,

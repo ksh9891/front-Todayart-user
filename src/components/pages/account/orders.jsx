@@ -44,7 +44,6 @@ class Orders extends React.Component{
                     },0);
                     
                     this.setState({orders:response.payload.data, deliveryNow:del, complete:com,refund:ref})
-                    console.log(del, com, ref)
                 }
             })
 
@@ -142,8 +141,30 @@ class Orders extends React.Component{
         }
 
     }
+    
+    fatchList=(status)=>{
+        this.state.getOrders().then(response=>{
+            if(response.type===ActionTypes.ACCOUNT_ORDER_ITEMS_SUCCESS){
+                if(status==='all'){
+                    const orders = response.payload.data;
+                    return this.setState({orders:orders})
+                }
+                const orders = response.payload.data.filter(item=>{
+                    return item.orderDetails.filter(item=>{
+                        if(status==='del'){return item.status==='배송중'}
+                        else if(status==='com'){return item.status==='배송완료'}
+                        else if(status==='ref'){return item.status==='반품대기'||item.status==='반품중'||
+                        item.status==='반품완료'||item.status==='환불처리중'||item.status==='환불완료'}
+                }).length>0})
+                this.setState({orders:orders})
+                console.log("aaaa", orders);
+                }})}
+
+
 
     render(){
+        
+
         return(
             <div>
                <Breadcrumb title={'마이페이지'} />
@@ -171,25 +192,25 @@ class Orders extends React.Component{
                 </div>
                 </div>
                 <div className="col-lg-9"> 
-                    {this.state.order!==null?
+                    {this.state.orders!==null?
                         <div className="dashboard-right">
                             <div className="dashboard">
                             <div className="filterBox">
-                                <img src={`${process.env.PUBLIC_URL}/assets/images/delivery.png`} className="statusNow del" alt="" />
+                                <img src={`${process.env.PUBLIC_URL}/assets/images/delivery.png`} className="statusNow del" alt="" onClick={()=>this.fatchList('del')}/>
                                 <span className="delivery">배송중</span>
                                 <span className="number del">{this.state.deliveryNow}</span>
-                                <img src={`${process.env.PUBLIC_URL}/assets/images/complete.png`} className="statusNow com" alt="" />
+                                <img src={`${process.env.PUBLIC_URL}/assets/images/complete.png`} className="statusNow com" alt="" onClick={()=>this.fatchList('com')}/>
                                 <span className="complete">배송완료</span>
                                 <span className="number com">{this.state.complete}</span>
-                                <img src={`${process.env.PUBLIC_URL}/assets/images/refund.png`} className="statusNow ref" alt="" />
+                                <img src={`${process.env.PUBLIC_URL}/assets/images/refund.png`} className="statusNow ref" alt="" onClick={()=>this.fatchList('ref')}/>
                                 <span className="refund">반품/환불</span>
                                 <span className="number ref">{this.state.refund}</span>
                             </div>
                             <div className="orderList">
-                            {this.state.orders!==null?
+                            {this.state.orders.length>0?
                             this.state.orders.map((items, index)=>(
                             <ul key={index} className="goods_by_order">
-                            {items.orderDetails.map((item, index)=>{
+                            {items!==null&&items.orderDetails!==null&&items.orderDetails!==undefined?items.orderDetails.map((item, index)=>{
                                 const { fileName } = item.product.thumbnail;
                                 const image = Files.filePath(fileName);
                                 return (
@@ -213,16 +234,20 @@ class Orders extends React.Component{
                                 </div>  
                                 </li>
                                 </div>)
-                            })}
+                            }):''}
                             </ul>
-                            )):''}
+                            )):<div className="col-sm-12 empty-cart-cls text-center submenu">
+                            <img src={`${process.env.PUBLIC_URL}/assets/images/icon-empty-order.png`} className="img-fluid mb-4 order" alt="" />
+                                <h3><strong>해당하는 내역이 존재하지않습니다.</strong></h3>
+                                <button className="btn btn-sm btn-solid ta-btn-sm" onClick={()=>{this.fatchList('all')}}>모든 주문내역 보기</button>
+                        </div>}
                     </div>
                     </div>
                     </div>
                     :
                     <div className="col-sm-12 empty-cart-cls text-center">
-                        <img src={`${process.env.PUBLIC_URL}/assets/images/icon-empty-order.png`} className="img-fluid mb-4" alt="" />
-                            <h3><strong>주문내역이 존재하지않습니다.</strong></h3>
+                        <img src={`${process.env.PUBLIC_URL}/assets/images/icon-empty-order.png`} className="img-fluid mb-4 order" alt="" />
+                        <h3><strong>주문내역이 존재하지않습니다.</strong></h3>
                         <h4>다양한 작품이 준비되어있습니다!</h4>
                     </div>
                     }

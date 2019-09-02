@@ -86,7 +86,7 @@ class ShippingBox extends React.Component{
                         <input type="radio" name="address" value="otherAddress" id="otherAddress"onClick={()=>{this.setState({selectAddress:"new"})}}/>
                         <label htmlFor="otherAddress">신규배송지 </label>
                         </span>
-                        <button onClick={()=>{}}>배송지 목록</button>
+                        <button className="btn btn-sm btn-solid ta-btn-sm">배송지 목록</button>
                     </div>
                     {this.state.selectAddress==="main"?
                     <div className="viewAddress">

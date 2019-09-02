@@ -5,6 +5,7 @@ import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
 import { ActionTypes } from '../constants/ActionTypes';
 
+
 class CartContainer extends React.Component{
     constructor(props){
         super(props)
@@ -44,8 +45,10 @@ class CartContainer extends React.Component{
                 }
             })
         }
-        
+
         return(
+        
+        
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
         <Link to={`${process.env.PUBLIC_URL}/cart`}>
