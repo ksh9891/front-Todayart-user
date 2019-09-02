@@ -6,6 +6,9 @@ import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import {addToCart, Actions} from '../../../actions'
 import {ActionTypes} from '../../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 import { Files } from '../../../utils';
 
@@ -43,7 +46,7 @@ class ProductItem extends Component {
 
 
     plusQty = () => {
-        if(this.props.product.stock >= this.state.quantity) {
+        if(this.props.product.remain > this.state.quantity) {
             this.setState({quantity: this.state.quantity+1})
         }else{
             this.setState({stock: 'Out of Stock !'})
@@ -54,9 +57,10 @@ class ProductItem extends Component {
     }
 
     render() {
-        const {product, symbol, onAddToCartClicked, onAddToWishlistClicked, onAddToCompareClicked, item} = this.props;
+        const {symbol,  onAddToWishlistClicked,  item} = this.props;
+        const {thumbnail} = item;
 
-        const { fileName } = item.thumbnail
+        const { fileName } = thumbnail
         const image = Files.filePath(fileName);
 
         const asyncAddCart=(item,qty)=>{
@@ -69,6 +73,19 @@ class ProductItem extends Component {
                  console.log('error >>', error)
              })
         }
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')  
+                } 
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }                 
+               
 
 
         // let RatingStars = []
@@ -105,13 +122,14 @@ class ProductItem extends Component {
 
                         </div>
                         <div className="cart-info cart-wrap">
-                            <button title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
+                            
+                            <a  href="javascript:void(0)" title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
                                 <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                            </button>
-                            <a href="#" title="Add to Wishlist" onClick={onAddToWishlistClicked}>
+                            </a>
+                            <a  href="javascript:void(0)"  title="Add to Wishlist" onClick={()=>addWishilist(item)}>
                                 <i className="fa fa-heart" aria-hidden="true"></i>
                             </a>
-                            <a href="#" data-toggle="modal"
+                            <a  href="javascript:void(0)" data-toggle="modal"
                                data-target="#quick-view"
                                title="Quick View"
                                onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
@@ -216,7 +234,8 @@ class ProductItem extends Component {
 
 const mapDispatchToProps=(dispatch)=>({
  addToCart:(item, qty)=>dispatch(addToCart(item, qty)),
- calcPrice:()=>dispatch(Actions.calcCartPrice())
+ calcPrice:()=>dispatch(Actions.calcCartPrice()),
+ addWishlist: (item) => dispatch(Actions.addWishlist(item)),
 })
 
 export default connect(null,mapDispatchToProps)(ProductItem);

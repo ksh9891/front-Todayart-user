@@ -37,7 +37,6 @@ class HeaderFive extends Component {
 				 document.querySelector(".loader-wrapper").style = "display: none";
 			 }, 2000);
 			 if(prevState.cart!==nextProps.cart){
-				 console.log("getDerivedStateFromProps",nextProps.cart)
 			 return {cart:nextProps.cart}
 			 }
 			 return null;
@@ -45,7 +44,6 @@ class HeaderFive extends Component {
 			}
 			
 			shouldComponentUpdate(nextProps, nextState){
-				console.log("SHOULD--COMPONENT--UPDATE, nextProps, nextState", this.props, nextProps, this.state, nextState);
 				if(this.state.cart!==nextState.cart){
 				return true;}
 				return false;
@@ -56,7 +54,6 @@ class HeaderFive extends Component {
 		 }
 
 		 componentDidUpdate(prevProps, prevState){
-			 console.log("componentDidUpdate==prevProps, prevState",prevProps, this.props, prevState, this.state);
 			 if(prevState.cart!==this.state.cart){
 			 this.forceUpdate()}
 		 }
@@ -114,7 +111,7 @@ class HeaderFive extends Component {
                 .then(response => {
 				
 					console.log('word',searchword)
-                    this.props.history.push('/collection');
+                    this.props.history.push(`/collection`);
                 })
                 .catch(error => {
                     console.log('error >> ', error);

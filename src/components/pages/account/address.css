@@ -1,0 +1,49 @@
+.ta-btn-row {
+    margin-bottom: 20px;
+}
+
+.ta-btn-row > div {
+    display: flex;
+}
+
+.ta-btn-sm {
+    padding: 0.25rem 0.5rem;
+    margin-left: auto;
+}
+
+.ta-btn-md {
+    padding: 0.45rem 3.75rem;
+    margin-left: auto;
+}
+
+.ta-address-result-box {
+    margin-top: 20px;
+}
+
+.ta-address-tr {
+    cursor: pointer;
+}
+
+.ta-address-tr:hover {
+    background-color: #fffbca;
+}
+
+.ta-address-tr td:first-child, .ta-address-tr td:last-child{
+    vertical-align: middle;
+}
+
+.ta-address-none {
+    text-align: center;
+}
+
+.ta-table th {
+    text-align: center;
+}
+
+.ta-table > tbody td {
+    text-align: center;
+}
+
+.ta-address-pointer {
+    cursor: pointer;
+}

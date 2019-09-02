@@ -20,7 +20,6 @@ class FooterTwo extends Component {
     }
 
     render () {
-
         return (
                 <footer className="footer-light pet-layout-footer">
                     <div className="white-layout">
@@ -32,40 +31,20 @@ class FooterTwo extends Component {
                                             <div className="footer-brand-logo">
                                                 <LogoImage logo={this.props.logoName} />
                                             </div>
-                                            <div className="social-white">
-                                                <ul>
-                                                    <li>
-                                                        <Link to={'https://www.facebook.com/'} ><i className="fa fa-facebook" aria-hidden="true"></i></Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link to={'https://plus.google.com/'} ><i className="fa fa-google-plus" aria-hidden="true"></i></Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link to={'https://twitter.com'}><i className="fa fa-twitter" aria-hidden="true"></i></Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link to={'https://instagram.com'}><i className="fa fa-instagram" aria-hidden="true"></i></Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link to={'https://rss.com/'}><i className="fa fa-rss" aria-hidden="true"></i></Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
                                             <div className="footer-title footer-mobile-title">
-                                                <h4>my account</h4>
+                                                <h4>사이트 맵</h4>
                                             </div>
                                             <div className="footer-contant">
                                                 <ul>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >womens</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >clothing</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >accessories</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >featured</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >service</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >cart</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >my order</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >Home</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 전체</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 서양화</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 동양화</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 기타</Link></li>
                                                     <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >FAQ</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >new product</Link></li>
-                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >featured product</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >Q&A</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >공지사항</Link></li>
+                                                    <li><Link to={`${process.env.PUBLIC_URL}/register-artist`} >작가 신청</Link></li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -79,8 +58,7 @@ class FooterTwo extends Component {
                             <div className="row">
                                 <div className="col-xl-6 col-md-6 col-sm-12">
                                     <div className="footer-end">
-                                        <p><i className="fa fa-copyright" aria-hidden="true"></i> 2018-19 themeforest
-                                            powered by pixelstrap</p>
+                                        <p><i className="fa fa-copyright" aria-hidden="true" /> 2019 Bitcamp final project - TodayArt</p>
                                     </div>
                                 </div>
                                 <div className="col-xl-6 col-md-6 col-sm-12">
