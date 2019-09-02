@@ -676,6 +676,7 @@ const getAddress = () =>{
     })
 }
 
+
 const changeStatus = (changeCode, orderDetailId, status) =>{
     console.log("ACTION", changeCode, orderDetailId, status)
     return ({
@@ -694,6 +695,42 @@ const changeStatus = (changeCode, orderDetailId, status) =>{
     })
 }
 
+
+
+
+const addWishlist = (item) => {
+    return({
+        type : ActionTypes.ADD_WISHLIST,
+        payload:{
+            request:{
+                method: 'POST',
+                url: '/wish',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data:JSON.stringify({ product : item })
+
+            }
+        }
+    })
+}
+
+
+
+const removeWishlist = (id) => {
+    return({
+        type: ActionTypes.REMOVE_WISHLIST,
+        payload: {
+            request:{
+                method: 'DELETE',
+                url: `/wish/${id}`
+            }
+        }
+    })
+}
+
+
 const searchAddressInApi = (keyword) =>{
     return ({
         type:ActionTypes.SEARCH_ADDRESS_API,
@@ -701,6 +738,21 @@ const searchAddressInApi = (keyword) =>{
             request:{
                 method: 'GET',
                 url: `/getAddrApi?keyword=${keyword}`
+
+            }
+        }
+    })
+}
+
+
+
+const fetchWishlist = () => {
+    return({
+        type: ActionTypes.FETCH_WISHLIST,
+        payload: {
+            request:{
+                method: 'GET',
+                url: `/wish`
             }
         }
     })
@@ -723,6 +775,7 @@ const addAddress = ({address, postalNumber, addressDetail}) => {
         }
     });
 };
+
 
 const updateMainAddress = (addressId) =>{
     return ({
@@ -747,6 +800,24 @@ const deleteAddress = (addressId) =>{
         }
     })
 }
+
+
+const addCartFromWishlist = (id) => {
+    return ({
+        type: ActionTypes.ADDCART_FROMWISHLIST,
+        payload: {
+            request: {
+                method: 'POST',
+                url: `/cart/${id}`
+            }
+        }
+    });
+};
+
+
+
+
+        
 
 export const Actions = {
     getClientToken,
@@ -791,5 +862,12 @@ export const Actions = {
     searchAddressInApi,
     addAddress,
     updateMainAddress,
-    deleteAddress
+    deleteAddress,
+    addWishlist,
+    removeWishlist,
+    fetchWishlist,
+    searchAddressInApi,
+    addAddress,
+    addCartFromWishlist
+
 };

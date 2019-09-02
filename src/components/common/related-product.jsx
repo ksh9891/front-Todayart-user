@@ -2,16 +2,53 @@ import React, {Component} from 'react';
 import Slider from 'react-slick';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
-
-import {getBestSeller} from "../../services";
-import {addToCart, addToWishlist, addToCompare} from "../../actions";
 import ProductItem from '../layouts/common/product-item';
+import {ActionTypes} from '../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { addToCart } from '../../actions'
+import {Actions} from '../../actions'
 
 
 class RelatedProduct extends Component {
-    render (){
-        const {items, symbol, addToCart, addToWishlist, addToCompare} = this.props;
 
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+           
+            endSlice: 6
+        }
+    }
+
+    componentWillMount(){        
+        this.props.fetchArtwork();
+    }
+
+
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            endSlice: this.getRandomArbitrary(6, this.props.items.length)
+        })
+
+        console.log("this.state", this.state);
+    }
+
+    // min (포함) 과 max (불포함) 사이의 난수를 반환
+    getRandomArbitrary = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+    render (){
+        const {items, symbol} = this.props;
+
+                         
+
+      
 
         return (
             <section className="section-b-space">
@@ -22,12 +59,10 @@ class RelatedProduct extends Component {
                         </div>
                     </div>
                     <div className="row search-product">
-                        { items.slice(0, 6).map((product, index ) =>
+                        { items.slice(this.state.endSlice-6, this.state.endSlice).map((item, index ) =>
                             <div key={index} className="col-xl-2 col-md-4 col-sm-6">
-                                <ProductItem product={product} symbol={symbol}
-                                             onAddToCompareClicked={() => addToCompare(product)}
-                                             onAddToWishlistClicked={() => addToWishlist(product)}
-                                             onAddToCartClicked={() => addToCart(product, 1)} key={index} />
+                                <ProductItem item={item} symbol={symbol}    
+                                             key={index} />
                             </div>)
                         }
                     </div>
@@ -39,9 +74,21 @@ class RelatedProduct extends Component {
 
 function mapStateToProps(state) {
     return {
-        items: getBestSeller(state.data.products),
-        symbol: state.data.symbol
+       
+        symbol: state.data.symbol,
+        items: state.data.items
     }
 }
 
-export default connect(mapStateToProps, {addToCart, addToWishlist, addToCompare})(RelatedProduct);
+
+
+const mapDispatchToProps = (dispatch) => ({   
+     addWishlist: (item) => dispatch(Actions.addWishlist(item)),
+    fetchArtwork:() => dispatch(Actions.fetchArtwork()) ,
+    addToCart:(item, qty)=>dispatch(addToCart(item, qty))
+   
+})
+
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(RelatedProduct);

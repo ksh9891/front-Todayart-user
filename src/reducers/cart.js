@@ -95,6 +95,41 @@ const cart = (state = initialStateCart, action) => {
                 }
             }
             return state;
+
+
+            case ActionTypes.ADDCART_FROMWISHLIST_SUCCESS:
+                if(payload!==null&&payload!==undefined){
+                    let {data} = payload;
+                    data = {...data, checked:true};
+                    const refreashCartItem=(items, data)=>{
+                        if(items.every((item)=>item.cartId!==data.cartId)){
+                            items.push(data);
+                            return items;
+                        }else{
+                            return(
+                        items.map((item)=>{
+                            if(item.cartId===data.cartId){
+                                return {...data}
+                            }
+                            else {
+                                return{...item, checked:true}
+                            }
+                        }))
+                    }}
+                    return{
+                        ...state,
+                        items:refreashCartItem(items, data)
+                    }
+                }
+                return state;
+
+         
+
+
+        
+
+
+            
         
         case ActionTypes.LOGOUT:
             return initialStateCart;
