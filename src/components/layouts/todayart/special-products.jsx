@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {connect} from 'react-redux'
-
-import {getBestSeller, getBestSellerProducts, getMensWear, getNewProducts, getWomensWear} from '../../../services/index'
-import {addToCart, addToWishlist, addToCompare} from "../../../actions/index";
+import {getBestSellerProducts, getNewProducts} from '../../../services/index'
 import ProductItem from '../common/product-item';
-
 import {Actions} from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 class SpecialProducts extends Component {
 
-    componentWillMount(){
-        // this.fetchMoreItems();
+    componentWillMount(){        
         this.props.fetchArtwork();
     }
 
     render (){
 
-        const {bestSeller,newProducts, featuredProducts, symbol, addToCart, addToWishlist, addToCompare, items} = this.props
+        const {bestSeller, symbol, addToCart, addToWishlist, addToCompare, items} = this.props
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')                    
+                                 
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
 
         return (
             <div>
@@ -34,10 +47,9 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { items.map((item, index ) =>
+                                    { items.slice(0, 8).map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(item)}
-                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
                                     }
                                 </div>
@@ -47,7 +59,7 @@ class SpecialProducts extends Component {
                                     { items.map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(item)}
-                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
                                     }
                                 </div>
@@ -57,12 +69,13 @@ class SpecialProducts extends Component {
                                     { bestSeller.map((products, index ) =>
                                         <ProductItem products={products} symbol={symbol}
                                                      onAddToCompareClicked={() => addToCompare(products)}
-                                                     onAddToWishlistClicked={() => addToWishlist(products)}
+                                                     onAddToWishlistClicked={() => addWishilist(products)}
                                                      onAddToCartClicked={() => addToCart(products, 1)} key={index} /> )
                                     }
                                 </div>
                             </TabPanel>
                         </Tabs>
+                        <ToastContainer/>
                     </div>
                 </section>
             </div>
@@ -79,11 +92,10 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    // fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+    addWishlist: (item) => dispatch(Actions.addWishlist(item)),
     fetchArtwork:() => dispatch(Actions.fetchArtwork()) 
    
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (SpecialProducts);
 
-// export default connect(mapStateToProps, {addToCart, addToWishlist, addToCompare}) (SpecialProducts);

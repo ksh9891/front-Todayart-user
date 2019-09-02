@@ -3,10 +3,15 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
+import {ActionTypes} from '../../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
-import { getTotal, getCartProducts } from '../../../reducers'
-import { addToCart, addToWishlist, addToCompare } from '../../../actions'
+
+
+import { addToCart} from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
@@ -14,119 +19,90 @@ class ProductListing1 extends Component {
 
     constructor (props) {
         super (props);
-        console.log(props);
+        console.log("props", props);
         this.state = {
-            limit: 4,
+            limit: 0,
             hasMoreItems: true,
             id:this.props.id
            
         };
     }
 
-    static getDerivedStateFromProps(props, state) {
-        if(props.items.length <= state.limit) {
-            return {...state, hasMoreItems: false}
-        } else {
-            return {...state, hasMoreItems: true}
-        }
-       
+
+
+
+    componentWillReceiveProps(){
+        
+        if (this.state.limit < this.props.items.length) {
+            this.setState({
+                ...this.state,            
+                limit: this.state.limit + 4,
+                hasMoreItems: true
+               
+            })
+        }else {
+            this.setState({
+                ...this.state,            
+                limit: 0,
+                hasMoreItems: true
+            })
+    }
     }
 
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("should", this.props, nextProps, this.state, nextState)
-
-    //     if(nextState == this.state && this.props !== nextProps) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    // shouldComponentUpdate(nextProps, nextState, nextContext) {
-    //     console.log("shouldComponentUpdate", this.state, nextState);
-    //     return false
-    // }
-
-
-    // componentDidUpdate(prevProps, prevState, snapshot) {
-    //     this.setState({
-    //         ...this.state,
-    //         hasMoreItems: true
-    //     })
-    // }
-
-    // componentDidCatch(error, errorInfo) {
-    //     console.log("error", error);
-    // }
-
-    // componentDidMount() {
-
-        
-
-
-    //     console.log("props", this.props);
-    //     this.setState({
-    //         ...this.state,
-    //         id: this.props.id           
-    //     });
-
-    //     // if ( this.props.id == 0){
-    //     //     this.props.fetchArtwork();
-    //     // }else {
-    //     //     this.props.fetchCategory(this.props.id);
-    //     // }
-    //     // this.fetchMoreItems();
-    // }
-
-    // componentDidMount(){        
-    //     if ( this.props.id == 0){
-    //         this.props.fetchArtwork();
-    //     }else {
-    //         this.props.fetchCategory(this.props.id);
-    // }
-// }
+ 
+    
 
     fetchMoreItems = () => {   
-          
+
         console.log("33");
-        // console.log("items :::" , this.props.items)
-        // this.props.items.slice(this.state.limit-4, this.state.limit)
-        // console.log("items >>>>>>> " ,this.props.items.slice(this.state.limit-4, this.state.limit ))
-        if (this.state.limit >= this.props.items.length) {  
-            this.setState({ hasMoreItems: false });
-            return;
+        if (this.state.limit >= this.props.items.length) {
+            console.log("44");
+            this.setState({ 
+                ...this.state,
+                hasMoreItems: false });
+           // return;
+        }else{
+            console.log("5");
+            setTimeout(() => {
+                this.setState({
+                    ...this.state,
+                    limit: this.state.limit + 4,
+                    hasMoreItems: true
+                });
+            }, 1000);
         }
         
-        this.setState({
-            ...this.state,
-            items : this.props.items.slice(this.state.limit-4, this.state.limit ),
-            hasMoreItems : true
-
-        })
-
-
-        // // a fake async api call
-        // setTimeout(() => {
-        //     this.setState({
-        //         limit: this.state.limit + 4
-        //     });
-        // }, 1000);
 
 
     }
 
+
+    
+
     render (){
-        const {products, items, addToCart, symbol, addToWishlist, addToCompare} = this.props;
-        console.log("items >>",items);
-        console.log("items.length >> ",items.length)
-        console.log("this.state.limit >>",this.state.limit);
-        console.log("this.fetchMoreItems >> ", this.fetchMoreItems);
-        console.log("this.state.hasMoreItems >> ", this.state.hasMoreItems);
+
+      
+        const {products, items, addToCart, symbol} = this.props;
+
+
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')                    
+                                 
+                }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+       
         return (
             <div>
                 <div className="product-wrapper-grid">
                     <div className="container-fluid">
-                        {items.length > 0 ?
+                        {items.length > 0 ? 
                             <InfiniteScroll
                                 dataLength={this.state.limit} //This is important field to render the next data
                                 next={this.fetchMoreItems}
@@ -137,13 +113,13 @@ class ProductListing1 extends Component {
                                         <b>Yay! You have seen it all</b>
                                     </p>
                                 }
+                                
                             >
                                 <div className="row">
-                                    { items.slice(0, this.state.limit).map((item, index) =>
+                                   { items.slice(0, this.state.limit).map((item, index) =>
                                         <div className={`${this.props.colSize===3?'col-xl-3 col-md-6 col-grid-box':'col-lg-'+this.props.colSize}`} key={index}>
                                         <ProductListItem item={item} symbol={symbol}
-                                                         onAddToCompareClicked={() => addToCompare(item)}
-                                                         onAddToWishlistClicked={() => addToWishlist(item)}
+                                                         onAddToWishlistClicked={() => addWishilist(item)}
                                                          onAddToCartClicked={addToCart} key={index}/>
                                         </div>)
                                     }
@@ -158,8 +134,10 @@ class ProductListing1 extends Component {
                                     <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
                                 </div>
                             </div>
+                           
                         }
                     </div>
+                    <ToastContainer/>
                 </div>
             </div>
         )
@@ -175,8 +153,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
     fetchArtwork:() => dispatch(Actions.fetchArtwork()),
     addToCart: () => dispatch(addToCart()),
-    addToWishlist: () => dispatch(addToWishlist()),
-    addToCompare: () => dispatch(addToCompare())
+    addWishlist: (item) => dispatch(Actions.addWishlist(item))
+    
    
 })
 
