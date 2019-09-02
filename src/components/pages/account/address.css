@@ -35,3 +35,15 @@
 .ta-address-none {
     text-align: center;
 }
+
+.ta-table th {
+    text-align: center;
+}
+
+.ta-table > tbody td {
+    text-align: center;
+}
+
+.ta-address-pointer {
+    cursor: pointer;
+}
