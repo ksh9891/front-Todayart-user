@@ -50,7 +50,9 @@ import RegisterSuccess from "./components/pages/registert-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
 import Orders from './components/pages/account/orders.jsx'
+import RegisterArtist from './components/pages/register-artist'
 import Address from './components/pages/account/address'
+import AddressAdd from './components/pages/account/address-add'
 
 import aboutUs from './components/pages/about-us'
 import PageNotFound from './components/pages/404'
@@ -115,17 +117,16 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
                                 <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList}/>
 
+                                <Route path={`${process.env.PUBLIC_URL}/register-artist`} component={RegisterArtist}/>
 
                                 {/* Product */}
                                 <Route path={`${process.env.PUBLIC_URL}/product/:id`} component={NoSideBar}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collections/:id`} component={CollectionCategory}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/collection`} component={CollectionSearch}/>
-
-
-
 
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
