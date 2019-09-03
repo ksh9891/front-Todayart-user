@@ -43,7 +43,7 @@ export default function wishlistReducer(state = initialStateWishlist, action) {
         case ActionTypes.ADD_WISHLIST_SUCCESS:
             if (payload !== null && payload !== undefined) {
                 const { data } = payload;
-               
+
                 return {
                     ...state,
                     items: [
@@ -69,6 +69,16 @@ export default function wishlistReducer(state = initialStateWishlist, action) {
             return state;
 
         case ActionTypes.REMOVE_WISHILIST_SUCCESS:
+            if (payload !== null && payload !== undefined) {
+                const { data } = payload;
+                return {
+                    ...state,
+                    items: items.filter(item => item.wishlistId !== data.wishlistId)
+                }
+            }
+            return state;
+
+        case ActionTypes.ADDCART_FROMWISHLIST_SUCCESS:
             if (payload !== null && payload !== undefined) {
                 const { data } = payload;
                 return {

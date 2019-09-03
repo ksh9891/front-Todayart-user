@@ -2,23 +2,55 @@ import React, {Component} from 'react';
 import Slider from 'react-slick';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
-
-import {getBestSeller} from "../../services";
-import {addToCart, addToWishlist, addToCompare} from "../../actions";
 import ProductItem from '../layouts/common/product-item';
-
+import {ActionTypes} from '../../constants/ActionTypes'
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import { addToCart } from '../../actions'
 import {Actions} from '../../actions'
+
+
 
 class RelatedProduct extends Component {
 
-    componentWillMount(){
-        // this.fetchMoreItems();
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+           
+            endSlice: 6
+        }
+    }
+
+    componentWillMount(){        
         this.props.fetchArtwork();
     }
 
-    render (){
-        const {items, symbol, addToCart, addToWishlist, addToCompare} = this.props;
 
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            endSlice: this.getRandomArbitrary(6, this.props.items.length)
+        })
+
+        console.log("this.state", this.state);
+    }
+
+    // min (포함) 과 max (불포함) 사이의 난수를 반환
+    getRandomArbitrary = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+
+
+    render (){
+        const {items, symbol} = this.props;
+
+                         
+
+      
 
         return (
             <section className="section-b-space">
@@ -30,11 +62,12 @@ class RelatedProduct extends Component {
                     </div>
 
 
+
                                 <div className="no-slider row">
                                     { items.slice(0, 4).map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}
-                                                     onAddToCompareClicked={() => addToCompare(item)}
-                                                     onAddToWishlistClicked={() => addToWishlist(item)}
+                                                     
+                                                     
                                                      onAddToCartClicked={() => addToCart(item, 1)} key={index} /> )
                                     }
                                 </div>
@@ -49,6 +82,7 @@ class RelatedProduct extends Component {
                                              onAddToCompareClicked={() => addToCompare(item)}
                                              onAddToWishlistClicked={() => addToWishlist(item)}
                                              onAddToCartClicked={() => addToCart(item, 1)} key={index} />
+
                             </div>)
                         }
                     </div> */}
@@ -57,6 +91,7 @@ class RelatedProduct extends Component {
         )
     }
 }
+
 
 // function mapStateToProps(state) {
 //     return {
@@ -80,3 +115,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps) (RelatedProduct);
+

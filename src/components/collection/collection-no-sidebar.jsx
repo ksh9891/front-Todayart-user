@@ -72,18 +72,10 @@ class CollectionNoSideBar extends Component {
                                                     </div>
 
                                                     <div className="container">
-                                {/* <div className="row">
-                                    <div className="col-xl-12">
-									<form className="collectionSearch">
-                                            <div className="form-group">
-												<input type="text"
-												 className="form-control" 
-												 id="searchword"  
-												 ref={this.textInput}
-												 placeholder="Search a Product" />
-                                            </div>
-                                            <button type="submit"  onClick={this.closeSearch} className="btn btn-primary"><i className="fa fa-search" /></button>
-                                        </form>
+
+                                <div className="row">
+                                    <div className="col-xl-12">								
+
                                     </div>
                                 </div> */}
                             </div>

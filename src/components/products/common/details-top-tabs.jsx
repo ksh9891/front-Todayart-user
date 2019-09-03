@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import {Link} from 'react-router-dom'
+import ProductQandA from '../../articles/ProductQandA'
 
 import { connect } from 'react-redux'
 import { Actions } from '../../../actions'
@@ -35,18 +36,16 @@ class DetailsTopTabs extends Component {
                                 </Tab>
                                 <Tab className="nav-item">
                                     <span className="nav-link" >
-                                        <i className="icofont icofont-contacts"></i>Write Review</span>
+                                        <i className="icofont icofont-contacts"></i>Product Q&A</span>
                                     <div className="material-border"></div>
                                 </Tab>
                             </TabList>
                             <TabPanel className="tab-pane fade mt-4 show active">
                                 <table className="table table-striped mb-0">
-                                    <tbody>
-                                    
-                                    <tr>
-                                        <th>상품코드 :</th>
-                                        <td>{item.productId}</td>
-                                    </tr>
+
+                                    <tbody>                                   
+                                   
+
                                     <tr>
                                         <th>상품명 :</th>
                                         <td>{item.productName}</td>
@@ -66,11 +65,8 @@ class DetailsTopTabs extends Component {
                                     <tr>
                                         <th>배송비 :</th>
                                         <td>{symbol}{item.shippingFee}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>품절여부 :</th>
-                                        <td>{item.isSoldOut}</td>
-                                    </tr>
+                                    </tr>                                    
+
                                     </tbody>
                                 </table>
                             </TabPanel>
@@ -93,7 +89,7 @@ class DetailsTopTabs extends Component {
                             <TabPanel>
                                 <form className="theme-form mt-4">
                                     <div className="form-row">
-                                        <div className="col-md-12 ">
+                                        {/* <div className="col-md-12 ">
                                             <div className="media m-0">
                                                 <label>Rating</label>
                                                 <div className="media-body ml-3">
@@ -113,16 +109,18 @@ class DetailsTopTabs extends Component {
                                         </div>
                                         <div className="col-md-6">
                                             <label htmlFor="email">Email</label>
-                                            <input type="text" className="form-control" id="email" placeholder="Email을 입력하세요" required />
+
+                                            <input type="text" className="form-control" id="email" placeholder="Email" required />
+                                        </div> */}
+                                        <ProductQandA />
+                                        <div className="col-md-12">
+                                            <label htmlFor="review">Product Q&A Title</label>
+                                            <input type="text" className="form-control" id="review" placeholder="Enter your Review Subjects" required />
                                         </div>
                                         <div className="col-md-12">
-                                            <label htmlFor="review">리뷰제목</label>
-                                            <input type="text" className="form-control" id="review" placeholder="
-                                            제목을 입력하세요" required />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <label htmlFor="review">리뷰내용</label>
-                                            <textarea className="form-control" placeholder="리뷰를 작성해주세요" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                            <label htmlFor="review">Product Q&A Content</label>
+                                            <textarea className="form-control" placeholder="Wrire Your Testimonial Here" id="exampleFormControlTextarea1" rows="6"></textarea>
+
                                         </div>
                                         <div className="col-md-12">
                                             <button className="btn btn-solid" type="submit">리뷰작성</button>

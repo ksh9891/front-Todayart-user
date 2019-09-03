@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import Slider from 'react-slick';
 import '../common/index.scss';
 import {connect} from "react-redux";
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 
 // import custom Components
@@ -99,6 +102,30 @@ class NoSideBar extends Component {
 
         const { fileName } = thumbnail?thumbnail:{};
         const image = Files.filePath(fileName);
+            
+        const addWishilist=(item)=>{
+            this.props.addWishlist(item)
+                .then(response=>{
+                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')  
+                } 
+            }).catch(error=>{
+                console.log('error >>', error)
+            })
+       }     
+        // const asyncAddCart=(item,qty)=>{
+        //     this.props.addToCart(item,qty)
+        //         .then(response=>{
+        //         if(response.type===ActionTypes.ADD_CART_SUCCESS){
+        //             this.props.calcPrice();
+        //         }
+        //      }).catch(error=>{
+        //          console.log('error >>', error)
+        //      })
+        // }
+
+        
 
         return (
             <div>
@@ -110,7 +137,7 @@ class NoSideBar extends Component {
                 <section >
                     <div className="collection-wrapper">
                         <div className="container">
-                            <div className="row">
+                            <div className="row">   
                                 <div className="col-lg-6 product-thumbnail">
 
                                     {/* <Slider {...products} asNavFor={this.state.nav2} ref={slider => (this.slider1 = slider)} className="product-slick">
@@ -129,7 +156,7 @@ class NoSideBar extends Component {
                                     <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
 
                                 </div>
-                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addToWishlist} calcPrice={calcPrice} />
+                                <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={addToCartUnsafe} addToWishlistClicked={addWishilist} calcPrice={calcPrice} />
                             </div>
                         </div>
                     </div>
@@ -147,6 +174,8 @@ class NoSideBar extends Component {
                 </section>
 
                 <RelatedProduct />
+                <ToastContainer/>
+                            
             </div>
         )
     }
@@ -175,7 +204,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchSingleProduct2: (id) => dispatch(Actions.fetchSingleProduct2(id)),
 
     addToCart: (product, qty) => dispatch(addToCart(product, qty)),
-    addToWishlist: () => dispatch(addToWishlist()),
+    addWishlist: (item) => dispatch(Actions.addWishlist(item)),
     addToCartUnsafe: () => dispatch(addToCartUnsafe()),
     calcPrice:()=>dispatch(Actions.calcCartPrice())
 

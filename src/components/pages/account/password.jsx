@@ -143,7 +143,7 @@ class Password extends Component {
                                             <li className="active"><Link to="/account/password">비밀번호 변경</Link></li>
                                             <li><Link to="/account/addresses">배송지 관리</Link></li>
                                             <li><Link to="/account/orders">주문 관리</Link></li>
-                                            <li><Link to="/wishlist">찜목록 관리</Link></li>
+                                            
                                         </ul>
                                     </div>
                                 </div>

@@ -13,9 +13,35 @@ import { addToCart } from '../../../actions'
 
 class SpecialProducts extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+           
+            endSlice: 8
+        }
+    }
+
     componentWillMount(){        
         this.props.fetchArtwork();
     }
+
+
+    componentDidMount() {
+        this.setState({
+            ...this.state,
+            endSlice: this.getRandomArbitrary(8, this.props.items.length)
+        })
+
+        console.log("this.state", this.state);
+    }
+
+    // min (포함) 과 max (불포함) 사이의 난수를 반환
+    getRandomArbitrary = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    
 
     render (){
 
@@ -44,7 +70,13 @@ class SpecialProducts extends Component {
              }).catch(error=>{
                  console.log('error >>', error)
              })
-        }       
+        } 
+        
+        
+
+
+
+        
 
 
         return (
@@ -62,7 +94,7 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { items.slice(0, 8).map((item, index ) =>
+                                    { items.slice(this.state.endSlice-8, this.state.endSlice).map((item, index) =>
                                         <ProductItem item={item} symbol={symbol}
 
                                                      onAddToWishlistClicked={() => addWishilist(item)}
@@ -71,7 +103,7 @@ class SpecialProducts extends Component {
                                     }
                                 </div>
                             </TabPanel>
-                            <TabPanel>
+                            <TabPanel>  
                                 <div className="no-slider row">
                                     { items.map((item, index ) =>
                                         <ProductItem item={item} symbol={symbol}

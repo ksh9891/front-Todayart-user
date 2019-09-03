@@ -7,7 +7,7 @@ import {ActionTypes} from '../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
+import { addToCart } from '../../actions'
 import Breadcrumb from '../common/breadcrumb';
 
 
@@ -32,10 +32,38 @@ class wishList extends Component {
                 if(response.type==ActionTypes.REMOVE_WISHLIST_SUCCESS){  
                     console.log('삭제성공!')
                     toast.success("상품이 찜하기에서 삭제되었습니다")
-                    this.props.fetchWishlist()
-                    
+                    this.props.fetchWishlist()               
                     
                 }
+             }).catch(error=>{
+                 console.log('error >>', error)
+             })
+        }
+
+        // const moveToCart=(id)=>{
+        //     this.props.addCartFromWishlist(id)
+        //         .then(response=>{
+                  
+        //         if(response.type==ActionTypes.ADDCART_FROMWISHLIST_SUCCESS){  
+        //             console.log('이동성공!')
+        //             toast.success("상품이 장바구니로 이동되었습니다")
+        //             this.props.fetchWishlist()    
+                   
+        //         }
+        //      }).catch(error=>{
+        //          console.log('error >>', error)
+        //      })
+        // }
+
+        const moveToCart=(id)=>{
+            this.props.addCartFromWishlist(id)
+                .then(response=>{                  
+                if(response.type==ActionTypes.ADDCART_FROMWISHLIST_SUCCESS){  
+                    console.log('이동성공!')
+                    toast.success("상품이 장바구니로 이동되었습니다")
+                    this.props.fetchWishlist() 
+                    
+                }       
              }).catch(error=>{
                  console.log('error >>', error)
              })
@@ -84,7 +112,7 @@ class wishList extends Component {
                                                                 <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                                     <i className="fa fa-times" />
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="cart" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                                <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                                     <i className="fa fa-shopping-cart" />
                                                                 </a>
                                                             </h2>
@@ -100,7 +128,7 @@ class wishList extends Component {
                                                     <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                         <i className="fa fa-times" />
                                                     </a>
-                                                    <a href="javascript:void(0)" className="cart" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                    <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                         <i className="fa fa-shopping-cart" />
                                                     </a>
                                                 </td>
@@ -151,7 +179,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     fetchWishlist: ()=> dispatch(Actions.fetchWishlist()),
-    removeWishlist: (id)=> dispatch(Actions.removeWishlist(id))
+    removeWishlist: (id)=> dispatch(Actions.removeWishlist(id)),
+    addCartFromWishlist: (id) => dispatch(Actions.addCartFromWishlist(id)), 
+    addToCart: (item, qty) => dispatch(addToCart(item, qty))
    
     
    

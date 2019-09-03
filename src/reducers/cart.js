@@ -1,4 +1,5 @@
-
+import { toast  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { ActionTypes } from '../constants/ActionTypes';
 
 const initialStateCart = {
@@ -61,6 +62,7 @@ const cart = (state = initialStateCart, action) => {
             }
             
         case ActionTypes.DELETE_CART_ITEM_SUCCESS:
+                toast.error("상품이 장바구니에서 삭제되었습니다");
             if(payload!==null && payload!==undefined){
                 const {data} = payload;
                 return {
@@ -71,6 +73,7 @@ const cart = (state = initialStateCart, action) => {
             return state;
         
         case ActionTypes.ADD_CART_SUCCESS:
+            toast.success("상품이 장바구니에 추가되었습니다");       
             if(payload!==null&&payload!==undefined){
                 let {data} = payload;
                 data = {...data, checked:true};
@@ -95,7 +98,42 @@ const cart = (state = initialStateCart, action) => {
                 }
             }
             return state;
+
+
+            case ActionTypes.ADDCART_FROMWISHLIST_SUCCESS:
+                if(payload!==null&&payload!==undefined){
+                    let {data} = payload;
+                    data = {...data, checked:true};
+                    const refreashCartItem=(items, data)=>{
+                        if(items.every((item)=>item.cartId!==data.cartId)){
+                            items.push(data);
+                            return items;
+                        }else{
+                            return(
+                        items.map((item)=>{
+                            if(item.cartId===data.cartId){
+                                return {...data}
+                            }
+                            else {
+                                return{...item, checked:true}
+                            }
+                        }))
+                    }}
+                    return{
+                        ...state,
+                        items:refreashCartItem(items, data)
+                    }
+                }
+                return state;
+
+         
+
         
+
+
+            
+        
+                
         case ActionTypes.LOGOUT:
             return initialStateCart;
 

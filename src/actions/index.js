@@ -489,7 +489,7 @@ const getOrderList = () => {
     })
 }
 
-const articleWrite = ({title, content, boardId}) => {
+const articleWrite = ({title, content, boardId, productId}) => {
     return ({
         type: ActionTypes.ARTICLEWRITE,
         payload: {
@@ -500,7 +500,7 @@ const articleWrite = ({title, content, boardId}) => {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 },
-                data: JSON.stringify({title, content, boardId})
+                data: JSON.stringify({title, content, boardId, productId})
             }
         }
     });
@@ -519,7 +519,6 @@ const articleDelete  =(articleId) =>{
 }
 
 const articleUpdate  =({articleId, title, content}) =>{
-    console.log("article >> ", articleId)
     return({
         type:ActionTypes.ARTICLEUPDATE,
         payload:{
@@ -536,8 +535,80 @@ const articleUpdate  =({articleId, title, content}) =>{
     })
 }
 
+
+const articleSearch = ({boardId, searchWord, searchCondition}) => {
+    return ({
+        type: ActionTypes.ARTICLESEARCH,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/article/search?value=${searchWord}&boardId=${boardId}&where=${searchCondition}`
+            }
+        }
+    })
+}
+
+const commentList = (articleId) => {
+    return ({
+        type: ActionTypes.COMMENTLIST,
+        payload: {
+            request: {
+                method: 'GET',
+                url: `/comment?articleId=${articleId}`
+            }
+        }
+    })
+}
+
+const commentWrite = ({articleId, content}) => {
+    return ({
+        type: ActionTypes.COMMENTWRITE,
+        payload: {
+            request:{
+                method: 'POST',
+                url: '/comment',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({articleId, content})
+            }
+        }
+    })
+}
+
+const commentUpdate  =({commentId, content}) =>{
+    return({
+        type:ActionTypes.COMMENTUPDATE,
+        payload:{
+            request:{
+                method: 'PATCH',
+                url: `/comment/${commentId}`,
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                    'Accept': 'application/json'
+                },
+                data: JSON.stringify({content})
+            }
+        }
+    })
+}
+
+const commentDelete  =(commentId) =>{
+    return({
+        type:ActionTypes.COMMENTDELETE,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/comment/${commentId}`
+            }
+        }
+    })
+}
+
 export const addToCart = (item, quantity) =>{
     // toast.success("Item Added to Cart");
+
     return({
         type:ActionTypes.ADD_CART,
         payload:{
@@ -682,6 +753,25 @@ const getAddress = () =>{
 }
 
 
+const changeStatus = (changeCode, orderDetailId, status) =>{
+    console.log("ACTION", changeCode, orderDetailId, status)
+    return ({
+        type:ActionTypes.CHANGE_STATUS,
+        payload:{
+            request:{
+                method:'PATCH',
+                url:'/orders',
+                data:{
+                    changeCode:changeCode,
+                    orderDetailId:orderDetailId,
+                    status:status
+                }
+            }
+        }
+    })
+}
+
+
 
 const searchAddressInApi = (keyword) =>{
     return ({
@@ -727,12 +817,11 @@ const addWishlist = (item) => {
                     'Accept': 'application/json'
                 },
                 data:JSON.stringify({ product : item })
+
             }
         }
     })
 }
-
-
 
 
 
@@ -762,22 +851,6 @@ const fetchWishlist = () => {
 }
 
 
-// const searchAddressInApi = (keyword) =>{
-//     return ({
-//         type:ActionTypes.SEARCH_ADDRESS_API,
-//         payload:{
-//             request:{
-//                 method: 'GET',
-//                 url: `/getAddrApi?keyword=${keyword}`
-
-//             }
-//         }
-//     })
-// }
-
-
-
-
 
 // const addAddress = ({address, postalNumber, addressDetail}) => {
 //     return ({
@@ -796,6 +869,48 @@ const fetchWishlist = () => {
 //     });
 // };
 
+
+
+const updateMainAddress = (addressId) =>{
+    return ({
+        type:ActionTypes.UPDATE_MAIN_ADDRESS,
+        payload:{
+            request:{
+                method: 'PATCH',
+                url: `/address?addressId=${addressId}`
+            }
+        }
+    })
+}
+
+const deleteAddress = (addressId) =>{
+    return ({
+        type:ActionTypes.DELETE_ADDRESS,
+        payload:{
+            request:{
+                method: 'DELETE',
+                url: `/address?addressId=${addressId}`
+            }
+        }
+    })
+}
+
+
+const addCartFromWishlist = (id) => {
+    return ({
+        type: ActionTypes.ADDCART_FROMWISHLIST,
+        payload: {
+            request: {
+                method: 'POST',
+                url: `/cart/${id}`
+            }
+        }
+    });
+};
+
+
+
+        
 
 
 export const Actions = {
@@ -821,6 +936,11 @@ export const Actions = {
     articleWrite,
     articleDelete,
     articleUpdate,
+    articleSearch,
+    commentList,
+    commentWrite,
+    commentUpdate,
+    commentDelete,
     makeOrder,
     excuteKakaoPay,
     approveKakaoPay,
@@ -837,12 +957,17 @@ export const Actions = {
     fetchProductBySearch,
     registerVerification,
     checkRegisterToken,
+    changeStatus,
     searchAddressInApi,
     addAddress,
+    updateMainAddress,
+    deleteAddress,
     addWishlist,
     removeWishlist,
-    fetchWishlist
-
+    fetchWishlist,
+    searchAddressInApi,
+    addAddress,
+    addCartFromWishlist
 
 };
 

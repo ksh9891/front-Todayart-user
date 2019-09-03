@@ -35,8 +35,9 @@ class StateLoader {
       },
       article: {
         items: [],
-        item: null,
+        detail: null,
         boardName: [],
+        comment: [],
         page: 1,
         size: 10,
         totalCount: 0

@@ -85,10 +85,8 @@ class DetailsWithPrice extends Component {
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
                     <h2> {item.productName} </h2>
-                    <h4>
-                        {item.artistName}</h4>
-                        {/* 가격할인된거 보여주는 부분 */}
-                        {/* <span>{item.discount}% off</span> */}
+                    <h4>{item.artistName}</h4>
+
                     <h3>{symbol}{item.productPrice} </h3>
                     
                       {/* 색상 선택하던 부분 */}
@@ -104,46 +102,17 @@ class DetailsWithPrice extends Component {
 
                     <div className="product-description border-product">
                         
-                              {/* {item.size? */}
-                            {/* <div> */}
-                            <h6 className="product-title size-text">상품크기
-                                <h4>{item.productSize}</h4>
-                                {/* 상품 사이즈 보는 부분 */}
-                                    {/* <span>
-                                        <a href="#" data-toggle="modal"
-                                             data-target="#sizemodal" onClick={this.onOpenModal} >size chart</a>
-                                             </span> */}
-                                             </h6>
 
-                                <div className="modal fade" id="sizemodal" tabIndex="-1"
-                                     role="dialog" aria-labelledby="exampleModalLabel"
-                                     aria-hidden="true">
-                                    <div className="modal-dialog modal-dialog-centered"
-                                         role="document">
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h5 className="modal-title"
-                                                    id="exampleModalLabel">Sheer Straight
-                                                    Kurta</h5>
-                                                <button type="button" className="close"
-                                                        data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div className="modal-body">
-                                                <img src={`${process.env.PUBLIC_URL}/assets/images/size-chart.jpg`} alt="" className="img-fluid"/>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div>
+                               
+                                <div >
+                            <ul>
+                                {
+                                    <li >{item.productSize}</li>
+                                }
+                            </ul>
 
-                                </div>
-                                <div className="size-box">
-                                    {/* 사이즈 선택하는 부분 */}
-                            {/* <ul>
-                                {item.size.map((size, i) => {
-                                    return <li key={i}><a href="#">{size}</a></li>
-                                })}
-                            </ul> */}
+</div>
                         </div>
                             {/* </div>:''} */}
                         <span className="instock-cls">{this.state.stock}</span>
@@ -191,27 +160,7 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="border-product">
-                        {/* 시간나오던 부분 */}
-                        {/* <h6 className="product-title">Time Reminder</h6>
-                        <div className="timer">
-                            <p id="demo">
-                                <span>25
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Days</span>
-                                </span>
-                                <span>22
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Hrs</span>
-                                </span>
-                                <span>13
-                                    <span className="padding-l">:</span>
-                                    <span className="timer-cal">Min</span>
-                                </span>
-                                <span>57
-                            y        <span className="timer-cal">Sec</span>
-                                </span>
-                            </p>
-                        </div> */}
+
                     </div>
                 </div>
                 <Modal open={this.state.open} onClose={this.onCloseModal} center>

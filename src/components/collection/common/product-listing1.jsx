@@ -9,7 +9,7 @@ import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-import { addToCart} from '../../../actions'
+import { addToCart } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
 import ProductListItem from "./product-list-item";
 
@@ -130,8 +130,6 @@ class ProductListing1 extends Component {
                                         <ProductListItem item={item} symbol={symbol}
 
                                                          onAddToWishlistClicked={() => addWishilist(item)}
-                                                         onAddToCartClicked={addToCart} key={index}/>
-
                                                          onAddToCartClicked={asyncAddCart} key={index}/>
 
                                         </div>)

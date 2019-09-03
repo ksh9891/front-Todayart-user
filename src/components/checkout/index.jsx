@@ -239,69 +239,7 @@ class checkOut extends Component {
                                     <div className="checkout row">
 
                                     <ShippingBox/>
-                                    {/* <div className="col-lg-6 col-sm-12 col-xs-12">
-                                        <div className="checkout-title">
-                                            <h3>주소 입력</h3>
-                                        </div>
-                                        <div className="row check-out">
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">First Name</div>
-                                                <input type="text" name="first_name" value={this.state.first_name} onChange={this.setStateFromInput} />
-                                                {this.validator.message('first_name', this.state.first_name, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Last Name</div>
-                                                <input type="text" name="last_name" value={this.state.last_name} onChange={this.setStateFromInput} />
-                                                {this.validator.message('last_name', this.state.last_name, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Phone</div>
-                                                <input type="text" name="phone"  value={this.state.phone} onChange={this.setStateFromInput} />
-                                                {this.validator.message('phone', this.state.phone, 'required|phone')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Email Address</div>
-                                                <input type="text" name="email" value={this.state.email} onChange={this.setStateFromInput} />
-                                                {this.validator.message('email', this.state.email, 'required|email')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Country</div>
-                                                <select name="country" value={this.state.country} onChange={this.setStateFromInput}>
-                                                    <option>India</option>
-                                                    <option>South Africa</option>
-                                                    <option>United State</option>
-                                                    <option>Australia</option>
-                                                </select>
-                                                {this.validator.message('country', this.state.country, 'required')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Address</div>
-                                                <input type="text" name="address" value={this.state.address} onChange={this.setStateFromInput} placeholder="Street address" />
-                                                {this.validator.message('address', this.state.address, 'required|min:20|max:120')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Town/City</div>
-                                                <input type="text" name="city" value={this.state.city} onChange={this.setStateFromInput} />
-                                                {this.validator.message('city', this.state.city, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                                                <div className="field-label">State / County</div>
-                                                <input type="text" name="state" value={this.state.state} onChange={this.setStateFromInput} />
-                                                {this.validator.message('state', this.state.state, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                                                <div className="field-label">Postal Code</div>
-                                                <input type="text" name="pincode" value={this.state.spincode} onChange={this.setStateFromInput} />
-                                                {this.validator.message('pincode', this.state.pincode, 'required|integer')}
-                                            </div>
-                                            <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <input type="checkbox" name="create_account" id="account-option"  checked={this.state.create_account} onChange={this.setStateFromCheckbox}/>
-                                                &ensp; <label htmlFor="account-option">Create An Account?</label>
-                                                {this.validator.message('checkbox', this.state.create_account, 'create_account')}
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                        <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
+                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
                                     <div className="row section-t-space">
                                         <div className="col-lg-6">

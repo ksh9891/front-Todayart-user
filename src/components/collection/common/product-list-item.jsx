@@ -71,14 +71,14 @@ class ProductListItem extends Component {
                                 ><img src={image} className="img-fluid" alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
-                                <button title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
+                                <a  href="javascript:void(0)" title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
                                     <i className="fa fa-shopping-cart" aria-hidden="true"></i>
-                                </button>
-                                <a href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
+                                </a>
+                                <a  href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
                                     <i className="fa fa-heart" aria-hidden="true"></i>
                                 </a>
+                                <a  href="javascript:void(0)" data-toggle="modal"
 
-                                <a href="javascript:void(0)" data-toggle="modal"
                                    data-target="#quick-view"
                                    title="Quick View"
                                    onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
