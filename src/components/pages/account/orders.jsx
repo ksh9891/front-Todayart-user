@@ -8,8 +8,6 @@ import { Actions } from '../../../actions';
 import { ActionTypes } from '../../../constants/ActionTypes';
 import { Files } from '../../../utils';
 
-
-
 class Orders extends React.Component{
     constructor(props){
         super(props)

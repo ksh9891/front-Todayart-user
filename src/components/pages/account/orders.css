@@ -163,7 +163,7 @@ text-align:center;
     padding-top:8px;
     grid-column:4/5;
     grid-row : 1/5;
-    border-left-style:1px dotted #ddd;
+    border-left-style: 1px dotted #ddd;
 }
 
 .img-fluid.order{
