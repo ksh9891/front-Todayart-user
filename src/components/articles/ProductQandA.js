@@ -10,10 +10,9 @@ class ProductQandA extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      boardId: queryString.parse(props.location.search).boardId
+      boardId: queryString.parse(props.location.search).boardId,
+      reply: ''
     }
-    this.searchWordInput = React.createRef();
-    this.searchConditionInput = React.createRef();
   }
 
   componentDidMount() {
@@ -53,14 +52,31 @@ class ProductQandA extends Component {
   };
 
   onReply = (e, articleId) => {
-
     e.preventDefault();
+
+    const replyContent = this.state.reply;
+
+    this.props.commentWrite({ articleId, replyContent })
+      .then(response => {
+        this.props.history.push("/product/" + this.props.data.item.productId)
+      })
+      .then(console.log('thisprops = ', this.props))
+      .catch(error => {
+        console.log('error>>', error);
+      });
   };
 
   onComment = (articleId) => {
     this.props.commentList(articleId)
   }
 
+  onWriting = (e) => {
+    console.log("write", e.target.value);
+    this.setState({
+      ...this.state,
+      reply: e.target.value
+    })
+  }
 
   render() {
     this.state.boardId = (this.props.match.params.product !== true) ? '4' : '';
@@ -92,22 +108,47 @@ class ProductQandA extends Component {
                         <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
                           <form className="form-inline">
                             <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
-                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
+                            <button className="btn btn-outline-success my-2 my-sm-0" oneClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
                           </form>
                         </nav>
                         </div> : ''}
                     </span>
-                    <span>
-                      {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN")) ?
-                        <div className="checkout_btn_inner d-flex align-items-center">
-                          <nav class="navbar navbar-light bg-light">
-                            <form className="form-inline">
-                              <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onReply(e, detail.articleId)}>답변</button>
-                            </form>
-                          </nav>
-                        </div>
-                        : ''}
-                    </span>
+
+                    {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN")) ?
+                      <form onSubmit={element => this.onReply(element, detail.articleId)}>
+                        <span>
+                          <div className="accordion theme-accordion" id="accordionExample">
+                            <div className="card">
+                              <div className="card-header" id="headingOne">
+                                <button type="button" data-toggle="collapse" data-target={"#collapse" + `${detail.articleId}`}
+                                  aria-controls={"collapse" + `${detail.articleId}`}>답변
+                              </button>
+
+
+
+                              </div>
+
+                              <div id={"collapse" + `${detail.articleId}`} className="collapse" aria-labelledby={"heading" + `${detail.articleId}`}
+                                data-parent="#accordionExample">
+                                <div className="card-body">
+                                  <textarea
+                                    class="form-control"
+                                    rows="3"
+                                    type="reply"
+                                    id="reply"
+                                    name="reply"
+                                    onChange={(e) => this.onWriting(e)}
+                                    placeholder="내용을 입력하세요."
+                                    required
+                                  ></textarea>
+                                </div>
+                                <button type="submit">확인</button>
+                              </div>
+                            </div>
+                          </div>
+                        </span>
+                      </form>
+                      : ''}
 
                     <Comment articleId={detail.articleId} onComment={this.props.commentList} />
 
@@ -173,7 +214,7 @@ class ProductQandA extends Component {
               <nav className="navbar navbar-light bg-light">
                 <form className="form-inline">
                   <button className="btn btn-outline-success my-2 my-sm-0">
-                    <Link to={"/articleWrite"} boardId={this.state.boardId}>글쓰기</Link>
+                    <Link to={"/articleWrite"} boardId={this.state.boardId}>질문하기</Link>
                   </button>
                 </form>
               </nav>
@@ -197,7 +238,8 @@ const mapDispatchToProps = (dispatch) => ({
   articleDelete: (boardId) => dispatch(Actions.articleDelete(boardId)),
   getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
   articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition })),
-  commentList: (articleId) => dispatch(Actions.commentList(articleId))
+  commentList: (articleId) => dispatch(Actions.commentList(articleId)),
+  commentWrite: ({ articleId, replyContent }) => dispatch(Actions.commentWrite({ articleId, replyContent }))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductQandA))

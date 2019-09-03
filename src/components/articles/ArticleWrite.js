@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
 
 import { Actions } from '../../actions';
-import Breadcrumb from '../common/breadcrumb'
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 

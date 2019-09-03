@@ -26,12 +26,17 @@ class Comment extends Component {
         }
     }
 
-    onDelete = (e, articleId) => {
+    onCommentDelete = (e) => {
+
+        const [{commentId}] = this.state.comment
+
         e.preventDefault();
-        this.props.articleDelete(articleId)
-            .then(response => {
-                this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId)
-            })
+        this.props.commentDelete({commentId})
+        .then(response => {
+            this.props.article.boardName.boardId === 4 ?
+              this.props.history.push("/product/" + this.props.data.item.productId) :
+              this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId)
+          })
             .catch(error => {
                 console.log('error>>', error);
             });
@@ -68,31 +73,31 @@ class Comment extends Component {
         return (
             <div>
                 {this.state.comment ?
-
                     <div class="media mt-3 shadow-textarea">
                         <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
                             alt="Generic placeholder image" />
                         <div class="media-body">
-                            <h5 class="mt-0 font-weight-bold blue-text">{this.state.comment.map(item => item.nickname)}</h5>
+                            <h5 class="mt-0 font-weight-bold blue-text">{this.state.comment.map(detail => detail.nickname)}</h5>
                             <div class="form-group basic-textarea rounded-corners">
-                                {this.state.comment.map(item => item.content)}
+                                {this.state.comment.map(detail => detail.replyContent)}
                             </div>
+
+                            {console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',this.state)}
+
+                            {((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
+                                <div className="checkout_btn_inner d-flex align-items-center">
+                                    <nav className="navbar navbar-light bg-light">
+                                        <form className="form-inline">
+                                            <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onCommentDelete(e, this.state.articleId)}>삭제</button>
+                                        </form>
+                                    </nav>
+                                </div> : ''}
                         </div>
                     </div>
-
-
                     : ''}
-                {(this.state.comment !== undefined) &&
-                    (((userDetails !== null) && (item.artist.memberId === userDetails.memberId)) ||
-                        ((userDetails !== null) && (userDetails.role === "ROLE_ADMIN"))) ?
-                    <div className="checkout_btn_inner d-flex align-items-center"><nav class="navbar navbar-light bg-light">
-                        <form className="form-inline">
-                            <button className="btn btn-outline-success my-2 my-sm-0">수정</button>
-                            <button className="btn btn-outline-success my-2 my-sm-0">삭제</button>
-                        </form>
-                    </nav>
-                    </div> : ''
-                }
+
+
+
             </div>
         )
     }
@@ -107,7 +112,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
     getArticleDetail: (boardId, articleId) => dispatch(Actions.getArticleDetail(boardId, articleId)),
     articleSearch: ({ boardId, searchWord, searchCondition }) => dispatch(Actions.articleSearch({ boardId, searchWord, searchCondition })),
-    commentList: (articleId) => dispatch(Actions.commentList(articleId))
+    commentList: (articleId) => dispatch(Actions.commentList(articleId)),
+    commentDelete: ({commentId}) => dispatch(Actions.commentDelete({commentId}))
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment))

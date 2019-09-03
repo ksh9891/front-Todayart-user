@@ -106,17 +106,6 @@ class DetailsTopTabs extends Component {
                                             <input type="text" className="form-control" id="email" placeholder="Email" required />
                                         </div> */}
                                         <ProductQandA />
-                                        <div className="col-md-12">
-                                            <label htmlFor="review">Product Q&A Title</label>
-                                            <input type="text" className="form-control" id="review" placeholder="Enter your Review Subjects" required />
-                                        </div>
-                                        <div className="col-md-12">
-                                            <label htmlFor="review">Product Q&A Content</label>
-                                            <textarea className="form-control" placeholder="Wrire Your Testimonial Here" id="exampleFormControlTextarea1" rows="6"></textarea>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <button className="btn btn-solid" type="submit">Submit YOur Review</button>
-                                        </div>
                                     </div>
                                 </form>
                             </TabPanel>
