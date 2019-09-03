@@ -6,6 +6,7 @@ import Breadcrumb from "../common/breadcrumb";
 import {incrementQty, decrementQty, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import { Files } from '../../utils';
+import './index.css'
 
 
 class cartComponent extends Component {
@@ -55,16 +56,16 @@ class cartComponent extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12">
-                                <table className="table cart-table table-responsive-xs">
+                                <table className="table cart-table table-responsive-xs cart_check" style={{"table-layout":"fixed", "width":"90%", "margin":"auto"}}>
                                     <thead>
                                     <tr className="table-head">
-                                        <th></th>
+                                        <th className="check" width="20px"></th>
                                         <th scope="col">image</th>
                                         <th scope="col">product name</th>
                                         <th scope="col">price</th>
                                         <th scope="col">quantity</th>
                                         <th scope="col">total</th>
-                                        <th scope="col" width="50">delete</th>
+                                        <th scope="col" width="5%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -79,7 +80,7 @@ class cartComponent extends Component {
                                                 <td>
                                                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                                                     state:{item:item.product}}}>
-                                                        <img src={image} className="mr-3" alt=""style={{"border-radius":"10px"}} />
+                                                        <img src={image} className="mr-3" alt=""style={{"borderRadius":"10px"}} />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
@@ -143,9 +144,9 @@ class cartComponent extends Component {
                                 </table>
                             </div>
                         </div>
-                        <div className="row cart-buttons">
+                        <div className="row cart-buttons" style={{"width":"90%","margin":"auto"}}>
                             <div className="col-6">
-                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">continue shopping</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/collection`} className="btn btn-solid">continue shopping</Link>
                             </div>
                             <div className="col-6">
                                 <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
