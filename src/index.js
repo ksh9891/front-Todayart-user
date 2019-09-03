@@ -45,8 +45,8 @@ import orderSuccess from './components/checkout/success-page'
 // Extra Pages
 import Login from './components/pages/login'
 import Register from './components/pages/register'
-import RegisterWait from "./components/pages/registert-wait";
-import RegisterSuccess from "./components/pages/registert-success";
+import RegisterWait from "./components/pages/register-wait";
+import RegisterSuccess from "./components/pages/register-success";
 import Account from './components/pages/account/account'
 import Password from './components/pages/account/password'
 import Orders from './components/pages/account/orders.jsx'
@@ -108,14 +108,15 @@ class Root extends React.Component {
                                 {/* 메인페이지 */}
                                 <Route exact path={`${process.env.PUBLIC_URL}/`} component={TodayArt}/>
 
-                                {/* Member */}
+                                {/* Account private area */}
+                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
+                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
-                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
                                 <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
-                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
                                 <PrivateRoute path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
                                 <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
                                 <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
@@ -194,7 +195,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
 
-                                 {/*<Route exact path="*" component={PageNotFound} />*/}
+                                {/*<Route exact path="*" component={PageNotFound} />*/}
                             </Layout>
                         </Switch>
                     </ScrollContext>
