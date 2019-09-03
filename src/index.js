@@ -110,11 +110,11 @@ class Root extends React.Component {
                                 <Route exact path={`${process.env.PUBLIC_URL}/`} component={TodayArt}/>
 
                                 {/* Account private area */}
-                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account`} component={Account} />
-                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account/password`} component={Password} />
-                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
-                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
-                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account} />
+                                <Route exact path={`${process.env.PUBLIC_URL}/account/password`} component={Password} />
+                                <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
+                                <Route path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
 
                                 <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
