@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import Breadcrumb from "../common/breadcrumb";
 import {incrementQty, decrementQty, Actions} from '../../actions'
+import {ActionTypes} from '../../constants/ActionTypes'
+import { Files } from '../../utils';
+
 
 class cartComponent extends Component {
 
@@ -21,9 +24,21 @@ class cartComponent extends Component {
         this.props.calcCartPrice();
     }
 
+    deleteItem=(cartId)=>{
+        this.props.deleteCartItem(cartId)
+        .then(response=>{
+            if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
+                return this.props.calcCartPrice();
+            }
+        }).catch(error=>
+            console.log("error >>", error))
+
+        }
+
     render (){
-        const {cart, cartItems, symbol, total} = this.props;
-        const {items, totalPrice, totalShipping} = cart;
+        const {cart, cartItems, symbol, } = this.props;
+        const {totalPrice, totalShipping} = cart;
+
         return (
             <div>
                 {/*SEO Support*/}
@@ -54,6 +69,8 @@ class cartComponent extends Component {
                                     </thead>
                                     <tbody>
                                     {cartItems.map((item, index) => {
+                                        const { fileName } = item.product.thumbnail;
+                                        const image = Files.filePath(fileName);
                                         return (
                                             <tr key={index}>
                                                 <td>
@@ -62,7 +79,7 @@ class cartComponent extends Component {
                                                 <td>
                                                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                                                     state:{item:item.product}}}>
-                                                        <img src={item.thumbnail} alt="" />
+                                                        <img src={image} className="mr-3" alt=""style={{"border-radius":"10px"}} />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
@@ -83,7 +100,7 @@ class cartComponent extends Component {
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <i className="icon-close" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                                <i className="icon-close" onClick={() => this.deleteItem(item.cartId)}/>
                                 
                                                             </h2>
                                                         </div>
@@ -110,7 +127,7 @@ class cartComponent extends Component {
                                                 </td>
                                                 <td><h2 className="td-color">{symbol}{item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)}</h2></td>
                                                 <td>
-                                                    <i className="fa fa-times" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                    <i className="fa fa-times" onClick={() =>  this.deleteItem(item.cartId)}/>
                                                 </td>
                                             </tr>
                                          )
@@ -120,7 +137,7 @@ class cartComponent extends Component {
                                     <tfoot>
                                     <tr>
                                         <td>total price :</td>
-                                        <td><h2>{symbol} {cart.totalPrice+cart.totalShipping} </h2></td>
+                                        <td><h2>{symbol} {totalPrice+totalShipping} </h2></td>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -162,6 +179,8 @@ class cartComponent extends Component {
 const mapStateToProps = (state) => ({
     cart:state.cart,
     cartItems: state.cart.items,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping,
     symbol: state.data.symbol
 })
 

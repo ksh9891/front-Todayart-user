@@ -126,7 +126,14 @@ const cart = (state = initialStateCart, action) => {
                 }
                 return state;
 
-         
+         case ActionTypes.SNAP_ONE_ITEM:
+             return {...state, items:items.map((item, index)=>{
+                 if(index===items.length-1){
+                     return {...item, checked:true}
+                 }else{
+                     return {...item, checked:false}
+                 }
+             })}
 
         
 
