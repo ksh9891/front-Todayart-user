@@ -5,6 +5,9 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import {Link} from 'react-router-dom'
 
+import { connect } from 'react-redux'
+import { Actions } from '../../../actions'
+
 class DetailsTopTabs extends Component {
     render (){
 
@@ -105,23 +108,24 @@ class DetailsTopTabs extends Component {
                                             </div>
                                         </div>
                                         <div className="col-md-6">
-                                            <label htmlFor="name">Name</label>
-                                            <input type="text" className="form-control" id="name" placeholder="Enter Your name" required />
+                                            <label htmlFor="name">이름</label>
+                                            <input type="text" className="form-control" id="name" placeholder="이름을 입력하세요" required />
                                         </div>
                                         <div className="col-md-6">
                                             <label htmlFor="email">Email</label>
-                                            <input type="text" className="form-control" id="email" placeholder="Email" required />
+                                            <input type="text" className="form-control" id="email" placeholder="Email을 입력하세요" required />
                                         </div>
                                         <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
-                                            <input type="text" className="form-control" id="review" placeholder="Enter your Review Subjects" required />
+                                            <label htmlFor="review">리뷰제목</label>
+                                            <input type="text" className="form-control" id="review" placeholder="
+                                            제목을 입력하세요" required />
                                         </div>
                                         <div className="col-md-12">
-                                            <label htmlFor="review">Review Title</label>
-                                            <textarea className="form-control" placeholder="Wrire Your Testimonial Here" id="exampleFormControlTextarea1" rows="6"></textarea>
+                                            <label htmlFor="review">리뷰내용</label>
+                                            <textarea className="form-control" placeholder="리뷰를 작성해주세요" id="exampleFormControlTextarea1" rows="6"></textarea>
                                         </div>
                                         <div className="col-md-12">
-                                            <button className="btn btn-solid" type="submit">Submit YOur Review</button>
+                                            <button className="btn btn-solid" type="submit">리뷰작성</button>
                                         </div>
                                     </div>
                                 </form>
@@ -134,4 +138,22 @@ class DetailsTopTabs extends Component {
     }
 }
 
-export default DetailsTopTabs;
+const mapStateToProps = (state) => ({
+    // products: getVisibleproducts(state.data, state.filters),
+    symbol: state.data.symbol,
+    items : state.data.items
+})
+
+// const mapDispatchToProps = (dispatch) => ({
+//     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
+//     fetchArtwork:() => dispatch(Actions.fetchArtwork()),
+//     addWishlist: (item) => dispatch(Actions.addWishlist(item)), 
+//     addToCart: (item, qty) => dispatch(addToCart(item, qty))
+   
+
+
+// })
+
+export default connect(mapStateToProps, null)(DetailsTopTabs)
+
+// export default DetailsTopTabs;

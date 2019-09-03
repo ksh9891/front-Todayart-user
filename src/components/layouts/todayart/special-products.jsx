@@ -51,7 +51,7 @@ class SpecialProducts extends Component {
             <div>
                 <div className="title1 section-t-space">
                     <h4>exclusive products</h4>
-                    <h2 className="title-inner1">special products</h2>
+                    <h2 className="title-inner1">special products 홈화면</h2>
                 </div>
                 <section className="section-b-space p-t-0">
                     <div className="container">

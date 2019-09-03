@@ -13,7 +13,7 @@ import {Helmet} from 'react-helmet'
 class Todayart extends Component {
 
     componentDidMount() {
-        document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color5.css` );
+        document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color8.css` );
     }
 
     render(){
@@ -21,18 +21,18 @@ class Todayart extends Component {
             <div>
                 <Helmet>
                     <title>TodayArt | 오늘의 아트</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="오늘의 아트에 오신 것을 환영합니다." />
                 </Helmet>
                 <section className="p-0 small-slider">
                     <Slider className="slide-1 home-slider">
                         <div>
-                            <div className="home home12 text-left">
+                            <div className="home home34 text-left">
                                 <div className="container">
                                     <div className="row">
                                         <div className="col">
                                             <div className="slider-contain">
                                                 <div>
-                                                    <h4>furniture sofa</h4>
+                                                    <h4>furniture sofa 배너</h4>
                                                     <h1>harmony sofa</h1><a href="#" className="btn btn-solid">shop
                                                     now</a></div>
                                             </div>
@@ -68,7 +68,8 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner1.jpg`} alt=""
+                                            {/* 메인 배너 이미지 */}
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/test4.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
@@ -84,7 +85,7 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner2.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/test5.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
@@ -100,7 +101,7 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner3.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/test3.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
