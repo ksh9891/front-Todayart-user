@@ -26,8 +26,9 @@ class CheckoutDetail extends Component{
             excuteKakaoPay:props.excuteKakaoPay
         }
     }
-
+    
     static getDerivedStateFromProps(nextProps, prevState){
+        console.log("Condition", prevState.checkCondition);
         if(nextProps.cart!==prevState.cart){
             return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
         }
@@ -37,6 +38,9 @@ class CheckoutDetail extends Component{
     shouldComponentUpdate(nextProps, nextState){
         if(this.props.cart!==nextProps.cart){
             return true
+        }
+        if(this.state.checkCondition!==nextState.checkCondition){
+            return true;
         }
         return false
     }
@@ -166,13 +170,13 @@ class CheckoutDetail extends Component{
         </div>
 
         <div className="creat_account">
-            <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
+            <input type="checkbox" id="f-option4" name="selector" onClick={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
             <label htmlFor="f-option4">I’ve read and accept the </label>
             <a href="#">terms & conditions*</a>
         </div>
             
                 <div className="text-right">
-                    {this.state.checkCondition? <button type ="button" className="btn-solid btn"  onClick={()=>tryPaying()}>결제하기</button>
+                    {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
                     :
                     <button type ="button" className="btn-solid btn" onClick={()=>denyPaying()}>결제하기</button>
                     }    
@@ -254,59 +258,8 @@ class checkOut extends Component {
                             <div className="checkout-form">
                                 <form>
                                     <div className="checkout row">
-
                                     <ShippingBox/>
                                     <CheckoutDetail cart={this.props.cart} symbol={symbol} totalPrice={this.props.totalPrice} totalShipping={this.props.totalShipping} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
-                                    </div>
-                                    <div className="row section-t-space">
-                                        <div className="col-lg-6">
-                                            <div className="stripe-section">
-                                                <h5>stripe js example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4242424242424242</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>2/2020</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>2222</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 m-sm-t-2">
-                                            <div className="stripe-section">
-                                                <h5>paypal example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4152521541244</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>11/18</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>521</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>

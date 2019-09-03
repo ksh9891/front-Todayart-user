@@ -15,7 +15,7 @@
     border-collapse: collapse;
     border-spacing: 2px;
     border-color: grey;
-    width:75%;
+    width:95%;
     
 }
 
@@ -27,7 +27,7 @@
 
 .shippingBox table tbody tr td:first-child{
     margin-right: 15px;
-    width: 50px;
+    width: 25%;
 }
 
 #consigee, #address, #addressDetail{
@@ -52,8 +52,12 @@
 }
 
 .secondTd{
-    padding-left:50px;
+    width:75%;
     margin-bottom:1rem;
+}
+
+.selectAddressBox{
+    margin-bottom:5px;
 }
 
 .shippingBox span{
@@ -67,7 +71,24 @@
     letter-spacing: 0.05em;
     font-size: 12px;
 
+
 }
+
+
+.shippingBox .ta-btn-sm.cl{
+   margin-left: 10px;
+}
+
+.shippingBox .modal-dialog .modal-content{
+    width:130%;
+}
+
+.shippingBox .modal-dialog.modal-dialog-scrollable{
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:15%;
+}
+
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
