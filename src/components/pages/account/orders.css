@@ -65,18 +65,24 @@ text-align:center;
     grid-column:1/2;
     grid-row:2/4;
     width: 100%;
+    border-radius:90px;
+
 }
 
 .statusNow.com{
     grid-column:3/4;
     grid-row:2/4;
     width: 100%;
+    border-radius:90px;
+
 }
 
 .statusNow.ref{
     grid-column:5/6;
     grid-row:2/4;
     width: 100%;
+    border-radius:90px;
+
 }
 
 .orderList{
@@ -160,6 +166,17 @@ text-align:center;
     border-left-style:1px dotted #ddd;
 }
 
-.img-fluid{
-    border-radius:5px;
+.img-fluid.order{
+    border-radius:90px;
+}
+
+.col-sm-12.empty-cart-cls.text-center.submenu{
+    padding-top:30px;
+}
+
+.orderList .ta-btn-sm {
+    padding: 0.25rem 0.5rem;
+    margin-top:15px;
+    margin-left: auto;
+    font-weight: 500;
 }

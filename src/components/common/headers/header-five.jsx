@@ -177,7 +177,7 @@ class HeaderFive extends Component {
 
                 <div id="search-overlay" className="search-overlay">
                     <div>
-                        <span className="closebtn" onClick={this.closeSearch} title="Close Overlay">×</span>
+                        <span className="closebtn" onClick={this.closeSearch} title="Close Overlay">Ã—</span>
                         <div className="overlay-content">
                             <div className="container">
                                 <div className="row">

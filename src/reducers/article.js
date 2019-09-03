@@ -3,8 +3,9 @@ import { ActionTypes } from '../constants/ActionTypes';
 
 const initialStateArticle = {
     items: [],
-    item: null,
-    boardName: null,
+    detail: null,
+    boardName: [],
+    comment: null,
     page: 1,
     size: 10,
     totalCount: 0,
@@ -30,13 +31,27 @@ const article = (state = initialStateArticle, action) => {
             }
             return state;
 
+        case ActionTypes.ARTICLESEARCH_SUCCESS:
+            if (payload !== undefined && payload !== null) {
+                const { data } = payload;
+                console.log('data = ', data)
+                if (data !== undefined && data !== null) {
+                    return {
+                        ...state,
+                        items: data.items,
+                        boardName: data.boardName,
+                    };
+                }
+            }
+            return state;
+
         case ActionTypes.ARTICLEDETAIL_SUCCESS:
             if (payload !== undefined && payload !== null) {
                 const { data } = payload;
                 if (data !== undefined && data !== null) {
                     return {
                         ...state,
-                        item: data
+                        detail: data
                     };
                 }
             }
@@ -47,10 +62,22 @@ const article = (state = initialStateArticle, action) => {
                 const { data } = payload;
                 return {
                     ...state,
-                    items: items.filter(item => item.articleId !== data.articleId)
+                    items: items.filter(detail => detail.articleId !== data.articleId)
                 }
             }
             return state;
+
+        // case ActionTypes.COMMENTLIST_SUCCESS:
+        //     if (payload !== undefined && payload !== null) {
+        //         const { data } = payload;
+        //         if (data !== undefined && data !== null) {
+        //             return {
+        //                 ...state,
+        //                 comment: data.items
+        //             };
+        //         }
+        //     }
+        //     return state;
 
 
         case ActionTypes.LOGOUT:
