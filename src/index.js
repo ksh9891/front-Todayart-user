@@ -65,6 +65,13 @@ import Dashboard from './components/pages/dashboard'
 import Faq from './components/pages/faq'
 import SupportContainer from './containers/SupportContainer'
 
+// Custom Components
+import HeaderFive from './components/common/headers/header-five';
+
+// ThemeSettings
+import ThemeSettings from "./components/common/theme-settings"
+import FooterTwo from "./components/common/footers/footer-two";
+
 // Blog Pages
 import RightSide from './components/blogs/right-sidebar'
 import Details from './components/blogs/details'
@@ -96,30 +103,24 @@ class Root extends React.Component {
                 <BrowserRouter basename={'/'} >
                     <ScrollContext>
                         <Switch>
-                            {/*<Route exact path={`${process.env.PUBLIC_URL}/`} component={Landing}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/vegetables`} component={Vegetables}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/electronic`} component={Electronic}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/furniture`} component={Furniture}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/pets`} component={Pets}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/watch`} component={Watch}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/kids`} component={Kids}/>*/}
-                            {/*<Route path={`${process.env.PUBLIC_URL}/beauty`} component={Beauty}/>*/}
-                            <Layout>
+                            <React.Fragment>
+                                {/* eslint-disable-next-line react/jsx-no-undef */}
+                                <HeaderFive logoName={'logo.png'}/>
                                 {/* 메인페이지 */}
                                 <Route exact path={`${process.env.PUBLIC_URL}/`} component={TodayArt}/>
 
                                 {/* Account private area */}
-                                <Route exact path={`${process.env.PUBLIC_URL}/account`} component={Account}/>
-                                <Route exact path={`${process.env.PUBLIC_URL}/account/password`} component={Password}/>
+                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account`} component={Account} />
+                                <PrivateRoute exact path={`${process.env.PUBLIC_URL}/account/password`} component={Password} />
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
+                                <PrivateRoute path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
 
-                                <Route path={`${process.env.PUBLIC_URL}/login`} component={Login}/>
+                                <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
                                 <Route path={`${process.env.PUBLIC_URL}/register`} component={Register}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-wait/:email`} component={RegisterWait}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/register-success/:token`} component={RegisterSuccess}/>
                                 <Route path={`${process.env.PUBLIC_URL}/forget-password`} component={ForgetPassword}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/orders`} component={Orders}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/addresses`} component={Address}/>
-                                <Route path={`${process.env.PUBLIC_URL}/account/addresses-add`} component={AddressAdd}/>
                                 <Route path={`${process.env.PUBLIC_URL}/cart`} component={Cart}/>
                                 <Route path={`${process.env.PUBLIC_URL}/wishlist`} component={wishList} />
 
@@ -132,7 +133,7 @@ class Root extends React.Component {
 
                                 {/*Routes For Features (Product Collection) */}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/collection`} component={CollectionLeftSidebar}/>
-                                
+
                                 <Route path={`${process.env.PUBLIC_URL}/right-sidebar/collection`} component={CollectionRightSidebar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/full-width/collection`} component={CollectionFullWidth}/>
                                 <Route path={`${process.env.PUBLIC_URL}/metro/collection`} component={CollectionMetro}/>
@@ -140,7 +141,7 @@ class Root extends React.Component {
                                 {/*Routes For Single Product*/}
                                 <Route path={`${process.env.PUBLIC_URL}/left-sidebar/product/:id`} component={LeftSideBar}/>
                                 <Route path={`${process.env.PUBLIC_URL}/right-sidebar/product/:id`} component={RightSideBar}/>
-                                
+
                                 <Route path={`${process.env.PUBLIC_URL}/col-left/product/:id`} component={ColumnLeft}/>
                                 <Route path={`${process.env.PUBLIC_URL}/col-right/product/:id`} component={ColumnRight}/>
                                 <Route path={`${process.env.PUBLIC_URL}/accordian/product/:id`} component={Accordian}/>
@@ -195,8 +196,12 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
 
-                                {/*<Route exact path="*" component={PageNotFound} />*/}
-                            </Layout>
+                                {/*<Route component={PageNotFound} />*/}
+                                <FooterTwo logoName={'logo.png'}/>
+
+                                <ThemeSettings />
+
+                            </React.Fragment>
                         </Switch>
                     </ScrollContext>
                 </BrowserRouter>

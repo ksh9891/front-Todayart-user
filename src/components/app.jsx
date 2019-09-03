@@ -11,17 +11,16 @@ import FooterThree from "./common/footers/footer-three";
 import FooterFour from "./common/footers/footer-four";
 
 class App extends Component {
-
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <HeaderFive logoName={'logo.png'}/>
                 {this.props.children}
                 <FooterTwo logoName={'logo.png'}/>
 
                 <ThemeSettings />
 
-            </div>
+            </React.Fragment>
         );
     }
 }
