@@ -6,8 +6,6 @@ import Breadcrumb from "../common/breadcrumb";
 import {incrementQty, decrementQty, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import { Files } from '../../utils';
-import './index.css'
-
 
 class cartComponent extends Component {
 
