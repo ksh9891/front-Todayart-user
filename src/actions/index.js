@@ -885,10 +885,14 @@ const addCartFromWishlist = (id) => {
     });
 };
 
-
-
+const snapOneItem = () =>{
+    return ({
+        type:ActionTypes.SNAP_ONE_ITEM
+    })
+}
 
         
+
 
 export const Actions = {
     getClientToken,
@@ -944,6 +948,7 @@ export const Actions = {
     fetchWishlist,
     searchAddressInApi,
     addAddress,
-    addCartFromWishlist
+    addCartFromWishlist,
+    snapOneItem
 
 };

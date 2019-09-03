@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import Breadcrumb from "../common/breadcrumb";
 import {incrementQty, decrementQty, Actions} from '../../actions'
+import {ActionTypes} from '../../constants/ActionTypes'
+import { Files } from '../../utils';
 
 class cartComponent extends Component {
 
@@ -21,9 +23,21 @@ class cartComponent extends Component {
         this.props.calcCartPrice();
     }
 
+    deleteItem=(cartId)=>{
+        this.props.deleteCartItem(cartId)
+        .then(response=>{
+            if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
+                return this.props.calcCartPrice();
+            }
+        }).catch(error=>
+            console.log("error >>", error))
+
+        }
+
     render (){
-        const {cart, cartItems, symbol, total} = this.props;
-        const {items, totalPrice, totalShipping} = cart;
+        const {cart, cartItems, symbol, } = this.props;
+        const {totalPrice, totalShipping} = cart;
+
         return (
             <div>
                 {/*SEO Support*/}
@@ -40,20 +54,22 @@ class cartComponent extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12">
-                                <table className="table cart-table table-responsive-xs">
+                                <table className="table cart-table table-responsive-xs cart_check" style={{"table-layout":"fixed", "width":"90%", "margin":"auto"}}>
                                     <thead>
                                     <tr className="table-head">
-                                        <th></th>
+                                        <th className="check" width="20px"></th>
                                         <th scope="col">image</th>
                                         <th scope="col">product name</th>
                                         <th scope="col">price</th>
                                         <th scope="col">quantity</th>
                                         <th scope="col">total</th>
-                                        <th scope="col" width="50">delete</th>
+                                        <th scope="col" width="5%"></th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     {cartItems.map((item, index) => {
+                                        const { fileName } = item.product.thumbnail;
+                                        const image = Files.filePath(fileName);
                                         return (
                                             <tr key={index}>
                                                 <td>
@@ -62,7 +78,7 @@ class cartComponent extends Component {
                                                 <td>
                                                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                                                     state:{item:item.product}}}>
-                                                        <img src={item.thumbnail} alt="" />
+                                                        <img src={image} className="mr-3" alt=""style={{"borderRadius":"10px"}} />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
@@ -83,7 +99,7 @@ class cartComponent extends Component {
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <i className="icon-close" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                                <i className="icon-close" onClick={() => this.deleteItem(item.cartId)}/>
                                 
                                                             </h2>
                                                         </div>
@@ -110,7 +126,7 @@ class cartComponent extends Component {
                                                 </td>
                                                 <td><h2 className="td-color">{symbol}{item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)}</h2></td>
                                                 <td>
-                                                    <i className="fa fa-times" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                    <i className="fa fa-times" onClick={() =>  this.deleteItem(item.cartId)}/>
                                                 </td>
                                             </tr>
                                          )
@@ -120,15 +136,15 @@ class cartComponent extends Component {
                                     <tfoot>
                                     <tr>
                                         <td>total price :</td>
-                                        <td><h2>{symbol} {cart.totalPrice+cart.totalShipping} </h2></td>
+                                        <td><h2>{symbol} {totalPrice+totalShipping} </h2></td>
                                     </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
-                        <div className="row cart-buttons">
+                        <div className="row cart-buttons" style={{"width":"90%","margin":"auto"}}>
                             <div className="col-6">
-                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">continue shopping</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/collection`} className="btn btn-solid">continue shopping</Link>
                             </div>
                             <div className="col-6">
                                 <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
@@ -162,6 +178,8 @@ class cartComponent extends Component {
 const mapStateToProps = (state) => ({
     cart:state.cart,
     cartItems: state.cart.items,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping,
     symbol: state.data.symbol
 })
 

@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
 import Breadcrumb from '../common/breadcrumb'
-import useCollapse from 'react-collapsed';
 
 class FAQArticle extends Component {
 

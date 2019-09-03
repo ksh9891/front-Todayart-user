@@ -1,11 +1,18 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
+import { Files } from '../../../../utils';
 
-const CartHeader  = ({item, total, symbol, deleteCartItem}) => (
+
+const CartHeader  = ({item, total, symbol, deleteCartItem}) => {
+    const { fileName } = item.product.thumbnail;
+    const image = Files.filePath(fileName);
+    return (
             <li >
                 <div className="media">
                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
-                            state:{item:item.product}}}><img alt="" className="mr-3" src={`${item.thumbnail}`} /></Link>
+                            state:{item:item.product}}}>
+                                <img src={image} className="mr-3" alt="" style={{"borderRadius":"10px"}}/>
+                            </Link>
                     <div className="media-body">
                         <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                             state:{item:item.product}}}><h4>{item.product.productName}</h4></Link>
@@ -18,7 +25,7 @@ const CartHeader  = ({item, total, symbol, deleteCartItem}) => (
                 </div>
             </li>
         )
-
+}
 
 
 export default CartHeader;
