@@ -9,10 +9,10 @@ class ShippingBox extends React.Component{
         super(props);
         this.state={
             member:props.member,
-            addresses:props.member.memberAddresses,
-            mainAddress:props.order.mainAddress[0],
-            address:props.order.mainAddress[0],
-            checkedAddress:props.order.mainAddress[0],
+            addresses:props.member.memberAddresses?props.member.memberAddresses:null,
+            mainAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            address:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            checkedAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
             selectAddress:"main",
             open:false
         }
@@ -55,8 +55,8 @@ class ShippingBox extends React.Component{
         const {realName, phone, email} = member;
         return(
             <div className="col-lg-6 col-sm-12 col-xs-12">
-                    <div className="checkout-title">
-                        <div className="shippingBox orderUser">
+                <div className="checkout-title">
+                    <div className="shippingBox orderUser">
                         <h3>주문자 정보</h3>
                         <table>
                             <tbody>
@@ -65,7 +65,7 @@ class ShippingBox extends React.Component{
                                         이름
                                     </td>
                                     <td  className="secondTd">
-                                        {realName}
+                                        {realName?realName:<input type="text" id="member"/>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,7 +73,9 @@ class ShippingBox extends React.Component{
                                         연락처
                                     </td>
                                     <td className="secondTd">
-                                        {phone}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,8 +88,8 @@ class ShippingBox extends React.Component{
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
                     </div>
+                </div>
                     
                 <div className="checkout-title">
                     <div className="shippingBox">
@@ -208,22 +210,22 @@ class AsyncMainAddressBox extends React.Component{
 
     render(){
         return(
+            <div>
+                {this.state.address?
             <table>
                 <tbody className="addressTable">
                     <tr>
                         <td>수령인</td>
-                        {this.state.address.consignee!==undefined&&this.state.address.consignee!==null?
+                        {this.state.address!==null&&this.state.address.consignee!==undefined&&this.state.address.consignee!==null?
                         <td className="secondTd">{this.state.address.consignee}</td>:
                         <td className="secondTd"><input type="text" id="consigee" required/></td>}
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        {this.state.address.consigneePhone!==undefined&&this.state.address.consigneePhone!==null?
+                        {this.state.address!==null&&this.state.address.consigneePhone!==undefined&&this.state.address.consigneePhone!==null?
                         <td className="secondTd">{this.state.address.consigneePhone}</td>:
                         <div>
-                        <td className="secondTd"><input type="tel" id="consigneePhone" required/></td>
-                        <td><input type="tel" id="consigneePhone" required/></td>
-                        <td><input type="tel" id="consigneePhone" required/></td>
+                        <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/></td>
                         </div>}
                     </tr>
                     <tr className="addressCell">
@@ -239,6 +241,9 @@ class AsyncMainAddressBox extends React.Component{
                     </tr>
                 </tbody>
             </table>
+                :<div className="ta-address-none" style={{"marginTop":"30px","marginBottom":"10px", "textAlign":"left", "paddingLeft":"10px"}}>등록된 배송지가 없어요!</div>
+                }
+            </div>
         )
     }
 }
@@ -266,9 +271,9 @@ class NewAddressBox extends React.Component{
                         </tr>
                         <tr>
                             <td><label htmlFor="consigneePhone">연락처</label></td>
-                            <td className="secondTd"><input type="tel" id="consigneePhone"/></td>
-                            <td><input type="tel" id="consigneePhone"/></td>
-                            <td><input type="tel" id="consigneePhone"/></td>
+                            <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone"/>
+                            <input type="tel" id="consigneePhone"/>
+                            <input type="tel" id="consigneePhone"/></td>
                         </tr>
                         <tr className="addressCell">
                             <td rowSpan="3"><label htmlFor="address">주소</label></td>

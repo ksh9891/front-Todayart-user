@@ -23,6 +23,11 @@ const loginAsync = (email, password) => (dispatch) => {
             } else {
                 return Promise.reject(response);
             }
+        })
+        .then(response=>{
+            if(response.type === ActionTypes.GET_CART_SUCCESS){
+                return dispatch(Actions.calcCartPrice());
+            }
         });
 };
 

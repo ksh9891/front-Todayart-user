@@ -9,6 +9,9 @@ import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import {getCartTotal} from "../../services";
 import ShippingBox from './shippingBox';
+import {Conditions} from './conditions.js';
+import CurrencyFormat from "react-currency-format";
+import "./index.css";
 
 
 class CheckoutDetail extends Component{
@@ -16,19 +19,24 @@ class CheckoutDetail extends Component{
         super(props)
         this.state={
             cart:props.cart,
-            sysbol:props.symbol,
+            symbol:props.symbol,
             totalPrice:props.totalPrice,
             totalShipping:props.totalShipping,
             pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
             makeOrder:props.makeOrder,
-            excuteKakaoPay:props.excuteKakaoPay
+            excuteKakaoPay:props.excuteKakaoPay,
+            open:false
         }
     }
     
     static getDerivedStateFromProps(nextProps, prevState){
         console.log("Condition", prevState.checkCondition);
+        console.log("Pay", prevState.pay);
+        console.log("CardCom", prevState.cardCom);
+
+
         if(nextProps.cart!==prevState.cart){
             return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
         }
@@ -42,8 +50,22 @@ class CheckoutDetail extends Component{
         if(this.state.checkCondition!==nextState.checkCondition){
             return true;
         }
+        if(this.state.pay!==nextState.pay){
+            return true;
+        }
         return false
     }
+
+
+     onOpenModal = (e) => {
+        e.preventDefault();
+       this.setState({ open: true });
+    };
+
+     onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
 
 
     render(){
@@ -105,34 +127,31 @@ class CheckoutDetail extends Component{
     }
 
 
-    const client = {
-        sandbox:    'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-        production: 'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-    }
-    
     return (
         <div className="col-lg-6 col-sm-12 col-xs-12">
             <div className="checkout-details">
                 <div className="order-box">
                     <div className="title-box">
-                        <div>Product <span> Total</span></div>
+                        <div>상품정보/수량 <span> 금액</span></div>
                     </div>
                     <ul className="qty">
                         {orderItems.map((item, index) => {
                             return <div key={index}>
                             {item.product.productName}
-                            <li>{item.productPrice} × {item.quantity}
-                            <span>{symbol} {item.productPrice*item.quantity}</span></li> 
+                            <li>
+                                <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} />
+                                <CurrencyFormat value={item.productPrice*item.quantity} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                            </li>
                             </div> })
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>Subtotal <span className="count">{symbol}{totalPrice}</span></li>
-                        <li>Shipping <span className="count">{symbol}{totalShipping}</span></li>
+                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
 
-                    <ul className="total">
-                        <li>Total <span className="count">{symbol}{totalPrice+totalShipping}</span></li>
+                    <ul className="sub-total">
+                        <li>최종 결제금액 <span className="count"><CurrencyFormat value={totalPrice+totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
                 </div>
 
@@ -141,49 +160,65 @@ class CheckoutDetail extends Component{
                         <div className="payment-options">
                         <div className="payment_item">
                             <div className="radion_btn">
-                            <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({pay:"kakaoPay", cardCom:null})}}/>
-                            <label htmlFor="f-option5">카카오페이 결제</label>
-                        <div className="check"></div>
-                    </div>
-               </div>
-                <div className="payment_item active">
-                    <div className="radion_btn">
-                        <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({pay:"creditCard", cardCom:"국민"})}}/>
-                        <label htmlFor="f-option6">신용카드 결제 </label>
-                        <img src="img/product/card.jpg" alt=""/>
-                        <div className="check"></div>
-                        {(this.state.pay==="creditCard")?<div><span>카드선택</span><span style={{float:'right'}}>
-                            <div>
-                                <select onChange={(e)=>{this.setState({cardCom:e.target.value})}}>
-                                    {cardList.map((item)=>{return(
-                                        <option value={item} key={item} >
-                                            {item}
-                                        </option>
-                                    )})}
-                                </select>
+                                <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({...this.state, pay:"kakaoPay", cardCom:null})}}/>
+                                <label htmlFor="f-option5">카카오페이 결제</label>
                             </div>
-                        </span></div>:''}
-                </div>
-            </div>
-        </div>
-        
-        </div>
+                        <div className="payment_item">
+                            <div className="radion_btn">
+                                <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({...this.state, pay:"creditCard", cardCom:"국민"})}}/>
+                                <label htmlFor="f-option6">신용카드 결제 </label>
+                                {(this.state.pay==="creditCard")?
+                                <div><span>카드선택</span><span style={{float:'right'}}>
+                                    <div>
+                                        <select onChange={(e)=>{this.setState({...this.state, cardCom:e.target.value})}}>
+                                            {cardList.map((item)=>{return(
+                                                <option value={item} key={item} >
+                                                    {item}
+                                                </option>
+                                            )})}
+                                        </select>
+                                    </div>
+                                </span></div>:''}
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
 
         <div className="creat_account">
-            <input type="checkbox" id="f-option4" name="selector" onClick={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4">I’ve read and accept the </label>
-            <a href="#">terms & conditions*</a>
+            <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
+            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
+            {/* <a href="#">terms & conditions*</a> */}
         </div>
+                 <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
+                        <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
+                            <div className="modal-content conditions" style={{"maxHeight":"calc(100vh - 200px)"}}>
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="conditions">이용약관</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body" style={{"maxHeight": "calc(100vh - 200px)", "overflowY":"auto"}}>
+                                
+                                    <Conditions/>
+                            
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
             
                 <div className="text-right">
                     {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
                     :
                     <button type ="button" className="btn-solid btn" onClick={()=>denyPaying()}>결제하기</button>
                     }    
-                </div>
-            
+                </div>  
             </div>
-        </div>
         </div>
         )
     }
@@ -245,7 +280,7 @@ class checkOut extends Component {
 
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>MultiKart | CheckOut Page</title>
+                    <title>TodayArt | CheckOut Page</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 {/*SEO Support End */}

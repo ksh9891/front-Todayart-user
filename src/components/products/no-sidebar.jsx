@@ -6,7 +6,6 @@ import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
-
 // import custom Components
 import RelatedProduct from "../common/related-product";
 import Breadcrumb from "../common/breadcrumb";
@@ -19,10 +18,6 @@ import SmallImages from './common/product/small-image'
 import { Actions } from '../../actions'
 import { Files } from '../../utils';
 import { ActionTypes } from '../../constants/ActionTypes';
-
-
-
-
 
 class NoSideBar extends Component {
     // this.props.location.state.item
@@ -57,9 +52,9 @@ class NoSideBar extends Component {
        }
 
     render(){
-
         const {symbol, addToCartUnsafe, addToWishlist, calcPrice} = this.props
         const {thumbnail} = this.state.item;
+
         var products = {
             fade: true
         };
@@ -110,11 +105,8 @@ class NoSideBar extends Component {
             })
         }
 
-        
-
         return (
             <div>
-
                 <Breadcrumb title={' Product / '+this.state.item.productName} />
 
                 {/*Section Start*/}
@@ -124,11 +116,9 @@ class NoSideBar extends Component {
                         <div className="container">
                             <div className="row">   
                                 <div className="col-lg-6 product-thumbnail">
-                                    
                                             <div >
                                                 <ImageZoom image={image} className="img-fluid image_zoom_cls-0" />
                                             </div>
-                                       
                                     <SmallImages item={this.state.item} settings={productsnav} navOne={this.state.nav1} />
                                 </div>
                                 <DetailsWithPrice symbol={symbol} item={this.state.item} navOne={this.state.nav1} addToCartClicked={asyncAddCart} BuynowClicked={buyNow} addToWishlistClicked={addWishilist} calcPrice={calcPrice} />
