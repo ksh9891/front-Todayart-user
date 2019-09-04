@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import '../../common/index.scss';
 import Slider from 'react-slick';
+import './main.css'
 
 // Import custom components
 import SpecialProducts from "./special-products"
 import BlogSection from "../common/blogsection"
 import ThemeSettings from "../../common/theme-settings"
-import FooterOne from "../../common/footers/footer-one";
 
 import {Helmet} from 'react-helmet'
 
@@ -31,10 +31,10 @@ class Todayart extends Component {
                                     <div className="row">
                                         <div className="col">
                                             <div className="slider-contain">
-                                                <div>
-                                                    <h4>furniture sofa</h4>
-                                                    <h1>harmony sofa</h1><a href="#" className="btn btn-solid">shop
-                                                    now</a></div>
+                                                <div className={`tracking-in-expand`}>
+                                                    <h4 className="ta-sub">today art</h4>
+                                                    <h1 className="ta-main">Art Gallery Shop</h1>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -47,10 +47,10 @@ class Todayart extends Component {
                                     <div className="row">
                                         <div className="col">
                                             <div className="slider-contain">
-                                                <div>
-                                                    <h4>furniture sofa</h4>
-                                                    <h1>harmony chair</h1><a href="#" className="btn btn-solid">shop
-                                                    now</a></div>
+                                                <div className="tracking-in-expand">
+                                                    <h4 className="ta-sub">today art</h4>
+                                                    <h1 className="ta-main">Art Gallery Shop</h1>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

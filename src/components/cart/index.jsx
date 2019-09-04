@@ -7,7 +7,6 @@ import {incrementQty, decrementQty, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import { Files } from '../../utils';
 
-
 class cartComponent extends Component {
 
     constructor (props) {
