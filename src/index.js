@@ -69,7 +69,6 @@ import SupportContainer from './containers/SupportContainer'
 import HeaderFive from './components/common/headers/header-five';
 
 // ThemeSettings
-import ThemeSettings from "./components/common/theme-settings"
 import FooterTwo from "./components/common/footers/footer-two";
 
 // Blog Pages
@@ -148,7 +147,6 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/right-image/product/:id`} component={RightImage}/>
                                 <Route path={`${process.env.PUBLIC_URL}/vertical/product/:id`} component={Vertical}/>
 
-
                                 {/*Routes For custom Features*/}
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
@@ -158,7 +156,6 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccessFail`} component={kakaoSuccessFail}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoSuccess`} component={kakaoSuccess}/>
                                 <Route path={`${process.env.PUBLIC_URL}/checkout/kakaoCancel`} component={kakaoCancel}/>
-
 
                                 {/*Routes For Extra Pages*/}
                                 <Route path={`${process.env.PUBLIC_URL}/pages/about-us`} component={aboutUs}/>
@@ -196,8 +193,6 @@ class Root extends React.Component {
 
                                 {/*<Route component={PageNotFound} />*/}
                                 <FooterTwo logoName={'logo.png'}/>
-
-                                <ThemeSettings />
 
                             </React.Fragment>
                         </Switch>

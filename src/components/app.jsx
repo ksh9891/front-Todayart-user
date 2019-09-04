@@ -14,9 +14,6 @@ class App extends Component {
                 <HeaderFive logoName={'logo.png'}/>
                 {this.props.children}
                 <FooterTwo logoName={'logo.png'}/>
-
-                <ThemeSettings />
-
             </React.Fragment>
         );
     }
