@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
 import { Actions } from '../../../../actions'
-import {ActionTypes} from '../../../../constants/ActionTypes'
-import { toast  } from 'react-toastify';
+import { ActionTypes } from '../../../../constants/ActionTypes'
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
@@ -12,11 +12,12 @@ import "./detailprice.css";
 import CurrencyFormat from "react-currency-format";
 
 class DetailsWithPrice extends Component {
+
     constructor (props) {
         super (props)
         this.state = {
-            open:false,
-            quantity:1,
+            open: false,
+            quantity: 1,
             stock: 'InStock',
             nav3: null
         }
@@ -37,17 +38,17 @@ class DetailsWithPrice extends Component {
     }
 
     minusQty = () => {
-        if(this.state.quantity > 1) {
-            this.setState({stock: 'InStock'})
-            this.setState({quantity: this.state.quantity - 1})
+        if (this.state.quantity > 1) {
+            this.setState({ stock: 'InStock' })
+            this.setState({ quantity: this.state.quantity - 1 })
         }
     }
 
     plusQty = () => {
-        if(this.props.item.remain > this.state.quantity) {
-            this.setState({quantity: this.state.quantity+1})
-        }else{
-            this.setState({stock: 'Out of Stock !'})
+        if (this.props.item.remain > this.state.quantity) {
+            this.setState({ quantity: this.state.quantity + 1 })
+        } else {
+            this.setState({ stock: 'Out of Stock !' })
         }
     }
 
@@ -59,6 +60,7 @@ class DetailsWithPrice extends Component {
         const {symbol, item, addToCartClicked, BuynowClicked} = this.props
         const addWishilist=(item)=>{
             this.props.addWishlist(item)
+
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
                     toast.error("작품이 찜하기에 추가되었습니다");       
@@ -68,11 +70,12 @@ class DetailsWithPrice extends Component {
              }).catch(error=>{
                  console.log('error >>', error)
              })
+
         }
 
         var colorsnav = {
             slidesToShow: 6,
-            swipeToSlide:true,
+            swipeToSlide: true,
             arrows: false,
             dots: false,
             focusOnSelect: true
@@ -106,13 +109,15 @@ class DetailsWithPrice extends Component {
                         </div>
                         <div className="qty-box">
                             <div className="input-group">
-                                  <span className="input-group-prepend">
+                                <span className="input-group-prepend">
                                     <button type="button" className="btn quantity-left-minus" onClick={this.minusQty} data-type="minus" data-field="">
                                      <i className="fa fa-angle-left" />
+
                                     </button>
-                                  </span>
+                                </span>
                                 <input type="text" name="quantity" value={this.state.quantity} onChange={this.changeQty} className="form-control input-number" />
                                 <span className="input-group-prepend">
+
                                 <button type="button" className="btn quantity-right-plus" onClick={this.plusQty} data-type="plus" data-field="">
                                 <i className="fa fa-angle-right" />
                                 </button>
@@ -121,9 +126,10 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                     <div className="product-buttons" >
-                        <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
-                                    this.props.calcPrice()
-                                    }}
+                        <a className="btn btn-solid" onClick={() => {
+                            addToCartClicked(item, this.state.quantity);
+                            this.props.calcPrice()
+                        }}
                         > 장바구니 </a>
                         <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} > 바로구매</Link>
                     </div>
@@ -159,7 +165,7 @@ class DetailsWithPrice extends Component {
                         </div>
                     </div>
                 </Modal>
-                <ToastContainer/>
+                <ToastContainer />
             </div>
         )
     }

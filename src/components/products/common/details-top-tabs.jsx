@@ -3,12 +3,12 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
-
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import queryString from 'query-string'
 import ProductQandA from '../../articles/ProductQandA';
 import { Actions } from '../../../actions'
+import CurrencyFormat from "react-currency-format";
 
 
 class DetailsTopTabs extends Component {
@@ -56,7 +56,7 @@ class DetailsTopTabs extends Component {
                                     <tbody>
 
                                         <tr>
-                                            <th>상품명 :</th>
+                                            <th>작품명 :</th>
                                             <td>{item.productName}</td>
                                         </tr>
                                         <tr>
@@ -64,17 +64,18 @@ class DetailsTopTabs extends Component {
                                             <td>{item.artistName}</td>
                                         </tr>
                                         <tr>
-                                            <th>상품크기 :</th>
+                                            <th>작품크기 :</th>
                                             <td>{item.productSize}</td>
                                         </tr>
                                         <tr>
-                                            <th>상품가격 :</th>
-                                            <td>{symbol}{item.productPrice}</td>
+                                            <th>작품가격 :</th>
+                                            <td>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></td>
                                         </tr>
                                         <tr>
                                             <th>배송비 :</th>
-                                            <td>{symbol}{item.shippingFee}</td>
+                                            <td>{symbol}<CurrencyFormat value={item.shippingFee} displayType={'text'} thousandSeparator={true} /></td>
                                         </tr>
+                                        
                                     </tbody>
                                 </table>
                             </TabPanel>

@@ -47,10 +47,11 @@ class FilterBar extends Component {
 
     render (){
         const { id } = this.props;
+        
         return (
             <div className="product-filter-content">
                 <div className="search-count">
-                    <h5>Showing Products 1-{this.props.items.length} Result</h5>
+                    <h5> 총 {this.props.items.length}개의 작품이 있습니다.</h5>
                 </div>
                 <div className="collection-view">
                     <ul>
@@ -64,12 +65,6 @@ class FilterBar extends Component {
                 </div>
                 <div className="collection-grid-view">
                     <ul>
-                        <li>
-                            <img
-                                src={`${process.env.PUBLIC_URL}/assets/images/icon/2.png`}
-                                alt=""
-                                className="product-2-layout-view" onClick={() => this.LayoutView(6)} />
-                        </li>
                         <li>
                             <img
                                 src={`${process.env.PUBLIC_URL}/assets/images/icon/3.png`}
@@ -111,9 +106,9 @@ class FilterBar extends Component {
                         }
                     }
                         }>
-                        <option value="">Sorting items</option>
-                        <option value="HighToLow">Price: High to Low</option>
-                        <option value="LowToHigh">Price: Low to High</option>                       
+                        <option value="">작품정렬</option>
+                        <option value="HighToLow">높은가격순</option>
+                        <option value="LowToHigh">낮은가격순</option>                       
                     </select>
                 </div>
             </div>

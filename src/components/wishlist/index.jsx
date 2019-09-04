@@ -78,7 +78,7 @@ class wishList extends Component {
             <div>
                 <Helmet>
                     <title>TodayArt | WishList Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 <Breadcrumb title={'위시리스트'} />
                 {items.length>0 ?

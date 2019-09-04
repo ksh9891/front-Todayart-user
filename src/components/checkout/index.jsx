@@ -3,7 +3,6 @@ import {Helmet} from 'react-helmet'
 import { connect } from 'react-redux'
 import {Link, Redirect } from 'react-router-dom'
 import SimpleReactValidator from 'simple-react-validator';
-
 import Breadcrumb from "../common/breadcrumb";
 import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
@@ -22,6 +21,7 @@ class CheckoutDetail extends Component{
             symbol:props.symbol,
             totalPrice:props.totalPrice,
             totalShipping:props.totalShipping,
+
             pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
@@ -187,8 +187,7 @@ class CheckoutDetail extends Component{
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
-            {/* <a href="#">terms & conditions*</a> */}
+            <label htmlFor="f-option4"> 구매 및 결제대행서비스 <a href="#">이용약관</a> 등에 모두 동의합니다. (필수) </label>
         </div>
                  <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
                         <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
@@ -281,7 +280,7 @@ class checkOut extends Component {
                 {/*SEO Support*/}
                 <Helmet>
                     <title>TodayArt | CheckOut Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 {/*SEO Support End */}
 
@@ -328,3 +327,4 @@ export default connect(
 )(checkOut)
 export {kakaoCancel} from './kakao';
 export {kakaoSuccessFail} from './kakao';
+

@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import '../../common/index.scss';
 import Slider from 'react-slick';
 import './main.css'
-
 // Import custom components
 import SpecialProducts from "./special-products"
 import BlogSection from "../common/blogsection"
 import ThemeSettings from "../../common/theme-settings"
-
 import {Helmet} from 'react-helmet'
 
 class Todayart extends Component {
@@ -166,7 +164,6 @@ class Todayart extends Component {
                                     <h2 className="title-inner1">from the Exhibition</h2>
                                     <div className="tabs tab-title">
                                         <h4>Exhibition Information</h4></div>
-                                        {/* <h6>현재 진행중인 전시정보입니다.</h6> */}
                                     <hr role="tournament6" />
                                 </div>
                             </div>
