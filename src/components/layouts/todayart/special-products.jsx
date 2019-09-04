@@ -18,20 +18,38 @@ class SpecialProducts extends Component {
 
         this.state = {
            
+            randomItem : [],
             endSlice: 8
         }
     }
 
-    componentWillMount(){        
-        this.props.fetchArtwork();
+    componentWillMount(){
+        
+        
     }
 
 
     componentDidMount() {
-        this.setState({
-            ...this.state,
-            endSlice: this.getRandomArbitrary(8, this.props.items.length)
-        })
+
+        this.props.fetchArtwork()
+        .then(response => {
+            if(response.type=== ActionTypes.FETCH_ARTWORK_SUCCESS){
+                const { data } = response.payload;
+                
+
+                this.setState({
+                    ...this.state,
+                    endSlice: this.getRandomArbitrary(8, data.length)
+                })
+
+                const randomItem = data.slice(this.state.endSlice-8, this.state.endSlice);
+                
+                this.setState({
+                    ...this.state,
+                    randomItem: randomItem
+                })
+            }
+        });
 
         console.log("this.state", this.state);
     }
@@ -43,6 +61,8 @@ class SpecialProducts extends Component {
 
     
 
+    
+
     render (){
 
         const {symbol,addToCart, addToCompare, items} = this.props
@@ -51,7 +71,7 @@ class SpecialProducts extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    toast.error("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')  
                 } 
             }).catch(error=>{
