@@ -1,0 +1,8 @@
+tr > td:first-child {
+    min-width: unset!important;
+}
+
+.ta-total-price > span {
+    font-size: 23px;
+    font-weight: bold;
+}

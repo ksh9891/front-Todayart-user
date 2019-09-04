@@ -1,0 +1,18 @@
+.qty li span {
+    font-size: inherit!important;
+    float: none!important;
+}
+
+.qty li span:last-child {
+    font-size: 18px!important;
+    float: right!important;
+}
+
+.total .count > span {
+    font-size: 18px!important;
+    float: none!important;
+}
+
+.order-box .total li span {
+    color: unset;
+}
