@@ -21,7 +21,7 @@ class Todayart extends Component {
             <div>
                 <Helmet>
                     <title>TodayArt | 오늘의 아트</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 <section className="p-0 small-slider">
                     <Slider className="slide-1 home-slider">
@@ -31,7 +31,7 @@ class Todayart extends Component {
                                     <div className="row">
                                         <div className="col">
                                             <div className="slider-contain">
-                                                <div className={`tracking-in-expand`}>
+                                                <div className="text-focus-in">
                                                     <h4 className="ta-sub">today art</h4>
                                                     <h1 className="ta-main">Art Gallery Shop</h1>
                                                 </div>
@@ -47,7 +47,23 @@ class Todayart extends Component {
                                     <div className="row">
                                         <div className="col">
                                             <div className="slider-contain">
-                                                <div className="tracking-in-expand">
+                                                <div className="text-focus-in">
+                                                    <h4 className="ta-sub">today art</h4>
+                                                    <h1 className="ta-main">Art Gallery Shop</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div className="home home14 text-left">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col">
+                                            <div className="slider-contain">
+                                                <div className="text-focus-in">
                                                     <h4 className="ta-sub">today art</h4>
                                                     <h1 className="ta-main">Art Gallery Shop</h1>
                                                 </div>
@@ -68,7 +84,7 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/24.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/todayart/2banner1.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
@@ -84,7 +100,7 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/25.png`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/todayart/2banner2.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
@@ -100,7 +116,7 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/39.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/todayart/2banner3.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
