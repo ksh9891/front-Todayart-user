@@ -109,7 +109,6 @@ class Todayart extends Component {
                                     <h2 className="title-inner1">from the Exhibition</h2>
                                     <div className="tabs tab-title">
                                         <h4>Exhibition Information</h4></div>
-                                        {/* <h6>현재 진행중인 전시정보입니다.</h6> */}
                                     <hr role="tournament6" />
                                 </div>
                             </div>

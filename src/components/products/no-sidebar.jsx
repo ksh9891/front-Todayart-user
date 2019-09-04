@@ -74,7 +74,7 @@ class NoSideBar extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    toast.success("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')  
                 } 
             }).catch(error=>{

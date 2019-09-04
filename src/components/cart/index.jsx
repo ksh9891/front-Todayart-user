@@ -44,11 +44,12 @@ class cartComponent extends Component {
                 {/*SEO Support*/}
                 <Helmet>
                     <title>TodayArt | Cart List Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 {/*SEO Support End */}
 
                 <Breadcrumb title={'장바구니'}/>
+
 
                 {cartItems.length > 0 ?
                     <section className="cart-section section-b-space">
@@ -90,6 +91,7 @@ class cartComponent extends Component {
                                                                         <input type="text" name="quantity"
                                                                                className="form-control input-number" defaultValue={item.quantity} />
                                                                     </div>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -149,7 +151,7 @@ class cartComponent extends Component {
                             <div className="row cart-row">
                                 <div className="col-sm-12 d-flex">
                                     <div className="ml-auto">
-                                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid mr-3">쇼핑 계속하기</Link>
+                                        <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid mr-3">쇼핑 계속하기</Link>
                                         <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
                                     </div>
                                 </div>
