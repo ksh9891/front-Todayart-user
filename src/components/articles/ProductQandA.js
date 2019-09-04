@@ -208,18 +208,7 @@ class ProductQandA extends Component {
             )
           }) : ''}
 
-        <span>
-          {userDetails !== null ?
-            <div className="checkout_btn_inner d-flex align-items-center">
-              <nav className="navbar navbar-light bg-light">
-                <form className="form-inline">
-                  <button className="btn btn-outline-success my-2 my-sm-0">
-                    <Link to={"/articleWrite"} boardId={this.state.boardId}>질문하기</Link>
-                  </button>
-                </form>
-              </nav>
-            </div> : ''}
-        </span>
+        
       </div>
     )
 

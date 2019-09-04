@@ -1,15 +1,26 @@
 // 상품상세페이지 하단 내용, 디테일, 비디오, 리뷰 쓰는 곳에 대한 코드
 
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
-import {Link} from 'react-router-dom'
-import ProductQandA from '../../articles/ProductQandA'
+import { Link, withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
+import queryString from 'query-string'
+import ProductQandA from '../../articles/ProductQandA';
 
 class DetailsTopTabs extends Component {
-    render (){
 
-        const {symbol, item} = this.props
+    constructor(props) {
+        super(props)
+        this.state = {
+          boardId: queryString.parse(props.location.search).boardId
+        }
+      }
+
+    render() {
+
+        const { symbol, item } = this.props
+        const { userDetails } = this.props.auth;
 
         return (
             <section className="tab-product m-0">
@@ -39,28 +50,28 @@ class DetailsTopTabs extends Component {
                             </TabList>
                             <TabPanel className="tab-pane fade mt-4 show active">
                                 <table className="table table-striped mb-0">
-                                    <tbody>                                   
-                                   
-                                    <tr>
-                                        <th>상품명 :</th>
-                                        <td>{item.productName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>작가 :</th>
-                                        <td>{item.artistName}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>상품크기 :</th>
-                                        <td>{item.productSize}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>상품가격 :</th>
-                                        <td>{symbol}{item.productPrice}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>배송비 :</th>
-                                        <td>{symbol}{item.shippingFee}</td>
-                                    </tr>                                    
+                                    <tbody>
+
+                                        <tr>
+                                            <th>상품명 :</th>
+                                            <td>{item.productName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>작가 :</th>
+                                            <td>{item.artistName}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품크기 :</th>
+                                            <td>{item.productSize}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>상품가격 :</th>
+                                            <td>{symbol}{item.productPrice}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>배송비 :</th>
+                                            <td>{symbol}{item.shippingFee}</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </TabPanel>
@@ -106,6 +117,18 @@ class DetailsTopTabs extends Component {
                                             <input type="text" className="form-control" id="email" placeholder="Email" required />
                                         </div> */}
                                         <ProductQandA />
+                                        <span>
+                                            {userDetails !== null ?
+                                                <div className="checkout_btn_inner d-flex align-items-center">
+                                                    <nav className="navbar navbar-light bg-light">
+                                                        <form className="form-inline">
+                                                            <button className="btn btn-outline-success my-2 my-sm-0">
+                                                                <Link to={"/articleWrite"} boardId={this.state.boardId}>질문하기</Link>
+                                                            </button>
+                                                        </form>
+                                                    </nav>
+                                                </div> : ''}
+                                        </span>
                                     </div>
                                 </form>
                             </TabPanel>
@@ -117,4 +140,10 @@ class DetailsTopTabs extends Component {
     }
 }
 
-export default DetailsTopTabs;
+const mapStateToProps = (state) => ({
+    article: state.article,
+    auth: state.auth,
+    data: state.data
+  });
+
+export default withRouter(connect(mapStateToProps, null)(DetailsTopTabs))

@@ -21,7 +21,7 @@ class ArticleWrite extends Component {
 
     e.preventDefault();
 
-    const title = this.titleInput.current.value;
+    const title = this.props.article.boardName.boardId === 4 ? this.title = this.props.data.item.productName : this.titleInput.current.value;
     const content = this.contentInput.current.value;
     const boardId = this.props.article.boardName.boardId;
     const productId = this.props.data.item.productId !== null ? this.props.data.item.productId:null;
@@ -32,7 +32,7 @@ class ArticleWrite extends Component {
       .then(response => {
         this.props.article.boardName.boardId === 4 ? 
         this.props.history.push("/product/" + this.props.data.item.productId) :
-        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
+        this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId) 
       })
       .catch(error => {
         console.log('error>>', error);
@@ -52,7 +52,7 @@ class ArticleWrite extends Component {
         
         this.props.article.boardName.boardId === 4 ? 
         this.props.history.push("/product/" + this.props.article.detail.productId) :
-        this.props.history.push("/articles?boardId=" + this.props.article.detail.boardId) 
+        this.props.history.push("/articles?boardId=" + this.props.article.boardName.boardId) 
 
       })
       .then(console.log('thisprops = ', this.props))
@@ -89,7 +89,7 @@ class ArticleWrite extends Component {
                 </select> */}
   
               </div>
-              <div class="form-group">
+              {this.props.article.boardName.boardId === 4 ? '' : <div class="form-group">
                 <label for="Name">제목</label>
                 <input
                 class="form-control"
@@ -101,7 +101,8 @@ class ArticleWrite extends Component {
                   placeholder="제목을 입력하세요."
                   required
                 />
-              </div>
+              </div>}
+              
 
               {/* <div className="App">
                 <h4>내용</h4>
