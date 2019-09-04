@@ -73,7 +73,10 @@ const cart = (state = initialStateCart, action) => {
             return state;
         
         case ActionTypes.ADD_CART_SUCCESS:
-            toast.success("작품이 장바구니에 추가되었습니다");       
+
+            toast.error("상품이 장바구니에 추가되었습니다");       
+   
+
             if(payload!==null&&payload!==undefined){
                 let {data} = payload;
                 data = {...data, checked:true};
