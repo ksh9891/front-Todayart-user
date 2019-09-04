@@ -176,9 +176,7 @@ const mapDispatchToProps=(dispatch)=>({
     getCart:()=>dispatch(Actions.getCart()),
     toggleCartItem: (id)=>dispatch(Actions.toggleCartItem(id)),
     deleteCartItem: (id)=>dispatch(Actions.deleteCartItem(id)),
-    calcCartPrice: ()=>dispatch(Actions.calcCartPrice()),
-    incrementQty: ()=>dispatch(incrementQty()),
-    decrementQty: ()=>dispatch(decrementQty())
+    calcCartPrice: ()=>dispatch(Actions.calcCartPrice())
   })
 
 export default connect(
