@@ -39,3 +39,12 @@
         opacity: 1;
     }
 }
+
+
+.home {
+    height: 70vh!important;
+}
+
+.slider-contain {
+    height: 70vh!important;
+}
