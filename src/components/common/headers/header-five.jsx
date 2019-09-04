@@ -135,7 +135,7 @@ class HeaderFive extends Component {
 							<div className="col-sm-12">
 								<div className="main-menu">
 									<div className="menu-left category-nav-right">
-										<div className="brand-logo">
+										<div className="brand-logo" style={{'padding': '15px'}}>
                                             <LogoImage logo={this.props.logoName} />
 										</div>
 										{/*<div className="navbar">*/}
