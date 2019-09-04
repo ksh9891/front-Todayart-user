@@ -52,9 +52,9 @@ class cartComponent extends Component {
 
                 {cartItems.length > 0 ?
                     <section className="cart-section section-b-space">
-                        <div className="container">
-                            <div className="row">
-                                <div className="col-sm-12">
+                        <div className="container" style={{"width": "90%"}}>
+                            <div className="row cart-row">
+                                <div className="col-sm-12 ta-cart-col">
                                     <table className="table cart-table table-responsive-xs">
                                         <thead>
                                             <tr className="table-head">
@@ -64,7 +64,7 @@ class cartComponent extends Component {
                                                 <th scope="col">가격</th>
                                                 <th scope="col">수량</th>
                                                 <th scope="col">결제금액</th>
-                                                <th scope="col">삭제</th>
+                                                <th scope="col"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -139,14 +139,14 @@ class cartComponent extends Component {
                                     </table>
                                 </div>
                             </div>
-                            <div className="row mt-3 mb-3">
+                            <div className="row mt-3 mb-3 cart-row">
                                 <div className="col-sm-12">
                                     <h5 className="text-right ta-total-price">
                                         최종 결제금액 : <CurrencyFormat value={cart.totalPrice+cart.totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} />
                                     </h5>
                                 </div>
                             </div>
-                            <div className="row">
+                            <div className="row cart-row">
                                 <div className="col-sm-12 d-flex">
                                     <div className="ml-auto">
                                         <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid mr-3">쇼핑 계속하기</Link>

@@ -1,8 +1,17 @@
-tr > td:first-child {
+tr > td:first-child, tr > td:last-child{
     min-width: unset!important;
 }
 
 .ta-total-price > span {
     font-size: 23px;
     font-weight: bold;
+}
+
+.ta-cart-col {
+    display: flex;
+}
+
+.cart-row {
+    width: 90%;
+    margin: auto;
 }
