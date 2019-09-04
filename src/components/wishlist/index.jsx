@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { addToCart } from '../../actions'
 import Breadcrumb from '../common/breadcrumb';
+import {Helmet} from 'react-helmet'
+import CurrencyFormat from "react-currency-format";
 
 
 class wishList extends Component {
@@ -31,7 +33,7 @@ class wishList extends Component {
                   
                 if(response.type==ActionTypes.REMOVE_WISHLIST_SUCCESS){  
                     console.log('삭제성공!')
-                    toast.success("상품이 찜하기에서 삭제되었습니다")
+                    toast.success("작품이 찜하기에서 삭제되었습니다")
                     this.props.fetchWishlist()               
                     
                 }
@@ -60,7 +62,7 @@ class wishList extends Component {
                 .then(response=>{                  
                 if(response.type==ActionTypes.ADDCART_FROMWISHLIST_SUCCESS){  
                     console.log('이동성공!')
-                    toast.success("상품이 장바구니로 이동되었습니다")
+                    toast.success("작품이 장바구니로 이동되었습니다")
                     this.props.fetchWishlist() 
                     
                 }       
@@ -73,6 +75,10 @@ class wishList extends Component {
 
         return (
             <div>
+                <Helmet>
+                    <title>TodayArt | WishList Page</title>
+                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                </Helmet>
                 <Breadcrumb title={'위시리스트'} />
                 {items.length>0 ?
                 <section className="wishlist-section section-b-space">
@@ -86,7 +92,7 @@ class wishList extends Component {
                                         <th scope="col">작품명</th>
                                         <th scope="col">가격</th>
                                         <th scope="col">재고 여부</th>
-                                        <th scope="col">액션</th>
+                                        <th scope="col">삭제/장바구니</th>
                                     </tr>
                                     </thead>
                                     {items.map((item, index) => {
@@ -105,30 +111,38 @@ class wishList extends Component {
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                            <del><span className="money">{symbol}{item.product.productPrice}</span></del></h2>
+                                                                <span className="money">
+                                                                    <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                </span>
+                                                            </h2>
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                                <a className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                                     <i className="fa fa-times" />
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
+                                                                <a className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                                     <i className="fa fa-shopping-cart" />
                                                                 </a>
                                                             </h2>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><h2>
-                                                     <del><span className="money">{symbol}{item.product.productPrice}</span></del></h2></td>
+                                                <td>
+                                                    <p>
+                                                        <span className="money">
+                                                            <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                        </span>
+                                                    </p>
+                                                </td>
                                                 <td >
                                                     <p>in stock</p>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                    <a className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                         <i className="fa fa-times" />
                                                     </a>
-                                                    <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
+                                                    <a className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                         <i className="fa fa-shopping-cart" />
                                                     </a>
                                                 </td>
@@ -140,8 +154,7 @@ class wishList extends Component {
                         </div>
                         <div className="row wishlist-buttons">
                             <div className="col-12">
-                                <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid">continue shopping</Link>
-                                <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">check out</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid">쇼핑 계속하기</Link>
                             </div>
                         </div>
                     </div>

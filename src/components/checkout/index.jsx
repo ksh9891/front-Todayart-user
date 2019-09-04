@@ -10,6 +10,8 @@ import {ActionTypes} from '../../constants/ActionTypes'
 import {getCartTotal} from "../../services";
 import ShippingBox from './shippingBox';
 import {Conditions} from './conditions.js';
+import CurrencyFormat from "react-currency-format";
+import "./index.css";
 
 
 class CheckoutDetail extends Component{
@@ -17,7 +19,7 @@ class CheckoutDetail extends Component{
         super(props)
         this.state={
             cart:props.cart,
-            sysbol:props.symbol,
+            symbol:props.symbol,
             totalPrice:props.totalPrice,
             totalShipping:props.totalShipping,
             pay:"kakaoPay",
@@ -130,24 +132,26 @@ class CheckoutDetail extends Component{
             <div className="checkout-details">
                 <div className="order-box">
                     <div className="title-box">
-                        <div>Product <span> Total</span></div>
+                        <div>상품정보/수량 <span> 금액</span></div>
                     </div>
                     <ul className="qty">
                         {orderItems.map((item, index) => {
                             return <div key={index}>
                             {item.product.productName}
-                            <li>{item.productPrice} × {item.quantity}
-                            <span>{symbol} {item.productPrice*item.quantity}</span></li> 
+                            <li>
+                                <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} />
+                                <CurrencyFormat value={item.productPrice*item.quantity} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                            </li>
                             </div> })
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>Subtotal <span className="count">{symbol}{totalPrice}</span></li>
-                        <li>Shipping <span className="count">{symbol}{totalShipping}</span></li>
+                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
 
-                    <ul className="total">
-                        <li>Total <span className="count">{symbol}{totalPrice+totalShipping}</span></li>
+                    <ul className="sub-total">
+                        <li>최종 결제금액 <span className="count"><CurrencyFormat value={totalPrice+totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
                 </div>
 
@@ -182,12 +186,10 @@ class CheckoutDetail extends Component{
                     </div>
 
         <div className="creat_account">
-            <input type="checkbox" id="f-option4" name="checkbox" onClick={()=>{this.state.checkCondition===false?this.setState({...this.state, checkCondition:true}):this.setState({...this.state, checkCondition:false})}} />
-            <label htmlFor="f-option4">I’ve read and accept the </label>
-            <a data-toggle="modal" data-target="#conditions" onClick={()=>this.onOpenModal} style={{"color":"blue"}}> terms & conditions*</a>
+            <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
+            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
+            {/* <a href="#">terms & conditions*</a> */}
         </div>
-
-
                  <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
                         <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
                             <div className="modal-content conditions" style={{"maxHeight":"calc(100vh - 200px)"}}>
@@ -208,7 +210,7 @@ class CheckoutDetail extends Component{
                             </div>
                             </div>
                         </div>
-                        </div>
+                </div>
             
                 <div className="text-right">
                     {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
@@ -278,7 +280,7 @@ class checkOut extends Component {
 
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>Today Art | CheckOut Page</title>
+                    <title>TodayArt | CheckOut Page</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 {/*SEO Support End */}

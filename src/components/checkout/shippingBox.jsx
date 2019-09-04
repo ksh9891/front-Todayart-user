@@ -55,8 +55,8 @@ class ShippingBox extends React.Component{
         const {realName, phone, email} = member;
         return(
             <div className="col-lg-6 col-sm-12 col-xs-12">
-                    <div className="checkout-title">
-                        <div className="shippingBox orderUser">
+                <div className="checkout-title">
+                    <div className="shippingBox orderUser">
                         <h3>주문자 정보</h3>
                         <table>
                             <tbody>
@@ -88,8 +88,8 @@ class ShippingBox extends React.Component{
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
                     </div>
+                </div>
                     
                 <div className="checkout-title">
                     <div className="shippingBox">
