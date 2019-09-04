@@ -256,7 +256,6 @@ class ElementProductBox extends Component {
                         </div>
                     </div>
                 </section>
-
             </div>
         )
     }

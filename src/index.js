@@ -7,7 +7,6 @@ import './index.scss';
 
 // Import custom components
 import store from './store';
-import { getAllProducts } from './actions'
 
 // Layouts
 import TodayArt from './components/layouts/todayart/main';
@@ -34,7 +33,6 @@ import Column from "./components/products/column";
 import Vertical from "./components/products/vertical";
 
 // Features
-import Layout from './components/app'
 import Cart from './components/cart'
 import Compare from './components/compare/index'
 import wishList from './components/wishlist'
@@ -71,11 +69,6 @@ import HeaderFive from './components/common/headers/header-five';
 // ThemeSettings
 import FooterTwo from "./components/common/footers/footer-two";
 
-// Blog Pages
-import RightSide from './components/blogs/right-sidebar'
-import Details from './components/blogs/details'
-import BlogPage from './components/blogs/blog-page'
-
 // Theme Element
 import ElementTitle from "./components/features/theme/element-title"
 import ElementBanner from "./components/features/theme/element-banner";
@@ -91,7 +84,6 @@ import ElementProductNoSlider from "./components/features/product/element-produc
 import ElementMultipleSlider from "./components/features/product/element-multiple-slider"
 import ElementProductTab from "./components/features/product/element-product-tab"
 import ArticleWrite from './components/articles/ArticleWrite';
-import PrivateRoute from "./PrivateRoute";
 
 class Root extends React.Component {
     render() {
@@ -185,11 +177,6 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/features/element-product-no-slider`} component={ElementProductNoSlider}/>
                                 <Route path={`${process.env.PUBLIC_URL}/features/element-product-multiple-slider`} component={ElementMultipleSlider}/>
                                 <Route path={`${process.env.PUBLIC_URL}/features/element-product-tab`} component={ElementProductTab}/>
-
-                                {/*Blog Pages*/}
-                                <Route path={`${process.env.PUBLIC_URL}/blog/right-sidebar`} component={RightSide}/>
-                                <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
-                                <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
 
                                 {/*<Route component={PageNotFound} />*/}
                                 <FooterTwo logoName={'logo.png'}/>
