@@ -3,10 +3,17 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
+<<<<<<< HEAD
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import queryString from 'query-string'
 import ProductQandA from '../../articles/ProductQandA';
+=======
+import {Link} from 'react-router-dom'
+import ProductQandA from '../../articles/ProductQandA'
+import { connect } from 'react-redux'
+import { Actions } from '../../../actions'
+>>>>>>> ckk
 
 class DetailsTopTabs extends Component {
 
@@ -141,9 +148,14 @@ class DetailsTopTabs extends Component {
 }
 
 const mapStateToProps = (state) => ({
+
     article: state.article,
     auth: state.auth,
-    data: state.data
+    data: state.data,
+    symbol: state.data.symbol,
+    items : state.data.items
   });
 
 export default withRouter(connect(mapStateToProps, null)(DetailsTopTabs))
+
+

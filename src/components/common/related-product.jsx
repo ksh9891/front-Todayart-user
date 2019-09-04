@@ -55,7 +55,7 @@ class RelatedProduct extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12 product-related">
-                            <h2>related products</h2>
+                            <h2>추천상품</h2>
                         </div>
                     </div>
                     <div className="row search-product">
