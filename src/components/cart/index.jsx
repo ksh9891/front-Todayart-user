@@ -28,12 +28,12 @@ class cartComponent extends Component {
             <div>
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>MultiKart | Cart List Page</title>
+                    <title>TodayArt | Cart List Page</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 {/*SEO Support End */}
 
-                <Breadcrumb title={'Cart Page'}/>
+                <Breadcrumb title={'장바구니'}/>
 
                 {cartItems.length>0 ?
                 <section className="cart-section section-b-space">
@@ -44,12 +44,12 @@ class cartComponent extends Component {
                                     <thead>
                                     <tr className="table-head">
                                         <th></th>
-                                        <th scope="col">image</th>
-                                        <th scope="col">product name</th>
-                                        <th scope="col">price</th>
-                                        <th scope="col">quantity</th>
-                                        <th scope="col">total</th>
-                                        <th scope="col" width="50">delete</th>
+                                        <th scope="col">작품이미지</th>
+                                        <th scope="col">작품명</th>
+                                        <th scope="col">가격</th>
+                                        <th scope="col">수량</th>
+                                        <th scope="col">결제금액</th>
+                                        <th scope="col" width="50">삭제</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -89,7 +89,7 @@ class cartComponent extends Component {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><h2>{symbol}{item.productPrice}</h2>shipping Fee : {item.shippingFee?item.shippingFee:0}</td>
+                                                <td><h2>{symbol}{item.productPrice}</h2>배송비 : {item.shippingFee?item.shippingFee:0}</td>
                                                 <td>
                                                     <div className="qty-box">
                                                         <div className="input-group">
@@ -119,7 +119,7 @@ class cartComponent extends Component {
                                 <table className="table cart-table table-responsive-md">
                                     <tfoot>
                                     <tr>
-                                        <td>total price :</td>
+                                        <td>최종 결제금액 :</td>
                                         <td><h2>{symbol} {cart.totalPrice+cart.totalShipping} </h2></td>
                                     </tr>
                                     </tfoot>
@@ -128,7 +128,7 @@ class cartComponent extends Component {
                         </div>
                         <div className="row cart-buttons">
                             <div className="col-6">
-                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">continue shopping</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">쇼핑 계속하기</Link>
                             </div>
                             <div className="col-6">
                                 <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>

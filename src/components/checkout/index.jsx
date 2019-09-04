@@ -94,7 +94,7 @@ class CheckoutDetail extends Component{
             <div className="checkout-details">
                 <div className="order-box">
                     <div className="title-box">
-                        <div>Product <span> Total</span></div>
+                        <div>상품정보/수량 <span> 금액</span></div>
                     </div>
                     <ul className="qty">
                         {orderItems.map((item, index) => {
@@ -106,12 +106,12 @@ class CheckoutDetail extends Component{
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>Subtotal <span className="count">{symbol}{totalPrice}</span></li>
-                        <li>Shipping <span className="count">{symbol}{totalShipping}</span></li>
+                        <li>상품금액 <span className="count">{symbol}{totalPrice}</span></li>
+                        <li>배송비 <span className="count">{symbol}{totalShipping}</span></li>
                     </ul>
 
                     <ul className="total">
-                        <li>Total <span className="count">{symbol}{totalPrice+totalShipping}</span></li>
+                        <li>최종 결제금액 <span className="count">{symbol}{totalPrice+totalShipping}</span></li>
                     </ul>
                 </div>
 
@@ -150,8 +150,8 @@ class CheckoutDetail extends Component{
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4">I’ve read and accept the </label>
-            <a href="#">terms & conditions*</a>
+            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
+            {/* <a href="#">terms & conditions*</a> */}
         </div>
             
                 <div className="text-right">
@@ -224,7 +224,7 @@ class checkOut extends Component {
 
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>MultiKart | CheckOut Page</title>
+                    <title>TodayArt | CheckOut Page</title>
                     <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
                 </Helmet>
                 {/*SEO Support End */}
