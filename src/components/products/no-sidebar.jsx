@@ -72,6 +72,7 @@ class NoSideBar extends Component {
             focusOnSelect: true
         };
         
+        
         const { fileName } = thumbnail?thumbnail:{};
         const image = Files.filePath(fileName);
             
