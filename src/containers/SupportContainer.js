@@ -65,7 +65,7 @@ class SupportContainer extends Component {
                             <nav className="navbar navbar-light bg-light">
                                 <form className="form-inline">
                                         <button className="btn btn-outline-success my-2 my-sm-0"> 
-                                        <Link to={"/articleWrite"} boardId={this.state.boardId}>글쓰기</Link>
+                                        <Link to={"/articleWrite"} boardId={this.props.article.boardName.boardId}>글쓰기</Link>
                                         </button>
                                 </form>
                             </nav>
