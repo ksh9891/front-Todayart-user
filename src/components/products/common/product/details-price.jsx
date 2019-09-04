@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom'
 import Slider from 'react-slick';
 import Modal from 'react-responsive-modal';
-
 import { Actions } from '../../../../actions'
 import {ActionTypes} from '../../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
+import "./detailprice.css";
 
 
 
@@ -65,7 +65,7 @@ class DetailsWithPrice extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    toast.success("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')                    
                                  
                 }
@@ -86,8 +86,8 @@ class DetailsWithPrice extends Component {
         return (
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
-                    <h2> {item.productName} </h2>
-                    <h4>{item.artistName}</h4>
+                    <h2> {item.productName}  <small className="product-fontsize">{item.artistName}</small> </h2>
+                    {/* <h4>{item.artistName}</h4> */}
                     <h3>{symbol}{item.productPrice} </h3>
                     {item.variants?
                     <ul >
@@ -102,15 +102,16 @@ class DetailsWithPrice extends Component {
                             <div>
                                
                                 <div >
-                            <ul>
-                                {
+                            
+                                    <h6 className="product-title size-text">작품크기 | Size</h6>
                                     <li >{item.productSize}</li>
-                                }
-                            </ul>
+                             
                         </div>
                             </div>
+                            <div className="product-stock">
                         <span className="instock-cls">{this.state.stock}</span>
-                        <h6 className="product-title">quantity</h6>
+                        <h6 className="product-title">수량 | quantity</h6>
+                        </div>
                         <div className="qty-box">
                             <div className="input-group">
                                   <span className="input-group-prepend">
@@ -131,15 +132,15 @@ class DetailsWithPrice extends Component {
                         <a className="btn btn-solid" onClick={() => {addToCartClicked(item, this.state.quantity);
                                     this.props.calcPrice()
                                     }}
-                        >장바구니에 담기</a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} >바로 구입하기</Link>
+                        > 장바구니 </a>
+                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} > 바로구매</Link>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">product details</h6>
+                        <h6 className="product-title">작품설명 | Details</h6>
                         <p>{item.productContent}</p>
                     </div>
                     <div className="border-product">
-                        <h6 className="product-title">share it</h6>
+                        <h6 className="product-title">공유 | share it</h6>
                         <div className="product-icon">
                             <ul className="product-social">
                                 <li><a href="https://www.facebook.com/" target="_blank"><i className="fa fa-facebook"></i></a></li>
@@ -149,7 +150,7 @@ class DetailsWithPrice extends Component {
                             </ul>
                                 <button className="wishlist-btn" onClick={() => addWishilist(item)}><i
                                     className="fa fa-heart"></i><span
-                                    className="title-font">Add To WishList</span>
+                                    className="title-font"> 찜하기 </span>
                                 </button>
                         </div>
                     </div>
@@ -183,4 +184,4 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 
-export default connect(null,mapDispatchToProps)(DetailsWithPrice);
+    export default connect(null,mapDispatchToProps)(DetailsWithPrice);

@@ -9,8 +9,9 @@ import {ActionTypes} from '../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-
 import { Files } from '../../../utils';
+import "./productitem.css";
+
 
 class ProductItem extends Component {
 
@@ -181,44 +182,44 @@ class ProductItem extends Component {
                                         <div className="col-lg-6 rtl-text">
                                             <div className="product-right">
                                                 <h2> {item.productName} </h2>
-                                                <h3>{item.productPrice}{symbol}</h3>
+                                                <h3>{symbol}{item.productPrice}</h3>
 
                                                 <div className="border-product">
 
                                                      {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품상세설명 */}
-                                                    <h6 className="product-title">product details</h6>
-                                                    <p>{item.productContent}</p>
-                                                </div>
+                                                     <h6 className="product-title">작가 | Artist </h6>
+                                                        <li>{item.artistName} </li>
+                                                    </div>
                                                 <div className="product-description border-product">
                                                     
-                                                    <div className="size-box">
-                                                        <ul>
-                                                            
+                                                <div className="size-box">
+                                                            <ul>
+                                                            <h6 className="product-title">상품크기 | Size</h6>
                                                                <li>{item.productSize}</li>
-                                                           
-                                                        </ul>
-                                                    </div>
-                                                    <h6 className="product-title">quantity</h6>
-                                                    <div className="qty-box">
-                                                        <div className="input-group">
+                                                                
+                                                            </ul>
+                                                        </div>
+                                                        <h6 className="product-title">수량 | quantity</h6>
+                                                        <div className="qty-box">
+                                                            <div className="input-group">
                                                               <span className="input-group-prepend">
                                                                 <button type="button" className="btn quantity-left-minus" onClick={this.minusQty} data-type="minus" data-field="">
                                                                  <i className="fa fa-angle-left"></i>
                                                                 </button>
                                                               </span>
-                                                            <input type="text" name="quantity" value={this.state.quantity}  onChange={this.changeQty} className="form-control input-number" />
+                                                                <input type="text" name="quantity" value={this.state.quantity}  onChange={this.changeQty} className="form-control input-number" />
                                                                 <span className="input-group-prepend">
                                                                 <button type="button" className="btn quantity-right-plus" onClick={this.plusQty} data-type="plus" data-field="">
                                                                 <i className="fa fa-angle-right"></i>
                                                                 </button>
                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
                                                 <div className="product-buttons">
-                                                    <button  className="btn btn-solid" onClick={() => asyncAddCart(item, this.state.quantity)} >add to cart</button>
+                                                    <button  className="btn btn-solid" onClick={() => asyncAddCart(item, this.state.quantity)} > 장바구니 </button>
                                                     <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
-                                                        state :{ item:this.props.item }}} className="btn btn-solid">>view detail</Link>
+                                                        state :{ item:this.props.item }}} className="btn btn-solid"> 상품페이지로 이동</Link>
                                                 </div>
                                             </div>
                                         </div>

@@ -5,6 +5,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
 import {Link} from 'react-router-dom'
 import ProductQandA from '../../articles/ProductQandA'
+import { connect } from 'react-redux'
+import { Actions } from '../../../actions'
 
 class DetailsTopTabs extends Component {
     render (){
@@ -128,4 +130,10 @@ class DetailsTopTabs extends Component {
     }
 }
 
-export default DetailsTopTabs;
+const mapStateToProps = (state) => ({
+    // products: getVisibleproducts(state.data, state.filters),
+    symbol: state.data.symbol,
+    items : state.data.items
+})
+
+export default connect(mapStateToProps, null)(DetailsTopTabs)
