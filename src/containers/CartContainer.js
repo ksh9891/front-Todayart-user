@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
 import { ActionTypes } from '../constants/ActionTypes';
-
+import CurrencyFormat from "react-currency-format";
 
 class CartContainer extends React.Component{
     constructor(props){
@@ -64,8 +64,8 @@ class CartContainer extends React.Component{
                 <div>
             <li>
                 <div className="total">
-                    <h5>상품금액 : <span>{symbol}{totalPrice}</span></h5>
-                    <h5>배송비 : <span>{symbol}{totalShipping}</span></h5>
+                    <h5>상품금액 : <span>{symbol}<CurrencyFormat value={totalPrice} displayType={'text'} thousandSeparator={true} /></span></h5>
+                    <h5>배송비 : <span>{symbol}<CurrencyFormat value={totalShipping} displayType={'text'} thousandSeparator={true} /></span></h5>
                 </div>
             </li>
             <li>

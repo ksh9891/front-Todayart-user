@@ -3,7 +3,6 @@ import {Helmet} from 'react-helmet'
 import { connect } from 'react-redux'
 import {Link, Redirect } from 'react-router-dom'
 import SimpleReactValidator from 'simple-react-validator';
-
 import Breadcrumb from "../common/breadcrumb";
 import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
@@ -281,7 +280,7 @@ class checkOut extends Component {
                 {/*SEO Support*/}
                 <Helmet>
                     <title>TodayArt | CheckOut Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 {/*SEO Support End */}
 
