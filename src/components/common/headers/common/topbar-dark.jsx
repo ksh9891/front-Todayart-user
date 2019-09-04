@@ -13,8 +13,8 @@ class TopBarDark extends Component {
                         <div className="col-lg-6">
                             <div className="header-contact">
                                 <ul>
-                                    <li>오늘의아트 방문을 환영합니다!</li>
-                                    <li><i className="fa fa-phone" aria-hidden="true"/>연락처 : 02 - 000 - 0000</li>
+                                    <li>오늘의아트에 오신 것을 환영합니다</li>
+                                    <li><i className="fa fa-phone" aria-hidden="true"/>연락처 : 02 - 707 - 0491</li>
                                 </ul>
                             </div>
                         </div>
