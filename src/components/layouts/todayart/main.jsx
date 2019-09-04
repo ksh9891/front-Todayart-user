@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import '../../common/index.scss';
 import Slider from 'react-slick';
 import './main.css'
-
 // Import custom components
 import SpecialProducts from "./special-products"
 import BlogSection from "../common/blogsection"
 import ThemeSettings from "../../common/theme-settings"
-
 import {Helmet} from 'react-helmet'
 
 class Todayart extends Component {
