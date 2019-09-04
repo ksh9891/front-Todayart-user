@@ -3,12 +3,14 @@ import {Helmet} from 'react-helmet'
 import { connect } from 'react-redux'
 import {Link, Redirect } from 'react-router-dom'
 import SimpleReactValidator from 'simple-react-validator';
-
 import Breadcrumb from "../common/breadcrumb";
 import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import {getCartTotal} from "../../services";
 import ShippingBox from './shippingBox';
+import {Conditions} from './conditions.js';
+import CurrencyFormat from "react-currency-format";
+import "./index.css";
 
 
 class CheckoutDetail extends Component{
@@ -16,19 +18,60 @@ class CheckoutDetail extends Component{
         super(props)
         this.state={
             cart:props.cart,
-            sysbol:props.symbol,
-            payment:props.symbol,
+            symbol:props.symbol,
+            totalPrice:props.totalPrice,
+            totalShipping:props.totalShipping,
+
             pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
             makeOrder:props.makeOrder,
-            excuteKakaoPay:props.excuteKakaoPay
+            excuteKakaoPay:props.excuteKakaoPay,
+            open:false
         }
     }
+    
+    static getDerivedStateFromProps(nextProps, prevState){
+        console.log("Condition", prevState.checkCondition);
+        console.log("Pay", prevState.pay);
+        console.log("CardCom", prevState.cardCom);
+
+
+        if(nextProps.cart!==prevState.cart){
+            return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
+        }
+        return null;
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.props.cart!==nextProps.cart){
+            return true
+        }
+        if(this.state.checkCondition!==nextState.checkCondition){
+            return true;
+        }
+        if(this.state.pay!==nextState.pay){
+            return true;
+        }
+        return false
+    }
+
+
+     onOpenModal = (e) => {
+        e.preventDefault();
+       this.setState({ open: true });
+    };
+
+     onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
+
 
     render(){
 
-    const {items, totalPrice, totalShipping}=this.state.cart;
+    const {cart, totalPrice, totalShipping} = this.state;
+    const {items}=cart;
     const symbol = this.state.symbol;
     const orderItems = items.filter((item)=>item.checked===true);
     const orderItemList = orderItems.map((item)=>item.cartId);
@@ -84,34 +127,31 @@ class CheckoutDetail extends Component{
     }
 
 
-    const client = {
-        sandbox:    'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-        production: 'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-    }
-    
     return (
         <div className="col-lg-6 col-sm-12 col-xs-12">
             <div className="checkout-details">
                 <div className="order-box">
                     <div className="title-box">
-                        <div>Product <span> Total</span></div>
+                        <div>상품정보/수량 <span> 금액</span></div>
                     </div>
                     <ul className="qty">
                         {orderItems.map((item, index) => {
                             return <div key={index}>
                             {item.product.productName}
-                            <li>{item.productPrice} × {item.quantity}
-                            <span>{symbol} {item.productPrice*item.quantity}</span></li> 
+                            <li>
+                                <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} />
+                                <CurrencyFormat value={item.productPrice*item.quantity} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                            </li>
                             </div> })
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>Subtotal <span className="count">{symbol}{totalPrice}</span></li>
-                        <li>Shipping <span className="count">{symbol}{totalShipping}</span></li>
+                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
 
-                    <ul className="total">
-                        <li>Total <span className="count">{symbol}{totalPrice+totalShipping}</span></li>
+                    <ul className="sub-total">
+                        <li>최종 결제금액 <span className="count"><CurrencyFormat value={totalPrice+totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
                 </div>
 
@@ -120,49 +160,66 @@ class CheckoutDetail extends Component{
                         <div className="payment-options">
                         <div className="payment_item">
                             <div className="radion_btn">
-                            <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({pay:"kakaoPay", cardCom:null})}}/>
-                            <label htmlFor="f-option5">카카오페이 결제</label>
-                        <div className="check"></div>
-                    </div>
-               </div>
-                <div className="payment_item active">
-                    <div className="radion_btn">
-                        <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({pay:"creditCard", cardCom:"국민"})}}/>
-                        <label htmlFor="f-option6">신용카드 결제 </label>
-                        <img src="img/product/card.jpg" alt=""/>
-                        <div className="check"></div>
-                        {(this.state.pay==="creditCard")?<div><span>카드선택</span><span style={{float:'right'}}>
-                            <div>
-                                <select onChange={(e)=>{this.setState({cardCom:e.target.value})}}>
-                                    {cardList.map((item)=>{return(
-                                        <option value={item} key={item} >
-                                            {item}
-                                        </option>
-                                    )})}
-                                </select>
+                                <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({...this.state, pay:"kakaoPay", cardCom:null})}}/>
+                                <label htmlFor="f-option5">카카오페이 결제</label>
                             </div>
-                        </span></div>:''}
-                </div>
-            </div>
-        </div>
-        
-        </div>
+                        <div className="payment_item">
+                            <div className="radion_btn">
+                                <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({...this.state, pay:"creditCard", cardCom:"국민"})}}/>
+                                <label htmlFor="f-option6">신용카드 결제 </label>
+                                {(this.state.pay==="creditCard")?
+                                <div><span>카드선택</span><span style={{float:'right'}}>
+                                    <div>
+                                        <select onChange={(e)=>{this.setState({...this.state, cardCom:e.target.value})}}>
+                                            {cardList.map((item)=>{return(
+                                                <option value={item} key={item} >
+                                                    {item}
+                                                </option>
+                                            )})}
+                                        </select>
+                                    </div>
+                                </span></div>:''}
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4">I’ve read and accept the </label>
-            <a href="#">terms & conditions*</a>
+            <label htmlFor="f-option4">  <a data-toggle="modal" data-target="#conditions" onClick={()=>this.onOpenModal} style={{"color":"blue"}}>구매 및 결제대행서비스 이용약관</a> 등에 모두 동의합니다. (필수) </label>
+            {/* <a href="#">terms & conditions*</a> */}
         </div>
+
+                 <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
+                        <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
+                            <div className="modal-content conditions" style={{"maxHeight":"calc(100vh - 200px)"}}>
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="conditions">이용약관</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body" style={{"maxHeight": "calc(100vh - 200px)", "overflowY":"auto"}}>
+                                
+                                    <Conditions/>
+                            
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                </div>
             
                 <div className="text-right">
-                    {this.state.checkCondition? <button type ="button" className="btn-solid btn"  onClick={()=>tryPaying()}>결제하기</button>
+                    {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
                     :
                     <button type ="button" className="btn-solid btn" onClick={()=>denyPaying()}>결제하기</button>
                     }    
-                </div>
-            
+                </div>  
             </div>
-        </div>
         </div>
         )
     }
@@ -224,8 +281,8 @@ class checkOut extends Component {
 
                 {/*SEO Support*/}
                 <Helmet>
-                    <title>MultiKart | CheckOut Page</title>
-                    <meta name="description" content="Multikart – Multipurpose eCommerce React Template is a multi-use React template. It is designed to go well with multi-purpose websites. Multikart Bootstrap 4 Template will help you run multiple businesses." />
+                    <title>TodayArt | CheckOut Page</title>
+                    <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 {/*SEO Support End */}
 
@@ -237,121 +294,8 @@ class checkOut extends Component {
                             <div className="checkout-form">
                                 <form>
                                     <div className="checkout row">
-
                                     <ShippingBox/>
-                                    {/* <div className="col-lg-6 col-sm-12 col-xs-12">
-                                        <div className="checkout-title">
-                                            <h3>주소 입력</h3>
-                                        </div>
-                                        <div className="row check-out">
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">First Name</div>
-                                                <input type="text" name="first_name" value={this.state.first_name} onChange={this.setStateFromInput} />
-                                                {this.validator.message('first_name', this.state.first_name, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Last Name</div>
-                                                <input type="text" name="last_name" value={this.state.last_name} onChange={this.setStateFromInput} />
-                                                {this.validator.message('last_name', this.state.last_name, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Phone</div>
-                                                <input type="text" name="phone"  value={this.state.phone} onChange={this.setStateFromInput} />
-                                                {this.validator.message('phone', this.state.phone, 'required|phone')}
-                                            </div>
-                                            <div className="form-group col-md-6 col-sm-6 col-xs-12">
-                                                <div className="field-label">Email Address</div>
-                                                <input type="text" name="email" value={this.state.email} onChange={this.setStateFromInput} />
-                                                {this.validator.message('email', this.state.email, 'required|email')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Country</div>
-                                                <select name="country" value={this.state.country} onChange={this.setStateFromInput}>
-                                                    <option>India</option>
-                                                    <option>South Africa</option>
-                                                    <option>United State</option>
-                                                    <option>Australia</option>
-                                                </select>
-                                                {this.validator.message('country', this.state.country, 'required')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Address</div>
-                                                <input type="text" name="address" value={this.state.address} onChange={this.setStateFromInput} placeholder="Street address" />
-                                                {this.validator.message('address', this.state.address, 'required|min:20|max:120')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-12 col-xs-12">
-                                                <div className="field-label">Town/City</div>
-                                                <input type="text" name="city" value={this.state.city} onChange={this.setStateFromInput} />
-                                                {this.validator.message('city', this.state.city, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                                                <div className="field-label">State / County</div>
-                                                <input type="text" name="state" value={this.state.state} onChange={this.setStateFromInput} />
-                                                {this.validator.message('state', this.state.state, 'required|alpha')}
-                                            </div>
-                                            <div className="form-group col-md-12 col-sm-6 col-xs-12">
-                                                <div className="field-label">Postal Code</div>
-                                                <input type="text" name="pincode" value={this.state.spincode} onChange={this.setStateFromInput} />
-                                                {this.validator.message('pincode', this.state.pincode, 'required|integer')}
-                                            </div>
-                                            <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                <input type="checkbox" name="create_account" id="account-option"  checked={this.state.create_account} onChange={this.setStateFromCheckbox}/>
-                                                &ensp; <label htmlFor="account-option">Create An Account?</label>
-                                                {this.validator.message('checkbox', this.state.create_account, 'create_account')}
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                        <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
-                                    </div>
-                                    <div className="row section-t-space">
-                                        <div className="col-lg-6">
-                                            <div className="stripe-section">
-                                                <h5>stripe js example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4242424242424242</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>2/2020</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>2222</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 m-sm-t-2">
-                                            <div className="stripe-section">
-                                                <h5>paypal example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4152521541244</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>11/18</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>521</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} totalPrice={this.props.totalPrice} totalShipping={this.props.totalShipping} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
                                 </form>
                             </div>
@@ -364,7 +308,9 @@ class checkOut extends Component {
 }
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    symbol: state.data.symbol
+    symbol: state.data.symbol,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping
 })
 
 const mapDispatchToProps=(dispatch)=>({
@@ -383,3 +329,4 @@ export default connect(
 )(checkOut)
 export {kakaoCancel} from './kakao';
 export {kakaoSuccessFail} from './kakao';
+

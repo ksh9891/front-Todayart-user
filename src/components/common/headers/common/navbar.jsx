@@ -81,18 +81,18 @@ class NavBar extends Component {
                                 <Link to={`${process.env.PUBLIC_URL}/`} className="nav-link">HOME</Link>
                             </li>
                             <li>
-                                <Link to="#" className="nav-link" onClick={(e) => this.handleSubmenu(e)}>작품<span className="sub-arrow" /></Link>
+                            <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="nav-link">작품<span className="sub-arrow" /></Link>
                                 <ul className="nav-submenu">
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${0}`}>전체</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`}>서양화</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`}>동양화</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${3}`}>기타</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${0}`}>전체보기</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`}>풍경화</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`}>인물화</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${3}`}>정물화</Link></li>
                                     
                                      
                                 </ul>
                             </li>
                             <li>
-                                <Link to="" className="nav-link">지원<span className="sub-arrow" /></Link>
+                            <Link to={`${process.env.PUBLIC_URL}/articles?boardId=${1}`} className="nav-link">지원<span className="sub-arrow" /></Link>
                                 <ul className="nav-submenu">
                                     <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${1}`}>FAQ</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${2}`}>Q&A</Link></li>

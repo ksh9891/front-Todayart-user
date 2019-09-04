@@ -84,8 +84,65 @@ class ThemeSettings extends Component {
         let tap_to_top = {display: 'none'}
 
         return (
-            <div>                
-
+            <div>
+                <div>
+                    <a href="javascript:void(0)" onClick={() => this.openSetting()}>
+                        <div className="setting-sidebar" id="setting-icon">
+                            <div>
+                                <i className="fa fa-cog" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </a>
+                    <div id="setting_box" className="setting-box">
+                        <a href="javascript:void(0)" className="overlay" onClick={() => this.closeSetting()}></a>
+                        <div className="setting_box_body">
+                            <div onClick={() => this.closeSetting()}>
+                                <div className="sidebar-back text-left">
+                                    <i className="fa fa-angle-left pr-2" aria-hidden="true"></i> Back
+                                </div>
+                            </div>
+                            <div className="setting-body">
+                                <div className="setting-title">
+                                    <h4>color option</h4>
+                                </div>
+                                <div className="setting-contant">
+                                    <ul className="color-box">
+                                        <li className="color1 active" onClick={(e) => this.changeColor(e, 'color1')}></li>
+                                        <li className="color2" onClick={(e) => this.changeColor(e, 'color2')}></li>
+                                        <li className="color3" onClick={(e) => this.changeColor(e, 'color3')}></li>
+                                        <li className="color4" onClick={(e) => this.changeColor(e, 'color4')}></li>
+                                        <li className="color5" onClick={(e) => this.changeColor(e, 'color5')}></li>
+                                        <li className="color6" onClick={(e) => this.changeColor(e, 'color6')}></li>
+                                        <li className="color7" onClick={(e) => this.changeColor(e, 'color7')}></li>
+                                        <li className="color8" onClick={(e) => this.changeColor(e, 'color8')}></li>
+                                        <li className="color9" onClick={(e) => this.changeColor(e, 'color9')}></li>
+                                        <li className="color10" onClick={(e) => this.changeColor(e, 'color10')}></li>
+                                        <li className="color11" onClick={(e) => this.changeColor(e, 'color11')}></li>
+                                        <li className="color12" onClick={(e) => this.changeColor(e, 'color12')}></li>
+                                        <li className="color13" onClick={(e) => this.changeColor(e, 'color13')}></li>
+                                        <li className="color14" onClick={(e) => this.changeColor(e, 'color14')}></li>
+                                        <li className="color15" onClick={(e) => this.changeColor(e, 'color15')}></li>
+                                        <li className="color16" onClick={(e) => this.changeColor(e, 'color16')}></li>
+                                        <li className="color17" onClick={(e) => this.changeColor(e, 'color17')}></li>
+                                        <li className="color18" onClick={(e) => this.changeColor(e, 'color18')}></li>
+                                    </ul>
+                                </div>
+                                <div className="setting-title">
+                                    <h4>RTL</h4>
+                                </div>
+                                <div className="setting-contant">
+                                    <ul className="setting_buttons">
+                                        <li className="active" id="ltr_btn">
+                                            <a href={null} className="btn setting_btn" onClick={ () => this.ChangeRtl(this.state.divName)}>
+                                                {this.state.divName}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="sidebar-btn dark-light-btn">
                     <div className="dark-light">
                         <div

@@ -86,7 +86,7 @@ class ProductListing extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    toast.error("상품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')    
                 }
             }).catch(error=>{
@@ -140,9 +140,9 @@ class ProductListing extends Component {
                             <div className="row">
                                 <div className="col-sm-12 text-center section-b-space mt-5 no-found" >
                                     <img src={`${process.env.PUBLIC_URL}/assets/images/empty-search.jpg`} className="img-fluid mb-4" />
-                                    <h3>Sorry! Couldn't find the product you were looking For!!!    </h3>
-                                    <p>Please check if you have misspelt something or try searching with other words.</p>
-                                    <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">continue shopping</Link>
+                                    <h3>죄송합니다! 찾고 있는 상품을 찾을 수 없습니다.</h3>
+                                    <p>내용이 잘못되었는지 확인하거나 다른 단어로 검색해보십시오.</p>
+                                    <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid"> 계속 둘러보기 </Link>
                                 </div>
                             </div>
                            

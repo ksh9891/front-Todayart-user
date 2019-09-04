@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import CartPage from '../components/common/headers/common/cart-header'
 import {Actions} from '../actions'
 import { ActionTypes } from '../constants/ActionTypes';
+import CurrencyFormat from "react-currency-format";
 
 class CartContainer extends React.Component{
     constructor(props){
@@ -44,8 +45,10 @@ class CartContainer extends React.Component{
                 }
             })
         }
-        
+
         return(
+        
+        
      <li  className="onhover-div mobile-cart"><div className="cart-qty-cls">{cart.items.length}</div>
         {/* 카트모양 아이콘 */}
         <Link to={`${process.env.PUBLIC_URL}/cart`}>
@@ -61,14 +64,14 @@ class CartContainer extends React.Component{
                 <div>
             <li>
                 <div className="total">
-                    <h5>subtotal : <span>{symbol}{totalPrice}</span></h5>
-                    <h5>shippingFee : <span>{symbol}{totalShipping}</span></h5>
+                    <h5>상품금액 : <span>{symbol}<CurrencyFormat value={totalPrice} displayType={'text'} thousandSeparator={true} /></span></h5>
+                    <h5>배송비 : <span>{symbol}<CurrencyFormat value={totalShipping} displayType={'text'} thousandSeparator={true} /></span></h5>
                 </div>
             </li>
             <li>
                 <div className="buttons">
-                    <Link to={`${process.env.PUBLIC_URL}/cart`} className="view-cart">view cart</Link>
-                    <Link to={`${process.env.PUBLIC_URL}/checkout`} className="checkout">checkout</Link>
+                    <Link to={`${process.env.PUBLIC_URL}/cart`} className="view-cart">장바구니 보기</Link>
+                    <Link to={`${process.env.PUBLIC_URL}/checkout`} className="checkout">결제</Link>
                 </div>
             </li></div>
                     :

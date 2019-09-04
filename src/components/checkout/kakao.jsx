@@ -12,7 +12,7 @@ const KakaoSuccess = ({order,approveKakaoPay})=>{
     approveKakaoPay(pgToken, ordered, tid)
     .then((response)=>{
         if(response.type===ActionTypes.APPROVE_KAKAO_PAY_SUCCESS){
-            window.opener.location.replace("/test")
+            window.opener.location.replace("/order-success")
             window.close();
             
         }else{

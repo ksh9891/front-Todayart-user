@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import Pace from 'react-pace-progress'
 
 // Import custom components
-import store from '../../../store';
 import NavBar from "./common/navbar";
-import SideBar from "./common/sidebar";
 import CartContainer from "./../../../containers/CartContainer";
 import {changeCurrency} from '../../../actions'
 import {connect} from "react-redux";
@@ -135,7 +133,7 @@ class HeaderFive extends Component {
 							<div className="col-sm-12">
 								<div className="main-menu">
 									<div className="menu-left category-nav-right">
-										<div className="brand-logo">
+										<div className="brand-logo" style={{'padding': '15px'}}>
                                             <LogoImage logo={this.props.logoName} />
 										</div>
 										{/*<div className="navbar">*/}

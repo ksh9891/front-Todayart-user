@@ -15,7 +15,8 @@
     border-collapse: collapse;
     border-spacing: 2px;
     border-color: grey;
-    width:75%;
+    width:95%;
+    line-height: 1.9;
     
 }
 
@@ -27,21 +28,22 @@
 
 .shippingBox table tbody tr td:first-child{
     margin-right: 15px;
-    width: 50px;
+    width: 25%;
 }
 
-#consigee, #address, #addressDetail{
+#consigee, #address, #addressDetail, #member{
     height: 30px;
     width: 100%;
     background-color: #F9F9F9;
     border:1px dashed #c7c7c7;
 }
 
-#consigneePhone{
+#consigneePhone, #memberPhone{
     background-color: #F9F9F9;
     height: 30px;
     border:1px dashed #c7c7c7;
-    width: 100%;
+    width: 32%;
+    margin-right:2px;
 }
 
 #postalNumber{
@@ -52,27 +54,43 @@
 }
 
 .secondTd{
-    padding-left:50px;
+    width:75%;
     margin-bottom:1rem;
+}
+
+.selectAddressBox{
+    margin-bottom:5px;
 }
 
 .shippingBox span{
     margin-right:25px;
 }
 
-.shippingBox button{
-    border: 2px solid #866e6c;
-    border-radius: 10px;
-    color: white;
-    padding: 2px 10px;
-    text-align: center;
-    text-decoration: none;
+.shippingBox .ta-btn-sm{
+    padding: 0.25rem 0.5rem;
+    margin-left: auto;
+    font-weight: 500;
     letter-spacing: 0.05em;
-    display: inline;
-    background-color: #866e6c;
     font-size: 12px;
 
+
 }
+
+
+.shippingBox .ta-btn-sm.cl{
+   margin-left: 10px;
+}
+
+.shippingBox .modal-dialog .modal-content{
+    width:130%;
+}
+
+.shippingBox .modal-dialog.modal-dialog-scrollable{
+    margin-right:auto;
+    margin-left:auto;
+    margin-top:15%;
+}
+
 
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {

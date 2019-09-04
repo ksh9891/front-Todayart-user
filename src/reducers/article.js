@@ -67,6 +67,16 @@ const article = (state = initialStateArticle, action) => {
             }
             return state;
 
+        case ActionTypes.COMMENTDELETE_SUCCESS:
+            if (payload !== null && payload !== null) {
+                const { data } = payload;
+                return {
+                    ...state,
+                    items: items.filter(comment => comment.commentId !== data.commentId)
+                }
+            }
+            return state;
+
         // case ActionTypes.COMMENTLIST_SUCCESS:
         //     if (payload !== undefined && payload !== null) {
         //         const { data } = payload;

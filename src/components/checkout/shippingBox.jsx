@@ -2,15 +2,19 @@ import React from 'react';
 import {connect} from 'react-redux';
 import './shippingBox.css';
 import { Actions } from '../../actions';
+import Modal from 'react-responsive-modal';
 
 class ShippingBox extends React.Component{
     constructor(props){
         super(props);
         this.state={
             member:props.member,
-            addresses:props.order.addresses,
-            mainAddress:props.order.mainAddress,
-            selectAddress:"main"
+            addresses:props.member.memberAddresses?props.member.memberAddresses:null,
+            mainAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            address:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            checkedAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            selectAddress:"main",
+            open:false
         }
         
         this.props.getAddress();
@@ -21,12 +25,14 @@ class ShippingBox extends React.Component{
             console.log("getDerivedStateFromProps", nextProps)
             return {addresses:nextProps.order.addresses, mainAddress:nextProps.order.mainAddress}
         }
+        if(nextProps.address!==prevState.address){
+            return {address:nextProps.address}}
         return prevState
     }
 
     shouldComponentUpdate(nextProps, nextState){
         console.log("shouldComponentUpdate", this.state, nextState)
-        return true
+        return true;
     }
 
     componentWillUnmount(){
@@ -34,14 +40,23 @@ class ShippingBox extends React.Component{
     }
 
     
+
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+    };
+    
     render(){
         const {member, mainAddress} = this.state;
         
         const {realName, phone, email} = member;
         return(
             <div className="col-lg-6 col-sm-12 col-xs-12">
-                    <div className="checkout-title">
-                        <div className="shippingBox orderUser">
+                <div className="checkout-title">
+                    <div className="shippingBox orderUser">
                         <h3>주문자 정보</h3>
                         <table>
                             <tbody>
@@ -50,7 +65,7 @@ class ShippingBox extends React.Component{
                                         이름
                                     </td>
                                     <td  className="secondTd">
-                                        {realName}
+                                        {realName?realName:<input type="text" id="member"/>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -58,7 +73,9 @@ class ShippingBox extends React.Component{
                                         연락처
                                     </td>
                                     <td className="secondTd">
-                                        {phone}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
+                                        {phone?phone:<input type="tel" id="memberPhone"/>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -71,8 +88,8 @@ class ShippingBox extends React.Component{
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
                     </div>
+                </div>
                     
                 <div className="checkout-title">
                     <div className="shippingBox">
@@ -86,12 +103,72 @@ class ShippingBox extends React.Component{
                         <input type="radio" name="address" value="otherAddress" id="otherAddress"onClick={()=>{this.setState({selectAddress:"new"})}}/>
                         <label htmlFor="otherAddress">신규배송지 </label>
                         </span>
-                        <button onClick={()=>{}}>배송지 목록</button>
+                        <button type="button" data-toggle="modal" data-target="#exampleModalScrollable" className="btn btn-sm btn-solid ta-btn-sm" onClick={()=>this.onOpenModal}>배송지 목록</button>
+                        
+
+{/*Modal*/}
+
+                        <div className="modal fade" id="exampleModalScrollable" tabIndex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-scrollable" role="document">
+                            <div className="modal-content address_list">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalScrollableTitle">배송지 목록</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <div className="table-responsive">
+                                        <table className="table table-responsive-sm ta-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>주소</th>
+                                                    <th>우편번호</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            { this.state.member.memberAddresses === null || this.state.member.memberAddresses === undefined ?
+                                                <tr>
+                                                    <td colSpan="4" className="ta-address-none">등록된 배송지가 없어요!</td>
+                                                </tr>
+                                                :
+                                                this.state.member.memberAddresses.map((memberAddress, index) => {
+                                                        return (
+                                                            <tr key={memberAddress.addressId}>
+                                                                <td>{index+1}</td>
+                                                                <td style={{'textAlign': 'left'}}>{memberAddress.address} {memberAddress.addressDetail}</td>
+                                                                <td>{memberAddress.postalNumber}</td>
+                                                                <td><input type="radio" name="check" value={memberAddress.addressId} defaultChecked={memberAddress.mainAddress==='y'?true:false}
+                                                                onClick={()=>this.setState({checkedAddress:memberAddress})}/></td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                            }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm" data-dismiss="modal" onClick={()=>{this.setState({address:this.state.checkedAddress, selectAddress:'main'})}}>주소 선택하기</button>
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+
+
                     </div>
                     {this.state.selectAddress==="main"?
                     <div className="viewAddress">
                     {this.state.mainAddress?
-                    <AsyncMainAddressBox mainAddress={this.state.mainAddress} />
+                    <AsyncMainAddressBox mainAddress={this.state.mainAddress} address={this.state.address} />
                     : "로딩중입니다"
                     }
                    </div>
@@ -111,35 +188,62 @@ class AsyncMainAddressBox extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            mainAddress : props.mainAddress[0]
+            mainAddress : props.mainAddress[0],
+            address:props.mainAddress[0]
         }
+        console.log("CONSTROCTOR", this.props.mainAddress, this.state.mainAddress, this.state.address)
     }
+
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.address!==nextProps.address){
+            return {address:nextProps.address}
+        }
+        return null;
+    }
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.state.address!==nextState.address){
+            return true
+        }
+        return false
+    }
+
+
     render(){
-        console.log("asyncAddressBox", this.props.mainAddress);
         return(
+            <div>
+                {this.state.address?
             <table>
                 <tbody className="addressTable">
                     <tr>
                         <td>수령인</td>
-                        <td className="secondTd">{this.state.mainAddress.consignee}</td>
+                        {this.state.address!==null&&this.state.address.consignee!==undefined&&this.state.address.consignee!==null?
+                        <td className="secondTd">{this.state.address.consignee}</td>:
+                        <td className="secondTd"><input type="text" id="consigee" required/></td>}
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        <td className="secondTd">{this.state.mainAddress.consigneePhone}</td>
+                        {this.state.address!==null&&this.state.address.consigneePhone!==undefined&&this.state.address.consigneePhone!==null?
+                        <td className="secondTd">{this.state.address.consigneePhone}</td>:
+                        <div>
+                        <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/></td>
+                        </div>}
                     </tr>
                     <tr className="addressCell">
                         <td rowSpan="3">주소</td>
-                        <td className="secondTd">{this.state.mainAddress.postalNumber}</td>
+                        <td className="secondTd">{this.state.address.postalNumber}</td>
                     </tr>
                     <tr>
-                        <td className="secondTd">{this.state.mainAddress.address}</td>
+                        <td className="secondTd">{this.state.address.address}</td>
                         
                     </tr>
                     <tr>
-                        <td className="secondTd">{this.state.mainAddress.addressDetail}</td>
+                        <td className="secondTd">{this.state.address.addressDetail}</td>
                     </tr>
                 </tbody>
             </table>
+                :<div className="ta-address-none" style={{"marginTop":"30px","marginBottom":"10px", "textAlign":"left", "paddingLeft":"10px"}}>등록된 배송지가 없어요!</div>
+                }
+            </div>
         )
     }
 }
@@ -152,59 +256,13 @@ class NewAddressBox extends React.Component{
         }
     }
 
-    sample6_execDaumPostcode(){
-        this.daum.Postcode.load({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
-            }
-        }).open();
-    }
+   
+    
 
 
     render(){
         return(
             <div>
-                <form>
                     <table>
                         <tbody>
                         <tr>
@@ -213,16 +271,16 @@ class NewAddressBox extends React.Component{
                         </tr>
                         <tr>
                             <td><label htmlFor="consigneePhone">연락처</label></td>
-                            <td className="secondTd"><input type="tel" id="consigneePhone"/></td>
-                            <td><input type="tel" id="consigneePhone"/></td>
-                            <td><input type="tel" id="consigneePhone"/></td>
+                            <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone"/>
+                            <input type="tel" id="consigneePhone"/>
+                            <input type="tel" id="consigneePhone"/></td>
                         </tr>
                         <tr className="addressCell">
                             <td rowSpan="3"><label htmlFor="address">주소</label></td>
                             <td colSpan="2" className="secondTd"><input type="number" id="postalNumber" placeholder="우편번호"/> </td>
-                            <td><button onClick={()=>{this.sample6_execDaumPostcode()}}>우편번호검색</button></td>
-                            
+                            <td><button type="button" data-toggle="modal" data-target="#searchPostalNumber" className="btn btn-sm btn-solid ta-btn-sm" onClick={()=>this.onOpenModal}>우편번호검색</button></td>                            
                         </tr>
+
                         <tr>
                             <td colSpan="3" className="secondTd"><input type="number" id="address" placeholder="도로명 주소"/></td>
                             
@@ -239,7 +297,29 @@ class NewAddressBox extends React.Component{
                             </tr>
                         </tfoot>
                     </table>
-                </form>
+                <div className="modal fade" id="searchPostalNumber" tabIndex="-1" role="dialog" aria-labelledby="searchPostalNumberTitle" aria-hidden="true">
+                        <div className="modal-dialog modal-dialog-scrollable" role="document">
+                            <div className="modal-content address_list">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="searchPostalNumberTitle">배송지 목록</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                   sdafdaf
+                                </div>
+                            </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm" data-dismiss="modal">주소 선택</button>
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <script type="text/javascript">
                     <script></script>
