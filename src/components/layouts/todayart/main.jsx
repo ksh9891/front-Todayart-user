@@ -13,7 +13,7 @@ import {Helmet} from 'react-helmet'
 class Todayart extends Component {
 
     componentDidMount() {
-        document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color5.css` );
+        document.getElementById("color").setAttribute("href", `${process.env.PUBLIC_URL}/assets/css/color17.css` );
     }
 
     render(){
@@ -68,13 +68,13 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner1.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/24.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
                                             <div>
-                                                <h4>save 30%</h4>
-                                                <h2>sofa</h2>
+                                                <h4>동서양의 화가, </h4>
+                                                <h2>꽃을 이야기하다</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -84,13 +84,13 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner2.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/25.png`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
                                             <div>
-                                                <h4>save 60%</h4>
-                                                <h2>new arrival</h2>
+                                                <h4>파피에 콜레</h4>
+                                                <h2>papier collé</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -100,13 +100,13 @@ class Todayart extends Component {
                                 <a href="#">
                                     <div className="collection-banner p-right text-right">
                                         <div className="img-part">
-                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/2banner3.jpg`} alt=""
+                                            <img src={`${process.env.PUBLIC_URL}/assets/images/furniture/39.jpg`} alt=""
                                                  className="img-fluid blur-up lazyload bg-img" />
                                         </div>
                                         <div className="contain-banner banner-3">
                                             <div>
-                                                <h4>save 60%</h4>
-                                                <h2>chair</h2>
+                                                <h4>추상표현주의</h4>
+                                                <h2>Abstract Expressionism</h2>
                                             </div>
                                         </div>
                                     </div>
@@ -128,9 +128,9 @@ class Todayart extends Component {
                             <div className="row">
                                 <div className="col">
                                     <div className="banner-contain">
-                                        <h2>2018</h2>
-                                        <h3>interior design in home</h3>
-                                        <h4>special offer</h4>
+                                        <h2>2019.09.26</h2>
+                                        <h3>TodayArt Season 2</h3>
+                                        <h4>COMING SOON!!!</h4>
                                     </div>
                                 </div>
                             </div>
@@ -147,7 +147,10 @@ class Todayart extends Component {
                             <div className="col">
                                 <div className="title1">
                                     <h4>Recent Story</h4>
-                                    <h2 className="title-inner1">from the blog</h2>
+                                    <h2 className="title-inner1">from the Exhibition</h2>
+                                    <div className="tabs tab-title">
+                                        <h4>Exhibition Information</h4></div>
+                                        {/* <h6>현재 진행중인 전시정보입니다.</h6> */}
                                     <hr role="tournament6" />
                                 </div>
                             </div>
