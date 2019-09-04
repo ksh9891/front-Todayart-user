@@ -187,9 +187,10 @@ class CheckoutDetail extends Component{
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
+            <label htmlFor="f-option4">  <a data-toggle="modal" data-target="#conditions" onClick={()=>this.onOpenModal} style={{"color":"blue"}}>구매 및 결제대행서비스 이용약관</a> 등에 모두 동의합니다. (필수) </label>
             {/* <a href="#">terms & conditions*</a> */}
         </div>
+
                  <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
                         <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
                             <div className="modal-content conditions" style={{"maxHeight":"calc(100vh - 200px)"}}>
