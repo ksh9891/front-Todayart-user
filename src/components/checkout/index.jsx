@@ -16,7 +16,7 @@ class CheckoutDetail extends Component{
         super(props)
         this.state={
             cart:props.cart,
-            sysbol:props.symbol,
+            symbol:props.symbol,
             payment:props.symbol,
             pay:"kakaoPay",
             cardCom:null,
@@ -150,8 +150,7 @@ class CheckoutDetail extends Component{
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
-            <label htmlFor="f-option4"> 구매 및 결제대행서비스 이용약관 등에 모두 동의합니다. (필수) </label>
-            {/* <a href="#">terms & conditions*</a> */}
+            <label htmlFor="f-option4"> 구매 및 결제대행서비스 <a href="#">이용약관</a> 등에 모두 동의합니다. (필수) </label>
         </div>
             
                 <div className="text-right">
@@ -321,3 +320,4 @@ export default connect(
 )(checkOut)
 export {kakaoCancel} from './kakao';
 export {kakaoSuccessFail} from './kakao';
+

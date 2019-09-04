@@ -128,7 +128,7 @@ class cartComponent extends Component {
                         </div>
                         <div className="row cart-buttons">
                             <div className="col-6">
-                                <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid">쇼핑 계속하기</Link>
+                                <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid">쇼핑 계속하기</Link>
                             </div>
                             <div className="col-6">
                                 <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
