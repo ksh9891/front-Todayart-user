@@ -10,9 +10,9 @@ class ShippingBox extends React.Component{
         this.state={
             member:props.member,
             addresses:props.member.memberAddresses,
-            mainAddress:props.order.mainAddress[0],
-            address:props.order.mainAddress[0],
-            checkedAddress:props.order.mainAddress[0],
+            mainAddress:props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0],
+            address:props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0],
+            checkedAddress:props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0],
             selectAddress:"main",
             open:false
         }
