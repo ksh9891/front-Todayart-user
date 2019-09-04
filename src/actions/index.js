@@ -557,7 +557,7 @@ const commentList = (articleId) => {
     })
 }
 
-const commentWrite = ({articleId, content}) => {
+const commentWrite = ({articleId, replyContent}) => {
     return ({
         type: ActionTypes.COMMENTWRITE,
         payload: {
@@ -568,7 +568,7 @@ const commentWrite = ({articleId, content}) => {
                     'Content-Type': 'application/json; charset=UTF-8',
                     'Accept': 'application/json'
                 },
-                data: JSON.stringify({articleId, content})
+                data: JSON.stringify({articleId, replyContent})
             }
         }
     })
@@ -591,7 +591,7 @@ const commentUpdate  =({commentId, content}) =>{
     })
 }
 
-const commentDelete  =(commentId) =>{
+const commentDelete  =({commentId}) =>{
     return({
         type:ActionTypes.COMMENTDELETE,
         payload:{
@@ -885,7 +885,11 @@ const addCartFromWishlist = (id) => {
     });
 };
 
-
+const snapOneItem = () =>{
+    return ({
+        type:ActionTypes.SNAP_ONE_ITEM
+    })
+}
 
         
 
@@ -942,8 +946,7 @@ export const Actions = {
     addWishlist,
     removeWishlist,
     fetchWishlist,
-    searchAddressInApi,
-    addAddress,
-    addCartFromWishlist
+    addCartFromWishlist,
+    snapOneItem
 
 };

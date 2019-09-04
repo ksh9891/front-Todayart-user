@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import Breadcrumb from "../common/breadcrumb";
 import {incrementQty, decrementQty, Actions} from '../../actions'
+import {ActionTypes} from '../../constants/ActionTypes'
+import { Files } from '../../utils';
 
 class cartComponent extends Component {
 
@@ -21,9 +23,21 @@ class cartComponent extends Component {
         this.props.calcCartPrice();
     }
 
+    deleteItem=(cartId)=>{
+        this.props.deleteCartItem(cartId)
+        .then(response=>{
+            if(response.type===ActionTypes.DELETE_CART_ITEM_SUCCESS){
+                return this.props.calcCartPrice();
+            }
+        }).catch(error=>
+            console.log("error >>", error))
+
+        }
+
     render (){
-        const {cart, cartItems, symbol, total} = this.props;
-        const {items, totalPrice, totalShipping} = cart;
+        const {cart, cartItems, symbol, } = this.props;
+        const {totalPrice, totalShipping} = cart;
+
         return (
             <div>
                 {/*SEO Support*/}
@@ -40,7 +54,7 @@ class cartComponent extends Component {
                     <div className="container">
                         <div className="row">
                             <div className="col-sm-12">
-                                <table className="table cart-table table-responsive-xs">
+                                <table className="table cart-table table-responsive-xs cart_check" style={{"table-layout":"fixed", "width":"90%", "margin":"auto"}}>
                                     <thead>
                                     <tr className="table-head">
                                         <th></th>
@@ -54,6 +68,8 @@ class cartComponent extends Component {
                                     </thead>
                                     <tbody>
                                     {cartItems.map((item, index) => {
+                                        const { fileName } = item.product.thumbnail;
+                                        const image = Files.filePath(fileName);
                                         return (
                                             <tr key={index}>
                                                 <td>
@@ -62,7 +78,7 @@ class cartComponent extends Component {
                                                 <td>
                                                     <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                                                     state:{item:item.product}}}>
-                                                        <img src={item.thumbnail} alt="" />
+                                                        <img src={image} className="mr-3" alt=""style={{"borderRadius":"10px"}} />
                                                     </Link>
                                                 </td>
                                                 <td><Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
@@ -83,7 +99,7 @@ class cartComponent extends Component {
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <i className="icon-close" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                                <i className="icon-close" onClick={() => this.deleteItem(item.cartId)}/>
                                 
                                                             </h2>
                                                         </div>
@@ -93,24 +109,13 @@ class cartComponent extends Component {
                                                 <td>
                                                     <div className="qty-box">
                                                         <div className="input-group">
-                                                            <span className="input-group-prepend">
-                                                                <button type="button" className="btn quantity-left-minus" onClick={() => this.props.decrementQty(item.id)} data-type="minus" data-field="">
-                                                                 <i className="fa fa-angle-left"></i>
-                                                                </button>
-                                                            </span>
                                                             <input type="text" name="quantity" value={item.quantity} readOnly={true} className="form-control input-number" />
-
-                                                            <span className="input-group-prepend">
-                                                            <button className="btn quantity-right-plus" onClick={() => this.props.incrementQty(item, 1)}  data-type="plus" disabled={(item.qty >= item.stock)? true : false}>
-                                                            <i className="fa fa-angle-right"></i>
-                                                            </button>
-                                                           </span>
                                                         </div>
                                                     </div>{(item.qty >= item.stock)? 'out of Stock' : ''}
                                                 </td>
                                                 <td><h2 className="td-color">{symbol}{item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)}</h2></td>
                                                 <td>
-                                                    <i className="fa fa-times" onClick={() => this.props.deleteCartItem(item.cartId)}/>
+                                                    <i className="fa fa-times" onClick={() =>  this.deleteItem(item.cartId)}/>
                                                 </td>
                                             </tr>
                                          )
@@ -121,14 +126,17 @@ class cartComponent extends Component {
                                     <tr>
                                         <td>최종 결제금액 :</td>
                                         <td><h2>{symbol} {cart.totalPrice+cart.totalShipping} </h2></td>
+
                                     </tr>
                                     </tfoot>
                                 </table>
                             </div>
                         </div>
-                        <div className="row cart-buttons">
+                        <div className="row cart-buttons" style={{"width":"90%","margin":"auto"}}>
                             <div className="col-6">
+
                                 <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid">쇼핑 계속하기</Link>
+
                             </div>
                             <div className="col-6">
                                 <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
@@ -162,6 +170,8 @@ class cartComponent extends Component {
 const mapStateToProps = (state) => ({
     cart:state.cart,
     cartItems: state.cart.items,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping,
     symbol: state.data.symbol
 })
 

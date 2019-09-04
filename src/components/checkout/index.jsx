@@ -9,6 +9,7 @@ import {removeFromWishlist, Actions} from '../../actions'
 import {ActionTypes} from '../../constants/ActionTypes'
 import {getCartTotal} from "../../services";
 import ShippingBox from './shippingBox';
+import {Conditions} from './conditions.js';
 
 
 class CheckoutDetail extends Component{
@@ -18,17 +19,59 @@ class CheckoutDetail extends Component{
             cart:props.cart,
             symbol:props.symbol,
             payment:props.symbol,
+            totalPrice:props.totalPrice,
+            totalShipping:props.totalShipping,
+
             pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
             makeOrder:props.makeOrder,
-            excuteKakaoPay:props.excuteKakaoPay
+            excuteKakaoPay:props.excuteKakaoPay,
+            open:false
         }
     }
+    
+    static getDerivedStateFromProps(nextProps, prevState){
+        console.log("Condition", prevState.checkCondition);
+        console.log("Pay", prevState.pay);
+        console.log("CardCom", prevState.cardCom);
+
+
+        if(nextProps.cart!==prevState.cart){
+            return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
+        }
+        return null;
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+        if(this.props.cart!==nextProps.cart){
+            return true
+        }
+        if(this.state.checkCondition!==nextState.checkCondition){
+            return true;
+        }
+        if(this.state.pay!==nextState.pay){
+            return true;
+        }
+        return false
+    }
+
+
+     onOpenModal = (e) => {
+        e.preventDefault();
+       this.setState({ open: true });
+    };
+
+     onCloseModal = () => {
+        this.setState({ open: false });
+    };
+
+
 
     render(){
 
-    const {items, totalPrice, totalShipping}=this.state.cart;
+    const {cart, totalPrice, totalShipping} = this.state;
+    const {items}=cart;
     const symbol = this.state.symbol;
     const orderItems = items.filter((item)=>item.checked===true);
     const orderItemList = orderItems.map((item)=>item.cartId);
@@ -84,11 +127,6 @@ class CheckoutDetail extends Component{
     }
 
 
-    const client = {
-        sandbox:    'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-        production: 'AZ4S98zFa01vym7NVeo_qthZyOnBhtNvQDsjhaZSMH-2_Y9IAJFbSD3HPueErYqN8Sa8WYRbjP7wWtd_',
-    }
-    
     return (
         <div className="col-lg-6 col-sm-12 col-xs-12">
             <div className="checkout-details">
@@ -120,48 +158,66 @@ class CheckoutDetail extends Component{
                         <div className="payment-options">
                         <div className="payment_item">
                             <div className="radion_btn">
-                            <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({pay:"kakaoPay", cardCom:null})}}/>
-                            <label htmlFor="f-option5">카카오페이 결제</label>
-                        <div className="check"></div>
-                    </div>
-               </div>
-                <div className="payment_item active">
-                    <div className="radion_btn">
-                        <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({pay:"creditCard", cardCom:"국민"})}}/>
-                        <label htmlFor="f-option6">신용카드 결제 </label>
-                        <img src="img/product/card.jpg" alt=""/>
-                        <div className="check"></div>
-                        {(this.state.pay==="creditCard")?<div><span>카드선택</span><span style={{float:'right'}}>
-                            <div>
-                                <select onChange={(e)=>{this.setState({cardCom:e.target.value})}}>
-                                    {cardList.map((item)=>{return(
-                                        <option value={item} key={item} >
-                                            {item}
-                                        </option>
-                                    )})}
-                                </select>
+                                <input type="radio" id="f-option5" name="selector" defaultChecked="true" onClick={()=>{this.setState({...this.state, pay:"kakaoPay", cardCom:null})}}/>
+                                <label htmlFor="f-option5">카카오페이 결제</label>
                             </div>
-                        </span></div>:''}
-                </div>
-            </div>
-        </div>
-        
-        </div>
+                        <div className="payment_item">
+                            <div className="radion_btn">
+                                <input type="radio" id="f-option6" name="selector" onClick={()=>{this.setState({...this.state, pay:"creditCard", cardCom:"국민"})}}/>
+                                <label htmlFor="f-option6">신용카드 결제 </label>
+                                {(this.state.pay==="creditCard")?
+                                <div><span>카드선택</span><span style={{float:'right'}}>
+                                    <div>
+                                        <select onChange={(e)=>{this.setState({...this.state, cardCom:e.target.value})}}>
+                                            {cardList.map((item)=>{return(
+                                                <option value={item} key={item} >
+                                                    {item}
+                                                </option>
+                                            )})}
+                                        </select>
+                                    </div>
+                                </span></div>:''}
+                            </div>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
 
         <div className="creat_account">
             <input type="checkbox" id="f-option4" name="selector" onChange={()=>{this.state.checkCondition===false?this.setState({checkCondition:true}):this.setState({checkCondition:false})}} />
             <label htmlFor="f-option4"> 구매 및 결제대행서비스 <a href="#">이용약관</a> 등에 모두 동의합니다. (필수) </label>
         </div>
+
+
+                 <div className="modal fade" id="conditions" tabIndex="-1" role="dialog" aria-labelledby="conditions" aria-hidden="true" style={{"height":"75%","marginTop":"10%", "paddingBottom":"10%", "overflowY":"hidden"}}>
+                        <div className="modal-dialog" role="document" style={{"marginLeft":"auto", "marginRight":"auto", "overflowY":"initial"}} >
+                            <div className="modal-content conditions" style={{"maxHeight":"calc(100vh - 200px)"}}>
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="conditions">이용약관</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body" style={{"maxHeight": "calc(100vh - 200px)", "overflowY":"auto"}}>
+                                
+                                    <Conditions/>
+                            
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
             
                 <div className="text-right">
-                    {this.state.checkCondition? <button type ="button" className="btn-solid btn"  onClick={()=>tryPaying()}>결제하기</button>
+                    {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
                     :
                     <button type ="button" className="btn-solid btn" onClick={()=>denyPaying()}>결제하기</button>
                     }    
-                </div>
-            
+                </div>  
             </div>
-        </div>
         </div>
         )
     }
@@ -236,59 +292,8 @@ class checkOut extends Component {
                             <div className="checkout-form">
                                 <form>
                                     <div className="checkout row">
-
                                     <ShippingBox/>
-                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} payment={payment} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
-                                    </div>
-                                    <div className="row section-t-space">
-                                        <div className="col-lg-6">
-                                            <div className="stripe-section">
-                                                <h5>stripe js example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4242424242424242</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>2/2020</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>2222</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-lg-6 m-sm-t-2">
-                                            <div className="stripe-section">
-                                                <h5>paypal example</h5>
-                                                <div>
-                                                    <h5 className="checkout_class">dummy test</h5>
-                                                    <table>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td>cart number</td>
-                                                                <td>4152521541244</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>mm/yy</td>
-                                                                <td>11/18</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>cvc</td>
-                                                                <td>521</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <CheckoutDetail cart={this.props.cart} symbol={symbol} totalPrice={this.props.totalPrice} totalShipping={this.props.totalShipping} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
                                 </form>
                             </div>
@@ -301,7 +306,9 @@ class checkOut extends Component {
 }
 const mapStateToProps = (state) => ({
     cart: state.cart,
-    symbol: state.data.symbol
+    symbol: state.data.symbol,
+    totalPrice:state.cart.totalPrice,
+    totalShipping:state.cart.totalShipping
 })
 
 const mapDispatchToProps=(dispatch)=>({
