@@ -96,8 +96,6 @@ import PrivateRoute from "./PrivateRoute";
 
 class Root extends React.Component {
     render() {
-        store.dispatch(getAllProducts());
-
         return(
         	<Provider store={store}>
                 <BrowserRouter basename={'/'} >

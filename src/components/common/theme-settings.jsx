@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {SlideUpDown} from "../../services/script"
 import { ToastContainer } from 'react-toastify';
-import {Link} from "react-router-dom";
 
 class ThemeSettings extends Component {
 
