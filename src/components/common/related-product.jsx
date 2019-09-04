@@ -18,21 +18,34 @@ class RelatedProduct extends Component {
         super(props);
 
         this.state = {
-           
-            endSlice: 6
-        }
-    }
+           randomItem : [],
+            endSlice: 6,
 
-    componentWillMount(){        
-        this.props.fetchArtwork();
+        }
     }
 
 
     componentDidMount() {
-        this.setState({
-            ...this.state,
-            endSlice: this.getRandomArbitrary(6, this.props.items.length)
-        })
+
+        this.props.fetchArtwork()
+        .then(response => {
+            if(response.type=== ActionTypes.FETCH_ARTWORK_SUCCESS){
+                const { data } = response.payload;
+                
+
+                this.setState({
+                    ...this.state,
+                    endSlice: this.getRandomArbitrary(6, data.length)
+                })
+
+                const randomItem = data.slice(this.state.endSlice-6, this.state.endSlice);
+                
+                this.setState({
+                    ...this.state,
+                    randomItem: randomItem
+                })
+            }
+        });
 
         console.log("this.state", this.state);
     }
@@ -44,11 +57,7 @@ class RelatedProduct extends Component {
 
 
     render (){
-        const {items, symbol} = this.props;
-
-                         
-
-      
+        const {symbol} = this.props;
 
         return (
             <section className="section-b-space">
@@ -59,7 +68,7 @@ class RelatedProduct extends Component {
                         </div>
                     </div>
                     <div className="row search-product">
-                        { items.slice(this.state.endSlice-6, this.state.endSlice).map((item, index ) =>
+                        { this.state.randomItem.map((item, index) =>
                             <div key={index} className="col-xl-2 col-md-4 col-sm-6">
                                 <ProductItem item={item} symbol={symbol}    
                                              key={index} />

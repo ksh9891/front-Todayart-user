@@ -42,6 +42,14 @@ class NoSideBar extends Component {
             })
         }
     }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("shouldComponentUpdate111111", this.state, nextState, this.props, nextProps);
+        if(this.props.match.params.id!==nextProps.match.params.id){
+            return true
+        }
+        return false
+    }
     
     componentDidMount() {
         this.setState({
@@ -75,7 +83,7 @@ class NoSideBar extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.success("상품이 찜하기에 추가되었습니다");       
+                    toast.error("상품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')  
                 } 
             }).catch(error=>{
