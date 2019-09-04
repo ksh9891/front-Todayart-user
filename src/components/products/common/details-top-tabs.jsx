@@ -3,17 +3,13 @@
 import React, { Component } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.scss';
-<<<<<<< HEAD
+
 import { Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import queryString from 'query-string'
 import ProductQandA from '../../articles/ProductQandA';
-=======
-import {Link} from 'react-router-dom'
-import ProductQandA from '../../articles/ProductQandA'
-import { connect } from 'react-redux'
 import { Actions } from '../../../actions'
->>>>>>> ckk
+
 
 class DetailsTopTabs extends Component {
 
