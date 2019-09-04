@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
 import { Files } from '../../../utils';
-import { getRelatedItems } from '../../../services';
+import CurrencyFormat from 'react-currency-format';
 
 
 class ProductListItem extends Component {
@@ -100,23 +100,14 @@ class ProductListItem extends Component {
                         </div>
                         <div className="product-detail">
                             <div>
-                                <div className="rating">
-                                    
-                                </div>
-                                
-
-
-
-
+                                <div className="rating" />
                                 <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                 state :{ item:this.props.item }}}
                                 >
                                     <h4>{item.productName}</h4>
-
                                 </Link>
-
                                 <h6><span className="money">{item.artist.artistName}</span></h6>
-                                <h6>{symbol}{item.productPrice}</h6>
+                                <h6>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h6>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {
@@ -139,9 +130,7 @@ class ProductListItem extends Component {
                                             <div className="col-lg-6 rtl-text">
                                                 <div className="product-right">
                                                     <h2> {item.productName} </h2>
-                                                    <h3>{symbol}{item.productPrice}
-                                                        <del><span className="money">{symbol}{item.productPrice}</span></del>
-                                                    </h3>
+                                                    <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
                                                    
                                                     <div className="border-product">
                                                         <h6 className="product-title">product details</h6>

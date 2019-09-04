@@ -9,9 +9,7 @@ import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
-
-
-
+import CurrencyFormat from "react-currency-format";
 
 class DetailsWithPrice extends Component {
 
@@ -53,14 +51,13 @@ class DetailsWithPrice extends Component {
             this.setState({stock: 'Out of Stock !'})
         }
     }
+
     changeQty = (e) => {
         this.setState({ quantity: parseInt(e.target.value) })
     }
 
     render (){
-
         const {symbol, item, addToCartClicked, BuynowClicked} = this.props
-
         const addWishilist=(item)=>{
             this.props.addWishlist(item)
                 .then(response=>{
@@ -73,7 +70,6 @@ class DetailsWithPrice extends Component {
                  console.log('error >>', error)
              })
         }
-
 
         var colorsnav = {
             slidesToShow: 6,
@@ -88,7 +84,7 @@ class DetailsWithPrice extends Component {
                 <div className="product-right">
                     <h2> {item.productName} </h2>
                     <h4>{item.artistName}</h4>
-                    <h3>{symbol}{item.productPrice} </h3>
+                    <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
                     {item.variants?
                     <ul >
                         <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
@@ -98,30 +94,26 @@ class DetailsWithPrice extends Component {
                         </Slider>
                     </ul>:''}
                     <div className="product-description border-product">
-                        
+                        <div>
                             <div>
-                               
-                                <div >
-                            <ul>
-                                {
-                                    <li >{item.productSize}</li>
-                                }
-                            </ul>
-                        </div>
+                                <ul>
+                                    {<li>{item.productSize}</li>}
+                                </ul>
                             </div>
+                        </div>
                         <span className="instock-cls">{this.state.stock}</span>
                         <h6 className="product-title">quantity</h6>
                         <div className="qty-box">
                             <div className="input-group">
                                   <span className="input-group-prepend">
                                     <button type="button" className="btn quantity-left-minus" onClick={this.minusQty} data-type="minus" data-field="">
-                                     <i className="fa fa-angle-left"></i>
+                                     <i className="fa fa-angle-left" />
                                     </button>
                                   </span>
                                 <input type="text" name="quantity" value={this.state.quantity} onChange={this.changeQty} className="form-control input-number" />
                                 <span className="input-group-prepend">
                                 <button type="button" className="btn quantity-right-plus" onClick={this.plusQty} data-type="plus" data-field="">
-                                <i className="fa fa-angle-right"></i>
+                                <i className="fa fa-angle-right" />
                                 </button>
                                </span>
                             </div>

@@ -946,8 +946,6 @@ export const Actions = {
     addWishlist,
     removeWishlist,
     fetchWishlist,
-    searchAddressInApi,
-    addAddress,
     addCartFromWishlist,
     snapOneItem
 

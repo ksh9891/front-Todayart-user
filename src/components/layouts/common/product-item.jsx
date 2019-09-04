@@ -11,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 
 import { Files } from '../../../utils';
+import CurrencyFormat from "react-currency-format";
 
 class ProductItem extends Component {
 
@@ -180,9 +181,9 @@ class ProductItem extends Component {
                                         </div>
                                         <div className="col-lg-6 rtl-text">
                                             <div className="product-right">
-                                                <h2> {item.productName} </h2>
-                                                <h3>{item.productPrice}{symbol}</h3>
+                                                <h2>{item.productName} </h2>
 
+                                                <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
                                                 <div className="border-product">
 
                                                      {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품상세설명 */}
