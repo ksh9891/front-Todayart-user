@@ -36,7 +36,7 @@ class cartComponent extends Component {
     }
 
     render (){
-        const {cart, cartItems, symbol, } = this.props;
+        const {cart, cartItems, symbol} = this.props;
         const {totalPrice, totalShipping} = cart;
 
         return (
@@ -149,7 +149,7 @@ class cartComponent extends Component {
                             <div className="row cart-row">
                                 <div className="col-sm-12 d-flex">
                                     <div className="ml-auto">
-                                        <Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} className="btn btn-solid mr-3">쇼핑 계속하기</Link>
+                                        <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid mr-3">쇼핑 계속하기</Link>
                                         <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
                                     </div>
                                 </div>
