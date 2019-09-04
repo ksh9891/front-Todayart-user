@@ -23,11 +23,7 @@ class SpecialProducts extends Component {
         }
     }
 
-    componentWillMount(){
-        
-        
-    }
-
+   
 
     componentDidMount() {
 
