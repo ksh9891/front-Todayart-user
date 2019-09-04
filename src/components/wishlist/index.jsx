@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import { addToCart } from '../../actions'
 import Breadcrumb from '../common/breadcrumb';
 import {Helmet} from 'react-helmet'
+import CurrencyFormat from "react-currency-format";
 
 
 class wishList extends Component {
@@ -110,30 +111,38 @@ class wishList extends Component {
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                            <span className="money">{symbol}{item.product.productPrice}</span></h2>
+                                                                <span className="money">
+                                                                    <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                </span>
+                                                            </h2>
                                                         </div>
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
-                                                                <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                                <a className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                                     <i className="fa fa-times" />
                                                                 </a>
-                                                                <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
+                                                                <a className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                                     <i className="fa fa-shopping-cart" />
                                                                 </a>
                                                             </h2>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td><p>
-                                                     <span className="money">{symbol}{item.product.productPrice}</span></p></td>
+                                                <td>
+                                                    <p>
+                                                        <span className="money">
+                                                            <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                        </span>
+                                                    </p>
+                                                </td>
                                                 <td >
                                                     <p>in stock</p>
                                                 </td>
                                                 <td>
-                                                    <a href="javascript:void(0)" className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
+                                                    <a className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
                                                         <i className="fa fa-times" />
                                                     </a>
-                                                    <a href="javascript:void(0)" className="cart" onClick={() => moveToCart(item.wishlistId)}>
+                                                    <a className="cart" onClick={() => moveToCart(item.wishlistId)}>
                                                         <i className="fa fa-shopping-cart" />
                                                     </a>
                                                 </td>
@@ -146,7 +155,6 @@ class wishList extends Component {
                         <div className="row wishlist-buttons">
                             <div className="col-12">
                                 <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="btn btn-solid">쇼핑 계속하기</Link>
-                                <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid">결제하기</Link>
                             </div>
                         </div>
                     </div>
