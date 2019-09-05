@@ -8,6 +8,7 @@ import {ActionTypes} from '../../constants/ActionTypes'
 import { Files } from '../../utils';
 import CurrencyFormat from "react-currency-format";
 import "./cart.css"
+import { ToastContainer } from 'react-toastify'
 
 class cartComponent extends Component {
 
@@ -157,6 +158,7 @@ class cartComponent extends Component {
                                 </div>
                             </div>
                         </div>
+                        <ToastContainer/>
                     </section>
                     :
                     <section className="cart-section section-b-space">
@@ -175,6 +177,7 @@ class cartComponent extends Component {
                                 </div>
                             </div>
                         </div>
+                        <ToastContainer/>
                     </section>
                 }
             </div>
