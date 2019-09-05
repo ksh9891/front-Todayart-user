@@ -91,12 +91,18 @@ class CollectionCategory extends Component {
                                             <div className="row">
                                                 <div className="col-sm-12">
                                                     <div className="top-banner-wrapper">
-                                                        <a href="#"><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
+                                                        <a ><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
                                                                          className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>오늘의 작품</h4>
-                                                            <h5>오늘의 작품이 제안하는</h5>
-                                                            <p>작품을 감상하고 구매해보세요</p>
+                                                            {/* <h4>오늘의 추천 글귀</h4> */}
+                                                            <p>"언젠가는 내 그림이 내 생활비와 물감 값보다 더 가치가 있다는 것을 알아줄 때가 올 것이다.</p>
+                                                                <p> 진정한 화가는 캔버스를 두려워하지 않는다. 오히려 캔버스가 화가를 두려워 한다" </p>
+                                                                    <p> _빈센트 반 고흐 Vincent Van Gogh</p>
+                                                                   
+                                                                   
+
+                                                            {/* <h5>문제가 풀리는 것은 결심을 할 때다.</h5>
+                                                            <p>_메이브 빈치, '그 겨울의 일주일'</p> */}
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">
@@ -168,10 +174,8 @@ class CollectionCategory extends Component {
 
 
 const mapStateToProps = (state) => ({
-    
     wishlist: state.wishlist.items,
-    symbol: "￦"
-
+    symbol: "원"
 })
 
 const mapDispatchToProps = (dispatch) => ({

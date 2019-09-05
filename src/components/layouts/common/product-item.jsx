@@ -160,16 +160,16 @@ class ProductItem extends Component {
                         </div>
                         <div className="cart-info cart-wrap">
                             
-                            <a  href="javascript:void(0)" title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
-                                <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <a title="Add to cart" onClick={()=>asyncAddCart(item, 1)}>
+                                <i className="fa fa-shopping-cart" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" />
                             </a>
-                            <a  href="javascript:void(0)"  title="Add to Wishlist" onClick={()=>addWishilist(item)}>
-                                <i className="fa fa-heart" aria-hidden="true"></i>
+                            <a title="Add to Wishlist" onClick={()=>addWishilist(item)}>
+                                <i className="fa fa-heart" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" />
                             </a>
-                            <a  href="javascript:void(0)" data-toggle="modal"
+                            <a data-toggle="modal"
                                data-target="#quick-view"
                                title="Quick View"
-                               onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
+                               onClick={this.onOpenModal}><i className="fa fa-search" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" /></a>
                            
                         </div>
                         {/* {product.variants?
@@ -218,7 +218,7 @@ class ProductItem extends Component {
                                         <div className="col-lg-6 rtl-text">
                                             <div className="product-right">
                                                 <h2>{item.productName} </h2>
-                                                <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
+                                                <h3><CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></h3>
                                                 <div className="border-product">
 
                                                      {/* 여기는 거기야 돋보기 눌렀을 때 뜨는 창에 나오는 상품상세설명 */}

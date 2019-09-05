@@ -13,6 +13,7 @@ import {
     removeFromCart
 } from "../../../actions/index";
 import ProductItem from './special-product-item';
+import CurrencyFormat from "react-currency-format";
 
 class Special extends Component {
 
@@ -51,8 +52,8 @@ class Special extends Component {
                                                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[0].id}`} >
                                                                 <h6>{product[0].name}</h6>
                                                             </Link>
-                                                            <h4>{symbol}{product[0].price-(product[0].price*product[0].discount/100)}
-                                                                <del><span className="money">{symbol}{product[0].price}</span></del>
+                                                            <h4><CurrencyFormat value={product[0].price-(product[0].price*product[0].discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                <del><span className="money"><CurrencyFormat value={product[0].price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></del>
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -73,8 +74,8 @@ class Special extends Component {
                                                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[1].id}`} >
                                                                 <h6>{product[1].name}</h6>
                                                             </Link>
-                                                            <h4>{symbol}{product[1].price-(product[1].price*product[1].discount/100)}
-                                                                <del><span className="money">{symbol}{product[1].price}</span></del>
+                                                            <h4><CurrencyFormat value={product[1].price-(product[1].price*product[1].discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                <del><span className="money"><CurrencyFormat value={product[1].price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></del>
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -118,8 +119,7 @@ class Special extends Component {
                                                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[3].id}`} >
                                                                 <h6>{product[3].name}</h6>
                                                             </Link>
-                                                            <h4>{symbol}{product[3].price-(product[3].price*product[3].discount/100)}
-                                                                <del><span className="money">{symbol}{product[3].price}</span></del>
+                                                            <h4><CurrencyFormat value={product[3].price-(product[3].price*product[3].discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                             </h4>
                                                         </div>
                                                     </div>
@@ -140,8 +140,8 @@ class Special extends Component {
                                                             <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product[4].id}`} >
                                                                 <h6>{product[4].name}</h6>
                                                             </Link>
-                                                            <h4>{symbol}{product[4].price-(product[4].price*product[4].discount/100)}
-                                                                <del><span className="money">{symbol}{product[4].price}</span></del>
+                                                            <h4><CurrencyFormat value={product[4].price-(product[4].price*product[4].discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                <del><span className="money"><CurrencyFormat value={product[4].price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></del>
                                                             </h4>
                                                         </div>
                                                     </div>

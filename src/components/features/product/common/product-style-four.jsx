@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
-
+import CurrencyFormat from "react-currency-format";
 
 class ProductStyleFour extends Component {
 
@@ -53,8 +53,8 @@ class ProductStyleFour extends Component {
                         <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>
                             <h6>{product.name}</h6>
                         </Link>
-                        <h4>{symbol}{product.price-(product.price*product.discount/100)}
-                            <del><span className="money">{symbol}{product.price}</span></del></h4>
+                        <h4><CurrencyFormat value={product.price-(product.price*product.discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
+                            <del><span className="money"><CurrencyFormat value={product.price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></del></h4>
                     </div>
                 </div>
             </div>

@@ -69,11 +69,11 @@ class DetailsTopTabs extends Component {
                                         </tr>
                                         <tr>
                                             <th>작품가격 :</th>
-                                            <td>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></td>
+                                            <td><CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></td>
                                         </tr>
                                         <tr>
                                             <th>배송비 :</th>
-                                            <td>{symbol}<CurrencyFormat value={item.shippingFee} displayType={'text'} thousandSeparator={true} /></td>
+                                            <td><CurrencyFormat value={item.shippingFee} suffix={symbol} displayType={'text'} thousandSeparator={true} /></td>
                                         </tr>
                                         
                                     </tbody>

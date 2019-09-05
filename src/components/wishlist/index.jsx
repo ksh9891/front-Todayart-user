@@ -113,7 +113,7 @@ class wishList extends Component {
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
                                                                 <span className="money">
-                                                                    <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                    <CurrencyFormat value={item.product.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                                 </span>
                                                             </h2>
                                                         </div>
@@ -132,7 +132,7 @@ class wishList extends Component {
                                                 <td>
                                                     <p>
                                                         <span className="money">
-                                                            <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                            <CurrencyFormat value={item.product.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                         </span>
                                                     </p>
                                                 </td>
@@ -141,10 +141,10 @@ class wishList extends Component {
                                                 </td>
                                                 <td>
                                                     <a className="icon" onClick={() => deleteWishlist(item.wishlistId)}>
-                                                        <i className="fa fa-times" />
+                                                        <i className="fa fa-times" style={{"fontSize": "20px", "marginRight": "15px", "cursor": "pointer"}} />
                                                     </a>
                                                     <a className="cart" onClick={() => moveToCart(item.wishlistId)}>
-                                                        <i className="fa fa-shopping-cart" />
+                                                        <i className="fa fa-shopping-cart" style={{"fontSize": "20px", "cursor": "pointer"}} />
                                                     </a>
                                                 </td>
                                             </tr>

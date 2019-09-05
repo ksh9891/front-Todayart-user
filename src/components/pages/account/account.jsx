@@ -20,7 +20,11 @@ class Account extends Component {
             address = '';
         } else {
             const addresses = memberAddresses.filter(item => (item.mainAddress === 'y'));
-            address = addresses[0].address + addresses[0].addressDetail;
+            console.log("addressses", addresses);
+
+            if(addresses !== null && addresses !== undefined && addresses.length > 0) {
+                address = addresses[0].address + addresses[0].addressDetail;
+            }
         }
 
         // this.setState({

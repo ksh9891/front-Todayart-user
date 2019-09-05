@@ -101,7 +101,7 @@ class DetailsWithPrice extends Component {
             <div className="col-lg-6 rtl-text">
                 <div className="product-right">
                     <h2> {item.productName}  <small className="product-fontsize">{item.artistName}</small> </h2>
-                    <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
+                    <h3><CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></h3>
                     {item.variants ?
                         <ul >
                             <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">

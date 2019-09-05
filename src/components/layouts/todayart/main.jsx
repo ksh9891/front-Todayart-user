@@ -22,7 +22,7 @@ class Todayart extends Component {
                     <meta name="description" content="TodayArt - 아마추어 미술인과 수요자들을 연결시켜주는 미술품 판매사이트" />
                 </Helmet>
                 <section className="p-0 small-slider">
-                    <Slider className="slide-1 home-slider">
+                    <Slider className="slide-1 home-slider" autoplay infinite>
                         <div>
                             <div className="home home12 text-left">
                                 <div className="container">
@@ -71,6 +71,22 @@ class Todayart extends Component {
                                 </div>
                             </div>
                         </div>
+                        <div>
+                            <div className="home home15 text-left">
+                                <div className="container">
+                                    <div className="row">
+                                        <div className="col">
+                                            <div className="slider-contain">
+                                                <div className="text-focus-in">
+                                                    <h4 className="ta-sub">today art</h4>
+                                                    <h1 className="ta-main">Art Gallery Shop</h1>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </Slider>
                 </section>
 
@@ -80,7 +96,7 @@ class Todayart extends Component {
 
                 {/*Parallax banner*/}
                 <section className="p-0">
-                    <div className="full-banner parallax parallax-banner3  text-center p-center">
+                    <div className="full-banner parallax parallax-banner3 text-center p-center">
                         <div className="container">
                             <div className="row">
                                 <div className="col">
@@ -115,8 +131,6 @@ class Todayart extends Component {
                     <BlogSection />
                 </section>
                 {/* Blog Section End*/}
-
-                <ThemeSettings/>
             </div>
         )
     }
