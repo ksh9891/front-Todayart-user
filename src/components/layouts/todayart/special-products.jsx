@@ -111,10 +111,8 @@ class SpecialProducts extends Component {
                                 <div className="no-slider row">
                                     { items.slice(this.state.endSlice-8, this.state.endSlice).map((item, index) =>
                                         <ProductItem item={item} symbol={symbol}
-
                                                      onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={asyncAddCart} key={index} /> )
-
                                     }
                                 </div>
                             </TabPanel>

@@ -31,19 +31,17 @@
     width: 25%;
 }
 
-#consigNee, #address, #addressDetail, #member{
+#consignee, #address, #addressDetail, #member{
     height: 30px;
     width: 100%;
     background-color: #F9F9F9;
     border:1px dashed #c7c7c7;
 }
 
-#consigneePhone, #memberPhone{
-    background-color: #F9F9F9;
-    height: 30px;
-    border:1px dashed #c7c7c7;
-    width: 32%;
-    margin-right:2px;
+#consigneePhone, .memberPhone{
+    background-color: #F9F9F9!important;
+    height: 30px!important;
+    border:1px dashed #c7c7c7!important;
 }
 
 #postalNumber{
