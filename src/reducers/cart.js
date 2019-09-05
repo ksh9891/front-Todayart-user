@@ -62,7 +62,7 @@ const cart = (state = initialStateCart, action) => {
             }
             
         case ActionTypes.DELETE_CART_ITEM_SUCCESS:
-                toast.error("작품이 장바구니에서 삭제되었습니다");
+                toast.info("작품이 장바구니에서 삭제되었습니다");
             if(payload!==null && payload!==undefined){
                 const {data} = payload;
                 return {
@@ -74,7 +74,7 @@ const cart = (state = initialStateCart, action) => {
         
         case ActionTypes.ADD_CART_SUCCESS:
 
-            toast.error("상품이 장바구니에 추가되었습니다");       
+            toast.info("상품이 장바구니에 추가되었습니다");       
    
 
             if(payload!==null&&payload!==undefined){

@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Actions } from '../../../actions'
 import {ActionTypes} from '../../../constants/ActionTypes'
+import {withRouter} from "react-router-dom";
 
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+
 
 import { addToCart } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
@@ -25,26 +26,44 @@ class ProductListing1 extends Component {
 
         };
     }
+    shouldComponentUpdate(nextProps){
+        if (this.props.wishlist !== nextProps.wishlist){
+            return false
+        }
+        return true
+    }
 
-    componentWillReceiveProps(){
+    componentWillReceiveProps(nextProps){
+        console.log('언제 실행이될거니')
+       // console.log(this.state.limit , this.props.items.length)
+        
+        
+        console.log('wishlist>>>>',this.props.wishlist, nextProps.wishlist)
 
         if (this.state.limit < this.props.items.length) {
+            console.log('여기는들어오지')
+            console.log(this.state.limit , this.props.items.length)
             this.setState({
                 ...this.state,
                 limit: this.state.limit + 4,
                 hasMoreItems: true
 
             })
-        }else {
+        }else if(this.state.limit >= this.props.items.length){
+            console.log('여기아예 안들어오지')
+            console.log(this.state.limit , this.props.items.length)
             this.setState({
                 ...this.state,
                 limit: 0,
                 hasMoreItems: true
             })
+        }else if(this.props.wishlist !== nextProps.wishlist){
+            console.log('아무것도 하지마라')
         }
     }
 
     fetchMoreItems = () => {
+        console.log('사실여기 걸리는거니')
         if (this.state.limit >= this.props.items.length) {
             this.setState({
                 ...this.state,
@@ -62,21 +81,47 @@ class ProductListing1 extends Component {
     }
 
     render (){
-        const {products, items, addToCart, symbol} = this.props;
+        const {products, items, addToCart, symbol, auth} = this.props;
+        const { userDetails } = auth;
 
         const addWishilist=(item)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            }else{
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.error("작품이 찜하기에 추가되었습니다");       
+                    toast.info("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')    
                 }
             }).catch(error=>{
                 console.log('error >>', error)
             })
+        }
        }             
 
         const asyncAddCart=(item,qty)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            }else {
             this.props.addToCart(item,qty)
                 .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
@@ -86,6 +131,7 @@ class ProductListing1 extends Component {
              }).catch(error=>{
                  console.log('error >>', error)
              })
+            }
         }
 
         return (
@@ -125,7 +171,7 @@ class ProductListing1 extends Component {
                             </div>
                         }
                     </div>
-                    <ToastContainer/>
+                   
                 </div>
             </div>
         )
@@ -135,7 +181,9 @@ class ProductListing1 extends Component {
 const mapStateToProps = (state) => ({
     products: getVisibleproducts(state.data, state.filters),
     symbol: state.data.symbol,
-    items : state.data.items
+    items : state.data.items,
+    wishlist : state.wishlist.items,
+    auth : state.auth
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -148,4 +196,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListing1)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductListing1))

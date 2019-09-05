@@ -12,6 +12,8 @@ import { ToastContainer } from 'react-toastify';
 import { Files } from '../../../utils';
 import "./productitem.css";
 import CurrencyFormat from "react-currency-format";
+import {withRouter} from "react-router-dom";
+
 
 class ProductItem extends Component {
 
@@ -27,6 +29,9 @@ class ProductItem extends Component {
         }
     }
 
+
+ 
+
     onClickHandle(img) {
         this.setState({ image : img} );
     }
@@ -35,7 +40,9 @@ class ProductItem extends Component {
     };
 
     onCloseModal = () => {
-        this.setState({ open: false });
+        
+        this.setState({ open: false });  
+        
     };
 
     minusQty = () => {
@@ -58,13 +65,27 @@ class ProductItem extends Component {
     }
 
     render() {
-        const {symbol,  onAddToWishlistClicked,  item} = this.props;
+        const {symbol,  onAddToWishlistClicked,  item, auth} = this.props;
         const {thumbnail} = item;
 
         const { fileName } = thumbnail
         const image = Files.filePath(fileName);
 
+        const { userDetails } =auth;
+
         const asyncAddCart=(item,qty)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            }else{
             this.props.addToCart(item,qty)
                 .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
@@ -73,19 +94,33 @@ class ProductItem extends Component {
              }).catch(error=>{
                  console.log('error >>', error)
              })
+            }
         }
 
         const addWishilist=(item)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            }else{
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.error("상품이 찜하기에 추가되었습니다");       
-                    console.log('찜하기성공!')  
-                } 
+                    toast.info("작품이 찜하기에 추가되었습니다");       
+                    console.log('찜하기성공!')    
+                }
             }).catch(error=>{
                 console.log('error >>', error)
             })
-       }                 
+        }
+       }           
                
 
 
@@ -217,8 +252,10 @@ class ProductItem extends Component {
                                                     </div>
                                                 <div className="product-buttons">
                                                     <button  className="btn btn-solid" onClick={() => asyncAddCart(item, this.state.quantity)} > 장바구니 </button>
+                                                    
                                                     <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
-                                                        state :{ item:this.props.item }}} className="btn btn-solid"> 상품페이지로 이동</Link>
+                                                        state :{ item:this.props.item }}} className="btn btn-solid" onClick={this.onCloseModal}> 상품페이지로 이동</Link>
+                                                       
                                                 </div>
                                             </div>
                                         </div>
@@ -232,10 +269,15 @@ class ProductItem extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+ 
+    auth : state.auth
+})
+
 const mapDispatchToProps=(dispatch)=>({
  addToCart:(item, qty)=>dispatch(addToCart(item, qty)),
  calcPrice:()=>dispatch(Actions.calcCartPrice()),
  addWishlist: (item) => dispatch(Actions.addWishlist(item)),
 })
 
-export default connect(null,mapDispatchToProps)(ProductItem);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(ProductItem))
