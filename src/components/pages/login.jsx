@@ -20,7 +20,7 @@ const loginAsync = (email, password) => (dispatch) => {
         .then(response => {
             if (response.type === ActionTypes.GET_USER_SUCCESS) {
                 if(response.payload.data !== null && response.payload.data !== undefined) {
-                    dispatch(Actions.fetchShippingAddress(response.payload.data.memberAddresses.filter(item=>item.mainAddress==='y')));
+                    // dispatch(Actions.fetchShippingAddress(response.payload.data.memberAddresses.filter(item=>item.mainAddress==='y')));
                     return dispatch(Actions.getCart());
                 } else {
                     response.type = ActionTypes.GET_USER_FAIL;
