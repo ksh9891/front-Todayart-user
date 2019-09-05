@@ -11,6 +11,7 @@ import { addToCart } from '../../actions'
 import {Actions} from '../../actions'
 
 
+
 class RelatedProduct extends Component {
 
 
@@ -47,6 +48,7 @@ class RelatedProduct extends Component {
             }
         });
 
+        window.scrollTo(0,0); 
         console.log("this.state", this.state);
     }
 

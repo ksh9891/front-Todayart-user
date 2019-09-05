@@ -8,6 +8,7 @@ import {ActionTypes} from '../../../constants/ActionTypes'
 import { toast  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import {withRouter} from "react-router-dom";
 
 import { addToCart } from '../../../actions'
 import {getVisibleproducts} from '../../../services';
@@ -79,20 +80,27 @@ class ProductListing extends Component {
 
 
       
-        const {products, items, addToCart, symbol} = this.props;
+        const {products, items, addToCart, symbol, auth} = this.props;
+        const { userDetails } = auth
 
 
         const addWishilist=(item)=>{
+            if(userDetails === null){
+                
+                {window.alert('찜하기는 로그인 후에 가능합니다')}
+                this.props.history.push(`/login`)
+            }else{
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.error("상품이 찜하기에 추가되었습니다");       
+                    toast.info("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')    
                 }
             }).catch(error=>{
                 console.log('error >>', error)
             })
-       }             
+        }
+       }      
                                  
 
         const asyncAddCart=(item,qty)=>{
@@ -157,7 +165,8 @@ class ProductListing extends Component {
 const mapStateToProps = (state) => ({
     products: getVisibleproducts(state.data, state.filters),
     symbol: state.data.symbol,
-    items : state.data.items
+    items : state.data.items,
+    auth : state.auth
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -170,4 +179,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductListing)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductListing))

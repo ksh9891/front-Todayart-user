@@ -165,7 +165,7 @@ class ProductListItem extends Component {
                                                 </div>
                                                 <div className="product-buttons">
                                                     <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} > 장바구니 </button>
-                                                   <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                  <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                                     state :{ item:this.props.item }}} className="btn btn-solid"> 상품페이지로 이동</Link>
                                                 </div>
                                             </div>

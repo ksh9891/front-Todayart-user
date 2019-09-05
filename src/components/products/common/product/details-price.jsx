@@ -10,11 +10,12 @@ import { ToastContainer } from 'react-toastify';
 import { connect } from 'react-redux'
 import "./detailprice.css";
 import CurrencyFormat from "react-currency-format";
+import { withRouter } from 'react-router-dom'
 
 class DetailsWithPrice extends Component {
 
-    constructor (props) {
-        super (props)
+    constructor(props) {
+        super(props)
         this.state = {
             open: false,
             quantity: 1,
@@ -56,21 +57,36 @@ class DetailsWithPrice extends Component {
         this.setState({ quantity: parseInt(e.target.value) })
     }
 
-    render (){
-        const {symbol, item, addToCartClicked, BuynowClicked} = this.props
-        const addWishilist=(item)=>{
-            this.props.addWishlist(item)
+    render() {
+        console.log("details-price render!")
+        const { symbol, item, addToCartClicked, BuynowClicked, auth } = this.props
+        const { userDetails } = auth;
 
-                .then(response=>{
-                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.error("작품이 찜하기에 추가되었습니다");       
-                    console.log('찜하기성공!')                    
-                                 
+
+
+        const addWishilist = (item) => {
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
                 }
-             }).catch(error=>{
-                 console.log('error >>', error)
-             })
 
+            } else {
+                this.props.addWishlist(item)
+                    .then(response => {
+                        if (response.type == ActionTypes.ADD_WISHLIST_SUCCESS) {
+                            toast.info("작품이 찜하기에 추가되었습니다");
+                            console.log('찜하기성공!')
+                        }
+                    }).catch(error => {
+                        console.log('error >>', error)
+                    })
+            }
         }
 
         var colorsnav = {
@@ -86,14 +102,14 @@ class DetailsWithPrice extends Component {
                 <div className="product-right">
                     <h2> {item.productName}  <small className="product-fontsize">{item.artistName}</small> </h2>
                     <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
-                    {item.variants?
-                    <ul >
-                        <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
-                            {item.variants.map((vari, i) => {
-                                return <li className={vari.color} key={i} title={vari.color}></li>
-                            })}
-                        </Slider>
-                    </ul>:''}
+                    {item.variants ?
+                        <ul >
+                            <Slider {...colorsnav} asNavFor={this.props.navOne} ref={slider => (this.slider1 = slider)} className="color-variant">
+                                {item.variants.map((vari, i) => {
+                                    return <li className={vari.color} key={i} title={vari.color}></li>
+                                })}
+                            </Slider>
+                        </ul> : ''}
                     <div className="product-description border-product">
                         <div>
                             <div>
@@ -111,17 +127,17 @@ class DetailsWithPrice extends Component {
                             <div className="input-group">
                                 <span className="input-group-prepend">
                                     <button type="button" className="btn quantity-left-minus" onClick={this.minusQty} data-type="minus" data-field="">
-                                     <i className="fa fa-angle-left" />
+                                        <i className="fa fa-angle-left" />
 
                                     </button>
                                 </span>
                                 <input type="text" name="quantity" value={this.state.quantity} onChange={this.changeQty} className="form-control input-number" />
                                 <span className="input-group-prepend">
 
-                                <button type="button" className="btn quantity-right-plus" onClick={this.plusQty} data-type="plus" data-field="">
-                                <i className="fa fa-angle-right" />
-                                </button>
-                               </span>
+                                    <button type="button" className="btn quantity-right-plus" onClick={this.plusQty} data-type="plus" data-field="">
+                                        <i className="fa fa-angle-right" />
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -131,7 +147,7 @@ class DetailsWithPrice extends Component {
                             this.props.calcPrice()
                         }}
                         > 장바구니 </a>
-                        <Link to={`${process.env.PUBLIC_URL}/checkout`} className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} > 바로구매</Link>
+                        <a className="btn btn-solid" onClick={() => BuynowClicked(item, this.state.quantity)} > 바로구매</a>
                     </div>
                     <div className="border-product">
                         <h6 className="product-title">작품설명 | Details</h6>
@@ -146,9 +162,9 @@ class DetailsWithPrice extends Component {
                                 <li><a href="https://twitter.com/" target="_blank"><i className="fa fa-twitter"></i></a></li>
                                 <li><a href="https://www.instagram.com/" target="_blank"><i className="fa fa-instagram"></i></a></li>
                             </ul>
-                                <button className="wishlist-btn" onClick={() => addWishilist(item)}>
-                                    <i className="fa fa-heart" /><span className="title-font"> 찜하기 </span>
-                                </button>
+                            <button className="wishlist-btn" onClick={() => addWishilist(item)}>
+                                <i className="fa fa-heart" /><span className="title-font"> 찜하기 </span>
+                            </button>
                         </div>
                     </div>
                     <div className="border-product" />
@@ -171,8 +187,12 @@ class DetailsWithPrice extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    auth: state.auth
+})
+
 const mapDispatchToProps = (dispatch) => ({
     addWishlist: (item) => dispatch(Actions.addWishlist(item))
 })
 
-export default connect(null,mapDispatchToProps)(DetailsWithPrice);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DetailsWithPrice));
