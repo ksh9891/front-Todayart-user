@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import { Actions } from '../../actions';
 import {ActionTypes} from '../../constants/ActionTypes';
 
-const KakaoSuccess = ({order,approveKakaoPay})=>{
+const KakaoSuccess = ({order,approveKakaoPay, createShipping, address})=>{
     const {ordered, tid} = order;
+    console.log("KAKAOOOOOO")
     let url = decodeURIComponent(window.location.href);
     url=decodeURIComponent(url);
     const pgToken = url.substring(url.indexOf('?')+1, url.length);
@@ -14,6 +15,7 @@ const KakaoSuccess = ({order,approveKakaoPay})=>{
         if(response.type===ActionTypes.APPROVE_KAKAO_PAY_SUCCESS){
             window.opener.location.replace("/order-success")
             window.close();
+            
             
         }else{
             window.opener.location.replace("/kakaoSuccessFail")
@@ -26,10 +28,12 @@ const KakaoSuccess = ({order,approveKakaoPay})=>{
 }
 
 const mapDispatchToProps=(dispatch)=>({
-    approveKakaoPay:(pgToken, ordered, tid)=>dispatch(Actions.approveKakaoPay(pgToken, ordered, tid))
+    approveKakaoPay:(pgToken, ordered, tid)=>dispatch(Actions.approveKakaoPay(pgToken, ordered, tid)),
+    createShipping:(ordered, address)=>dispatch(Actions.createShipping(ordered, address))
 })
 const mapStateToProps=(state)=>({
-    order:state.order
+    order:state.order,
+    address:state.order.shippingAddress
 })
 
 

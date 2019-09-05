@@ -14,10 +14,15 @@ import DetailsTopTabs from "./common/details-top-tabs";
 import { addToCart, addToCartUnsafe, addToWishlist } from '../../actions'
 import ImageZoom from './common/product/image-zoom'
 import SmallImages from './common/product/small-image'
+import { withRouter } from 'react-router-dom'
 
 import { Actions } from '../../actions'
 import { Files } from '../../utils';
 import { ActionTypes } from '../../constants/ActionTypes';
+
+
+
+
 
 class NoSideBar extends Component {
     // this.props.location.state.item
@@ -61,13 +66,45 @@ class NoSideBar extends Component {
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         console.log("shouldComponentUpdate111111", this.state, nextState);
-        console.log("shouldComponentUpdate222222", this.props, nextProps);
-        if(this.props.match.params.id===nextProps.match.params.id){
+
+        console.log("shouldComponentUpdate12221", this.props, nextProps);
+        if(this.props.match.params.id!==nextProps.match.params.id || this.state.item !== nextState.item){
+            console.log("들어ㅏ왔니?")
+
             return true
         }
         return false
     }
-    
+
+    componentDidUpdate(preProps, preState) {
+        console.log("========================== component update start ====================")
+        console.log(preProps, this.props);
+
+        if(preProps.match.params.id!==this.props.match.params.id){
+            console.log("실행!!");
+            this.props.fetchSingleProduct2(this.props.match.params.id)
+                .then(response => {
+                    if(response.type === ActionTypes.FETCH_SINGLEPRODUCT_SUCCESS) {
+                        this.setState({ ...this.state, item: this.props.item })
+                       
+                    }
+
+                    console.log("패치 완료!");
+                })
+        }
+
+
+        if (this.props.location.pathname !== preProps.location.pathname) {
+            window.scrollTo(0, 0);
+          }
+        console.log("========================== component update end ====================")
+        // this.props.fetchSingleProduct2(this.props.match.params.id)
+        // .then(() => this.setState({ ...this.state, item: this.props.item }));
+
+
+        
+    }
+
     componentDidMount() {
         this.setState({
             ...this.state,
@@ -78,8 +115,9 @@ class NoSideBar extends Component {
        }
 
     render(){
-        const {symbol, addToCartUnsafe, addToWishlist, calcPrice} = this.props
+        const {symbol, addToCartUnsafe, addToWishlist, calcPrice, auth} = this.props
         const {thumbnail} = this.state.item;
+        const { userDetails } = auth;
 
         var products = {
             fade: true
@@ -97,21 +135,43 @@ class NoSideBar extends Component {
         const { fileName } = thumbnail?thumbnail:{};
         const image = Files.filePath(fileName);
             
-        const addWishilist=(item)=>{
-            this.props.addWishlist(item)
-                .then(response=>{
-                if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
+        const addWishilist = (item) => {
+            if (userDetails === null) {
 
-                    toast.error("상품이 찜하기에 추가되었습니다");       
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
 
+                    }
+                }
 
-                    console.log('찜하기성공!')  
-                } 
-            }).catch(error=>{
-                console.log('error >>', error)
-            })
-       }     
+            } else {
+                this.props.addWishlist(item)
+                    .then(response => {
+                        if (response.type == ActionTypes.ADD_WISHLIST_SUCCESS) {
+                            toast.info("작품이 찜하기에 추가되었습니다");
+                            console.log('찜하기성공!')
+                        }
+                    }).catch(error => {
+                        console.log('error >>', error)
+                    })
+            }
+        }
         const asyncAddCart=(item,qty)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            } else{
             this.props.addToCart(item,qty)
                 .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
@@ -120,22 +180,39 @@ class NoSideBar extends Component {
              }).catch(error=>{
                  console.log('error >>', error)
              })
+            }
         }
         const buyNow=(item, qty)=>{
+            if (userDetails === null) {
+
+                {
+                    let confirm = window.confirm('로그인 이후에 이용 가능합니다\n' + '확인을 누르면 로그인 페이지로 이동합니다')
+                    if (confirm === true) {
+                        this.props.history.push(`/login`)
+                    } else if (confirm === false) {
+
+                    }
+                }
+
+            } else{
+
             this.props.addToCart(item,qty)
             .then(response=>{
                 if(response.type===ActionTypes.ADD_CART_SUCCESS){
                     this.props.snapOneItem();
                     this.props.calcPrice();
                 }
-                this.props.history.push(`${process.env.PUBLIC_URL}/checkout`)
+               this.props.history.push(`${process.env.PUBLIC_URL}/checkout`)
             }).catch(error=>{
                 console.log('error >>', error)
             })
         }
+        }
 
         return (
             <div>
+                
+                
                 <Breadcrumb title={' Product / '+this.state.item.productName} />
 
                 {/*Section Start*/}
@@ -169,7 +246,7 @@ class NoSideBar extends Component {
 
                 <RelatedProduct />
                 <ToastContainer/>
-                            
+               
             </div>
         )
     }
@@ -179,7 +256,9 @@ class NoSideBar extends Component {
 const mapStateToProps = (state) => ({
     
         item: state.data.item,
-        symbol: "￦"
+        symbol: "￦",
+        wishlist : state.wishlist.items,
+        auth : state.auth
     
     
 })
@@ -197,4 +276,4 @@ const mapDispatchToProps = (dispatch) => ({
    
 })
 
-export default connect(mapStateToProps, mapDispatchToProps) (NoSideBar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps) (NoSideBar));

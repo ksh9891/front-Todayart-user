@@ -33,7 +33,7 @@ class wishList extends Component {
                   
                 if(response.type==ActionTypes.REMOVE_WISHLIST_SUCCESS){  
                     console.log('삭제성공!')
-                    toast.error("작품이 찜하기에서 삭제되었습니다")
+                    toast.info("작품이 찜하기에서 삭제되었습니다")
                     this.props.fetchWishlist()               
                     
                 }
@@ -62,7 +62,7 @@ class wishList extends Component {
                 .then(response=>{                  
                 if(response.type==ActionTypes.ADDCART_FROMWISHLIST_SUCCESS){  
                     console.log('이동성공!')
-                    toast.error("작품이 장바구니로 이동되었습니다")
+                    toast.info("작품이 장바구니로 이동되었습니다")
                     
                     this.props.fetchWishlist() 
                     

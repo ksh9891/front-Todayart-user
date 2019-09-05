@@ -175,7 +175,7 @@ class HeaderFive extends Component {
 
                 <div id="search-overlay" className="search-overlay">
                     <div>
-                        <span className="closebtn" onClick={this.closeSearch} title="Close Overlay">Ã—</span>
+                        <span className="closebtn" onClick={this.closeSearch} title="Close Overlay">x</span>
                         <div className="overlay-content">
                             <div className="container">
                                 <div className="row">
@@ -186,7 +186,7 @@ class HeaderFive extends Component {
 												 className="form-control" 
 												 id="searchword"  
 												 ref={this.textInput}
-												 placeholder="Search a Product" />
+												 placeholder="작가명, 작품명" />
                                             </div>
                                             <button type="submit"  onClick={this.closeSearch} className="btn btn-primary"><i className="fa fa-search" /></button>
                                         </form>
