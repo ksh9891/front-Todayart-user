@@ -3,6 +3,10 @@ import {connect} from 'react-redux';
 import './shippingBox.css';
 import { Actions } from '../../actions';
 import Modal from 'react-responsive-modal';
+import { ActionTypes } from '../../constants/ActionTypes';
+import AddressAdd from './address-add'
+import FormCheckText from "../pages/formCheckText";
+
 
 class ShippingBox extends React.Component{
     constructor(props){
@@ -11,27 +15,35 @@ class ShippingBox extends React.Component{
             member:props.member,
             addresses:props.member.memberAddresses?props.member.memberAddresses:null,
             mainAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
-            address:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
+            shippingAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
             checkedAddress:props.member.memberAddresses?props.member.memberAddresses.filter(item=>item.mainAddress==='y')[0]:null,
             selectAddress:"main",
-            open:false
+            open:false,
+            fetchAddress:props.fetchShippingAddress
+
         }
         
         this.props.getAddress();
     }
 
     static getDerivedStateFromProps(nextProps, prevState){
+        console.log("부모부모", nextProps.shippingAddress,prevState.shippingAddress)
+        if(Object.prototype.toString.call(prevState.shippingAddress) === '[object Array]'){
+            prevState.fetchAddress(prevState.shippingAddress[0])
+        }
+
+        if(nextProps.shippingAddress!==prevState.shippingAddress){
+            return {shippingAddress:nextProps.shippingAddress, addresses:nextProps.order.addresses, mainAddress:nextProps.order.mainAddress}
+        }
         if(nextProps.addresses!==prevState.addresses){
-            console.log("getDerivedStateFromProps", nextProps)
             return {addresses:nextProps.order.addresses, mainAddress:nextProps.order.mainAddress}
         }
-        if(nextProps.address!==prevState.address){
-            return {address:nextProps.address}}
         return prevState
     }
 
+
+
     shouldComponentUpdate(nextProps, nextState){
-        console.log("shouldComponentUpdate", this.state, nextState)
         return true;
     }
 
@@ -39,7 +51,12 @@ class ShippingBox extends React.Component{
         
     }
 
-    
+    selectShippingAddress(){
+        console.log("select")
+        this.setState({shippingAddress:this.state.checkedAddress, selectAddress:'main'})
+        this.state.fetchAddress(this.state.checkedAddress)
+    }
+
 
     onOpenModal = () => {
         this.setState({ open: true });
@@ -48,10 +65,10 @@ class ShippingBox extends React.Component{
     onCloseModal = () => {
         this.setState({ open: false });
     };
+
     
     render(){
         const {member, mainAddress} = this.state;
-        
         const {realName, phone, email} = member;
         return(
             <div className="col-lg-6 col-sm-12 col-xs-12">
@@ -74,8 +91,8 @@ class ShippingBox extends React.Component{
                                     </td>
                                     <td className="secondTd">
                                         {phone?phone:<input type="tel" id="memberPhone"/>}
-                                        {phone?phone:<input type="tel" id="memberPhone"/>}
-                                        {phone?phone:<input type="tel" id="memberPhone"/>}
+                                        {phone?'':<input type="tel" id="memberPhone"/>}
+                                        {phone?'':<input type="tel" id="memberPhone"/>}
                                     </td>
                                 </tr>
                                 <tr>
@@ -96,7 +113,7 @@ class ShippingBox extends React.Component{
                     <h3>배송지 정보</h3>
                     <div className="selectAddressBox">
                         <span id="mainAddress">
-                        <input type="radio" name="address" value="MainAddress" id="MainAddress" defaultChecked="true" onClick={()=>{this.setState({selectAddress:"main"})}}/>
+                        <input type="radio" name="address" value="MainAddress" id="MainAddress" defaultChecked="true" onClick={()=>{this.selectShippingAddress()}}/>
                         <label htmlFor="MainAddress">기본배송지 </label>
                         </span>
                         <span>
@@ -155,7 +172,7 @@ class ShippingBox extends React.Component{
                             </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm" data-dismiss="modal" onClick={()=>{this.setState({address:this.state.checkedAddress, selectAddress:'main'})}}>주소 선택하기</button>
+                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm" data-dismiss="modal" onClick={()=>this.selectShippingAddress()}>주소 선택하기</button>
                                 <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
                             </div>
                             </div>
@@ -168,13 +185,13 @@ class ShippingBox extends React.Component{
                     {this.state.selectAddress==="main"?
                     <div className="viewAddress">
                     {this.state.mainAddress?
-                    <AsyncMainAddressBox mainAddress={this.state.mainAddress} address={this.state.address} />
+                    <AsyncMainAddressBox mainAddress={this.state.mainAddress} shippingAddress={this.state.shippingAddress} fetchAddress={this.state.fetchAddress}/>
                     : "로딩중입니다"
                     }
                    </div>
                    :
                    <div className="viewAddress">
-                    <NewAddressBox/>
+                    <NewAddressBox fetchAddress={this.state.fetchAddress} shippingAddress={this.state.shippingAddress}/>
                     </div>
                     }
                     </div>
@@ -189,55 +206,70 @@ class AsyncMainAddressBox extends React.Component{
         super(props)
         this.state={
             mainAddress : props.mainAddress[0],
-            address:props.mainAddress[0]
+            shippingAddress:props.mainAddress[0],
+            fetchAddress:props.fetchAddress
         }
-        console.log("CONSTROCTOR", this.props.mainAddress, this.state.mainAddress, this.state.address)
+
+        this.consignee=React.createRef();
+        this.phone1=React.createRef();
+        this.phone2=React.createRef();
+        this.phone3=React.createRef();
     }
 
     static getDerivedStateFromProps(nextProps, prevState){
-        if(prevState.address!==nextProps.address){
-            return {address:nextProps.address}
+        console.log("디폴트>>>",prevState.shippingAddress, nextProps.shippingAddress)
+        if(prevState.shippingAddress.address!==nextProps.shippingAddress.address){
+            return {shippingAddress:nextProps.shippingAddress}
         }
         return null;
     }
     shouldComponentUpdate(nextProps, nextState){
-        if(this.state.address!==nextState.address){
+        if(this.state.shippingAddress!==nextState.shippingAddress){
             return true
         }
         return false
     }
 
+    onChangeShippingInfo(){
+        
+        const name = this.consignee.current.value.trim();
+        const phone = this.phone1.current.value.trim()+'-'+this.phone2.current.value.trim()+'-'+this.phone3.current.value.trim()
+        const shippingAddress = {...this.state.shippingAddress, consignee:name, consigneePhone:phone}
+        this.state.fetchAddress(shippingAddress)
+    }
+
+    
 
     render(){
         return(
             <div>
-                {this.state.address?
+                {this.state.shippingAddress?
             <table>
                 <tbody className="addressTable">
                     <tr>
                         <td>수령인</td>
-                        {this.state.address!==null&&this.state.address.consignee!==undefined&&this.state.address.consignee!==null?
-                        <td className="secondTd">{this.state.address.consignee}</td>:
-                        <td className="secondTd"><input type="text" id="consigee" required/></td>}
+                        {this.state.shippingAddress!==null&&this.state.shippingAddress.consignee!==undefined&&this.state.shippingAddress.consignee!==null?
+                        <td className="secondTd">{this.state.shippingAddress.consignee}</td>:
+                        <td className="secondTd"><input type="text" id="consignee" ref={this.consignee} onChange={_=>this.onChangeShippingInfo()}/></td>}
                     </tr>
                     <tr>
                         <td>연락처</td>
-                        {this.state.address!==null&&this.state.address.consigneePhone!==undefined&&this.state.address.consigneePhone!==null?
-                        <td className="secondTd">{this.state.address.consigneePhone}</td>:
+                        {this.state.shippingAddress!==null&&this.state.shippingAddress.consigneePhone!==undefined&&this.state.shippingAddress.consigneePhone!==null?
+                        <td className="secondTd">{this.state.shippingAddress.consigneePhone}</td>:
                         <div>
-                        <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/><input type="tel" id="consigneePhone" required/></td>
+                        <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone" ref={this.phone1} onChange={_=>this.onChangeShippingInfo()} required/><input type="tel" id="consigneePhone"ref={this.phone2} onChange={_=>this.onChangeShippingInfo()} required/><input type="tel" id="consigneePhone"ref={this.phone3} onChange={_=>this.onChangeShippingInfo()} required/></td>
                         </div>}
                     </tr>
                     <tr className="addressCell">
                         <td rowSpan="3">주소</td>
-                        <td className="secondTd">{this.state.address.postalNumber}</td>
+                        <td className="secondTd">{this.state.shippingAddress.postalNumber}</td>
                     </tr>
                     <tr>
-                        <td className="secondTd">{this.state.address.address}</td>
+                        <td className="secondTd">{this.state.shippingAddress.address}</td>
                         
                     </tr>
                     <tr>
-                        <td className="secondTd">{this.state.address.addressDetail}</td>
+                        <td className="secondTd">{this.state.shippingAddress.addressDetail}</td>
                     </tr>
                 </tbody>
             </table>
@@ -252,13 +284,57 @@ class NewAddressBox extends React.Component{
     constructor(props){
         super(props)
         this.state={
-            addAddress:false
+            addAddress:false,
+            fetchAddress:props.fetchAddress,
+            shippingAddress:{consignee:'', consigneePhone:'', address:'', addressDetail:'', postalNumber:''},
+            open:false
+
+
         }
+        this.consignee=React.createRef()
+        this.phone1=React.createRef()
+        this.phone2=React.createRef()
+        this.phone3=React.createRef()
+        this.postalNumber=React.createRef()
+        this.addressDetail=React.createRef()
+        this.address=React.createRef()
+    }
+    static getDerivedStateFromProps(nextProps, prevState){
+        if(prevState.shippingAddress.address!==nextProps.shippingAddress.address){
+         return{shippingAddress:{...prevState.shippingAddress, address:nextProps.shippingAddress.address, postalNumber:nextProps.shippingAddress.postalNumber}}
+        }
+
     }
 
-   
-    
+    shouldComponentUpdate(nextProps, nextState){
+        return true
 
+    }
+
+    componentWillUpdate(nextProps, nextState){
+      
+        
+    }
+
+    onChangeShippingInfo(){
+        const name = this.consignee.current.value.trim();
+        const phone = this.phone1.current.value.trim()+'-'+this.phone2.current.value.trim()+'-'+this.phone3.current.value.trim()
+        const postalNumber=this.postalNumber.current.value.trim()
+        const address = this.address.current.value.trim()
+        const addressDetail = this.addressDetail.current.value.trim()
+        const shippingAddress = {...this.state.shippingAddress, consignee:name, consigneePhone:phone, postalNumber:postalNumber, address:address, addressDetail:addressDetail}
+        this.state.fetchAddress(shippingAddress)
+    }
+    
+    onOpenModal = () => {
+        this.setState({ open: true });
+    };
+
+    onCloseModal = () => {
+        this.setState({ open: false });
+        this.address.current.value= this.state.shippingAddress.address
+        this.postalNumber.current.value = this.state.shippingAddress.postalNumber
+    };
 
     render(){
         return(
@@ -267,26 +343,26 @@ class NewAddressBox extends React.Component{
                         <tbody>
                         <tr>
                         <td><label htmlFor="consignee">수령인</label></td>
-                        <td colSpan="3" className="secondTd"><input type="text" id="consigee"/></td>
+                        <td colSpan="3" className="secondTd"><input type="text" id="consignee"  ref={this.consignee} onChange={_=>this.onChangeShippingInfo()}/></td>
                         </tr>
                         <tr>
                             <td><label htmlFor="consigneePhone">연락처</label></td>
-                            <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone"/>
-                            <input type="tel" id="consigneePhone"/>
-                            <input type="tel" id="consigneePhone"/></td>
+                            <td className="secondTd" colSpan="3"><input type="tel" id="consigneePhone"  ref={this.phone1} onChange={_=>this.onChangeShippingInfo()}/>
+                            <input type="tel" id="consigneePhone"  ref={this.phone2} onChange={_=>this.onChangeShippingInfo()} />
+                            <input type="tel" id="consigneePhone"   ref={this.phone3}onChange={_=>this.onChangeShippingInfo()} /></td>
                         </tr>
                         <tr className="addressCell">
                             <td rowSpan="3"><label htmlFor="address">주소</label></td>
-                            <td colSpan="2" className="secondTd"><input type="number" id="postalNumber" placeholder="우편번호"/> </td>
+                            <td colSpan="2" className="secondTd"><input type="number" id="postalNumber" ref={this.postalNumber} placeholder="우편번호" readOnly/> </td>
                             <td><button type="button" data-toggle="modal" data-target="#searchPostalNumber" className="btn btn-sm btn-solid ta-btn-sm" onClick={()=>this.onOpenModal}>우편번호검색</button></td>                            
                         </tr>
 
                         <tr>
-                            <td colSpan="3" className="secondTd"><input type="number" id="address" placeholder="도로명 주소"/></td>
+                            <td colSpan="3" className="secondTd"><input type="text" id="address"ref={this.address} onChange={_=>this.onChangeShippingInfo()} placeholder="도로명 주소" readOnly/></td>
                             
                         </tr>
                         <tr>
-                            <td colSpan="3" className="secondTd"><input type="number" id="addressDetail" placeholder="상세주소"/></td>
+                            <td colSpan="3" className="secondTd"><input type="text" id="addressDetail" ref={this.addressDetail} onChange={_=>this.onChangeShippingInfo()} placeholder="상세주소"/></td>
                         </tr>
                         </tbody>
                         <tfoot>
@@ -297,29 +373,31 @@ class NewAddressBox extends React.Component{
                             </tr>
                         </tfoot>
                     </table>
+
+
+
+
                 <div className="modal fade" id="searchPostalNumber" tabIndex="-1" role="dialog" aria-labelledby="searchPostalNumberTitle" aria-hidden="true">
                         <div className="modal-dialog modal-dialog-scrollable" role="document">
                             <div className="modal-content address_list">
                             <div className="modal-header">
-                                <h5 className="modal-title" id="searchPostalNumberTitle">배송지 목록</h5>
+                                <h5 className="modal-title" id="searchPostalNumberTitle">주소검색</h5>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div className="modal-body">
-                            <div className="row">
-                                <div className="col-sm-12">
-                                   sdafdaf
-                                </div>
-                            </div>
+                                <AddressAdd fetchAddress={this.state.fetchAddress} shippingAddress={this.state.shippingAddress}/>                  
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-sm btn-solid ta-btn-sm" data-dismiss="modal">주소 선택</button>
                                 <button type="button" className="btn btn-sm btn-solid ta-btn-sm cl" data-dismiss="modal">닫기</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <script type="text/javascript">
                     <script></script>
@@ -334,11 +412,13 @@ class NewAddressBox extends React.Component{
 
 const mapStateToProps=(state)=>({
     member:state.auth.userDetails,
-    order:state.order
+    order:state.order,
+    shippingAddress:state.order.shippingAddress
 })
 
 const mapDispatchToProps=(dispatch)=>({
-    getAddress:()=>dispatch(Actions.getAddress())
+    getAddress:()=>dispatch(Actions.getAddress()),
+    fetchShippingAddress:(address)=>dispatch(Actions.fetchShippingAddress(address))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShippingBox);
