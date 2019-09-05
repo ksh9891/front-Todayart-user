@@ -30,7 +30,23 @@ class NoSideBar extends Component {
         };
     }
 
+    componentWillReceiveProps(){
+        
+
+        // this.props.fetchSingleProduct2(this.props.match.params.id)
+        // .then(() => this.setState({ ...this.state, item: this.props.item }));
+        
+        // if(this.state.item === null){
+        //     this.setState({
+        //         ...this.state,
+        //         item : this.props.item
+        //     })
+        // }
+
+    }
+
     componentWillMount(){
+        
         console.log('WillMount >> ', this.props)
         this.props.fetchSingleProduct2(this.props.match.params.id)
         .then(() => this.setState({ ...this.state, item: this.props.item }));
@@ -44,8 +60,9 @@ class NoSideBar extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log("shouldComponentUpdate111111", this.state, nextState, this.props, nextProps);
-        if(this.props.match.params.id!==nextProps.match.params.id){
+        console.log("shouldComponentUpdate111111", this.state, nextState);
+        console.log("shouldComponentUpdate222222", this.props, nextProps);
+        if(this.props.match.params.id===nextProps.match.params.id){
             return true
         }
         return false
@@ -57,6 +74,7 @@ class NoSideBar extends Component {
             nav1: this.slider1,
             nav2: this.slider2
         });
+
        }
 
     render(){
