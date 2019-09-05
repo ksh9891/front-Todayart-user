@@ -125,21 +125,22 @@ class CheckoutDetail extends Component{
             <div className="checkout-details">
                 <div className="order-box">
                     <div className="title-box">
-                        <div>상품정보/수량 <span> 금액</span></div>
+                        <div>작품정보 <span> 금액</span></div>
                     </div>
                     <ul className="qty">
                         {orderItems.map((item, index) => {
                             return <div key={index}>
                             {item.product.productName}
                             <li>
-                                <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} />
+                                <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> 
+                                {/* × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} /> */}
                                 <CurrencyFormat value={item.productPrice*item.quantity} prefix={symbol} displayType={'text'} thousandSeparator={true} />
                             </li>
                             </div> })
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>작품가격 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                         <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
 
