@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Link } from "react-router-dom";
-
+import Breadcrumb from '../common/breadcrumb'
 import { Actions } from '../../actions';
 import CKEditor from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import './article.css';
 
 class ArticleWrite extends Component {
 
@@ -26,7 +27,6 @@ class ArticleWrite extends Component {
     const boardId = this.props.article.boardName.boardId;
     const productId = this.props.data.item.productId !== null ? this.props.data.item.productId:null;
 
-    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa',boardId)
 
     this.props.articleWrite({title, content, boardId, productId})
       .then(response => {
@@ -70,25 +70,16 @@ class ArticleWrite extends Component {
 
     return (
       <div>
-        
-        <body> 
-          <div class="container">
+        <div className="header">
+         {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
+            <Breadcrumb title={this.props.article.boardName.boardName}/> : ''}
+          </div>
+          <section className="section-b-space" style={{"height":"515px"}}>
+          <div className="container" style={{"maxWidth":"1400px", "width":"100%", "height":"100%","paddingRight":"15px", "paddingLeft":"15px", "marginRight":"auto","marginLeft":"auto"}}>
+
             <form onSubmit={e => this.props.match.params.articleId !== undefined ? 
               this.onUpdate(e) : this.onWrite(e)}>
-              <div class="form-group">
-  
-                {this.props.article.boardName.boardName}
-                {/* <select
-                  class="form-control"
-                  type="boardId"
-                  id="boardId"
-                  name="boardId"
-                  placeholder="카테고리"
-                  required>
-                      <option value={this.props.article.boardName.boardName}>{this.props.article.boardName.boardName}</option>
-                </select> */}
-  
-              </div>
+              <div className="titleArea">
               {this.props.article.boardName.boardId === 4 ? '' : <div class="form-group">
                 <label for="Name">제목</label>
                 <input
@@ -100,28 +91,13 @@ class ArticleWrite extends Component {
                   defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.detail.title : null}
                   placeholder="제목을 입력하세요."
                   required
+                  style={{"width":"90%", "float":"right"}}
                 />
               </div>}
-              
-
-              {/* <div className="App">
-                <h4>내용</h4>
-                <CKEditor
-                    editor={ ClassicEditor }
-                    data="<p>내용을 입력하세요.</p>"
-                    onInit={ editor => {
-                        console.log( 'Editor is ready to use!', editor );
-                    } }
-                    onChange={ ( event, editor ) => {
-                        const data = editor.getData();
-                        console.log( { event, editor, data } );
-                    } }
-                />
-            </div> */}
-  
-              <div class="form-group">
+              </div>
+              <div className="contents">
+              <div className="form-group">
                 <label for=" Email1msg">내용</label>
-                <div class="form-group">
                   <textarea
                     class="form-control"
                     rows="10"
@@ -132,28 +108,31 @@ class ArticleWrite extends Component {
                     defaultValue={this.props.match.params.articleId !== undefined ? this.props.article.detail.content : null}
                     placeholder="내용을 입력하세요."
                     required
+                    style={{"width":"90%", "float":"right", "resize":"none"}}
                   ></textarea>
                 </div>
-  
               </div>
-              <div class="checkbox">
-                <label>
+              <div className="checkbox" style={{"marginBottom":"30px", "marginTop":"30px"}}>
+                <div>
                   <input
                     type="checkbox"
                     id="is_hidden"
                     name="is_hidden"
-                  /> 비밀글 여부
-                </label>
-              </div>
-              
-  
-              <button type="submit" class="btn btn-info">확인</button>
-            </form>
-            <button type="submit" class="btn btn-info">
-              <Link to={"/articles?boardId="+`${this.props.article.boardName.boardId}`}>취소</Link>
+                  />비밀글 여부
+                </div>
+                <div style={{"float":"right", "margin":"12px"}}>
+                <button type="submit" class="btn btn-info mr-2 ml-2">확인</button>
+              <button type="button" class="btn btn-info">  
+              <Link to={"/articles?boardId="+`${this.props.article.boardName.boardId}`} style={{"color":"inherit", "transition":".3s easeInOut"}}>취소</Link>
             </button>
+              </div>
+              </div>
+  
+            </form>
+<div className=""></div>
+            
           </div>
-        </body>
+        </section>
       </div>
     );    
   }

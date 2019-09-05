@@ -5,8 +5,8 @@ class Breadcrumb extends Component {
     render (){
         const {title, parent} = this.props;
         return (
-            <div className="breadcrumb-section">
-                <div className="container">
+            <div className="breadcrumb-section" >
+                <div className="container" style={{"maxWidth":"1400px"}}>
                     <div className="row">
                         <div className="col-md-6">
                             <div className="page-title">

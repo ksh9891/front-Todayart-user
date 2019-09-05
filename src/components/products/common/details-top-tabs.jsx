@@ -98,36 +98,15 @@ class DetailsTopTabs extends Component {
                             <TabPanel>
                                 <form className="theme-form mt-4">
                                     <div className="form-row">
-                                        {/* <div className="col-md-12 ">
-                                            <div className="media m-0">
-                                                <label>Rating</label>
-                                                <div className="media-body ml-3">
-                                                    <div className="rating three-star">
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                        <i className="fa fa-star"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="name">Name</label>
-                                            <input type="text" className="form-control" id="name" placeholder="Enter Your name" required />
-                                        </div>
-                                        <div className="col-md-6">
-                                            <label htmlFor="email">Email</label>
-                                            <input type="text" className="form-control" id="email" placeholder="Email" required />
-                                        </div> */}
                                         <ProductQandA />
                                         <span>
                                             {userDetails !== null ?
                                                 <div className="checkout_btn_inner d-flex align-items-center">
-                                                    <nav className="navbar navbar-light bg-light">
+                                                    <nav className="navbar navbar-light">
                                                         <form className="form-inline">
                                                             <button className="btn btn-outline-success my-2 my-sm-0">
-                                                                <Link to={"/articleWrite"} boardId={this.props.article.boardName.boardId}>질문하기</Link>
+                                                                <Link to={"/articleWrite"} boardId={this.props.article.boardName.boardId} 
+                                                                style={{"color":"inherit", "transition":".3s easeInOut"}}>질문하기</Link>
                                                             </button>
                                                         </form>
                                                     </nav>
