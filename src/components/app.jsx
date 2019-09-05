@@ -4,7 +4,6 @@ import React, {Component} from 'react';
 import HeaderFive from './common/headers/header-five';
 
 // ThemeSettings
-import ThemeSettings from "./common/theme-settings"
 import FooterTwo from "./common/footers/footer-two";
 
 class App extends Component {
