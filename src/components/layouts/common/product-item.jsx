@@ -25,7 +25,8 @@ class ProductItem extends Component {
             stock: 'InStock',
             quantity: 1,
             image: '',
-            onAddToWishlistClicked:props.onAddToCartClicked
+            onAddToWishlistClicked:props.onAddToCartClicked,
+            
         }
     }
 

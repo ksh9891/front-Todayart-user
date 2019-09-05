@@ -39,10 +39,10 @@ class FooterTwo extends Component {
                                                 <li><Link to={`${process.env.PUBLIC_URL}/`} >Home</Link></li>
                                                 <li><Link to={`${process.env.PUBLIC_URL}/collections/0`} >작품 - 전체</Link></li>
 
-                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/1`} >작품 - 풍경화</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/2`} >작품 - 인물화</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/3`} >작품 - 정물화</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}articles?boardId=${1}`} >FAQ</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`} >작품 - 인물화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`} >작품 - 풍경화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/${3}`} >작품 - 정물화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${1}`} >FAQ</Link></li>
                                                 <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${2}`} >Q&A</Link></li>
                                                 <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${3}`} >공지사항</Link></li>
 

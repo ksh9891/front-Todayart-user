@@ -84,8 +84,8 @@ class NavBar extends Component {
                             <Link to={`${process.env.PUBLIC_URL}/collections/0`} className="nav-link">작품<span className="sub-arrow" /></Link>
                                 <ul className="nav-submenu">
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${0}`}>전체보기</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`}>풍경화</Link></li>
-                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`}>인물화</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${1}`}>인물화</Link></li>
+                                    <li><Link to={`${process.env.PUBLIC_URL}/collections/${2}`}>풍경화</Link></li>
                                     <li><Link to={`${process.env.PUBLIC_URL}/collections/${3}`}>정물화</Link></li>
                                     
                                      

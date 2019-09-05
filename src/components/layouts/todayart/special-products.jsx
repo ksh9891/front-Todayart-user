@@ -109,7 +109,7 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { items.slice(this.state.endSlice-12, this.state.endSlice).map((item, index) =>
+                                    { this.state.randomItem.slice(this.state.endSlice-12, this.state.endSlice).map((item, index) =>
                                         <ProductItem item={item} symbol={symbol}
 
                                                      onAddToWishlistClicked={() => addWishilist(item)}
