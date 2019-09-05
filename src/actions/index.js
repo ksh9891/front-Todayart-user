@@ -891,7 +891,29 @@ const snapOneItem = () =>{
     })
 }
 
-        
+const fetchShippingAddress = (address) =>{
+    return ({
+        type:ActionTypes.FETCH_SHIPPING_ADDRESS,
+        address:address
+    })
+}        
+
+const createShipping = (ordered, address) =>{
+    const data = {"orderedId":ordered.orderId, "memberId":ordered.memberId, "orderedDetails":ordered.orderDetails, "consignee":address.consignee, 
+    "consigneePhone":address.consigneePhone, "postalCode":address.postalNumber, "receiveAddr":address.address+' '+address.addressDetail};
+
+    return ({
+        type:ActionTypes.CREATE_SHIPPING,
+        payload:{
+            request:{
+                method: 'POST',
+                url: `/shipping`,
+                data: {orderedId:ordered.orderId, memberId:ordered.memberId, orderedDetails:ordered.orderDetails, consignee:address.consignee, consigneePhone:address.consigneePhone,postalCode:address.postalNumber, receiveAddr:address.address+' '+address.addressDetail}
+
+            }
+        }
+    })
+}
 
 
 export const Actions = {
@@ -947,6 +969,8 @@ export const Actions = {
     removeWishlist,
     fetchWishlist,
     addCartFromWishlist,
-    snapOneItem
+    snapOneItem,
+    fetchShippingAddress,
+    createShipping
 
 };

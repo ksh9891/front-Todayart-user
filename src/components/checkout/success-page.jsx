@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux'
 
+import {Actions} from '../../actions'
+import { ActionTypes } from '../../constants/ActionTypes';
 
 class orderSuccess extends Component {
 
     constructor (props) {
         super (props)
+    
+    }
 
+    componentDidMount(){
+        this.props.createShipping(this.props.ordered, this.props.address);
+        this.props.getCart().then(response=>{if(response.type===ActionTypes.GET_CART_SUCCESS){this.props.calcCartPrice()}})
     }
 
     render (){
-        
         return (
            <section>
                <div className="order_success">
@@ -29,4 +36,15 @@ class orderSuccess extends Component {
     }
 }
 
-export default orderSuccess
+
+const mapDispatchToProps=(dispatch)=>({
+    createShipping:(ordered, address)=>dispatch(Actions.createShipping(ordered, address)),
+    getCart:()=>dispatch(Actions.getCart()),
+    calcCartPrice:()=>dispatch(Actions.calcCartPrice())
+})
+const mapStateToProps=(state)=>({
+    ordered:state.order.ordered,
+    address:state.order.shippingAddress
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(orderSuccess)

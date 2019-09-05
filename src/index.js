@@ -101,10 +101,10 @@ class Root extends React.Component {
         	<Provider store={store}>
                 <BrowserRouter basename={'/'} >
                     <ScrollContext>
-                        <Switch>
                             <React.Fragment>
                                 {/* eslint-disable-next-line react/jsx-no-undef */}
                                 <HeaderFive logoName={'logo.png'}/>
+                                <Switch>
                                 {/* 메인페이지 */}
                                 <Route exact path={`${process.env.PUBLIC_URL}/`} component={TodayArt}/>
 
@@ -151,7 +151,7 @@ class Root extends React.Component {
 
                                 {/*Routes For custom Features*/}
                                 <Route path={`${process.env.PUBLIC_URL}/compare`} component={Compare}/>
-                                <Route path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
+                                <Route exact path={`${process.env.PUBLIC_URL}/checkout`} component={checkOut}/>
                                 <Route path={`${process.env.PUBLIC_URL}/order-success`} component={orderSuccess}/>
                                 <Route path={`${process.env.PUBLIC_URL}/sales/orders`} component={aboutUs}/>
 
@@ -193,12 +193,11 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/blog/right-sidebar`} component={RightSide}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/details`} component={Details}/>
                                 <Route path={`${process.env.PUBLIC_URL}/blog/blog-page`} component={BlogPage}/>
-
-                                {/*<Route component={PageNotFound} />*/}
+                                <Route component={PageNotFound}/>
+                                </Switch>
                                 <FooterTwo logoName={'logo.png'}/>
 
                             </React.Fragment>
-                        </Switch>
                     </ScrollContext>
                 </BrowserRouter>
 			</Provider>

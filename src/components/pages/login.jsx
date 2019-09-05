@@ -19,6 +19,7 @@ const loginAsync = (email, password) => (dispatch) => {
         })
         .then(response => {
             if (response.type === ActionTypes.GET_USER_SUCCESS) {
+                dispatch(Actions.fetchShippingAddress(response.payload.data.memberAddresses.filter(item=>item.mainAddress==='y')));
                 return dispatch(Actions.getCart());
             } else {
                 return Promise.reject(response);
@@ -26,6 +27,7 @@ const loginAsync = (email, password) => (dispatch) => {
         })
         .then(response=>{
             if(response.type === ActionTypes.GET_CART_SUCCESS){
+
                 return dispatch(Actions.calcCartPrice());
             }
         });

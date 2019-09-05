@@ -22,7 +22,7 @@ class FooterTwo extends Component {
     render () {
         return (
             <footer className="footer-light pet-layout-footer">
-                <div className="white-layout" style={{"background-color": "#edeef2"}}>
+                <div className="white-layout" style={{"backgroundColor": "#edeef2"}}>
                     <div className="container">
                         <section className="small-section">
                             <div className="row footer-theme2">
