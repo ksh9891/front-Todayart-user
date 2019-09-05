@@ -22,7 +22,7 @@ class FooterTwo extends Component {
     render () {
         return (
             <footer className="footer-light pet-layout-footer">
-                <div className="white-layout" style={{"background-color": "#ffebeb"}}>
+                <div className="white-layout" style={{"background-color": "#edeef2"}}>
                     <div className="container">
                         <section className="small-section">
                             <div className="row footer-theme2">
@@ -32,19 +32,22 @@ class FooterTwo extends Component {
                                             <LogoImage logo={this.props.logoName} />
                                         </div>
                                         <div className="footer-title footer-mobile-title">
-                                            <h4>사이트 맵</h4>
+                                            <h4>사이트맵</h4>
                                         </div>
                                         <div className="footer-contant">
                                             <ul>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >Home</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 전체</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 서양화</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 동양화</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >작품 - 기타</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >FAQ</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >Q&A</Link></li>
-                                                <li><Link to={`${process.env.PUBLIC_URL}/left-sidebar/collection`} >공지사항</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/`} >Home</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/0`} >작품 - 전체</Link></li>
+
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/1`} >작품 - 풍경화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/2`} >작품 - 인물화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/collections/3`} >작품 - 정물화</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}articles?boardId=${1}`} >FAQ</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${2}`} >Q&A</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/articles?boardId=${3}`} >공지사항</Link></li>
+
                                                 <li><Link to={`${process.env.PUBLIC_URL}/register-artist`} >작가 신청</Link></li>
+                                                <li><Link to={`${process.env.PUBLIC_URL}/term`} >이용약관</Link></li>
                                             </ul>
                                         </div>
                                     </div>

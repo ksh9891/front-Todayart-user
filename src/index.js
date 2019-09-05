@@ -85,6 +85,8 @@ import ElementMultipleSlider from "./components/features/product/element-multipl
 import ElementProductTab from "./components/features/product/element-product-tab"
 import ArticleWrite from './components/articles/ArticleWrite';
 
+import TermnCondition from './components/common/termncondition'
+
 class Root extends React.Component {
     render() {
         return(
@@ -161,6 +163,7 @@ class Root extends React.Component {
                                 <Route path={`${process.env.PUBLIC_URL}/articles`} component={SupportContainer}/>
                                 <Route exact path={`${process.env.PUBLIC_URL}/articleWrite`} component={ArticleWrite}/>
                                 <Route path={`${process.env.PUBLIC_URL}/articleWrite/:articleId`} component={ArticleWrite}/>
+                                <Route path={`${process.env.PUBLIC_URL}/term`} component={TermnCondition}/>
 
                                 {/*Features*/}
                                 {/*Theme Elements*/}

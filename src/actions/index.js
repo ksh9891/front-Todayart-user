@@ -27,7 +27,7 @@ export const fetchSingleProduct = productId => ({
 })
 
 export const addToCartAndRemoveWishlist = (product,qty) => (dispatch) => {
-    toast.success("Item Added to Cart");
+    toast.error("Item Added to Cart");
     dispatch(addToCartUnsafe(product, qty));
     dispatch(removeFromWishlist(product));
 }
@@ -45,7 +45,7 @@ export const addToCartUnsafe = (product, qty) => {
 }};
 
 export const removeFromCart = product_id => (dispatch) => {
-    toast.error("Item Removed from Cart");
+    //toast.error("Item Removed from Cart");
     dispatch({
         type: types.REMOVE_FROM_CART,
         product_id
