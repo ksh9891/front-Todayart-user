@@ -19,21 +19,34 @@ const loginAsync = (email, password) => (dispatch) => {
         })
         .then(response => {
             if (response.type === ActionTypes.GET_USER_SUCCESS) {
-                dispatch(Actions.fetchShippingAddress(response.payload.data.memberAddresses.filter(item=>item.mainAddress==='y')));
-                return dispatch(Actions.getCart());
+                if(response.payload.data !== null && response.payload.data !== undefined) {
+                    dispatch(Actions.fetchShippingAddress(response.payload.data.memberAddresses.filter(item=>item.mainAddress==='y')));
+                    return dispatch(Actions.getCart());
+                } else {
+                    response.type = ActionTypes.GET_USER_FAIL;
+                    return Promise.reject(response);
+                }
             } else {
                 return Promise.reject(response);
             }
         })
-        .then(response=>{
+        .then(response => {
             if(response.type === ActionTypes.GET_CART_SUCCESS){
 
                 return dispatch(Actions.calcCartPrice());
             }
+        })
+        .catch(error => {
+            console.log("오류!", error);
+            return error;
         });
 };
 
 class Login extends Component {
+    state = {
+        message: ''
+    }
+
     constructor(props) {
         super(props);
 
@@ -48,15 +61,27 @@ class Login extends Component {
             const email = this.emailInput.current.value.trim();
             const password = sha256(this.passwordInput.current.value.trim());
 
-            console.log(email);
-            console.log(password);
-
             this.props.login(email, password)
                 .then(response => {
-                    this.props.history.push('/');
+                    console.log("response", response);
+                    if(response.type === ActionTypes.CALC_CART_PRICE) {
+                        this.props.history.push('/');
+                    } else if(response.type === ActionTypes.LOGIN_FAIL) {
+                        const message = "아이디 또는 비밀번호가 틀렸습니다.";
+                        return Promise.reject(message);
+                    } else if(response.type === ActionTypes.GET_USER_FAIL) {
+                        const message = "메일 인증을 받지 않은 상태입니다. 메일 인증 과정을 완료 해 주세요";
+                        return Promise.reject(message);
+                    } else {
+                        const message = "오류가 발생했습니다. 잠시 후 다시 시도해주세요";
+                        return Promise.reject(message);
+                    }
                 })
-                .catch(error => {
-                    console.log('error >> ', error);
+                .catch(message => {
+                    this.setState({
+                        ...this.state,
+                        message: message
+                    })
                 });
 
         };
@@ -96,6 +121,9 @@ class Login extends Component {
                                             />
                                         </div>
                                         <button type="submit" className="btn btn-solid">로그인</button>
+                                        <div className="errorMessage">
+                                            <span>{this.state.message}</span>
+                                        </div>
                                     </form>
                                     <Link to="/forget-password">비밀번호를 잊어버리셨나요?</Link>
                                 </div>
