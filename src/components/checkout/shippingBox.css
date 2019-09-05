@@ -31,7 +31,7 @@
     width: 25%;
 }
 
-#consigNee, #address, #addressDetail, #member{
+#consignee, #address, #addressDetail, #member{
     height: 30px;
     width: 100%;
     background-color: #F9F9F9;

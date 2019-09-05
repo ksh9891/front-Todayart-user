@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import queryString from 'query-string'
 import { Actions } from '../../actions';
-import Breadcrumb from '../common/breadcrumb'
+import { Link } from "react-router-dom";
+import './article.css';
 
 class FAQArticle extends Component {
 
@@ -73,60 +74,59 @@ class FAQArticle extends Component {
   render() {
     const { items } = this.props.article;
     const { userDetails } = this.props.auth;
-    
+    const {boardId} = this.state;
 
     return (
       <div>
         
-        {this.props.article.boardName !== null && this.props.article.boardName !== undefined ?
-          <Breadcrumb title={this.props.article.boardName.boardName} /> : ''
-        }
-        <nav className="navbar navbar-light bg-light">
-          <form className="form-inline" onSubmit={e => this.onSearch(e)}>
 
+        <nav className="navbar navbar-light forSearch">
+        <div className="topbar">
+        <Link to="/articles?boardId=1" style={{"color":"inherit"}}>FAQ</Link> |
+        <Link to="/articles?boardId=2" style={{"color":"inherit"}}>Q&A</Link> |
+        <Link to="/articles?boardId=3" style={{"color":"inherit"}}>공지사항</Link>
+        </div>
+          <form className="form-inline" onSubmit={e => this.onSearch(e)}>
             <select
-              className="form-control"
+              className="form-control search"
               type="boardId"
               id="boardId"
               name="boardId"
               placeholder="카테고리"
               ref={this.searchConditionInput}
               required>
-              <option value="TC">제목 + 내용</option>
+              <option value="TC">제목+내용</option>
               <option value="title">제목</option>
               <option value="content">내용</option>
             </select>
-
-            <input className="form-control mr-sm-2"
+            <input className="form-control search mr-sm-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
               id="SearchWordInput"
               name="searchWordInput"
               ref={this.searchWordInput} />
-            <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button className="btn btn-outline-success mr-sm-1" type="submit">Search</button>
           </form>
         </nav>
-        {items ?
-          items.map((detail) => {
-            const { title, content, nickname } = detail;
-            return (
-              <div>
+        <div>
+              <div className="support_boards">
 
                 {/*Dashboard section*/}
-                <section className="faq-section section-b-space">
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-sm-12">
+                      <div className="col-sm-0">
                         <div className="accordion theme-accordion" id="accordionExample">
+                    {items ?
+                      items.map((detail) => {
+                        const { title, content, nickname } = detail;
+                        return (
                           <div className="card">
                             <div className="card-header" id="headingOne">
                               <h5 className="mb-0">
-                                <button className="btn btn-link" type="button" data-toggle="collapse"
+                                <button className="btn btn-link title" type="button" data-toggle="collapse"
                                   data-target={"#collapse"+`${detail.articleId}`} aria-expanded="true"
                                   aria-controls={"collapse"+`${detail.articleId}`}>
-                                  {title}
-                                  {this.props.article.boardName.boardId==2? "글쓴이:"+nickname :''}
+                                  <span className="title_inline">{title}</span>
+                                  {this.props.article.boardName.boardId==2?<span className="writter">{nickname}</span> :''}
                                 </button>
                               </h5>
                             </div>
@@ -137,9 +137,9 @@ class FAQArticle extends Component {
                                 <p>{detail.content}</p>
                                 <span>
                                   {((userDetails !== null) && (detail.memberId === userDetails.memberId)) || ((userDetails !== null) && (userDetails.memberId === 1)) ?
-                                    <div className="checkout_btn_inner d-flex align-items-center"><nav className="navbar navbar-light bg-light">
+                                    <div className="checkout_btn_inner align-items-right"><nav className="navbar navbar-light forEdit">
                                       <form className="form-inline">
-                                        <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
+                                        <button className="btn btn-outline-success my-2 my-sm-0 mr-1" onClick={(e) => this.onModify(e, detail.boardId, detail.articleId)}>수정</button>
                                         <button className="btn btn-outline-success my-2 my-sm-0" onClick={(e) => this.onDelete(e, detail.articleId)}>삭제</button>
                                       </form>
                                     </nav>
@@ -148,16 +148,12 @@ class FAQArticle extends Component {
                               </div>
                             </div>
                           </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-
-              </div >
             )
-          }) : ''}
-
+          }): ''}
+          </div>
+        </div>
+      </div>
+ </div>
           
       </div>
     )

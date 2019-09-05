@@ -23,7 +23,7 @@ class PageNotFound extends Component {
                             <div className="col-sm-12">
                                 <div className="error-section">
                                     <h1 style={{"height":"200px"}}>:-(</h1>
-                                    <h2>앗, 이런! 잘 못 찾아왔어요!</h2>
+                                    <h2>앗, 이런! 없는 페이지에요!!</h2>
                                     <Link to={`${process.env.PUBLIC_URL}/`} className="btn btn-solid">메인화면으로 돌아가기</Link>
                                 </div>
                             </div>

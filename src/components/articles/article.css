@@ -1,0 +1,46 @@
+.collapse .card-body p{
+    padding:0.375rem 0.75rem;
+}
+
+.collapse .card {
+    padding:2px;
+}
+
+.collapse{
+    border-bottom:1px solid #ddd;
+    border-radius:0.1;
+
+}
+
+.writter{
+    float:right;
+}
+
+#headingOne .title_inline{
+    float:left;
+}
+
+#headingOne .btn.btn-link.title, .collapse .card-body{
+    width:100%;
+    padding-right:50px;
+    padding-left:50px;
+}
+
+.navbar.navbar-light{
+    margin-top:30px;
+    margin-bottom:15px;
+}
+
+.form-inline .form-control{
+    margin-left:8px;
+    border-radius:0.1;
+
+}
+
+.btn.btn-outline-success.mr-sm-1{
+    height:38px;
+}
+
+.forEdit{
+    float:right;
+}
