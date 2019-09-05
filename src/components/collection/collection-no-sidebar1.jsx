@@ -94,9 +94,19 @@ class CollectionCategory extends Component {
                                                         <a ><img src={`${process.env.PUBLIC_URL}/assets/images/mega-menu/2.jpg`}
                                                                          className="img-fluid" alt=""/></a>
                                                         <div className="top-banner-content small-section">
-                                                            <h4>오늘의 작품</h4>
-                                                            <h5>오늘의 작품이 제안하는</h5>
-                                                            <p>작품을 감상하고 구매해보세요</p>
+                                                            {/* <h4>오늘의 추천 글귀</h4> */}
+                                                            <p>"대부분의 사람들에게 디자인이란 겉치장이다. 
+                                                                인테리어 장식이다. 커튼과 소파의 소재다. 하지만 내게 디자인이란 그것들과 거리가 멀다. </p>
+                                                                <p>디자인은 인간이 만들어낸 창조물의 본질적 영혼으로 제품과 서비스를 겹겹이 포장하며 드러나는 것이다."</p>
+                                                                <p>In most people's vocabularies, design means veneer. It's interior decorating. It's the fabric of the curtains of the sofa. </p>
+                                                                <p> Design is the fundamental soul of a human-made creation that ends up expressing itself in successive outer layers of the product or service.</p>
+                                                                <p> But to me, nothing could be further from the meaning of design. </p>
+                                                                    <p> _스티브 잡스</p>
+                                                                   
+                                                                   
+
+                                                            {/* <h5>문제가 풀리는 것은 결심을 할 때다.</h5>
+                                                            <p>_메이브 빈치, '그 겨울의 일주일'</p> */}
                                                         </div>
                                                     </div>
                                                     <div className="collection-product-wrapper">
