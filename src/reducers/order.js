@@ -5,6 +5,7 @@ const initialStateOrder={
     nextUrl:null,
     tid:null,
     addresses:null,
+    shippingAddress:null,
     orderList:null,
     refresh:false
 }
@@ -57,6 +58,11 @@ const order = (state=initialStateOrder, action) =>{
         
         case ActionTypes.CHANGE_STATUS_SUCCESS:
             return {...state, refresh:true};
+
+        case ActionTypes.FETCH_SHIPPING_ADDRESS:
+            const address = action.address;
+            console.log("REDUCER", address)
+            return {...state, shippingAddress:address}
 
         case ActionTypes.LOGOUT:
                 return initialStateOrder;

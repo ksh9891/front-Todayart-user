@@ -11,6 +11,7 @@ import { addToCart } from '../../actions'
 import {Actions} from '../../actions'
 
 
+
 class RelatedProduct extends Component {
 
 
@@ -47,6 +48,7 @@ class RelatedProduct extends Component {
             }
         });
 
+        window.scrollTo(0,0); 
         console.log("this.state", this.state);
     }
 
@@ -64,7 +66,7 @@ class RelatedProduct extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-12 product-related">
-                            <h2>이런 작품은 어떠세요~?</h2>
+                            <h2>이런 작품은 어떠세요?</h2>
                         </div>
                     </div>
                     <div className="row search-product">

@@ -129,7 +129,6 @@ class Address extends Component {
                                             <li><Link to="/account/password">비밀번호 변경</Link></li>
                                             <li className="active"><Link to="/account/addresses">배송지 관리</Link></li>
                                             <li><Link to="/account/orders">주문 관리</Link></li>
-                                           
                                         </ul>
                                     </div>
                                 </div>
@@ -162,7 +161,7 @@ class Address extends Component {
                                                             <tbody>
                                                             {this.props.auth.userDetails.memberAddresses === null || this.props.auth.userDetails.memberAddresses === undefined ?
                                                                 <tr>
-                                                                    <td colSpan="4" className="ta-address-none">등록된 배송지가 없어요!</td>
+                                                                    <td colSpan="5" className="ta-address-none">등록된 배송지가 없어요!</td>
                                                                 </tr>
                                                                 :
                                                                 this.props.auth.userDetails.memberAddresses.map((memberAddress, index) => {

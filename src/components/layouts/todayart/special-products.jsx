@@ -19,7 +19,7 @@ class SpecialProducts extends Component {
         this.state = {
            
             randomItem : [],
-            endSlice: 8
+            endSlice: 12
         }
     }
 
@@ -35,10 +35,10 @@ class SpecialProducts extends Component {
 
                 this.setState({
                     ...this.state,
-                    endSlice: this.getRandomArbitrary(8, data.length)
+                    endSlice: this.getRandomArbitrary(12, data.length)
                 })
 
-                const randomItem = data.slice(this.state.endSlice-8, this.state.endSlice);
+                const randomItem = data.slice(this.state.endSlice-12, this.state.endSlice);
                 
                 this.setState({
                     ...this.state,
@@ -67,7 +67,7 @@ class SpecialProducts extends Component {
             this.props.addWishlist(item)
                 .then(response=>{
                 if(response.type==ActionTypes.ADD_WISHLIST_SUCCESS){
-                    toast.error("작품이 찜하기에 추가되었습니다");       
+                    toast.info("작품이 찜하기에 추가되었습니다");       
                     console.log('찜하기성공!')  
                 } 
             }).catch(error=>{
@@ -109,12 +109,10 @@ class SpecialProducts extends Component {
 
                             <TabPanel>
                                 <div className="no-slider row">
-                                    { items.slice(this.state.endSlice-8, this.state.endSlice).map((item, index) =>
+                                    { this.state.randomItem.slice(this.state.endSlice-12, this.state.endSlice).map((item, index) =>
                                         <ProductItem item={item} symbol={symbol}
-
                                                      onAddToWishlistClicked={() => addWishilist(item)}
                                                      onAddToCartClicked={asyncAddCart} key={index} /> )
-
                                     }
                                 </div>
                             </TabPanel>

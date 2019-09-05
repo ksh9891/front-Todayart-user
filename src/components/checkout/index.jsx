@@ -22,7 +22,7 @@ class CheckoutDetail extends Component{
             totalPrice:props.totalPrice,
             totalShipping:props.totalShipping,
 
-            pay:"kakaoPay",
+                        pay:"kakaoPay",
             cardCom:null,
             checkCondition:false,
             makeOrder:props.makeOrder,
@@ -32,11 +32,6 @@ class CheckoutDetail extends Component{
     }
     
     static getDerivedStateFromProps(nextProps, prevState){
-        console.log("Condition", prevState.checkCondition);
-        console.log("Pay", prevState.pay);
-        console.log("CardCom", prevState.cardCom);
-
-
         if(nextProps.cart!==prevState.cart){
             return {cart:nextProps.cart, totalPrice:nextProps.totalPrice, totalShipping:nextProps.totalShipping}
         }
@@ -86,9 +81,10 @@ class CheckoutDetail extends Component{
     }
 
 
-    const tryPaying=()=>{
+    const tryPaying=(e)=>{
+        e.preventDefault();
         const totalPayingPrice=totalPrice+totalShipping;
-
+        console.log("MemberInput", this.memberInput);
         switch(this.state.pay){
             case "kakaoPay":
                 tryPayingKakao(totalPayingPrice);
@@ -101,18 +97,15 @@ class CheckoutDetail extends Component{
     }
 
     const tryPayingKakao=(totalPayingPrice)=>{
-        console.log("makeOrder",this.props.makeOrder)
         this.props.makeOrder(orderItemList, totalShipping, totalPayingPrice)
         .then(async(response)=>{
             if(response.type===ActionTypes.MAKE_ORDER_SUCCESS){
-                console.log("aaaaa", response)
                 return this.props.excuteKakaoPay(response.payload.data);
             }else{
                 return Promise.reject(response);
             }
         })
         .then((response)=>{
-            console.log("response :",response);
             if(response.type===ActionTypes.EXCUTE_KAKAO_PAY_SUCCESS){
                 window.open(response.payload.data.next_redirect_pc_url, "카카오 결제", "width=550, height=630");            
             }else{
@@ -214,7 +207,7 @@ class CheckoutDetail extends Component{
                 </div>
             
                 <div className="text-right">
-                    {this.state.checkCondition? <button type ="button" className="btn-solid btn" onClick={()=>tryPaying()}>결제하기</button>
+                    {this.state.checkCondition? <button type ="submit" className="btn-solid btn" onClick={(e)=>tryPaying(e)}>결제하기</button>
                     :
                     <button type ="button" className="btn-solid btn" onClick={()=>denyPaying()}>결제하기</button>
                     }    
@@ -292,12 +285,10 @@ class checkOut extends Component {
                     <div className="container padding-cls">
                         <div className="checkout-page">
                             <div className="checkout-form">
-                                <form>
                                     <div className="checkout row">
                                     <ShippingBox/>
                                     <CheckoutDetail cart={this.props.cart} symbol={symbol} totalPrice={this.props.totalPrice} totalShipping={this.props.totalShipping} makeOrder={this.props.makeOrder} excuteKakaoPay={this.props.excuteKakaoPay}/>
                                     </div>
-                                </form>
                             </div>
                         </div>
                     </div>

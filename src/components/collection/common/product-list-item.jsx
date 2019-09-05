@@ -76,16 +76,16 @@ class ProductListItem extends Component {
                                     alt="" /></Link>
                             </div>
                             <div className="cart-info cart-wrap">
-                                <a  href="javascript:void(0)" title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
-                                    <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+                                <a title="Add to cart" onClick={() => onAddToCartClicked(this.props.item, 1)}>
+                                    <i className="fa fa-shopping-cart" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" />
                                 </a>
-                                <a  href="javascript:void(0)" title="Add to Wishlist" onClick={onAddToWishlistClicked} >
-                                    <i className="fa fa-heart" aria-hidden="true"></i>
+                                <a title="Add to Wishlist" onClick={onAddToWishlistClicked} >
+                                    <i className="fa fa-heart" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" />
                                 </a>
-                                <a  href="javascript:void(0)" data-toggle="modal"
+                                <a data-toggle="modal"
                                    data-target="#quick-view"
                                    title="Quick View"
-                                   onClick={this.onOpenModal}><i className="fa fa-search" aria-hidden="true"></i></a>
+                                   onClick={this.onOpenModal}><i className="fa fa-search" style={{"color": "white", "cursor": "pointer"}} aria-hidden="true" /></a>
                                 
                             </div>
                             {item.variants?
@@ -165,7 +165,7 @@ class ProductListItem extends Component {
                                                 </div>
                                                 <div className="product-buttons">
                                                     <button  className="btn btn-solid" onClick={() => onAddToCartClicked(item, this.state.quantity)} > 장바구니 </button>
-                                                   <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
+                                                  <Link to={{pathname :`${process.env.PUBLIC_URL}/product/${item.productId}`,
                                                     state :{ item:this.props.item }}} className="btn btn-solid"> 상품페이지로 이동</Link>
                                                 </div>
                                             </div>

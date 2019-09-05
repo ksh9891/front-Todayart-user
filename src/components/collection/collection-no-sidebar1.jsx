@@ -9,6 +9,7 @@ import {Actions} from '../../actions'
 import ProductListing1 from './common/product-listing1'
 import Breadcrumb from "../common/breadcrumb";
 import FilterBar from "./common/filter-bar";
+import { ToastContainer } from 'react-toastify';
 
 
 class CollectionCategory extends Component {
@@ -126,6 +127,7 @@ class CollectionCategory extends Component {
                         </div>
                     </div>
                 </section>
+                <ToastContainer/>
                 {/*Section End*/}
 
             </div>
@@ -165,6 +167,12 @@ class CollectionCategory extends Component {
 
 
 
+const mapStateToProps = (state) => ({
+    
+    wishlist: state.wishlist.items,
+    symbol: "￦"
+
+})
 
 const mapDispatchToProps = (dispatch) => ({
     fetchCategory: (id) => dispatch(Actions.fetchCategory(id)),
@@ -172,4 +180,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-export default withRouter(connect(null,mapDispatchToProps)(CollectionCategory));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(CollectionCategory));
