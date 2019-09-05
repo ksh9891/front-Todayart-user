@@ -113,7 +113,7 @@ class wishList extends Component {
                                                         <div className="col-xs-3">
                                                             <h2 className="td-color">
                                                                 <span className="money">
-                                                                    <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                    <CurrencyFormat value={item.product.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                                 </span>
                                                             </h2>
                                                         </div>
@@ -132,7 +132,7 @@ class wishList extends Component {
                                                 <td>
                                                     <p>
                                                         <span className="money">
-                                                            <CurrencyFormat value={item.product.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                            <CurrencyFormat value={item.product.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                         </span>
                                                     </p>
                                                 </td>

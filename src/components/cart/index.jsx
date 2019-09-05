@@ -98,7 +98,7 @@ class cartComponent extends Component {
                                                         <div className="mobile-cart-content row">
                                                             <div className="col-xs-3">
                                                                 <h2 className="td-color">
-                                                                    <CurrencyFormat value={item.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                    <CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                                 </h2>
                                                             </div>
                                                             <div className="col-xs-3">
@@ -111,7 +111,7 @@ class cartComponent extends Component {
                                                     <td>
                                                         <p>
                                                             <h4 className="td-color money">
-                                                                <CurrencyFormat value={item.productPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                                <CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                             </h4>
                                                             <br/>
                                                             <span className="money">
@@ -129,7 +129,7 @@ class cartComponent extends Component {
                                                     </td>
                                                     <td>
                                                         <h4 className="td-color money">
-                                                            <CurrencyFormat value={item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                                            <CurrencyFormat value={item.productPrice*item.quantity+(item.shippingFee?item.shippingFee:0)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                                         </h4>
                                                     </td>
                                                     <td>
@@ -144,7 +144,7 @@ class cartComponent extends Component {
                             <div className="row mt-3 mb-3 cart-row">
                                 <div className="col-sm-12">
                                     <h5 className="text-right ta-total-price">
-                                        최종 결제금액 : <CurrencyFormat value={cart.totalPrice+cart.totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                        최종 결제금액 : <CurrencyFormat value={cart.totalPrice+cart.totalShipping} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                                     </h5>
                                 </div>
                             </div>

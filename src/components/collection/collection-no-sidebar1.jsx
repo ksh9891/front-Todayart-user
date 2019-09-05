@@ -168,10 +168,8 @@ class CollectionCategory extends Component {
 
 
 const mapStateToProps = (state) => ({
-    
     wishlist: state.wishlist.items,
-    symbol: "￦"
-
+    symbol: "원"
 })
 
 const mapDispatchToProps = (dispatch) => ({

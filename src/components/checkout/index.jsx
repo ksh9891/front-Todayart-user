@@ -133,18 +133,18 @@ class CheckoutDetail extends Component{
                             {item.product.productName}
                             <li>
                                 <CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /> × <CurrencyFormat value={item.quantity} displayType={'text'} thousandSeparator={true} />
-                                <CurrencyFormat value={item.productPrice*item.quantity} prefix={symbol} displayType={'text'} thousandSeparator={true} />
+                                <CurrencyFormat value={item.productPrice*item.quantity} suffix={symbol} displayType={'text'} thousandSeparator={true} />
                             </li>
                             </div> })
                         }
                     </ul>
                     <ul className="sub-total">
-                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
-                        <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>상품금액 <span className="count"><CurrencyFormat value={totalPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>배송비 <span className="count"><CurrencyFormat value={totalShipping} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
 
                     <ul className="sub-total">
-                        <li>최종 결제금액 <span className="count"><CurrencyFormat value={totalPrice+totalShipping} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
+                        <li>최종 결제금액 <span className="count"><CurrencyFormat value={totalPrice+totalShipping} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></li>
                     </ul>
                 </div>
 

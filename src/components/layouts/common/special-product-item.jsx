@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import Modal from 'react-responsive-modal';
-
+import CurrencyFormat from "react-currency-format";
 
 class SpecialProductItem extends Component {
 
@@ -142,8 +142,8 @@ class SpecialProductItem extends Component {
                         <Link to={`${process.env.PUBLIC_URL}/left-sidebar/product/${product.id}`}>
                             <h6>{product.name}</h6>
                         </Link>
-                        <h4>{symbol}{product.price-(product.price*product.discount/100)}
-                            <del><span className="money">{symbol}{product.price}</span></del>
+                        <h4><CurrencyFormat value={product.price-(product.price*product.discount/100)} suffix={symbol} displayType={'text'} thousandSeparator={true} />
+                            <del><span className="money"><CurrencyFormat value={product.price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></del>
                         </h4>
                     </div>
                 </div>
@@ -164,7 +164,7 @@ class SpecialProductItem extends Component {
                                     <div className="col-lg-6 rtl-text">
                                         <div className="product-right">
                                             <h2> {product.name} </h2>
-                                            <h3>{symbol}{product.price}</h3>
+                                            <h3><CurrencyFormat value={product.price} suffix={symbol} displayType={'text'} thousandSeparator={true} /></h3>
                                             {product.variants?
                                             <ul className="color-variant">
                                                 {product.variants.map((vari, i) =>
