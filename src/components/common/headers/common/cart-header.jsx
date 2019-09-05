@@ -17,7 +17,7 @@ const CartHeader  = ({item, total, symbol, deleteCartItem}) => {
                     <div className="media-body">
                         <Link to={{pathname:`${process.env.PUBLIC_URL}/product/${item.product.productId}`,
                             state:{item:item.product}}}><h4>{item.product.productName}</h4></Link>
-                        <h4><span>{item.quantity} x<CurrencyFormat value={(item.productPrice)} prefix={symbol} displayType={'text'} thousandSeparator={true} /></span></h4>
+                        <h4><span>{item.quantity} x<CurrencyFormat value={(item.productPrice)} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></h4>
                     </div>
                 </div>
                 {/*<span>{cart}</span>*/}

@@ -256,7 +256,7 @@ class NoSideBar extends Component {
 const mapStateToProps = (state) => ({
     
         item: state.data.item,
-        symbol: "￦",
+        symbol: "원",
         wishlist : state.wishlist.items,
         auth : state.auth
     

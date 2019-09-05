@@ -109,7 +109,7 @@ class ProductListItem extends Component {
                                     <h4>{item.productName}</h4>
                                 </Link>
                                 <h6><span className="money">{item.artist.artistName}</span></h6>
-                                <h6>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h6>
+                                <h6><CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></h6>
                                 {item.variants?
                                 <ul className="color-variant">
                                     {item.variants.map((vari, i) => {
@@ -132,7 +132,7 @@ class ProductListItem extends Component {
                                         <div className="col-lg-6 rtl-text">
                                             <div className="product-right">
                                                 <h2> {item.productName} </h2>
-                                                <h3>{symbol}<CurrencyFormat value={item.productPrice} displayType={'text'} thousandSeparator={true} /></h3>
+                                                <h3><CurrencyFormat value={item.productPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></h3>
                                                 <div className="border-product">
                                                     <h6 className="product-title">작가 | Artist </h6>
                                                     <li>{item.artistName} </li>

@@ -64,8 +64,8 @@ class CartContainer extends React.Component{
                 <div>
             <li>
                 <div className="total">
-                    <h5>상품금액 : <span>{symbol}<CurrencyFormat value={totalPrice} displayType={'text'} thousandSeparator={true} /></span></h5>
-                    <h5>배송비 : <span>{symbol}<CurrencyFormat value={totalShipping} displayType={'text'} thousandSeparator={true} /></span></h5>
+                    <h5>상품금액 : <span><CurrencyFormat value={totalPrice} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></h5>
+                    <h5>배송비 : <span><CurrencyFormat value={totalShipping} suffix={symbol} displayType={'text'} thousandSeparator={true} /></span></h5>
                 </div>
             </li>
             <li>
@@ -87,7 +87,7 @@ class CartContainer extends React.Component{
 function mapStateToProps(state) {
     return {
         cart: state.cart,
-        symbol: '￦'
+        symbol: '원'
     }
 }
 
